@@ -142,6 +142,5 @@ public class EserciziStringhe
 				+ "{\n"
 				+ "   return " + s + ";\n"
 				+ "}");
-		
 	}
 }

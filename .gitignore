@@ -25,3 +25,5 @@ hs_err_pid*
 
 /Beije/.classpath
 /Beije/.project
+/Beije/bin
+/Beije/.settings
