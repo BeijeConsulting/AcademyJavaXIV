@@ -29,6 +29,7 @@ public class MorraCinese {
 				System.out.println("Puoi inserire solo carta, forbice o sasso.");
 			}
 		}while(!finito);
+		
 		return str;
 	}
 	
@@ -37,21 +38,15 @@ public class MorraCinese {
 		
 		if(str.equalsIgnoreCase(str1)) {
 			return str2 = "Pareggio";
-		} else if (str.equalsIgnoreCase("carta")) {
-			if(str1.equalsIgnoreCase("sasso")) {
-				return str2 = "Vince giocatore 1";
-			}
-		} else if (str.equalsIgnoreCase("sasso") ) {
-			if(str1.equalsIgnoreCase("forbice")) {
-				return str2 = "Vince giocatore 1";
-			}
+		} else if (str.equalsIgnoreCase("carta") && str1.equalsIgnoreCase("sasso")) {
+			return str2 = "Vince giocatore 1";
+		} else if (str.equalsIgnoreCase("sasso") && str1.equalsIgnoreCase("forbice")) {
+			return str2 = "Vince giocatore 1";
+		} else if(str.equalsIgnoreCase("forbice") && str1.equalsIgnoreCase("carta")) {
+			return str2 = "Vince giocatore 1";
 		} else {
-			if(str1.equalsIgnoreCase("carta")) {
-				return str2 = "Vince giocatore 1";
-			}
+			return str2 = "Vince giocatore 2";
 		}
-		
-		return str2 = "Vince giocatore 2";
 	}
 }
 
