@@ -29,6 +29,7 @@ public class MorraCinese {
 				System.out.println("Puoi inserire solo carta, forbice o sasso.");
 			}
 		}while(!finito);
+		
 		return str;
 	}
 	
