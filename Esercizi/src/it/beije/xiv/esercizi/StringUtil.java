@@ -2,8 +2,31 @@ package it.beije.xiv.esercizi;
 public class StringUtil {
 
 	public static void main(String[] args) {
+		StringUtil s = new StringUtil();
 		
-
+		System.out.println(s.substring("Animali", 2));
+		System.out.println();
+		System.out.println(s.substring("Animali", 2,3));
+		System.out.println();
+		System.out.println(s.toLowerCase("Animali123"));
+		System.out.println();
+		System.out.println(s.toUpperCase("Animali123"));
+		System.out.println();
+		System.out.println(s.equals("Animali123","Animali123"));
+		System.out.println();
+		System.out.println(s.equalsIgnoreCase("Animali123","AnimalI123"));
+		System.out.println();
+		System.out.println(s.contains("Animali123","ali"));
+		System.out.println();
+		System.out.println(s.startsWith("Animali123","A"));
+		System.out.println();
+		System.out.println(s.endsWith("Animali","i"));
+		System.out.println();
+		System.out.println(s.replace("AnimAli123",'A','B'));
+		System.out.println();
+		System.out.println(s.replace("AnimAli123","A","B"));
+		System.out.println();
+		System.out.println(s.trim("\ta e i o u\t\n  "));
 	}
 	String substring(String s, int beginIndex) {
 		StringBuilder ris = new StringBuilder();
@@ -27,7 +50,7 @@ public class StringUtil {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < s.length(); i++) {
 			if(s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') {
-				sb.append(s.charAt(i) - 'A');
+				sb.append((char)(s.charAt(i) + ('a'-'A')));
 			}else {
 				sb.append(s.charAt(i));
 			}
@@ -38,7 +61,7 @@ public class StringUtil {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < s.length(); i++) {
 			if(s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
-				sb.append(s.charAt(i) + 'a');
+				sb.append((char)(s.charAt(i) - ('a'-'A')));
 			}else {
 				sb.append(s.charAt(i));
 			}
@@ -118,40 +141,17 @@ public class StringUtil {
 				sb.append(s.charAt(i));
 			}
 		}
+		sb.reverse();
+		for(int i = s.length()-1, j = 0; i >= 0; i--) {
+			if(s.charAt(i) == ' ' || s.charAt(i) == '\n' || s.charAt(i) == '\t' || s.charAt(i) == '\r') {
+				sb.deleteCharAt(j);
+				continue;
+			}else {
+				break;
+			}
+		}
+		sb.reverse();
 		return sb.toString();
 	}
 	
-	//STRING BUILDER
-	String substring(StringBuilder sb, int beginIndex) {
-		StringBuilder tmp = new StringBuilder();
-		for(int i = beginIndex; i < sb.length(); i++) {
-			tmp.append(sb.charAt(i));
-		}
-		return tmp.toString();
-	}
-	String substring(StringBuilder sb, int beginIndex, int endIndex) {
-		StringBuilder tmp = new StringBuilder();
-		for(int i = beginIndex; i < sb.length(); i++) {
-			if(i == endIndex) break;
-			tmp.append(sb.charAt(i));
-		}
-		return tmp.toString();
-	}
-	StringBuilder delete(StringBuilder sb, int start, int end) {
-		StringBuilder tmp = new StringBuilder();
-		for(int i = start; i < sb.length(); i++) {
-			if(i == end) break;
-			tmp.append("");
-		}
-		sb = tmp;
-		return tmp;
-	}
-	StringBuilder reverse(StringBuilder sb) {
-		StringBuilder tmp = new StringBuilder();
-		for(int i = sb.length()-1; i >= 0;i--) {
-			tmp.append(sb.charAt(i));
-		}
-		sb = tmp;
-		return tmp;
-	}
 }
