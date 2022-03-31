@@ -8,8 +8,9 @@ public class MorraCinese {
 	}
 	
 	private static void morraCinese() {
-		System.out.println("Turno primo giocatore");
+		System.out.println("Turno primo giocatore.");
 		String str = inserisciMorraCinese();
+		System.out.println("Turno secondo giocatore.");
 		String str1 = inserisciMorraCinese();
 		System.out.println("Il risultato della partita è: " + verificaVincitore(str, str1));
 	}
