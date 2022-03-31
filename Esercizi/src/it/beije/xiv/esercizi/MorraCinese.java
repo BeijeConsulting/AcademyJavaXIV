@@ -34,27 +34,24 @@ public class MorraCinese {
 	
 	private static String verificaVincitore(String str, String str1) {
 		String str2;
-		boolean vinceGiocatore1 = false;
+		
 		if(str.equalsIgnoreCase(str1)) {
 			return str2 = "Pareggio";
 		} else if (str.equalsIgnoreCase("carta")) {
 			if(str1.equalsIgnoreCase("sasso")) {
-				vinceGiocatore1 = true;
+				return str2 = "Vince giocatore 1";
 			}
 		} else if (str.equalsIgnoreCase("sasso") ) {
 			if(str1.equalsIgnoreCase("forbice")) {
-				vinceGiocatore1 = true;
+				return str2 = "Vince giocatore 1";
 			}
 		} else {
 			if(str1.equalsIgnoreCase("carta")) {
-				vinceGiocatore1 = true;
+				return str2 = "Vince giocatore 1";
 			}
 		}
-		if(vinceGiocatore1) {
-			return str2 = "Vince giocatore 1";
-		} else {
-			return str2 = "Vince giocatore 2";
-		}
+		
+		return str2 = "Vince giocatore 2";
 	}
 }
 
