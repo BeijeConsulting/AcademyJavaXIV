@@ -47,12 +47,13 @@ public class EserciziArray {
 		System.out.println();
 		
 		System.out.println("Esercizio 10");
-		Scanner s = new Scanner(System.in);
-		System.out.print("Morra Cinese\nPlayer1 Inserisca una mossa(Carta,Forbice,Sasso): ");
-		String player1 = s.nextLine();
-		System.out.print("Player2 Inserisca una mossa(Carta,Forbice,Sasso): ");
-		String player2 = s.nextLine();
-		tmp.morraCinese(player1, player2);
+		try (Scanner s = new Scanner(System.in)) {
+			System.out.print("Morra Cinese\nPlayer1 Inserisca una mossa(Carta,Forbice,Sasso): ");
+			String player1 = s.nextLine();
+			System.out.print("Player2 Inserisca una mossa(Carta,Forbice,Sasso): ");
+			String player2 = s.nextLine();
+			tmp.morraCinese(player1, player2);
+		}
 		System.out.println();
 		
 		
