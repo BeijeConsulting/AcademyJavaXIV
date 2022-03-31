@@ -8,19 +8,18 @@ public class MorraCinese {
 	}
 	
 	private static void morraCinese() {
-		System.out.println("Turno primo giocatore.");
-		String str = inserisciMorraCinese();
-		System.out.println("Turno secondo giocatore.");
-		String str1 = inserisciMorraCinese();
+		String str = inserisciMorraCinese("Turno primo giocatore.");
+		String str1 = inserisciMorraCinese("Turno secondo giocatore.");
 		System.out.println("Il risultato della partita è: " + verificaVincitore(str, str1));
 	}
 
-	private static String inserisciMorraCinese() {
+	private static String inserisciMorraCinese(String playerTurn) {
 		Scanner scan = new Scanner(System.in);
 		String str;
 		boolean finito = false;
 		
 		do {
+			System.out.println(playerTurn);
 			System.out.println("Inserisci carta, forbice o sasso: ");
 			str = scan.nextLine();
 			if(str.equalsIgnoreCase("carta") || str.equalsIgnoreCase("forbice") || str.equalsIgnoreCase("sasso")) {
