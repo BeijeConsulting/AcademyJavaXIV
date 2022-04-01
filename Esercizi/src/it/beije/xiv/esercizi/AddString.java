@@ -1,3 +1,4 @@
+package it.beije.xiv.esercizi;
 
 public class AddString {
 	public static String[] addString(String s, String[]a) {
