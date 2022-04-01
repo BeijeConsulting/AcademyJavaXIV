@@ -1,0 +1,7 @@
+ABC 50.0 1 B
+CDE 25.0 1 S
+asd
+
+ABC oidopaspd
+EFG 36.0 1 B
+HIL 120.0 1 B
