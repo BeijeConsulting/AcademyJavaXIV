@@ -1,9 +1,9 @@
 package it.beije.xiv.esercizi.discord1;
 
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
-import java.util.Arrays;
 import java.util.Locale;
 
 public class DataInput {
@@ -20,8 +20,11 @@ public class DataInput {
 
         //Monday 13 September , day 256 of the year 2021, week number 37
 
+
         System.out.println(date.getDayOfWeek() +" "+ date.getDayOfMonth() +" "+date.getMonth()+", DAY "+date.getDayOfYear()
                 +" OF THE YEAR "+ date.getYear()+", WEEK NUMBER "+weekOfYear+" ");
 
     }
+
+
 }

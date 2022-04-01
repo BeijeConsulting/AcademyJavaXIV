@@ -72,7 +72,12 @@ public class CartaForbiceSasso {
         }
     }
 
-
+    /**
+     * Calcola il risultato vincente tra le due scelte
+     * @param player1 elemento scelto dal giocatore 1 (0=carta, 1=forbice, 2=sasso)
+     * @param player2 elemento scelto dal giocatore 2 (0=carta, 1=forbice, 2=sasso)
+     * @return un intero 0=pareggio, 1=vittoria player1, 2=vittoria player2
+     */
     private static int checkResult(int player1, int player2) {
         if(player1==player2){
             return 0;
