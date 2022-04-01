@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi.array;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

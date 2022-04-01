@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi.cicli;
 
 import java.util.ArrayList;
 
