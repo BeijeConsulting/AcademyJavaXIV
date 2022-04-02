@@ -20,8 +20,6 @@ public class Groups {
                 "([]\n" +
                 "[])";
 
-        int[] i={'[','{','(',')','}',']'};
-        System.out.println(Arrays.toString(i));
 
         System.out.println(groupCheck(trueS));
         System.out.println(groupCheck(falseS));
@@ -41,7 +39,7 @@ public class Groups {
                 continue;
             }
 
-            //caso il carattare fosse una parentesi aperta
+            //nel caso il carattare fosse una parentesi aperta già dal primo avvio
             if (stack.isEmpty()){
                 return false;
             }
@@ -51,19 +49,19 @@ public class Groups {
                 case ')':
                     lastChar = stack.get(stack.size()-1);
                     stack.remove(stack.size()-1);
-                    if (lastChar == '{' || lastChar == '['){ return false; }
+                    if (lastChar=='{' || lastChar=='['){ return false; }
                     break;
 
                 case '}':
                     lastChar = stack.get(stack.size()-1);
                     stack.remove(stack.size()-1);
-                    if (lastChar == '(' || lastChar == '['){ return false; }
+                    if (lastChar=='(' || lastChar=='['){ return false; }
                     break;
 
                 case ']':
                     lastChar = stack.get(stack.size()-1);
                     stack.remove(stack.size()-1);
-                    if (lastChar == '(' || lastChar == '{'){ return false; }
+                    if (lastChar=='{' || lastChar=='(' ){ return false; }
                     break;
             }
         }
