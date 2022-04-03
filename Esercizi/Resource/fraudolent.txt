@@ -1,4 +1,4 @@
-Google 50.0 210 B
+Google 10.0 10 B
 Microsoft 20.0 110 S
 Oracle 20.0 550 B
 Netflix 20.0 130 S
@@ -6,5 +6,9 @@ Amazon 20.0 310 B
 Intel 20.0 2130 S
 AMD 20.0 1110 B
 TMSC 20.0 1510 S
+
 Sbagliosrl BD 3.5 G
 ErroreSPA 12.0 737 CIAO
+ErroreSPA2 12 737 C
+dsad
+ErroreSPA2 Valore  quant S
