@@ -1,9 +1,6 @@
 package it.beije.xiv.esercizi.programmazionecompleti;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Deque;
 
 /**
  * @author Giuseppe Raddato
