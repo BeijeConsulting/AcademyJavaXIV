@@ -20,8 +20,14 @@ public class TriangleSum {
     //  rowSumOddNumbers(3) = 7 + 9 + 11 = 27
 
     public static void main(String[] args) {
-       // System.out.println("N=1 "+rowSumOddNumbers(1));
-        System.out.println("N=2 "+rowSumOddNumbers(9));
+        System.out.println("N=1 "+rowSumOddNumbers(1));
+        System.out.println();
+        System.out.println("N=9 "+rowSumOddNumbers(9));
+        System.out.println();
+
+        System.out.println("N=52 "+rowSumOddNumbers(52));
+        System.out.println();
+
     }
 
 
