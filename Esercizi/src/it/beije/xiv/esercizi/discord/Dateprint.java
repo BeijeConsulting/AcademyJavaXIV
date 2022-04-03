@@ -1,4 +1,4 @@
-package it.beije.exercises;
+package it.beije.xiv.esercizi.discord;
 import java.time.*;
 import java.time.temporal.IsoFields;
 import java.time.format.DateTimeFormatter;

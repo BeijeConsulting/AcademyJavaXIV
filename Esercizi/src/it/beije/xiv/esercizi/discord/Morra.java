@@ -1,4 +1,4 @@
-package it.beije.exercises;
+package it.beije.xiv.esercizi.discord;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
