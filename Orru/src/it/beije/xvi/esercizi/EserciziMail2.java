@@ -56,7 +56,6 @@ public class EserciziMail2 {
 	//Scrivere un programma Contrario che, data una stringa, la stampa al contrario. Per esempio, la stringa “Viva Java!” verrà “!avaJ aviV”
 	public void printReverse(String str) {
 		StringBuilder supportStr = new StringBuilder();
-		int j = 0;
 		
 		for(int i = str.length() - 1; i >= 0; i--) {
 			  supportStr.append(str.charAt(i));
