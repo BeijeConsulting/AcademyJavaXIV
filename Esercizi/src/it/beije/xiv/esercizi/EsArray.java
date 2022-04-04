@@ -9,30 +9,37 @@ public class EsArray {
 		
 		EsArray.maxArray(array);
 		System.out.println();
-		System.out.println("");
+		System.out.println(" ");
 		
 		EsArray.indiceMax(array);
 		System.out.println();
-		System.out.println("");
+		System.out.println(" ");
+		
 		
 		System.out.println(s.isCrescente(array));
-		System.out.println("");
+		System.out.println();
+		System.out.println(" ");
 		
 		System.out.println(s.mostRecurrent(array));
-		System.out.println("");
+		System.out.println();
+		System.out.println(" ");
 		
 		System.out.println(s.mediaInteri(array));
-		System.out.println("");
+		System.out.println();
+		System.out.println(" ");
 		
 		System.out.println(s.mediaMultipliDiTre(array));
-		System.out.println("");
+		System.out.println();
+		System.out.println(" ");
 		
 		EsArray.stampaZigZag(array);
 		System.out.println();
-		System.out.println("");
+		System.out.println(" ");
+		
 		
 		System.out.println(s.contains(5, array));
-		System.out.println("");
+		System.out.println();
+		System.out.println(" ");
 		
 		
 	}
