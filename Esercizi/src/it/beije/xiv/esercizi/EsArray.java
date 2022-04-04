@@ -31,6 +31,9 @@ public class EsArray {
 		System.out.println();
 		System.out.println("");
 		
+		System.out.println(s.contains(5, array));
+		System.out.println("");
+		
 		
 	}
 	
@@ -124,5 +127,14 @@ public class EsArray {
 			somma+= array[i];
 		}
 		return (float)(somma/array.length);
+	}
+	
+	boolean contains(int e, int[]array) {
+		int count = 0;
+		for(int i=0;i<array.length;i++) {
+			if(e == array[i]) count++;
+		}
+		if(count<1) return false;
+		else return true;
 	}
 }
