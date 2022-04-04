@@ -17,7 +17,7 @@ public class StringUtil
 		System.out.println(stringUtil.endsWith("Ciao", "ao"));
 		System.out.println(stringUtil.replace("Ciaoaa", 'a','b'));
 		//System.out.println(stringUtil.replace("XaoXaoX", "ao", "ZZ"));
-		System.out.println(stringUtil.trim("  A  Ciao AA  "));
+		System.out.println(stringUtil.trim("   A  Ciao AA  "));
 	}
 	
 	
@@ -235,7 +235,7 @@ public class StringUtil
 			}
 		}
 		
-		str = s.substring(begin, end+1);
+		str = substring(s, begin, end+1);
 		
 		return str;
 	}
