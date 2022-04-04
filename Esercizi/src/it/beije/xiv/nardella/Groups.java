@@ -20,6 +20,7 @@ public class Groups {
 		System.out.println(groupCheck("{(})"));
 		System.out.println(groupCheck("([]"));
 		System.out.println(groupCheck("([]"));
+		
 	}
 
 	public static boolean groupCheck(String s) {

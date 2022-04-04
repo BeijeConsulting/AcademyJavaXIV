@@ -19,10 +19,8 @@ public class EsercizioData {
 		DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate date = LocalDate.parse("13/09/2015", f);		
 		Locale locale = new Locale.Builder().setLanguage("it").setRegion("IT").build();
-		
 		System.out.println(date.getDayOfWeek() + " " + date.getDayOfMonth() + " " + date.getMonth() + ", giorno " +  date.getDayOfYear() +
 				" dell'anno " + date.getYear() + " settimana numero " + 	date.get(WeekFields.of(locale).weekOfYear()));
-
+		
 	}
-
 }
