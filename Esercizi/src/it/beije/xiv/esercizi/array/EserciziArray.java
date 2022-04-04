@@ -178,7 +178,6 @@ public class EserciziArray {
 	
 	public void morraCinese(String s1, String s2) {
 		if(s1 != null && s2 != null) {
-				
 				int p1 = 0, p2 = 0;
 				switch(s1.toLowerCase()) {
 					case "carta":
