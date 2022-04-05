@@ -33,7 +33,7 @@ public class FraudolentBank
 		
 		try
 		{
-			file = fb.readFile("C:\\Users\\Mattia\\git\\AcademyJavaXIV\\Beije\\files\\Operations.txt");   //TODO fix
+			file = fb.readFile("Operations.txt");
 			
 			for(String s : fb.processOperation(file))
 			{
@@ -46,9 +46,9 @@ public class FraudolentBank
 		}		
 	}
 	
-	private List<String> readFile(String path) throws IOException
+	private List<String> readFile(String name) throws IOException
 	{
-		return Files.readAllLines(Paths.get(path));
+		return Files.readAllLines(Paths.get("files", name));
 	}
 	
 	private List<String> processOperation(List<String> operation)
