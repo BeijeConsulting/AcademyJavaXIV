@@ -1,3 +1,4 @@
+package esercizi;
 /*public class YetMoreInitializationOrder { 
 	
 	static { 

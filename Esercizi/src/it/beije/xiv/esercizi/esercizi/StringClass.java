@@ -1,4 +1,5 @@
-import com.sun.xml.internal.bind.v2.runtime.Name;
+package esercizi;
+
 
 public class StringClass {
 

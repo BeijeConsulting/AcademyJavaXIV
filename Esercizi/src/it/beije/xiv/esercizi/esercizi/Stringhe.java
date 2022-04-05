@@ -1,3 +1,4 @@
+package esercizi;
 
 public class Stringhe {
 	public static void soloVocali(String str) {

@@ -1,3 +1,4 @@
+package esercizi;
 /*Realizzare un programma che, ricevuta in input una data in formato 13/09/2021 stampi le seguenti informazioni:
 Lunedì 13 Settembre, giorno 256 dell'anno 2021, settimana numero 37
 in italiano od inglese, va bene comunque*/
