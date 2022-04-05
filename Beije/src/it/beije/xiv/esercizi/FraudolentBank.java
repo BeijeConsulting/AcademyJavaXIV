@@ -33,7 +33,7 @@ public class FraudolentBank
 		
 		try
 		{
-			file = fb.readFile("C:\\Users\\Mattia\\git\\AcademyJavaXIV\\Beije\\src\\it\\beije\\xiv\\esercizi\\Operations.txt");   //TODO fix
+			file = fb.readFile("C:\\Users\\Mattia\\git\\AcademyJavaXIV\\Beije\\files\\Operations.txt");   //TODO fix
 			
 			for(String s : fb.processOperation(file))
 			{
