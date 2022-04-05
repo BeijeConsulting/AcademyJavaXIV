@@ -5,7 +5,6 @@ public class MorraCinese {
 
 	public static void main(String[] args) {
 		play();
-
 	}
 	
 	public static void play() {
@@ -14,13 +13,14 @@ public class MorraCinese {
 		
 		do {
 			System.out.println("Inserire mossa giocatore 1: ");
-			playerOne = scanner.nextLine().trim();
+			playerOne = scanner.nextLine().trim().toLowerCase();
 		}while(!isValid(playerOne));
 		
 		do {
 			System.out.println("Inserire mossa giocatore 2: ");
-			playerTwo = scanner.nextLine().trim();
+			playerTwo = scanner.nextLine().trim().toLowerCase();
 		}while(!isValid(playerTwo));
+		
 		scanner.close();
 		
 		if(playerOne.equals(playerTwo)) {
@@ -34,7 +34,6 @@ public class MorraCinese {
 		else {
 			System.out.println("Vince il giocatore 2");
 		}
-		
 	}
 	
 	public static boolean isValid(String s) {
