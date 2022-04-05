@@ -1,9 +1,6 @@
 package esercizi;
 
-public class equalsUtil {
-	
-	
-	//String replace(String s, String oldChar, String newChar)
+public class stringUtil {
 	
 	
 	public static String toLowerCaseUtil(String s) {
@@ -127,12 +124,30 @@ public class equalsUtil {
 	
 	public static String trimUtil(String s) {
 		int i = 0;
+		String newS = "";
 		
-		while((boolean) (s.charAt(i) == ' ' )){ //|| s.charAt(i) == ' \t ' || s.charAt(i) == ' \r 
-			System.out.println("todo");
-			i++;
+		while( s.charAt(i) == ' '){  //da implementare con \n e \r 
+			newS = substringUtil(s, ++i);
 		}
-		return"";
+		//Todo togliere dalla fine
+		return newS;
+	}
+	
+	public static String replaceUtil(String s, String oldChar, String newChar) {
+		String newS = "";
+		int j = 0;
+		for (int i = 0; i < s.length(); i++) {
+			if(s.charAt(i) == oldChar.charAt(j)) {
+				newS += newChar;
+				System.out.println("*"); //test
+				j++;
+				
+			}
+			else {
+				newS += s.charAt(i);
+			}
+		}
+		return newS;
 	}
 	
 	public static void main(String[] args) {
@@ -141,6 +156,7 @@ public class equalsUtil {
 		String t1 = "TEST";
 		String t2 ="pippo";
 		String t3 = "abcdefghijk";
+		String strTrim = "    ciao ";
 		
 		
 		System.out.println("upper case -> " + toUpperCaseUtil(test));
@@ -169,11 +185,10 @@ public class equalsUtil {
 		
 		System.out.println("substring 2-> " + replaceUtil(t2, 'p', 'P'));
 		
-		System.out.println("trim -> " + trimUtil("   ciao"));
+		System.out.println("trim: \n" + strTrim + "\n" + trimUtil(strTrim));
 		
-		
-		
-		
+		System.out.println("replace " + replaceUtil(test, "es", "OS"));
+	
 	}
 
 }
