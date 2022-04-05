@@ -12,7 +12,7 @@ public class Caffeina
 	{
 		if (n < 0) return "N NON POSITIVO";
 		
-		String str = ((n % 3) == 0 && (n % 4) != 0) ? "Java" : "";
+		String str = ((n % 3) == 0) ? "Java" : "";
 		str += ((n % 3) == 0 && (n % 4) == 0) ? "Coffee" : "";
 		str += ((n % 2) == 0 && !str.equals("")) ? "Script" : "";
 		str += (str.equals("")) ? "match_missed" : "";
