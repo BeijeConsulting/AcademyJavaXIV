@@ -1,5 +1,5 @@
 package device;
 
 public interface Video extends Screen{
-	//TODO
+	public abstract void playVideo();   //prints playing TV program / youtube video
 }
