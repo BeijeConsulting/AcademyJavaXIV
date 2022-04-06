@@ -87,5 +87,8 @@ public class Pentagono extends Poligono {
 		// TODO Auto-generated method stub
 		return getPerimetro();
 	}
+	public String getName() {
+		return "Pentagono";
+	}
 
 }

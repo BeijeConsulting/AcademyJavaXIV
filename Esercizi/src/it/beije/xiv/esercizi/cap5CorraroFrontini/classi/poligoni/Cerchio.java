@@ -43,5 +43,8 @@ public class Cerchio extends Poligono {
 	public double getBase() {
 		return -1;
 	}
-
+	
+	public String getName() {
+		return "Cerchio";
+	}
 }

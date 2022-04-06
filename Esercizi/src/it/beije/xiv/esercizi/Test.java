@@ -29,6 +29,7 @@ public class Test {
 		
 		Poligono f5 = new Pentagono(1, 1, 1, 1, 1,1);
 		SolidiRotazione f6 = new Cono(new Equilatero(3.0));
+		Poligono f7 = new Cerchio(1);
 		
 		System.out.println(f5.getName());
 		System.out.println(f5.getPerimetro());
@@ -37,6 +38,10 @@ public class Test {
 		System.out.println(f6.getName());
 		System.out.println(f6.getSurface());
 		System.out.println(f6.getVolume());
+		
+		System.out.println(f7.getName());
+		System.out.println(f7.getPerimetro());
+		System.out.println(f7.getArea());
 	}
 
 }
