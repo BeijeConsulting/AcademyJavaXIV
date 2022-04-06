@@ -1,10 +1,10 @@
-package it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi.discipline;
 
-public class Test {
+public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("Siso");
+
 	}
 
 }
