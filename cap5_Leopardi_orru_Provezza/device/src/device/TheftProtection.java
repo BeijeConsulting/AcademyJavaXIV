@@ -1,6 +1,6 @@
 package device;
 
-public class theftProtection extends Household implements Video, Audio, Camera {
+public class TheftProtection extends Household implements Video, Audio, Camera {
 	public void isDeviceBroken(boolean isBroken) {
 		if(isBroken) {
 			System.out.println("This device is broken. ");
