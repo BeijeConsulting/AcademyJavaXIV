@@ -8,19 +8,14 @@ public class Marte extends Pianeta{
     private int durataOrbita;
     private String eta;
 
-    public Marte(int dimensione, int durataOrbita, String eta){
+    public Marte(int dimensione, int durataRotazione, String eta){
         setNome("Marte");
-        setDurataOrbita(durataOrbita);
+        setDurataRotazion(durataRotazione);
         setEta(eta);
         setDimensione(dimensione);
     }
 
-    public Marte(int dimensione, String eta){
-        setNome("Marte");
-        setDurataOrbita(-1);
-        setEta(eta);
-        setDimensione(dimensione);
-    }
+
 
     @Override
     protected void setNome(String nomePianeta) {
@@ -41,13 +36,14 @@ public class Marte extends Pianeta{
         return this.dimensione;
     }
 
+
     @Override
-    protected void setDurataOrbita(int durata) {
+    protected void setDurataRotazion(int durata) {
         this.durataOrbita=durata;
     }
 
     @Override
-    public int getDurataOrbita() {
+    public int getDurataRotazione() {
         return this.durataOrbita;
     }
 

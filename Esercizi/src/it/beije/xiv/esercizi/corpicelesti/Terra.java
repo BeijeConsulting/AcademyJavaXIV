@@ -8,9 +8,9 @@ public class Terra extends Pianeta{
     private int durataOrbita;
     private String eta;
 
-    public Terra(int dimensione, int durataOrbita, String eta){
+    public Terra(int dimensione, int durataRotazione, String eta){
         setNome("Terra");
-        setDurataOrbita(durataOrbita);
+        setDurataRotazion(durataRotazione);
         setEta(eta);
         setDimensione(dimensione);
     }
@@ -36,12 +36,12 @@ public class Terra extends Pianeta{
     }
 
     @Override
-    protected void setDurataOrbita(int durata) {
+    protected void setDurataRotazion(int durata) {
         this.durataOrbita=durata;
     }
 
     @Override
-    public int getDurataOrbita() {
+    public int getDurataRotazione() {
         return this.durataOrbita;
     }
 

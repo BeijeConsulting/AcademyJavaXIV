@@ -11,9 +11,9 @@ public abstract class CorpoCeleste {
 
     public abstract int getDimensione();
 
-    protected abstract void setDurataOrbita(int durata);
+    protected abstract void setDurataRotazion(int durata);
 
-    public abstract int getDurataOrbita();
+    public abstract int getDurataRotazione();
 
 
     public abstract void setEta(String eta);
@@ -26,6 +26,6 @@ public abstract class CorpoCeleste {
                 " Dimensione: "+getDimensione()+
                 " Età: "+getEta() +"";
 
-        return s+=(getDurataOrbita()>0? " DurataOrbita: "+getDurataOrbita():"");
+        return s+=(getDurataRotazione()>=0? " DurataOrbita: "+getDurataRotazione():"");
     }
 }

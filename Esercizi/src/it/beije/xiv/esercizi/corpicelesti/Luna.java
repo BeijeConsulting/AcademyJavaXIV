@@ -1,22 +1,24 @@
 package it.beije.xiv.esercizi.corpicelesti;
 
-import java.util.Arrays;
 
-
-
-public class Sole extends Stella {
+public class Luna extends Satellite{
     private String nomeCorpoCeleste;
     private int dimensione;
     private int durataOrbita;
     private String eta;
-    private String[] elemen;
+    private int rivoluzione;
 
-    public Sole(int dimensione, int durataRotazione, String eta){
-        setNome("Sole");
+
+    public Luna(int dimensione, int durataRotazione, String eta, Pianeta pianeta, int rivoluzione ){
+        setNome("Luna");
         setDurataRotazion(durataRotazione);
         setEta(eta);
         setDimensione(dimensione);
+        setPianeta(pianeta);
+        setRivoluzione(rivoluzione);
+
     }
+
 
 
     @Override
@@ -46,9 +48,7 @@ public class Sole extends Stella {
     @Override
     public int getDurataRotazione() {
         return this.durataOrbita;
-
     }
-
 
     @Override
     public void setEta(String eta) {
@@ -61,14 +61,14 @@ public class Sole extends Stella {
     }
 
     @Override
-    public void setListaElementi(String... element) {
-        this.elemen=element;
+    public void setRivoluzione(int rivoluzione) {
+        this.rivoluzione=rivoluzione;
 
     }
 
     @Override
-    public String[] getListaElementi() {
-        return elemen;
+    public int getRivoluzione() {
+        return this.rivoluzione;
     }
 
 
