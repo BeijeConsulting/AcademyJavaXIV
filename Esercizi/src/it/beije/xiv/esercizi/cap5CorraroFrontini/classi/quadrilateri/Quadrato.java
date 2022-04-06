@@ -9,5 +9,13 @@ public class Quadrato extends Quadrilatero {
 	public double getArea() {
 		return getL1()*getL1();
 	}
+	@Override
+	public double getAltezza() {
+		return getL1();
+	}
+	@Override
+	public double getBase() {
+		return getL1();
+	}
 
 }

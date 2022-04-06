@@ -26,4 +26,14 @@ public class Trapezio extends Quadrilatero {
 		return ((getBMax()+getBMin())*getH())/2;
 	}
 
+	@Override
+	public double getAltezza() {
+		return getH();
+	}
+
+	@Override
+	public double getBase() {
+		return getBMax();
+	}
+
 }

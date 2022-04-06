@@ -18,4 +18,14 @@ public class Equilatero extends Triangolo {
 		return (b*h)/2;
 	}
 
+	@Override
+	public double getAltezza() {
+		return Math.sqrt((Math.pow(getL2(), 2)-Math.pow(getL1()/2, 2)));
+	}
+
+	@Override
+	public double getBase() {
+		return getL1();
+	}
+
 }

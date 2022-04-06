@@ -10,5 +10,13 @@ public class Rettangolo extends Quadrilatero {
 	public double getArea() {
 		return getL1()*getL2();
 	}
+	@Override
+	public double getAltezza() {
+		return getL2();
+	}
+	@Override
+	public double getBase() {
+		return getL1();
+	}
 
 }
