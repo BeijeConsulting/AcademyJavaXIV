@@ -17,7 +17,7 @@ public class Test {
 		System.out.println(f2.getName());
 		
 		Quadrato f3 = new Quadrato(1.0);
-		Cubo f4 = new Cubo(new Quadrato(1.0), 1.0);
+		Cubo f4 = new Cubo(new Quadrato(1.0));
 		
 		System.out.println(f3.getName());
 		System.out.println(f3.getPerimetro());
@@ -26,6 +26,17 @@ public class Test {
 		System.out.println(f4.getName());
 		System.out.println(f4.getSurface());
 		System.out.println(f4.getVolume());
+		
+		Poligono f5 = new Pentagono(1, 1, 1, 1, 1,1);
+		SolidiRotazione f6 = new Cono(new Equilatero(3.0));
+		
+		System.out.println(f5.getName());
+		System.out.println(f5.getPerimetro());
+		System.out.println(f5.getArea());
+		
+		System.out.println(f6.getName());
+		System.out.println(f6.getSurface());
+		System.out.println(f6.getVolume());
 	}
 
 }

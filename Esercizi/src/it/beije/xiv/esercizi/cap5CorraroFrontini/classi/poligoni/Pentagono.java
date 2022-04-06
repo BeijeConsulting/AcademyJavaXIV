@@ -5,11 +5,14 @@ import it.beije.xiv.esercizi.cap5CorraroFrontini.classiastratte.Poligono;
 public class Pentagono extends Poligono {
 	private double l1, l2, l3, l4, l5, apotema;
 	
-	public Pentagono(double l1, double l2, double l3, double l4, double l5) {
+	public Pentagono(double l1, double l2, double l3, double l4, double l5, double apotema) {
 		super();
 		this.l1 = l1;
 		this.l2 = l2;
 		this.l3 = l3;
+		this.l4 = l4;
+		this.l5 = l5;
+		this.apotema = apotema;
 	}
 	
 	public double getL1() {
