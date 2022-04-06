@@ -49,6 +49,9 @@ public abstract class Quadrilatero extends Poligono{
 		this.l4 = l4;
 	}
 	
+	public double getPerimetro() {
+		return getL1()+getL2()+getL3()+getL4();
+	}
 	public String getName() {
 		return "Quadrilatero";
 	}
