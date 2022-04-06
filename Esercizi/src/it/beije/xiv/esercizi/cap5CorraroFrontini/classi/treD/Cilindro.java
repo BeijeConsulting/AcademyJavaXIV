@@ -10,7 +10,7 @@ public class Cilindro extends SolidiRotazione{
 	{
 		this.figure=figure;
 		this.depth=figure.getAltezza();
-		this.base = new Cerchio();
+		this.base = new Cerchio(figure.getBase());
 	}
 	@Override
 	public double getSurface() {

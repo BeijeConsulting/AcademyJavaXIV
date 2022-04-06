@@ -2,7 +2,6 @@ package it.beije.xiv.esercizi.cap5CorraroFrontini.classi.treD;
 
 import it.beije.xiv.esercizi.cap5CorraroFrontini.classi.quadrilateri.Quadrato;
 import it.beije.xiv.esercizi.cap5CorraroFrontini.classiastratte.Poliedro;
-import it.beije.xiv.esercizi.cap5CorraroFrontini.interfacce.Forma2D;
 
 public class Cubo extends Poliedro {
 
