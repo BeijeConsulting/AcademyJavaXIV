@@ -1,18 +1,44 @@
 package device;
 
 public class Tv extends Device implements  Video, Audio{
-
+	boolean audioOn = false;
 	@Override
 	public boolean isAudioOn() {
-		// TODO Auto-generated method stub
-		return false;
+		return audioOn;
 	}
 
 	@Override
 	public boolean hasAudio() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
+
+	@Override
+	public boolean turnOnAudio() {
+		audioOn = true;
+		System.out.println("audio set to ON");
+		return audioOn;
+	}
+
+	@Override
+	public boolean turnOffAudio() {
+		audioOn = false;
+		System.out.println("audio set to OFF");
+		return true;
+	}
+
+	@Override
+	public void displayInfo(String s) {
+		System.out.println( "the display is showing this info: " + s);
+		
+	}
+
+	@Override
+	public void playVideo(String s) {
+		System.out.println("tv is palying " + s);
+		
+	}
+
+	
 	
 	
 
