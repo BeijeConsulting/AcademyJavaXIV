@@ -10,16 +10,12 @@ public class Equilatero extends Triangolo {
 	public String getName() {
 		return "Equilatero";
 	}
-	@Override
-	public double getPerimetro() {
-		// TODO Auto-generated method stub
-		return getL1()*3;
-	}
-
+	
 	@Override
 	public double getArea() {
-		// TODO Auto-generated method stub
-		return getL1()*getL2();
+		double b = getL1();
+		double h = Math.sqrt((Math.pow(getL2(), 2)-Math.pow(b/2, 2)));
+		return (b*h)/2;
 	}
 
 }
