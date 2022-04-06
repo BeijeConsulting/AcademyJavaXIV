@@ -6,6 +6,10 @@ public class Quadrato extends Quadrilatero {
 	public Quadrato(double l1) {
 		super(l1,l1,l1,l1);
 	}
+	
+	public String getName() {
+		return "Quadrato";
+	}
 	public double getArea() {
 		return getL1()*getL1();
 	}
