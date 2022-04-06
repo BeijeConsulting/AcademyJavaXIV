@@ -9,30 +9,24 @@ public class Prisma extends Poliedro implements Forma3D{
 	public Prisma(Triangolo base,double height) {
 		super();
 		this.base=base;
-		this.height=height;
+		this.depth=height;
 	}
 
+	
 	@Override
-	public double getPerimetro() {
-		;
-		return base.getPerimetro();
-	}
-
-	@Override
-	public double getArea() {
-		double Area=base.getPerimetro()*height;
+	public double getSurface() {
+		double Area=base.getPerimetro()*depth;
 		return Area;
 	}
 
 	@Override
 	public double getVolume() {
-		double Volume = base.getArea()*height;
+		double Volume = base.getArea()*depth;
 		return Volume;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Prisma";
 	}
 
