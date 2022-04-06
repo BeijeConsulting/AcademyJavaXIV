@@ -1,14 +1,15 @@
 package it.beije.xiv.esercizi.cap5CorraroFrontini.classi.treD;
 
+import it.beije.xiv.esercizi.cap5CorraroFrontini.classi.quadrilateri.Quadrato;
 import it.beije.xiv.esercizi.cap5CorraroFrontini.classiastratte.Poliedro;
 import it.beije.xiv.esercizi.cap5CorraroFrontini.interfacce.Forma2D;
 
 public class Cubo extends Poliedro {
 
-	public Cubo(Forma2D base,double depth)
+	public Cubo(Quadrato base)
 	{
 		this.base=base;
-		this.depth=depth;
+		this.depth=base.getAltezza();
 	}
 	
 	@Override
@@ -26,7 +27,7 @@ public class Cubo extends Poliedro {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Cubo";
 	}
 
 }
