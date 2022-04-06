@@ -1,5 +1,6 @@
 package it.beije.xiv.polimorfismo;
 
-public class StrumentoMusicale {
-
+public abstract class StrumentoMusicale
+{
+    public abstract void suona();
 }
