@@ -33,7 +33,15 @@ public class Cerchio extends Poligono {
 
 	@Override
 	public double getArea() {
-		return PI*r*r;
+		return PI*getR()*getR();
+	}
+	@Override
+	public double getAltezza() {
+		return -1;
+	}
+	@Override
+	public double getBase() {
+		return -1;
 	}
 
 }

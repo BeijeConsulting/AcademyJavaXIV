@@ -16,5 +16,13 @@ public class Isoscele extends Triangolo {
 		double h = Math.sqrt((Math.pow(getL2(), 2)-Math.pow(b/2, 2)));
 		return (b*h)/2;
 	}
+	@Override
+	public double getAltezza() {
+		return Math.sqrt((Math.pow(getL2(), 2)-Math.pow(getL1()/2, 2)));
+	}
+	@Override
+	public double getBase() {
+		return getL1();
+	}
 
 }
