@@ -8,8 +8,8 @@ public interface Camera {
 	
 	public void isCameraOn(boolean x);
 	
-	public void cameraQuality(int q);
+	public void cameraQuality();
 	
-	public void changeQuality(int q);
+	public void changeQuality(int cameraQuality);
 	
 }
