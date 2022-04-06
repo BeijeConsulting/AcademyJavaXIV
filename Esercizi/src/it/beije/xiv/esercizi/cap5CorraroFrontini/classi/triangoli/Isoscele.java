@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi.cap5CorraroFrontini.classi;
+package it.beije.xiv.esercizi.cap5CorraroFrontini.classi.triangoli;
 
 import it.beije.xiv.esercizi.cap5CorraroFrontini.classiastratte.Triangolo;
 
