@@ -2,9 +2,16 @@ package device;
 
 public class Tv extends Device implements  Video, Audio{
 	boolean audioOn = false;
+	
+	
+	public Tv(boolean audioOn) {
+		super();
+		this.audioOn = audioOn;
+	}
+
 	@Override
 	public boolean isAudioOn() {
-		return audioOn;
+		return this.audioOn;
 	}
 
 	@Override
@@ -14,14 +21,14 @@ public class Tv extends Device implements  Video, Audio{
 
 	@Override
 	public boolean turnOnAudio() {
-		audioOn = true;
+		this.audioOn = true;
 		System.out.println("audio set to ON");
-		return audioOn;
+		return this.audioOn;
 	}
 
 	@Override
 	public boolean turnOffAudio() {
-		audioOn = false;
+		this.audioOn = false;
 		System.out.println("audio set to OFF");
 		return true;
 	}
