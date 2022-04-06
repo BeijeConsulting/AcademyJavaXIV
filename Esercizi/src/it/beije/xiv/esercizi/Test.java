@@ -1,10 +1,11 @@
-package it.beije.xiv.esercizi;
+package src.it.beije.xiv.esercizi;
+
 
 public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+			
 	}
 
 }
