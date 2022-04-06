@@ -1,5 +1,7 @@
 package device;
 
 public abstract class Work {
-		//TODO
+		public void work() {
+			System.out.println("You are working");
+		}
 }
