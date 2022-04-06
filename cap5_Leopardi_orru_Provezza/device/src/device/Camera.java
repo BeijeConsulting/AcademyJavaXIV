@@ -5,9 +5,6 @@ public interface Camera {
 	public default void hasCamera() {
 		System.out.println("This device has the camera.");
 	}
-	public void turnOnCamera(boolean x);
-	
-	public void turnOffCamera(boolean x);
 	
 	public void isCameraOn(boolean x);
 	
