@@ -47,4 +47,7 @@ public abstract class Triangolo extends Poligono{
 	public String getName() {
 		return "Triangolo";
 	}
+	public double getPerimetro() {
+		return getL1()+getL2()+getL3();
+	}
 }
