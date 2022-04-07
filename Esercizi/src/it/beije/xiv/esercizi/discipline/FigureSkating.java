@@ -9,7 +9,7 @@ public class FigureSkating extends WinterOlympicGame implements Gymnastic, Cycli
 	@Override
 	public int getNumberOfPlayers() {
 		// TODO Auto-generated method stub
-		return 0;
+		return numberOfPlayers;
 	}
 
 	@Override
@@ -25,36 +25,27 @@ public class FigureSkating extends WinterOlympicGame implements Gymnastic, Cycli
 	}
 
 	@Override
-	public void startCompetition() {
-		// TODO Auto-generated method stub
-		if(checkReady()) {
-			System.out.println("Inizia la competizione di " + getClass());
-			this.boolean = true;
-	}
-
-	@Override
 	public void checkWinner() {
-		// TODO Auto-generated method stub
-		if(boolean) {
-			System.out.println("Il vincitore è ");
+			System.out.println("Il vincitore è Potato Mom. ");
 		}
 	}
 
 	@Override
 	public boolean checkNewWorldRecord() {
-		// TODO Auto-generated method stub
+		System.out.println("Potato Mom non ha effettuato un record mondiale.");
 		return false;
 	}
 
 	@Override
 	public boolean dopingTest() {
-		// TODO Auto-generated method stub
+		System.out.println("Nessun giocatore risulta in condizoni di doping.");
 		return false;
 	}
 
 	@Override
 	public boolean checkEquipment() {
 		// TODO Auto-generated method stub
+		System.out.println("L'equippagiamento è pronto per la competizione. ");
 		return false;
 	}
 

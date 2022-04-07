@@ -32,7 +32,7 @@ public class MountainBike extends SummerOlympicGame implements Cycling{
 	@Override
 	public boolean checkReady() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class MountainBike extends SummerOlympicGame implements Cycling{
 	}
 	
 	public String toString() {
-		if(dopingTest()) System.out.println("Doping test superato");
+		if(!dopingTest()) System.out.println("Doping test superato");
 		else System.out.println("Doping test non superato");
 		
 		if(checkReady() && !dopingTest()) {

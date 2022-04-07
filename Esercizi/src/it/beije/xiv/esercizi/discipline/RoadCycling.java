@@ -55,7 +55,7 @@ public class RoadCycling extends SummerOlympicGame implements Cycling{
 	
 	public String toString() {
 		if(dopingTest()) System.out.println("Doping test superato");
-		else System.out.println("Doping test non superato");
+		else System.out.println("Doping test non superato, la competizione non inziera.");
 		
 		if(checkReady() && !dopingTest()) {
 			startCompetition();
