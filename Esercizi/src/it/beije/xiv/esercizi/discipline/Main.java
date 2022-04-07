@@ -1,7 +1,6 @@
 package it.beije.xiv.esercizi.discipline;
 
 import it.beije.xiv.esercizi.giochiOlimpici.OlympicSport;
-import it.beije.xiv.esercizi.giochiOlimpici.SummerOlympicGame;
 
 public class Main {
 
@@ -11,11 +10,11 @@ public class Main {
 		olympic(new MountainBike());
 		olympic(new BMX());
 		olympic(new RoadCycling());
+		olympic(new ArtisticGymnastic());
 	}
 	
 	public static void olympic(OlympicSport s) {
 		System.out.println(s.toString());
 		System.out.println();
 	}
-
 }

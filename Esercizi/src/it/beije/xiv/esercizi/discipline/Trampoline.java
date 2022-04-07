@@ -27,6 +27,7 @@ public class Trampoline extends SummerOlympicGame implements Gymnastic {
 
 	@Override
 	public boolean checkReady() {
+		System.out.println("Squadre pronte");
 		return true;
 	}
 
@@ -37,11 +38,22 @@ public class Trampoline extends SummerOlympicGame implements Gymnastic {
 
 	@Override
 	public boolean checkNewWorldRecord() {
+		System.out.println("Nuovo record!!!");
 		return true;
 	}
 
 	@Override
 	public boolean dopingTest() {
+		System.out.println("Tutti i giocatori sono in condizione di giocare");
 		return true;
+	}
+
+	public String toString() {
+
+		if(checkReady() && !dopingTest()) {
+			startCompetition();
+			checkWinner();
+		}
+		return "La competizione  è finita. ";
 	}
 }

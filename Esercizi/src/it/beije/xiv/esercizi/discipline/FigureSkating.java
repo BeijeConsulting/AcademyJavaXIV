@@ -27,7 +27,6 @@ public class FigureSkating extends WinterOlympicGame implements Gymnastic, Cycli
 	@Override
 	public void checkWinner() {
 			System.out.println("Il vincitore è Potato Mom. ");
-		}
 	}
 
 	@Override
