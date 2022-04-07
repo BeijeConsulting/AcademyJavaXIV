@@ -1,6 +1,7 @@
 package device;
 
 public abstract class Device {
+	
 	public boolean battery = false;
 	
 	public boolean isOn = false;
