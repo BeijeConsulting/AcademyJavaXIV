@@ -80,6 +80,7 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 		if(checkReady() && !dopingTest()) {
 			startCompetition();
 			checkWinner();
+			checkNewWorldRecord();
 		}
 		return "La competizione di Speed Staking è finita. ";
 	}

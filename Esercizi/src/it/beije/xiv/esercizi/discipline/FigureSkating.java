@@ -1,10 +1,9 @@
 package it.beije.xiv.esercizi.discipline;
 
 import it.beije.xiv.esercizi.giochiOlimpici.WinterOlympicGame;
-import it.beije.xiv.esercizi.sport.Cycling;
-import it.beije.xiv.esercizi.sport.Gymnastic;
+import it.beije.xiv.esercizi.sport.Skating;
 
-public class FigureSkating extends WinterOlympicGame implements Gymnastic, Cycling{
+public class FigureSkating extends WinterOlympicGame implements Skating{
 
 	@Override
 	public int getNumberOfPlayers() {
@@ -15,13 +14,14 @@ public class FigureSkating extends WinterOlympicGame implements Gymnastic, Cycli
 	@Override
 	public void setNumberOfPlayers(int numberOfPlayers) {
 		// TODO Auto-generated method stub
+		this.numberOfPlayers = numberOfPlayers;
 		
 	}
 
 	@Override
 	public boolean checkReady() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -42,28 +42,29 @@ public class FigureSkating extends WinterOlympicGame implements Gymnastic, Cycli
 	}
 
 	@Override
-	public boolean checkEquipment() {
-		// TODO Auto-generated method stub
-		System.out.println("L'equippagiamento è pronto per la competizione. ");
-		return false;
+	public void flattingFloor() {
+		if(isFloorReady()) {
+			System.out.println("The floor is already flat.");
+		} else {
+			System.out.println("The floor has been flatted.");
+		}
 	}
 
 	@Override
-	public String equipmentList() {
+	public boolean isFloorReady() {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
-
-	@Override
-	public boolean isBikeAdaptForCompetion() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean security() {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public String toString() {
+		flattingFloor();
+		
+		if(checkReady() && !dopingTest()) {
+			startCompetition();
+			checkWinner();
+			checkNewWorldRecord();
+		}
+		return "La competizione di Figure Staking è finita. ";
 	}
 
 }

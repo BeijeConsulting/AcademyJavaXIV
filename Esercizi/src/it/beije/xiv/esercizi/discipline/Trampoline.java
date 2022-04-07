@@ -45,7 +45,7 @@ public class Trampoline extends SummerOlympicGame implements Gymnastic {
 	@Override
 	public boolean dopingTest() {
 		System.out.println("Tutti i giocatori sono in condizione di giocare");
-		return true;
+		return false;
 	}
 
 	public String toString() {
@@ -53,7 +53,8 @@ public class Trampoline extends SummerOlympicGame implements Gymnastic {
 		if(checkReady() && !dopingTest()) {
 			startCompetition();
 			checkWinner();
+			checkNewWorldRecord();
 		}
-		return "La competizione  è finita. ";
+		return "La competizione di salto sul trampolino è finita. ";
 	}
 }

@@ -71,6 +71,6 @@ public class Snowboard extends WinterOlympicGame implements Ski{
 				checkWinner();
 			}
 		} else System.out.println("Valanga prevista, competizione annullata");
-		return "Competizione BMX terminata";
+		return "Competizione di valanghe terminata";
 	}
 }

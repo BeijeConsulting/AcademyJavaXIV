@@ -11,6 +11,12 @@ public class Main {
 		olympic(new BMX());
 		olympic(new RoadCycling());
 		olympic(new ArtisticGymnastic());
+		olympic(new RhythmicGymnastic());
+		olympic(new Trampoline());
+		olympic(new FigureSkating());
+		olympic(new Snowboard());
+		olympic(new Freestyle());
+		
 	}
 	
 	public static void olympic(OlympicSport s) {
