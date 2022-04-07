@@ -1,6 +1,7 @@
 package it.beije.xiv.esercizi.giochiOlimpici;
 
 public abstract class OlympicSport {
+	public int numberOfPlayers;
 	
 	public int getSportsNumber() {
 		return 33;
@@ -8,7 +9,7 @@ public abstract class OlympicSport {
 	
 	public abstract int getNumberOfPlayers();
 	
-	public abstract void setNumberOfPlayers();
+	public abstract void setNumberOfPlayers(int numberOfPlayers);
 	
 	public abstract boolean checkReady();
 	
