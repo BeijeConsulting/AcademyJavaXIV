@@ -13,12 +13,18 @@ public abstract class OlympicSport {
 	
 	public abstract boolean checkReady();
 	
-	public abstract void startCompetition();
-	
 	public abstract void checkWinner();
 	
 	public abstract boolean checkNewWorldRecord();
 	
 	public abstract boolean dopingTest();
+	
+	public void startCompetition() {
+		if(checkReady()) {
+			System.out.println("3... 2... 1... Go. ");
+		} else {
+			System.out.println("The competion isn't ready to start. ");
+		}
+	};
 	
 }
