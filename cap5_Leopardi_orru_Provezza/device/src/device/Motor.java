@@ -10,7 +10,7 @@ public interface Motor {
 	
 	public void turnOffMotor(boolean x);
 	
-	public void isMotorOn(boolean x);
+	public boolean isMotorOn();
 	
 	public void wattMotor(int w);
 	
