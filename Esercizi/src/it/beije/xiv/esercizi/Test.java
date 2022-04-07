@@ -5,10 +5,12 @@ import it.beije.xiv.esercizi.corpicelesti.*;
 public class Test {
 
 	public static void main(String[] args) {
+
 		CorpoCeleste terra =new Terra(100,24,"Tanti anni");
 		CorpoCeleste marte =new Marte(160,27,"Molti più anni");
 		Stella sole =new Sole(400, 2_000_000,"Molti ma Molti più anni");
-		sole.setListaElementi("Elio", "Ossigeno");
+			sole.setListaElementi("Elio", "Ossigeno");
+			sole.setLuminosita(1000);
 
 		Luna luna =new Luna(50,27,"Più o meno quanto la terra ",(Terra)terra,24);
 
