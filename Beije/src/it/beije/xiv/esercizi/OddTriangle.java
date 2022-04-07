@@ -5,9 +5,9 @@ public class OddTriangle
 	public static void main(String[] args)
 	{
 		OddTriangle ot = new OddTriangle();
-		int lines = 6;
+		int lines = 9;
 		
-		System.out.println(ot.rowSumOddNumbers(lines));
+		System.out.println("Somma: " + ot.rowSumOddNumbers(lines));
 	}
 	
 	
@@ -16,9 +16,9 @@ public class OddTriangle
 		int sum = 0;
 		int[][] triangle = generateOddTriangle(n);
 		
-		for(int i = 0; i < triangle[n].length; i++)
+		for(int i = 0; i < triangle[n-1].length; i++)
 		{
-			sum += triangle[n][i];
+			sum += triangle[n-1][i];
 		}
 		
 		return sum;
@@ -28,6 +28,7 @@ public class OddTriangle
 	{
 		int[][] triangle = new int[lines][];
 		int line = 1;
+		int lastNumber = 1;
 		
 		for(int i = 0; i < triangle.length; i++, line++)
 		{
@@ -35,7 +36,8 @@ public class OddTriangle
 			
 			for(int j = 0; j < triangle[i].length; j++)
 			{
-				triangle[i][j] = 1;							//TODO RIEMPIRE CON I VALORI DISPARI
+				triangle[i][j] = lastNumber;
+				lastNumber +=2;
 				
 				System.out.print(triangle[i][j] + " ");
 			}
