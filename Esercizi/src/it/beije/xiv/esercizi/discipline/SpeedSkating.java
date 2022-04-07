@@ -8,10 +8,10 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 	public boolean flattingFloor;
 	public boolean ready;
 	
-	public SpeedSkating(boolean flattingFloor, int numberOfPlayers, boolean ready) {
-		this.flattingFloor = flattingFloor;
-		this.numberOfPlayers = numberOfPlayers;
-		this.ready = ready;
+	public SpeedSkating() {
+		this.flattingFloor = false;
+		this.numberOfPlayers = (int) (Math.random() * 10 + 1);
+		this.ready = true;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 	@Override
 	public int getNumberOfPlayers() {
 		// TODO Auto-generated method stub
-		return  (int) (Math.random() * 10 + 1);
+		return  numberOfPlayers;
 	}
 
 	@Override
@@ -54,15 +54,9 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 	}
 
 	@Override
-	public void startCompetition() {
-		// TODO Auto-generated method stub
-		System.out.println("");
-	}
-
-	@Override
 	public void checkWinner() {
 		// TODO Auto-generated method stub
-		
+		System.out.println("Il vincitore è potato jr.");
 	}
 
 	@Override
@@ -75,6 +69,16 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 	public boolean dopingTest() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public String toString() {
+		flattingFloor();
+		
+		if(checkReady() && !dopingTest()) {
+			startCompetition();
+			checkWinner();
+		}
+		return "";
 	}
 
 }
