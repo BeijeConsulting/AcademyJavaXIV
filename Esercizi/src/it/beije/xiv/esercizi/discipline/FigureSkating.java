@@ -24,20 +24,12 @@ public class FigureSkating extends WinterOlympicGame implements Gymnastic, Cycli
 		return false;
 	}
 
-	@Override
-	public void startCompetition() {
-		// TODO Auto-generated method stub
-		if(checkReady()) {
-			System.out.println("Inizia la competizione di " + getClass());
-			this.boolean = true;
-	}
+
 
 	@Override
 	public void checkWinner() {
 		// TODO Auto-generated method stub
-		if(boolean) {
 			System.out.println("Il vincitore è ");
-		}
 	}
 
 	@Override
