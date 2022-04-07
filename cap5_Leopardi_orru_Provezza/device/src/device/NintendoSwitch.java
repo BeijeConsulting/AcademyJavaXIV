@@ -1,12 +1,12 @@
 package device;
 
-public class NinetendoSwitch extends Entertainment implements TouchScreen, Video, Microphone, Audio{
+public class NintendoSwitch extends Entertainment implements TouchScreen, Video, Microphone, Audio{
 	public boolean audioOn;
 	public boolean micOn;
 	
 	
 
-	public NinetendoSwitch(boolean audioOn, boolean micOn) {
+	public NintendoSwitch(boolean audioOn, boolean micOn) {
 		super();
 		this.audioOn = audioOn;
 		this.micOn = micOn;

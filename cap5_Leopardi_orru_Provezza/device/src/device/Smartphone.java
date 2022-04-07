@@ -7,6 +7,7 @@ public class Smartphone extends Utility implements TouchScreen, Video, Microphon
 	int cameraQuality = 720;
 	
 	public Smartphone (boolean audioOn, boolean micOn, int cameraQuality) {
+		this.cameraQuality = cameraQuality;
 		this.audioOn = audioOn;
 		this.micOn = micOn;
 		this.battery = true;

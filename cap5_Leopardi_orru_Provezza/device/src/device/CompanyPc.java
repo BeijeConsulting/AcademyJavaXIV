@@ -15,9 +15,9 @@ public class CompanyPc extends Work implements Video, Microphone, Audio, Camera 
 	
 	public boolean isMicOn() {
 		if(this.microphone) {
-			System.out.println("The microphone of this device is off. ");
-		} else {
 			System.out.println("The microphone of this device is on. ");
+		} else {
+			System.out.println("The microphone of this device is off. ");
 		}
 		return microphone;
 	}
@@ -99,6 +99,7 @@ public class CompanyPc extends Work implements Video, Microphone, Audio, Camera 
 	}
 	
 	public CompanyPc(int cameraQuality, boolean audio, boolean microphone) {
+		this();
 		this.audio = audio;
 		this.cameraQuality = cameraQuality;
 		this.microphone = microphone;
