@@ -49,4 +49,32 @@ public class TheftProtection extends Household implements Video, Audio, Camera {
 		System.out.println("This device has audio.");
 		return true;
 	}
+	
+	public void playVideo(String s) {
+		System.out.println("Playing " +s);
+	}
+	
+	public void displayInfo(String s) {
+		System.out.println("The display is showing this " +s);
+	}
+	
+	public TheftProtection() {
+		this.audio = false;
+		this.cameraQuality = 720;
+	}
+	
+	public TheftProtection(int cameraQuality) {
+		this();
+		this.cameraQuality = cameraQuality;
+	}
+	
+	public TheftProtection(boolean audio) {
+		this();
+		this.audio = audio;
+	}
+	
+	public TheftProtection(int cameraQuality, boolean audio) {
+		this.cameraQuality = cameraQuality;
+		this.audio = audio;
+	}
 }
