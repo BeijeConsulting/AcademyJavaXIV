@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi.Stringhe;
 
 public class StringBuilderUtil {
 	public static void main(String[]args) {

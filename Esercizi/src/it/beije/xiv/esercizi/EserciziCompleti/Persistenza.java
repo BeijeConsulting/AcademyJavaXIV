@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi.EserciziCompleti;
 
 public class Persistenza {
 	public static void main(String []args) {

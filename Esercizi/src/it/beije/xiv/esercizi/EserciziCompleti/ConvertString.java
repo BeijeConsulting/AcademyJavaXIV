@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi.EserciziCompleti;
 
 public class ConvertString {
 	public static void main(String[] args) {

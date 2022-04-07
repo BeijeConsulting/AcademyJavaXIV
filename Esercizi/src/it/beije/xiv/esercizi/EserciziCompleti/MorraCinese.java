@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi.EserciziCompleti;
 import java.util.Scanner;
 
 public class MorraCinese {

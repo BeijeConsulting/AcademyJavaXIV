@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi.Stringhe;
 
 public class EsString {
 	public static void main(String[]args) {

@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi.EserciziCompleti;
 
 import java.io.File;  
 import java.io.FileNotFoundException;  // Import this class to handle errors
