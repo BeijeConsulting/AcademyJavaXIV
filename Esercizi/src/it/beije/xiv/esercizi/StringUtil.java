@@ -24,7 +24,7 @@ public class StringUtil {
 		System.out.println("  ");
 		System.out.println(s.replace("rancia",'a','z'));
 		System.out.println("  ");
-		System.out.println(s.replace("rancia","ran","m"));
+		System.out.println(s.replace("rancia","ran","ciao"));
 		System.out.println("  ");
 		System.out.println(s.trim("  raia c"));
 		System.out.println("  ");
