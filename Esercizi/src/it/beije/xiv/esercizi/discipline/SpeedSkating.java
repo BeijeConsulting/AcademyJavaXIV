@@ -50,6 +50,7 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 	@Override
 	public boolean checkReady() {
 		// TODO Auto-generated method stub
+		System.out.println("Tutte le squadre sono pronte. ");
 		return ready;
 	}
 
@@ -62,12 +63,14 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 	@Override
 	public boolean checkNewWorldRecord() {
 		// TODO Auto-generated method stub
+		System.out.println("Potato jr. ha fatto un nuovo world record. ");
 		return false;
 	}
 
 	@Override
 	public boolean dopingTest() {
 		// TODO Auto-generated method stub
+		System.out.println("Tutti i giocatori non sono dopati. ");
 		return false;
 	}
 	
@@ -78,7 +81,7 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 			startCompetition();
 			checkWinner();
 		}
-		return "";
+		return "La competizione di Speed Staking è finita. ";
 	}
 
 }

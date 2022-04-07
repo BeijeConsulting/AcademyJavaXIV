@@ -11,7 +11,7 @@ public class Main {
 	}
 	
 	public static void olympic(OlympicSport s) {
-		s.toString();
+		System.out.println(s.toString());
 	}
 
 }
