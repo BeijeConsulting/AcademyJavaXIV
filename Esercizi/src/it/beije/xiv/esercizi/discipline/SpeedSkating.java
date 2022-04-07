@@ -8,10 +8,10 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 	public boolean flattingFloor;
 	public boolean ready;
 	
-	public SpeedSkating(boolean flattingFloor, int numberOfPlayers, boolean ready) {
-		this.flattingFloor = flattingFloor;
-		this.numberOfPlayers = numberOfPlayers;
-		this.ready = ready;
+	public SpeedSkating() {
+		this.flattingFloor = false;
+		this.numberOfPlayers = (int) (Math.random() * 10 + 1);
+		this.ready = true;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 	@Override
 	public int getNumberOfPlayers() {
 		// TODO Auto-generated method stub
-		return  (int) (Math.random() * 10 + 1);
+		return  numberOfPlayers;
 	}
 
 	@Override
@@ -50,31 +50,38 @@ public class SpeedSkating extends WinterOlympicGame implements Skating{
 	@Override
 	public boolean checkReady() {
 		// TODO Auto-generated method stub
+		System.out.println("Tutte le squadre sono pronte. ");
 		return ready;
-	}
-
-	@Override
-	public void startCompetition() {
-		// TODO Auto-generated method stub
-		System.out.println("");
 	}
 
 	@Override
 	public void checkWinner() {
 		// TODO Auto-generated method stub
-		
+		System.out.println("Il vincitore è potato jr.");
 	}
 
 	@Override
 	public boolean checkNewWorldRecord() {
 		// TODO Auto-generated method stub
+		System.out.println("Potato jr. ha fatto un nuovo world record. ");
 		return false;
 	}
 
 	@Override
 	public boolean dopingTest() {
 		// TODO Auto-generated method stub
+		System.out.println("Tutti i giocatori non sono dopati. ");
 		return false;
+	}
+	
+	public String toString() {
+		flattingFloor();
+		
+		if(checkReady() && !dopingTest()) {
+			startCompetition();
+			checkWinner();
+		}
+		return "La competizione di Speed Staking è finita. ";
 	}
 
 }

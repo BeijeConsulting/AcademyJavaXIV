@@ -32,7 +32,7 @@ public class BMX extends SummerOlympicGame implements Cycling{
 	@Override
 	public boolean checkNewWorldRecord() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -52,5 +52,21 @@ public class BMX extends SummerOlympicGame implements Cycling{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	public String toString() {
+		if(dopingTest()) System.out.println("Doping test superato");
+		else System.out.println("Doping test non superato");
+		
+		
+		
+		if(checkReady() && !dopingTest()) {
+			startCompetition();
+			checkWinner();
+		}
+		if(checkNewWorldRecord()) {
+			System.out.print("Record mondiale di: ");
+			checkWinner();
+		}
+		return "Competizione BMX terminata";
+	}
 }
