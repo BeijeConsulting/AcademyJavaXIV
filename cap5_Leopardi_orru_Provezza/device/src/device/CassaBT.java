@@ -1,16 +1,22 @@
 package device;
 
-public class Stereo extends Entertainment implements Screen, Audio{
-	public boolean audioOn = false;
+public class CassaBT extends Entertainment implements Microphone, Audio {
+	public boolean audioOn;
+	public boolean micOn;
 	
-	public Stereo(boolean audioOn) {
+	
+
+	public CassaBT(boolean audioOn, boolean micOn) {
 		super();
 		this.audioOn = audioOn;
+		this.micOn = micOn;
 	}
+	
 
 	@Override
 	public boolean isAudioOn() {
 		return this.audioOn;
+		
 	}
 
 	@Override
@@ -43,10 +49,32 @@ public class Stereo extends Entertainment implements Screen, Audio{
 	}
 
 	@Override
-	public void displayInfo(String s) {
-		System.out.println("display info: " + s);
-		
+	public boolean isMicOn() {
+		return this.micOn;
 	}
+
+	@Override
+	public boolean turnOnMic() {
+		if(this.micOn) {
+			System.out.println("the mic is ON");
+		} else {
+			this.micOn = true;
+			System.out.println("noe the mic is ON");
+		}
+		return true;
+	}
+
+	@Override
+	public boolean turnOffMic() {
+		if(!this.micOn) {
+			System.out.println("the mic is OFF");
+		} else {
+			this.micOn = false;
+			System.out.println("noe the mic is OFF");
+		}
+		return true;
+	}
+
 
 	@Override
 	public void mediaType() {
@@ -55,8 +83,7 @@ public class Stereo extends Entertainment implements Screen, Audio{
 	}
 	
 	public void hasBattery() {
-		this.battery = false;
+		this.battery = true;
 	}
-	
 
 }

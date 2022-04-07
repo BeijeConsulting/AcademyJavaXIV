@@ -1,18 +1,17 @@
 package device;
 
-public class Tv extends Device implements  Video, Audio{
+public class Tv extends Entertainment implements  Video, Audio{
 	boolean audioOn = false;
-	
-	public void hasBattery() {
-		this.battery = false;
-	}
-	
 	
 	public Tv(boolean audioOn) {
 		super();
 		this.audioOn = audioOn;
 	}
-
+	
+	public void hasBattery() {
+		this.battery = false;
+	}
+		
 	@Override
 	public boolean isAudioOn() {
 		return this.audioOn;
@@ -48,6 +47,14 @@ public class Tv extends Device implements  Video, Audio{
 		System.out.println("tv is palying " + s);
 		
 	}
+
+	@Override
+	public void mediaType() {
+		System.out.println("you are watching video");
+		
+	}
+	
+	
 
 	
 	
