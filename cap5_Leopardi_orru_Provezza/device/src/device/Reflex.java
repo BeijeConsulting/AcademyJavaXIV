@@ -11,11 +11,10 @@ public class Reflex extends Entertainment implements Camera, TouchScreen, Microp
 		this.cameraOn = cameraOn;
 		this.micOn = micOn;
 		this.cameraQuality = cameraQuality;
-	}
-
-	public void hasBattery() {
 		this.battery = true;
 	}
+
+	
 
 	@Override
 	public void displayInfo(String s) {

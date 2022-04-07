@@ -6,9 +6,6 @@ public class Tv extends Entertainment implements  Video, Audio{
 	public Tv(boolean audioOn) {
 		super();
 		this.audioOn = audioOn;
-	}
-	
-	public void hasBattery() {
 		this.battery = false;
 	}
 		
