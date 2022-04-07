@@ -7,6 +7,6 @@ Esercizio Capitolo 5 Ereditarietà e polimorfismo
 Powered by Raddato, Pasqua, Marazzini
 
 
-### Schema Prodotto dal dibattito
+### Schema Prodotto dal brainstorming
 
 ![](Esercizi/Resource/uml.png)
