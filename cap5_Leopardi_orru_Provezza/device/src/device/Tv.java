@@ -3,7 +3,9 @@ package device;
 public class Tv extends Device implements  Video, Audio{
 	boolean audioOn = false;
 	
-	
+	public void hasBattery() {
+		this.battery = false;
+	}
 	
 	
 	public Tv(boolean audioOn) {
