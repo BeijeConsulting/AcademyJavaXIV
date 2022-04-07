@@ -53,4 +53,19 @@ public class MountainBike extends SummerOlympicGame implements Cycling{
 		return false;
 	}
 	
+	public String toString() {
+		if(dopingTest()) System.out.println("Doping test superato");
+		else System.out.println("Doping test non superato");
+		
+		if(checkReady() && !dopingTest()) {
+			startCompetition();
+			checkWinner();
+		}
+		if(checkNewWorldRecord()) {
+			System.out.print("Record mondiale di: ");
+			checkWinner();
+		}
+		return "Competizione MTB terminata";
+	}
+	
 }
