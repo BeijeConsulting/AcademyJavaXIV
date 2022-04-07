@@ -8,7 +8,7 @@ public abstract class OlympicSport {
 	
 	public abstract int getNumberOfPlayers();
 	
-	public abstract void setNumberOfPlayers();
+	public abstract void setNumberOfPlayers(int numberOfPlayer);
 	
 	public abstract boolean checkReady();
 	
