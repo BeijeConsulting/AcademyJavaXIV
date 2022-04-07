@@ -10,6 +10,7 @@ public class NinetendoSwitch extends Entertainment implements TouchScreen, Video
 		super();
 		this.audioOn = audioOn;
 		this.micOn = micOn;
+		this.battery = true;
 	}
 	
 
@@ -98,9 +99,6 @@ public class NinetendoSwitch extends Entertainment implements TouchScreen, Video
 		
 	}
 	
-	public void hasBattery() {
-		this.battery = true;
-	}
 	
 	
 }

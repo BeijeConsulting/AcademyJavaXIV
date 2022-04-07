@@ -6,6 +6,7 @@ public class Stereo extends Entertainment implements Screen, Audio{
 	public Stereo(boolean audioOn) {
 		super();
 		this.audioOn = audioOn;
+		this.battery = false;
 	}
 
 	@Override
@@ -54,9 +55,7 @@ public class Stereo extends Entertainment implements Screen, Audio{
 		
 	}
 	
-	public void hasBattery() {
-		this.battery = false;
-	}
+	
 	
 
 }

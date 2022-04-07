@@ -10,6 +10,7 @@ public class CassaBT extends Entertainment implements Microphone, Audio {
 		super();
 		this.audioOn = audioOn;
 		this.micOn = micOn;
+		this.battery = true;
 	}
 	
 
@@ -82,8 +83,5 @@ public class CassaBT extends Entertainment implements Microphone, Audio {
 		
 	}
 	
-	public void hasBattery() {
-		this.battery = true;
-	}
-
+	
 }
