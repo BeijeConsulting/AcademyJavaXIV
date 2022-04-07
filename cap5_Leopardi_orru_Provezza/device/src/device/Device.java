@@ -5,6 +5,15 @@ public abstract class Device {
 	
 	public boolean isOn = false;
 	
+	public void hasBattery() {
+		if (this.battery) {
+			System.out.println("This device is battery powered");
+		} else {
+			System.out.println("This device is not battery powered");
+		}
+		
+	}
+	
 	public void turnOn() {
 		this.isOn = true;
 		System.out.println("The device is on");

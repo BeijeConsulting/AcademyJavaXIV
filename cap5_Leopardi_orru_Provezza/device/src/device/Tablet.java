@@ -9,6 +9,7 @@ public class Tablet extends Utility implements TouchScreen, Video, Microphone, A
 	public Tablet (boolean audioOn, boolean micOn, int cameraQuality) {
 		this.audioOn = audioOn;
 		this.micOn = micOn;
+		this.battery = true;
 	}
 	
 	@Override
