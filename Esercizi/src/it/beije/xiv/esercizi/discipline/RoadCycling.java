@@ -20,13 +20,13 @@ public class RoadCycling extends SummerOlympicGame implements Cycling{
 	@Override
 	public int getNumberOfPlayers() {
 		// TODO Auto-generated method stub
-		return this.numberOfPlayer;
+		return this.numberOfPlayers;
 	}
 
 	@Override
-	public void setNumberOfPlayers(int numberOfPlayer) {
+	public void setNumberOfPlayers(int numberOfPlayers) {
 		// TODO Auto-generated method stub
-		this.numberOfPlayer = numberOfPlayer;
+		this.numberOfPlayers = numberOfPlayers;
 	}
 
 	@Override

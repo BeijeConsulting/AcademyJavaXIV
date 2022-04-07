@@ -24,9 +24,9 @@ public class MountainBike extends SummerOlympicGame implements Cycling{
 	}
 
 	@Override
-	public void setNumberOfPlayers(int numberOfPlayer) {
+	public void setNumberOfPlayers(int numberOfPlayers) {
 		// TODO Auto-generated method stub
-		this.numberOfPlayer = numberOfPlayer;
+		this.numberOfPlayers = numberOfPlayers;
 	}
 
 	@Override
