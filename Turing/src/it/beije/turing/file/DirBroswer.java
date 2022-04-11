@@ -3,12 +3,8 @@ package it.beije.turing.file;
 import java.io.File;
 
 public class DirBroswer {
-public static void main(String... args)
-{
-	final String fileName= "src";
-	Broswe(fileName,0);
-}
-private static String Broswe(String fileName, int indent)
+
+	private static String Broswe(String fileName, int indent)
 {
 	StringBuilder output = new StringBuilder();
 	for(int i = 0;i<indent;i++)
@@ -46,4 +42,8 @@ private static String Broswe(String fileName, int indent)
 	}
 	return output.toString();
 }
+	public static String Broswe(String fileName)
+	{
+		return Broswe(fileName,0);	
+	}
 }

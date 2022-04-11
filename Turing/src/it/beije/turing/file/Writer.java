@@ -1,21 +1,25 @@
 package it.beije.turing.file;
 
-import java.io.FileReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class Writer {
-public static void main(String...args)
+public static void Write(String fileName,String content)
 {
-	final String fileName="Test.txt";
 	FileWriter writer = null;
 	try
 	{
-		writer= new FileWriter(fileName);
-		writer.write("porcodio");
+		File file = new File(fileName);
+		if(!file.exists())
+		{
+			file.createNewFile();
+		}
+		writer= new FileWriter(file);
+		writer.write(content);
 	}
 	catch(Exception e)
-	{System.out.println("no file");}
+	{e.printStackTrace();}
 	finally
 	{
 		try {
