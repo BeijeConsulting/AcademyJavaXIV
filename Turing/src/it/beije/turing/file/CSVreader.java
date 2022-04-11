@@ -7,7 +7,7 @@ import java.io.IOException;
 
 
 public class CSVreader {
-
+ //Esempio IVO
 	public static void main(String[] args) {
 		
 		File file = new File("/temp/prova.txt");
