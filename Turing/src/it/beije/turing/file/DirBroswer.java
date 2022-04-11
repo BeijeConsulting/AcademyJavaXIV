@@ -9,7 +9,7 @@ public class DirBroswer {
 	StringBuilder output = new StringBuilder();
 	for(int i = 0;i<indent;i++)
 	{
-		output.append(" ");
+		output.append("  ");
 	}
 	try {
 		File file = new File(fileName);
