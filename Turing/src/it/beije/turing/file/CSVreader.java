@@ -27,7 +27,7 @@ public class CSVreader {
 			int c = 0;
 			while (bufferedReader.ready()) {
 				String row = bufferedReader.readLine();
-				System.out.println(++c + " " + row);
+				//System.out.println(++c + " " + row);
 				
 //				StringTokenizer tokenizer = new StringTokenizer(row, ";");
 //				while (tokenizer.hasMoreElements()) {
