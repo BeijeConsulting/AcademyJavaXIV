@@ -1,6 +1,7 @@
 package it.beije.turing.file.list;
 
 import java.io.*;
+import java.util.Scanner;
 
 /**
  * @author Giuseppe Raddato
@@ -8,10 +9,33 @@ import java.io.*;
  */
 public class DirectoryReader {
     private static StringBuilder result= new StringBuilder();
-
+    private final String PATH="/Users/giusepperaddato/Desktop/ProvaCart";
     public static void main(String[] args) throws IOException {
-        String path="/Users/giusepperaddato/Desktop/ProvaCart";
-        File file= new File(path);
+
+        System.out.println("Inserici path della cartella");
+
+        Scanner s = new Scanner(System.in);
+        String path =null;
+        File file=null;
+        boolean repeat=true;
+        do {
+
+            path = s.next();
+            file= new File(path);
+            if(!file.exists()){
+                repeat=true;
+                System.err.println("Il percorso non esiste ripeti");
+                System.out.println("Inserici path della cartella");
+            }else {
+                repeat=false;
+            }
+        }while (repeat);
+
+
+
+        s.close();
+
+
 
         StringBuilder resultFinal = showDirectoryTree(0, file);
         writeOnFile(resultFinal, path ,"resultTree");
