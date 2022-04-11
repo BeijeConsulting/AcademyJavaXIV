@@ -1,0 +1,2 @@
+"NOME";"COGNOME";"TELEFONO";"EMAIL";"NOTE"
+"Mario";"Rossi";"3425728273";"Mario.rossi@gmail.com";"vicino di casa"

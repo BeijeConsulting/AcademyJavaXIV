@@ -1,0 +1,3 @@
+"NOME";"COGNOME";"TELEFONO";"EMAIL";"NOTE"
+"Mario";"Rossi";"3425728273";"Mario.rossi@gmail.com";"vicino di casa"
+"Piero";"Bianchi";" 342627229";"piero.bianchi@tim.it";"zio, mamma"

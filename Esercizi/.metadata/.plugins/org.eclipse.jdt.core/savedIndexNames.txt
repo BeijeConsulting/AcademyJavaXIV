@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+/Users/matteoprovezza/Desktop/Beije/AcademyJavaXIV/Esercizi/.metadata/.plugins/org.eclipse.jdt.core
+2888603967.index
+1517987751.index
