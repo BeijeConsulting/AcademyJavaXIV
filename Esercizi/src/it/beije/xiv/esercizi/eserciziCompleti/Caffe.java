@@ -1,4 +1,4 @@
-package src.it.beije.xiv.esercizi.eserciziCompleti;
+package it.beije.xiv.esercizi.eserciziCompleti;
 
 public class Caffe {
 public static void main(String...args) {

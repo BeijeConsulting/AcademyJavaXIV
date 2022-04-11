@@ -1,4 +1,4 @@
-package src.it.beije.xiv.esercizi;
+package it.beije.xiv.esercizi;
 
 
 public class Test {

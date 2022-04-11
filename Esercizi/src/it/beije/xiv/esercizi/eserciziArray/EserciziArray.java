@@ -1,4 +1,4 @@
-package src.it.beije.xiv.esercizi.eserciziArray;
+package it.beije.xiv.esercizi.eserciziArray;
 import java.util.Arrays;
 public class EserciziArray {
 		public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package src.it.beije.xiv.esercizi.eserciziCompleti;
+package it.beije.xiv.esercizi.eserciziCompleti;
 import java.util.ArrayList;
 public class StringReplacer {
 public static void main(String...args)

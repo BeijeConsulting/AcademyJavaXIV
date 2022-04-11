@@ -1,4 +1,4 @@
-package src.it.beije.xiv.esercizi.eserciziStringhe;
+package it.beije.xiv.esercizi.eserciziStringhe;
 
 public class EserciziStringhe {
 	public static void main(String[] args)
