@@ -8,18 +8,18 @@ import java.util.Scanner;
  * Data: 11 apr 2022
  */
 public class DirectoryReader {
+
     private static StringBuilder result= new StringBuilder();
     private final String PATH="/Users/giusepperaddato/Desktop/ProvaCart";
+
     public static void main(String[] args) throws IOException {
 
         System.out.println("Inserici path della cartella");
-
         Scanner s = new Scanner(System.in);
         String path =null;
         File file=null;
         boolean repeat=true;
         do {
-
             path = s.next();
             file= new File(path);
             if(!file.exists()){
@@ -31,11 +31,7 @@ public class DirectoryReader {
             }
         }while (repeat);
 
-
-
         s.close();
-
-
 
         StringBuilder resultFinal = showDirectoryTree(0, file);
         writeOnFile(resultFinal, path ,"resultTree");
@@ -86,8 +82,5 @@ public class DirectoryReader {
                 }
             }
             return result;
-
     }
-
-
 }
