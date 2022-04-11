@@ -1,4 +1,4 @@
-package src.it.beije.xiv.esercizi.eserciziCompleti;
+package it.beije.xiv.esercizi.eserciziCompleti;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
