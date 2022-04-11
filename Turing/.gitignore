@@ -1,2 +1,7 @@
 /bin/
 /.classpath
+<<<<<<< HEAD
+=======
+/.project
+/.settings/
+>>>>>>> refs/remotes/origin/main
