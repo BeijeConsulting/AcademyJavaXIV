@@ -13,6 +13,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -230,6 +232,69 @@ public class RubricaController {
 		return contatti;
 	}
 	
+	public static void writeRubricaXML(List<Contatto> contatti, String path) {
+		
+		try {
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		
+		Document doc = documentBuilder.newDocument();
+
+		Element elementContatti = doc.createElement("contatti");
+		doc.appendChild(elementContatti);//root element
+		
+		for(Contatto contatto : contatti) {
+			Element elmContatto = doc.createElement("contatto");
+			
+			Element nome = doc.createElement("nome");
+			nome.setTextContent(contatto.getNome());
+			elmContatto.appendChild(nome);
+			
+			Element cognome = doc.createElement("cognome");
+			cognome.setTextContent(contatto.getCognome());
+			elmContatto.appendChild(cognome);
+			
+			Element telefono = doc.createElement("telefono");
+			telefono.setTextContent(contatto.getTelefono());
+			elmContatto.appendChild(telefono);
+			
+			Element email = doc.createElement("email");
+			email.setTextContent(contatto.getEmail());
+			elmContatto.appendChild(email);
+			
+			Element note = doc.createElement("note");
+			note.setTextContent(contatto.getNote());
+			elmContatto.appendChild(note);
+			
+			elementContatti.appendChild(elmContatto);
+		}
+
+		System.out.println("contatti : " + elementContatti.getElementsByTagName("contatto").getLength());
+		
+		// write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(doc);
+		
+		StreamResult result = new StreamResult(new File(path));
+
+		// Output to console for testing
+		StreamResult syso = new StreamResult(System.out);
+
+		transformer.transform(source, result);
+		transformer.transform(source, syso);
+		} catch(TransformerConfigurationException tcEx) {
+			tcEx.printStackTrace();
+		} catch(ParserConfigurationException pcEx) {
+			pcEx.printStackTrace();
+		} catch(TransformerException tEx) {
+			tEx.printStackTrace();
+		}
+
+		//System.out.println("File saved!");
+
+	}
+	
 	public static List<Contatto> addScanner(String csvPath, String separatore, boolean virgolette, int nContatti) {
 		List<Contatto> contatti = RubricaController.loadRubricaFromCSV(csvPath, separatore, virgolette);
 		
@@ -260,85 +325,6 @@ public class RubricaController {
 		return contatti;
 	}
 	
-	public static void writeXML(String path) throws Exception {
-		
-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		
-		Document doc = documentBuilder.newDocument();
-
-		Element contatti = doc.createElement("contatti");
-		doc.appendChild(contatti);//root element
-		{
-			Element contatto = doc.createElement("contatto");
-			contatto.setAttribute("eta", "25");
-			
-			Element cognome = doc.createElement("cognome");
-			cognome.setTextContent("Marrone");//<cognome>Marrone</cognome>
-			contatto.appendChild(cognome);
-	
-			Element nome = doc.createElement("nome");
-			nome.setTextContent("Emma");//<nome>Emma</nome>
-			contatto.appendChild(nome);
-	
-			Element telefono = doc.createElement("telefono");
-			telefono.setTextContent("432423");
-			contatto.appendChild(telefono);
-	
-			Element email = doc.createElement("email");
-			email.setTextContent("emma@marrone.it");
-			contatto.appendChild(email);
-	
-			Element note = doc.createElement("note");
-			note.setTextContent("la nota cantante");
-			contatto.appendChild(note);
-			
-			contatti.appendChild(contatto);
-		}
-		{
-			Element contatto = doc.createElement("contatto");
-			contatto.setAttribute("eta", "78");
-			
-			Element cognome = doc.createElement("cognome");
-			cognome.setTextContent("Morandi");
-			contatto.appendChild(cognome);
-	
-			Element nome = doc.createElement("nome");
-			nome.setTextContent("Gianni");
-			contatto.appendChild(nome);
-	
-			Element telefono = doc.createElement("telefono");
-			telefono.setTextContent("432425233");
-			contatto.appendChild(telefono);
-	
-			Element email = doc.createElement("email");
-			email.setTextContent("gianni@morandi.it");
-			contatto.appendChild(email);
-	
-			Element note = doc.createElement("note");
-			note.setTextContent("il noto cantante");
-			contatto.appendChild(note);
-			
-			contatti.appendChild(contatto);
-		}
-		System.out.println("contatti : " + contatti.getElementsByTagName("contatto").getLength());
-		
-		// write the content into xml file
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = transformerFactory.newTransformer();
-		DOMSource source = new DOMSource(doc);
-		
-		StreamResult result = new StreamResult(new File(path));
-
-		// Output to console for testing
-		StreamResult syso = new StreamResult(System.out);
-
-		transformer.transform(source, result);
-		transformer.transform(source, syso);
-
-		//System.out.println("File saved!");	
-
-	}
 	
 	public static void main(String[] args) {
 		
@@ -348,6 +334,7 @@ public class RubricaController {
 		//RubricaCsvController.scannerCSV("/Users/lorenzoorru0/Desktop/CSVjava/rubricaNew.csv", false, 1);
 		
 		System.out.println(RubricaController.loadRubricaFromXML("/Users/lorenzoorru0/Desktop/CSVjava/rubrica.xml"));
+		RubricaController.writeRubricaXML(RubricaController.loadRubricaFromXML("/Users/lorenzoorru0/Desktop/CSVjava/rubrica.xml"), "/Users/lorenzoorru0/Desktop/CSVjava/newRubrica.xml");
 	}
 
 }
