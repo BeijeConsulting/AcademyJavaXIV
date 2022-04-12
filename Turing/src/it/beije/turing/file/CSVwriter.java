@@ -21,14 +21,7 @@ public class CSVwriter {
 		
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = new FileWriter(file);
-			
-//			// "NOME","COGNOME","TELEFONO","EMAIL","NOTE"
-//			fileWriter.write("\"NOME\",\"COGNOME\",\"TELEFONO\",\"EMAIL\",\"NOTE\"");
-//			fileWriter.write('\n');
-//			//"Mario";"Rossi";"3432532555";"mario.rossi@gmail.com";"vicino di casa"
-//			fileWriter.write("\"Mario\";\"Rossi\";\"00000000\";\"mario.rossi@gmail.com\";\"vicino di casa\"");
-			
+		
 			List<Contatto> contatti = CSVreader.readCSV("/temp/prova.txt");
 			for (Contatto contatto : contatti) {
 //				fileWriter.write(row);

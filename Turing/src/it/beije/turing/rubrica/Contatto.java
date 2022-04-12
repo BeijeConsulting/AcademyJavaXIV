@@ -1,5 +1,8 @@
 package it.beije.turing.rubrica;
 
+import java.io.File;
+import java.util.Scanner;
+
 public class Contatto {
 	
 	private String nome;
@@ -41,6 +44,23 @@ public class Contatto {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	public static Contatto writeContatti() {
+		Contatto contatto = new Contatto();
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Se vuoi saltare il campo non inserire nessun carattere e premi invio. ");
+		System.out.println("Inserisci il nome: ");
+		contatto.setNome(scan.nextLine());
+		System.out.println("Inserisci il cognome: ");
+		contatto.setCognome(scan.nextLine());
+		System.out.println("Inserisci l'email: ");
+		contatto.setEmail(scan.nextLine());
+		System.out.println("Inserisci il numero di telefono: ");
+		contatto.setTelefono(scan.nextLine());
+		System.out.println("Inserisci delle note: ");
+		contatto.setNote(scan.nextLine());
+		return contatto;
 	}
 	
 	public String toString() {

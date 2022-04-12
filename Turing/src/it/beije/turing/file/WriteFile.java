@@ -3,13 +3,21 @@ package it.beije.turing.file;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import it.beije.turing.rubrica.Contatto;
 
 public class WriteFile {
 	
+	
 	public static void main(String[] args) {
+		writeFileContatti();
+	}
+
+	private static void createFileWriteExercise() {
 		try {
-			File file = new File("/Users/simonepitossi/File");
+			File file = writePath();
 			File[] fileList = file.listFiles();
 			File newFile = new File(file.getAbsolutePath() + "/" + file.getName() + ".txt");
 			FileWriter fileWriter = new FileWriter(newFile);
@@ -77,5 +85,41 @@ public class WriteFile {
 		
 		return count;
 	}
+	
+	public static ArrayList<Contatto> writeContatti() {
+		Scanner scan = new Scanner(System.in);
+		ArrayList<Contatto> contatti = new ArrayList<Contatto>();
+		boolean contattiNonInseriti = true;
+		
+		System.out.println("Vuoi inserire dei contatti? (Si o no)");
+		while(contattiNonInseriti) {
+			if(scan.nextLine().equalsIgnoreCase("Si")) {
+				contatti.add(Contatto.writeContatti());
+				System.out.println("Vuoi inserire altri contatti? (Si o no)");
+			} else {
+				System.out.println("Inserimento dei contatti terminato.");
+				
+				contattiNonInseriti = false;
+			}
+		}
+		
+		return contatti;
+	}
+	
+	public static void writeFileContatti() {
+		ArrayList<Contatto> contatti = writeContatti();
+		try {
+			File file = new File("/Users/simonepitossi/File/contatti.csv");
+			FileWriter fileWriter = new FileWriter(file);
+			for(Contatto c: contatti) {
+				fileWriter.write(c.toString() + "\n");
+			}
+			fileWriter.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 }

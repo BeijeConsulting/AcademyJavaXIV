@@ -45,4 +45,8 @@ public class ReadFile {
 			}
 		}
 	}
+	
+	public static void readContatti(File file) {
+		
+	}
 }
