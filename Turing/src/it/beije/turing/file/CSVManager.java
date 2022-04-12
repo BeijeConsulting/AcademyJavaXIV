@@ -31,41 +31,20 @@ public class CSVManager {
 			Contatto contatto = null;
 			while (bufferedReader.ready()) {
 				String row = bufferedReader.readLine();
-				//System.out.println(++c + " " + row);
+				System.out.println(++c + " " + row);
 				
-				//row = row.substring(0, row.length());
-				String[] columns = row.split(";");
+				row = row.substring(1, row.length()-1);
+				String[] columns = row.split("\";\"");
 //				for (String col : columns) System.out.println(col);
 				
 				contatto = new Contatto();
-				try {
-					contatto.setCognome(columns[0]);
-				}catch(ArrayIndexOutOfBoundsException e) {
-					contatto.setCognome("");
-				}
-				try {
-					contatto.setNome(columns[1]);
-				}catch(ArrayIndexOutOfBoundsException e) {
-					contatto.setNome("");
-				}
-				try {
-					contatto.setEmail(columns[2]);
-				}catch(ArrayIndexOutOfBoundsException e) {
-					contatto.setEmail("");
-				}
-				try {
-					contatto.setTelefono(columns[3]);
-				}catch(ArrayIndexOutOfBoundsException e) {
-					contatto.setTelefono("");
-				}
-				try {
-					contatto.setNote(columns[4]);
-				}catch(ArrayIndexOutOfBoundsException e) {
-					contatto.setNote("");
-				}
+				contatto.setNome(columns[0]);
+				contatto.setCognome(columns[1]);
+				contatto.setTelefono(columns[2]);
+				contatto.setEmail(columns[3]);
+				contatto.setNote(columns[4]);
 				
-				eliminaVirgolette(contatto);
-				//System.out.println(contatto);
+				System.out.println(contatto);
 				contatti.add(contatto);
 			}
 		} catch (IOException ioEx) {
@@ -79,7 +58,7 @@ public class CSVManager {
 			}
 		}
 		
-		//System.out.println("contatti: " + contatti.size());
+		System.out.println("contatti: " + contatti.size());
 		return contatti;
 	}
 	
@@ -116,8 +95,8 @@ public class CSVManager {
 			return true;
 	}
 	
-	public static void writeCSV(String csvPath, List<Contatto> contatti) {
-		File file = new File(csvPath);
+	public static void writeCSV(String csvPath) {
+		File file = new File("/temp/prova123.txt");
 		System.out.println("file exists? " + file.exists());
 		
 		if (file.exists()) {
@@ -135,16 +114,17 @@ public class CSVManager {
 //			//"Mario";"Rossi";"3432532555";"mario.rossi@gmail.com";"vicino di casa"
 //			fileWriter.write("\"Mario\";\"Rossi\";\"00000000\";\"mario.rossi@gmail.com\";\"vicino di casa\"");
 			
+			List<Contatto> contatti = CSVManager.readCSV("/temp/prova.txt");
 			for (Contatto contatto : contatti) {
 //				fileWriter.write(row);
 				fileWriter.write(contatto.getCognome());
-				fileWriter.write(';');
+				fileWriter.write('\t');
 				fileWriter.write(contatto.getNome());
-				fileWriter.write(';');
+				fileWriter.write('\t');
 				fileWriter.write(contatto.getEmail());
-				fileWriter.write(';');
+				fileWriter.write('\t');
 				fileWriter.write(contatto.getTelefono());
-				fileWriter.write(';');
+				fileWriter.write('\t');
 				fileWriter.write(contatto.getNote());
 				fileWriter.write('\n');
 			}
@@ -160,6 +140,7 @@ public class CSVManager {
 			
 			System.out.println("done");
 		}
+		
 	}
 	
 	public static void main(String[] args) {

@@ -2,7 +2,6 @@ package it.beije.turing.file;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class XMLmanager {
 		return childElements;
 	}
 
-	public static List<Element> readXML(String path) {
+	public static void readXML(String path) {
 		
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = null;
@@ -60,17 +59,17 @@ public class XMLmanager {
 			document = documentBuilder.parse(path);
 			
 			Element root = document.getDocumentElement();
-			//System.out.println("root : " + root.getTagName());
+			System.out.println("root : " + root.getTagName());
 			
 //			NodeList contatti = root.getElementsByTagName("contatto");
 //			System.out.println("contatti num : " + contatti.getLength());
 
 			NodeList nodes = root.getChildNodes();
-			//System.out.println("nodes num : " + nodes.getLength());
+			System.out.println("nodes num : " + nodes.getLength());
 			
 			List<Element> children = getChildElements(root);
-			//System.out.println("children num : " + children.size());
-			/*
+			System.out.println("children num : " + children.size());
+			
 			for (Element el : children) {
 				if (el.getTagName().equalsIgnoreCase("contatto")) {
 					List<Element> contatto = getChildElements(el);
@@ -96,12 +95,12 @@ public class XMLmanager {
 							break;
 						}
 						
-					}	
+					}
 					
 					System.out.println("eta' : " + el.getAttribute("eta"));
 				}
-			}	*/
-			return children;
+			}
+			
 		} catch (ParserConfigurationException pcEx) {
 			pcEx.printStackTrace();
 		} catch (IOException ioEx) {
@@ -109,7 +108,7 @@ public class XMLmanager {
 		} catch (SAXException saxEx) {
 			saxEx.printStackTrace();
 		}
-		return null;
+		
 	}
 	
 	public static void writeXML(String path) throws Exception {
@@ -193,8 +192,8 @@ public class XMLmanager {
 	}
 
 	public static void main(String[] args) throws Exception {
-		readXML(Paths.get("File","rubrica.xml").toAbsolutePath().toString());
-		writeXML(Paths.get("File","new_rubrica.xml").toAbsolutePath().toString());
+		//readXML("/temp/rubrica.xml");
+		writeXML("/temp/new_rubrica.xml");
 	}
 
 }
