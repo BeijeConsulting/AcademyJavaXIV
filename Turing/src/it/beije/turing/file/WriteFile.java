@@ -17,7 +17,7 @@ public class WriteFile {
 
 	private static void createFileWriteExercise() {
 		try {
-			File file = writePath();
+			File file = inputDirectoryPath();
 			File[] fileList = file.listFiles();
 			File newFile = new File(file.getAbsolutePath() + "/" + file.getName() + ".txt");
 			FileWriter fileWriter = new FileWriter(newFile);
@@ -28,7 +28,7 @@ public class WriteFile {
 		}
 	}
 	
-	public static File writePath() {
+	public static File inputDirectoryPath() {
 		Scanner scan = new Scanner(System.in);
 		boolean pathInserito = false;
 		File file = null;
@@ -52,14 +52,15 @@ public class WriteFile {
 		
 			for(File f : fileList) {
 				if(f.isFile() && !f.getName().equalsIgnoreCase(".DS_Store")) {
-					writeFile(fileWriter, f, count);
+					writeFileName(fileWriter, f, count);
 				} else if(f.isDirectory()) {
 					writeDirectory(fileWriter, f, count);
 				}
 			}
 	}
 	
-	public static void writeFile(FileWriter fileWriter, File f, int count) {
+	public static void writeFileName(FileWriter fileWriter, File f, int count) {
+		
 		try {
 			for(int i = 0; i < count; i++) {
 				fileWriter.write("\t");
@@ -72,6 +73,7 @@ public class WriteFile {
 	}
 	
 	public static int writeDirectory(FileWriter fileWriter, File f, int count) {
+		
 		try {
 			for(int i = 0; i < count; i++) {
 				fileWriter.write("\t");
@@ -86,28 +88,9 @@ public class WriteFile {
 		return count;
 	}
 	
-	public static ArrayList<Contatto> writeContatti() {
-		Scanner scan = new Scanner(System.in);
-		ArrayList<Contatto> contatti = new ArrayList<Contatto>();
-		boolean contattiNonInseriti = true;
-		
-		System.out.println("Vuoi inserire dei contatti? (Si o no)");
-		while(contattiNonInseriti) {
-			if(scan.nextLine().equalsIgnoreCase("Si")) {
-				contatti.add(Contatto.writeContatti());
-				System.out.println("Vuoi inserire altri contatti? (Si o no)");
-			} else {
-				System.out.println("Inserimento dei contatti terminato.");
-				
-				contattiNonInseriti = false;
-			}
-		}
-		
-		return contatti;
-	}
-	
 	public static void writeFileContatti() {
-		ArrayList<Contatto> contatti = writeContatti();
+		ArrayList<Contatto> contatti = Contatto.writeContatti();
+		
 		try {
 			File file = new File("/Users/simonepitossi/File/contatti.csv");
 			FileWriter fileWriter = new FileWriter(file);

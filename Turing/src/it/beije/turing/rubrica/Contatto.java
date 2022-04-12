@@ -1,6 +1,7 @@
 package it.beije.turing.rubrica;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Contatto {
@@ -46,7 +47,7 @@ public class Contatto {
 		this.note = note;
 	}
 	
-	public static Contatto writeContatti() {
+	public static Contatto writeContatto() {
 		Contatto contatto = new Contatto();
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Se vuoi saltare il campo non inserire nessun carattere e premi invio. ");
@@ -54,13 +55,33 @@ public class Contatto {
 		contatto.setNome(scan.nextLine());
 		System.out.println("Inserisci il cognome: ");
 		contatto.setCognome(scan.nextLine());
-		System.out.println("Inserisci l'email: ");
-		contatto.setEmail(scan.nextLine());
 		System.out.println("Inserisci il numero di telefono: ");
 		contatto.setTelefono(scan.nextLine());
+		System.out.println("Inserisci l'email: ");
+		contatto.setEmail(scan.nextLine());
 		System.out.println("Inserisci delle note: ");
 		contatto.setNote(scan.nextLine());
 		return contatto;
+	}
+	
+	public static ArrayList<Contatto> writeContatti() {
+		Scanner scan = new Scanner(System.in);
+		ArrayList<Contatto> contatti = new ArrayList<Contatto>();
+		boolean contattiNonInseriti = true;
+		
+		System.out.println("Vuoi inserire dei contatti? (Si o no)");
+		while(contattiNonInseriti) {
+			if(scan.nextLine().equalsIgnoreCase("Si")) {
+				contatti.add(writeContatto());
+				System.out.println("Vuoi inserire altri contatti? (Si o no)");
+			} else {
+				System.out.println("Inserimento dei contatti terminato.");
+				
+				contattiNonInseriti = false;
+			}
+		}
+		
+		return contatti;
 	}
 	
 	public String toString() {
