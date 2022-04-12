@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import it.beije.turing.rubrica.Contatto;
@@ -12,7 +13,8 @@ public class WriteFile {
 	
 	
 	public static void main(String[] args) {
-		writeFileContatti();
+		List<Contatto> contatti = new ArrayList<>();
+		writeRubricaContatti(contatti, "/Users/simonepitossi/File/newContatti.csv", ";");
 	}
 
 	private static void createFileWriteExercise() {
@@ -88,21 +90,34 @@ public class WriteFile {
 		return count;
 	}
 	
-	public static void writeFileContatti() {
-		ArrayList<Contatto> contatti = Contatto.writeContatti();
+	public static void writeRubricaContatti(List<Contatto> contatti, String pathFile, String separator) {
+		File file = new File(pathFile);
+		FileWriter fileWriter = null;
 		
+			
 		try {
-			File file = new File("/Users/simonepitossi/File/contatti.csv");
-			FileWriter fileWriter = new FileWriter(file);
+			if(!file.exists()) {
+				fileWriter = new FileWriter(file);
+			} else {
+				fileWriter = new FileWriter(file, true);
+				System.out.println("Il file esiste già, ogni contatto verrà aggiunto. ");
+			}
+			
+			contatti = Contatto.writeContatti();
+				 
 			for(Contatto c: contatti) {
-				fileWriter.write(c.toString() + "\n");
+				fileWriter.write(c.getNome() + separator);
+				fileWriter.write(c.getCognome() + separator);
+				fileWriter.write(c.getEmail() + separator);
+				fileWriter.write(c.getTelefono() + separator);
+				fileWriter.write(c.getNote() + "\n");
 			}
 			fileWriter.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace();			
 		}
 	}
 	
-	
-
 }
+
+

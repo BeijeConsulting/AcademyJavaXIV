@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class Contatto {
 	
-	private String nome;
-	private String cognome;
-	private String telefono;
-	private String email;
-	private String note;
+	private String nome = "";
+	private String cognome = "";
+	private String telefono = "";
+	private String email = "";
+	private String note = "";
 	
 	public String getNome() {
 		return nome;
@@ -47,7 +47,7 @@ public class Contatto {
 		this.note = note;
 	}
 	
-	public static Contatto writeContatto() {
+	public static Contatto inputCreaContatto() {
 		Contatto contatto = new Contatto();
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Se vuoi saltare il campo non inserire nessun carattere e premi invio. ");
@@ -64,6 +64,36 @@ public class Contatto {
 		return contatto;
 	}
 	
+	public static Contatto creaContatto(ArrayList<String> s, String[] individuaCampi) {
+		Contatto contatto = new Contatto();
+		int i = 0;
+		
+		for(String stringa :individuaCampi) {
+			switch(s.get(i).toLowerCase()) {
+			case "nome":
+				contatto.setNome(stringa);;
+				break;
+			case "cognome":
+				contatto.setCognome(stringa);
+				break;
+			case "telefono":
+				contatto.setTelefono(stringa);
+				break;
+			case "email":
+				contatto.setEmail(stringa);
+				break;
+			case "note":
+				contatto.setNote(stringa);
+				break;
+			default:
+				break;
+			}
+			i++;
+		}
+		
+		return contatto;
+	}
+	
 	public static ArrayList<Contatto> writeContatti() {
 		Scanner scan = new Scanner(System.in);
 		ArrayList<Contatto> contatti = new ArrayList<Contatto>();
@@ -72,7 +102,7 @@ public class Contatto {
 		System.out.println("Vuoi inserire dei contatti? (Si o no)");
 		while(contattiNonInseriti) {
 			if(scan.nextLine().equalsIgnoreCase("Si")) {
-				contatti.add(writeContatto());
+				contatti.add(inputCreaContatto());
 				System.out.println("Vuoi inserire altri contatti? (Si o no)");
 			} else {
 				System.out.println("Inserimento dei contatti terminato.");
