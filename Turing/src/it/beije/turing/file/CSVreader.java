@@ -8,9 +8,10 @@ import java.io.IOException;
 
 public class CSVreader {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-		File file = new File("/temp/prova.txt");
+		File file = new File("prova.txt");
+		file.createNewFile();
 		System.out.println("file exists? " + file.exists());
 		System.out.println("file is file? " + file.isFile());
 		System.out.println("file is dir? " + file.isDirectory());
@@ -46,7 +47,5 @@ public class CSVreader {
 				fEx.printStackTrace();
 			}
 		}
-		
 	}
-
 }
