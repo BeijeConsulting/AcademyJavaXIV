@@ -48,7 +48,7 @@ public class Rubrica
 					break;
 					
 				case 2:
-					//avviaMenuContatti(kb);
+					avviaMenuContatti();
 					break;
 					
 				case 3:
@@ -191,6 +191,61 @@ public class Rubrica
 			}
 			
 			
+		} while (riprova);
+	}
+	
+	private void avviaMenuContatti()
+	{
+		Scanner kb = null;
+		boolean riprova = false;
+		
+		do
+		{
+			menuContatti();
+			
+			riprova = false;
+			
+			kb = new Scanner(System.in);
+			int scelta = kb.nextInt();
+			
+			switch(scelta)
+			{
+				case 1:
+					if (contatti.size() != 0) System.out.println(contatti);
+					else System.out.println("Rubrica vuota.");
+					break;
+					
+				case 2:
+					//CERCACONTATTO
+					break;
+					
+				case 3:
+					//CREACONTATTO
+					return;
+					
+				case 4:
+					//MODIFICACONTATTO
+					return;
+					
+				case 5:
+					//CANCELLACONTATTO
+					return;
+					
+				case 6:
+					//TROVADUPLICATI
+					return;
+					
+				case 7:
+					//UNISCIDUPLICATI
+					return;
+					
+				case 8:
+					return;
+					
+				default:
+					riprova = true;
+					break;
+			}
 		} while (riprova);
 	}
 	
