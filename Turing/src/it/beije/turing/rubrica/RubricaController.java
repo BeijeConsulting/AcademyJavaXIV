@@ -26,7 +26,7 @@ import org.xml.sax.SAXException;
 
 public class RubricaController {
 	
-	public static List<Contatto> loadRubricaFromCSV(String path, String separatore, boolean virgolette) {
+	public static List<Contatto> loadRubricaFromCSV(String path, String separatore, boolean virgolette) throws IOException {
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
 		List<Contatto> contatti = null;
@@ -100,6 +100,7 @@ public class RubricaController {
 			}
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
+			throw ioEx;
 		} finally {
 			try {
 				bufferedReader.close();
@@ -173,7 +174,7 @@ public class RubricaController {
 		return childElements;
 	}
 	
-	public static List<Contatto> loadRubricaFromXML(String path) {
+	public static List<Contatto> loadRubricaFromXML(String path) throws ParserConfigurationException, IOException, SAXException {
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -184,14 +185,8 @@ public class RubricaController {
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			document = documentBuilder.parse(path);
 			
-			Element root = document.getDocumentElement();
-			System.out.println("root : " + root.getTagName());
-
-			NodeList nodes = root.getChildNodes();
-			System.out.println("nodes num : " + nodes.getLength());
-			
+			Element root = document.getDocumentElement();			
 			List<Element> children = getChildElements(root);
-			System.out.println("children num : " + children.size());
 			
 			for (Element el : children) {
 				Contatto contatto = new Contatto();
@@ -223,10 +218,13 @@ public class RubricaController {
 			
 		} catch (ParserConfigurationException pcEx) {
 			pcEx.printStackTrace();
+			throw pcEx;
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
+			throw ioEx;
 		} catch (SAXException saxEx) {
 			saxEx.printStackTrace();
+			throw saxEx;
 		}
 		
 		return contatti;
@@ -296,15 +294,15 @@ public class RubricaController {
 	}
 	
 	public static List<Contatto> addScanner(String csvPath, String separatore, boolean virgolette, int nContatti) {
-		List<Contatto> contatti = RubricaController.loadRubricaFromCSV(csvPath, separatore, virgolette);
+		List<Contatto> contatti = null;
+		
+		try {			
+			contatti = RubricaController.loadRubricaFromCSV(csvPath, separatore, virgolette);
+		} catch(IOException ioEx) {
+			ioEx.printStackTrace();
+		}
 		
 		Scanner s = new Scanner(System.in);
-//		while (!st.equalsIgnoreCase("exit")) {
-//			System.out.println(st);
-//			st = s.next();
-//			
-//			//...
-//		}
 		
 		for(int i = 0; i < nContatti; i++) {
 			Contatto contatto = new Contatto();
@@ -326,7 +324,7 @@ public class RubricaController {
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		//List<Contatto> contatti = RubricaCsvController.readCSV("/Users/lorenzoorru0/Desktop/CSVjava/rubrica.csv", false);
 		//System.out.println(contatti);
