@@ -1,6 +1,6 @@
 package it.beije.turing.rubrica;
 
-public class Contatto {
+public class Contatto implements Comparable {
 	
 	private String nome;
 	private String cognome;
@@ -52,6 +52,18 @@ public class Contatto {
 				.append(", note : ").append(this.note).append(" }");
 		
 		return builder.toString();
+	}
+	
+	public boolean equals(String s) {
+		if(this.email.equalsIgnoreCase(s))
+			return true;
+		return false;
+	}
+	@Override
+	public int compareTo(Object o) {
+		Contatto c = (Contatto)o;
+		
+		return this.getCognome().compareTo(c.getCognome());
 	}
 
 }

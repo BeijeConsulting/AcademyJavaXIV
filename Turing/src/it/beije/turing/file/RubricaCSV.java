@@ -116,7 +116,7 @@ public class RubricaCSV {
 					else if(ordine[i].equals("note"))
 						contatto.setNote(columns[i]);
 				}
-				System.out.println(contatto);
+				//System.out.println(contatto);
 				contatti.add(contatto);	
 			}
 			
