@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class RubricaCsvController {
 	
@@ -26,9 +27,9 @@ public class RubricaCsvController {
 			while (bufferedReader.ready()) {
 				String row = bufferedReader.readLine();
 				
-				row = row.substring(1, row.length()-1);
 				String[] columns = null;
 				if(virgolette) {
+					row = row.substring(1, row.length()-1);
 					columns = row.split("\";\"");
 				} else {					
 					columns = row.split(";");
@@ -75,7 +76,7 @@ public class RubricaCsvController {
 						}
 					}
 
-					System.out.println(contatto);
+					//System.out.println(contatto);
 					contatti.add(contatto);
 				}
 				c++;
@@ -145,15 +146,41 @@ public class RubricaCsvController {
 		}
 	}
 
-	public static void scannerCSV(String csvPath) {
+	public static void scannerCSV(String csvPath, boolean virgolette, int nContatti) {
+		List<Contatto> contatti = RubricaCsvController.readCSV(csvPath, virgolette);
 		
+		Scanner s = new Scanner(System.in);
+//		while (!st.equalsIgnoreCase("exit")) {
+//			System.out.println(st);
+//			st = s.next();
+//			
+//			//...
+//		}
+		
+		for(int i = 0; i < nContatti; i++) {
+			Contatto contatto = new Contatto();
+			System.out.print("\nInserisci nome: ");
+			contatto.setNome(s.nextLine());
+			System.out.print("Inserisci cognome: ");
+			contatto.setCognome(s.nextLine());
+			System.out.print("Inserisci telefono: ");
+			contatto.setTelefono(s.nextLine());
+			System.out.print("Inserisci email: ");
+			contatto.setEmail(s.nextLine());
+			System.out.print("Inserisci note: ");
+			contatto.setNote(s.nextLine());
+			contatti.add(contatto);
+		}
+		s.close();
+		RubricaCsvController.writeCSV(contatti, csvPath);
 	}
 	
 	public static void main(String[] args) {
 		
-		List<Contatto> contatti = RubricaCsvController.readCSV("/Users/lorenzoorru0/Desktop/CSVjava/rubrica.csv", false);
+		//List<Contatto> contatti = RubricaCsvController.readCSV("/Users/lorenzoorru0/Desktop/CSVjava/rubrica.csv", false);
 		//System.out.println(contatti);
-		RubricaCsvController.writeCSV(contatti, "/Users/lorenzoorru0/Desktop/CSVjava/rubricaNew.csv");
+		//RubricaCsvController.writeCSV(contatti, "/Users/lorenzoorru0/Desktop/CSVjava/rubricaNew.csv");
+		RubricaCsvController.scannerCSV("/Users/lorenzoorru0/Desktop/CSVjava/rubricaNew.csv", false, 1);
 	}
 
 }
