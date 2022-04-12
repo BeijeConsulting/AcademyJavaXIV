@@ -10,15 +10,10 @@ public class CSVutil {
 	
 	
 	
-//	public List<Contatto> loadRubricaFromXML(String pathFile) {
-//		
-//	}
 	
 	
 	
-	public void writeRubricaXML(List<Contatto> contatti, String pathFile) {
-		
-	}
+	
 	
 	public static List<String> readFile(String csvPath) {
 		FileReader fileReader = null;
