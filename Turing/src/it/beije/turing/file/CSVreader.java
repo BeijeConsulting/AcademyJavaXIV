@@ -58,7 +58,7 @@ public class CSVreader {
 
 	public static void main(String[] args) {
 
-		readCSV("/temp/prova.txt");
+		readCSV("/Users/matteoprovezza/Desktop/Beije/AcademyJavaXIV/dir/Turing/src/File/temp/rubrica.csv");
 
 //		File file = new File("/temp/prova.txt");
 //		System.out.println("file exists? " + file.exists());
