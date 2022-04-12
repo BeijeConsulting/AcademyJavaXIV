@@ -64,15 +64,15 @@ public class EsercizioFile {
 			directories.append("Dir:" + fr.getAbsolutePath() + "\n");
 			openDirectories(findDirectories(fr), 0);
 		}
-		writeOnFile();
+		writeOnFile(directories.toString());
 	}
 
-	public static void writeOnFile() {
+	public static void writeOnFile(String s) {
 		File file = new File(name.toString() + ".txt");
 		FileWriter fileWriter = null;
 		try {
 			fileWriter = new FileWriter(file);
-			fileWriter.write(directories.toString());
+			fileWriter.write(s);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
