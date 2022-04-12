@@ -9,14 +9,15 @@ import java.util.List;
 
 import it.beije.turing.rubrica.Contatto;
 
-
-public class CSVreader {
-	
-	public static List<Contatto> readCSV(String csvPath) {
+public class CSVreader
+{
+	public static List<Contatto> readCSV(String csvPath)
+	{
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
 		List<Contatto> contatti = null;
-		try {
+		try
+		{
 			fileReader = new FileReader(csvPath);
 			
 			bufferedReader = new BufferedReader(fileReader);
@@ -41,13 +42,20 @@ public class CSVreader {
 				System.out.println(contatto);
 				contatti.add(contatto);
 			}
-		} catch (IOException ioEx) {
+		}
+		catch (IOException ioEx)
+		{
 			ioEx.printStackTrace();
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				bufferedReader.close();
 				fileReader.close();
-			} catch (IOException fEx) {
+			}
+			catch (IOException fEx)
+			{
 				fEx.printStackTrace();
 			}
 		}
@@ -56,7 +64,8 @@ public class CSVreader {
 		return contatti;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 
 		readCSV("/temp/prova.txt");
 

@@ -15,6 +15,8 @@ public class FolderExplorer {
 		System.out.print("Folder name: ");
 		String path = kb.next();
 		
+		kb.close();
+		
 		String tree = ftf.explore(path, 0, "");
 		String[] strings = tree.split("\n");
 		FileWriter fw = null;

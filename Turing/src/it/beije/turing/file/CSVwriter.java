@@ -7,14 +7,15 @@ import java.util.List;
 
 import it.beije.turing.rubrica.Contatto;
 
-public class CSVwriter {
-
-	public static void main(String[] args) {
-		
+public class CSVwriter
+{
+	public static void main(String[] args)
+	{
 		File file = new File("/temp/prova123.txt");
 		System.out.println("file exists? " + file.exists());
 		
-		if (file.exists()) {
+		if (file.exists())
+		{
 			System.out.println("FILE GIA' ESISTENTE!!!");
 //			return;
 		}
@@ -30,7 +31,8 @@ public class CSVwriter {
 //			fileWriter.write("\"Mario\";\"Rossi\";\"00000000\";\"mario.rossi@gmail.com\";\"vicino di casa\"");
 			
 			List<Contatto> contatti = CSVreader.readCSV("/temp/prova.txt");
-			for (Contatto contatto : contatti) {
+			for (Contatto contatto : contatti)
+			{
 //				fileWriter.write(row);
 				fileWriter.write(contatto.getCognome());
 				fileWriter.write('\t');
@@ -43,13 +45,20 @@ public class CSVwriter {
 				fileWriter.write(contatto.getNote());
 				fileWriter.write('\n');
 			}
-		} catch (IOException ioEx) {
+		}
+		catch (IOException ioEx)
+		{
 			ioEx.printStackTrace();
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				fileWriter.flush();
 				fileWriter.close();
-			} catch (IOException fEx) {
+			}
+			catch (IOException fEx)
+			{
 				fEx.printStackTrace();
 			}
 			

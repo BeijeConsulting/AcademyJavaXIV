@@ -3,14 +3,17 @@ package it.beije.turing.rubrica;
 import java.util.Scanner;
 
 
-public class ScannerExample {
+public class ScannerExample
+{
 	
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		System.out.println("avvio scanner...");
 		
 		Scanner s = new Scanner(System.in);
 		String st = s.next();
-		while (!st.equalsIgnoreCase("exit")) {
+		while (!st.equalsIgnoreCase("exit"))
+		{
 			System.out.println(st);
 			st = s.next();
 			
