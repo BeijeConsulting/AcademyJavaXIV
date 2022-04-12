@@ -11,6 +11,7 @@ import it.beije.turing.file.CSVManager;
 public class RubricaCSV {
 	private List<Contatto> allContact;
 	private Path path;
+	
 	public RubricaCSV(Path path) {
 		this.path = path;
 		allContact = CSVManager.readCSV(path.toAbsolutePath().toString());
@@ -261,6 +262,7 @@ public class RubricaCSV {
 		
 		Scanner s = new Scanner(System.in);
 		String st = "";
+		System.out.println(r.getPath().toAbsolutePath().toString());
 		while (!st.equalsIgnoreCase("esci") && !st.equals("8")) {
 			System.out.println("Selezionare programma da eseguire:\n"
 					+ "1: Mostra tutta la rubrica\n"

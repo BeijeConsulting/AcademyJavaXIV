@@ -37,17 +37,6 @@ public class RubricaXML {
 		}
 	}
 	
-	public static void main(String[] args) {
-		RubricaXML r = new RubricaXML(Paths.get("File","rubrica.xml"));
-		r.vediListaContatti();
-		r.cercaContatto();
-		r.inserisciNuovoContatto();
-		r.modificaContatto();
-		r.cancellaContatto();
-		r.trovaDuplicati();
-		r.trovaDuplicatiModifica();
-	}
-
 	public void trovaDuplicatiModifica() {
 		// TODO Auto-generated method stub
 		
@@ -77,4 +66,17 @@ public class RubricaXML {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public static void main(String[] args) {
+		RubricaXML r = new RubricaXML(Paths.get("File","rubrica.xml"));
+		r.vediListaContatti();
+		r.cercaContatto();
+		r.inserisciNuovoContatto();
+		r.modificaContatto();
+		r.cancellaContatto();
+		r.trovaDuplicati();
+		r.trovaDuplicatiModifica();
+	}
+
+	
 }
