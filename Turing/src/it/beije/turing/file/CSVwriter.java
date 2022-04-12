@@ -3,6 +3,8 @@ package it.beije.turing.file;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import it.beije.turing.rubrica.Contatto;
@@ -29,7 +31,8 @@ public class CSVwriter {
 //			//"Mario";"Rossi";"3432532555";"mario.rossi@gmail.com";"vicino di casa"
 //			fileWriter.write("\"Mario\";\"Rossi\";\"00000000\";\"mario.rossi@gmail.com\";\"vicino di casa\"");
 			
-			List<Contatto> contatti = CSVreader.readCSV("/temp/prova.txt");
+			Path p = Paths.get("File","rubrica2.csv");
+			List<Contatto> contatti = CSVreader.readStaticCSV(p.toAbsolutePath().toString());
 			for (Contatto contatto : contatti) {
 //				fileWriter.write(row);
 				fileWriter.write(contatto.getCognome());

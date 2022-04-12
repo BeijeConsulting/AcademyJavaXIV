@@ -4,7 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import it.beije.turing.rubrica.Contatto;
@@ -12,7 +17,7 @@ import it.beije.turing.rubrica.Contatto;
 
 public class CSVreader {
 	
-	public static List<Contatto> readCSV(String csvPath) {
+	public static List<Contatto> readPrintCSV(String csvPath) {
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
 		List<Contatto> contatti = null;
@@ -27,16 +32,32 @@ public class CSVreader {
 				String row = bufferedReader.readLine();
 				System.out.println(++c + " " + row);
 				
-				row = row.substring(1, row.length()-1);
-				String[] columns = row.split("\";\"");
+				//row = row.substring(0, row.length());
+				String[] columns = row.split(";");
 //				for (String col : columns) System.out.println(col);
 				
 				contatto = new Contatto();
-				contatto.setNome(columns[0]);
-				contatto.setCognome(columns[1]);
-				contatto.setTelefono(columns[2]);
-				contatto.setEmail(columns[3]);
-				contatto.setNote(columns[4]);
+				try {
+					contatto.setCognome(columns[0]);
+				}catch(ArrayIndexOutOfBoundsException e) {
+					contatto.setCognome(null);
+				}
+				try {
+					contatto.setNome(columns[1]);
+				}catch(ArrayIndexOutOfBoundsException e) {
+					contatto.setNome(null);
+				}
+				try {
+					contatto.setEmail(columns[2]);
+				}catch(ArrayIndexOutOfBoundsException e) {
+					contatto.setEmail(null);
+				}
+				try {
+					contatto.setTelefono(columns[3]);
+				}catch(ArrayIndexOutOfBoundsException e) {
+					contatto.setTelefono(null);
+				}
+				//contatto.setNote(columns[4]);
 				
 				System.out.println(contatto);
 				contatti.add(contatto);
@@ -55,10 +76,69 @@ public class CSVreader {
 		System.out.println("contatti: " + contatti.size());
 		return contatti;
 	}
-
+	
+	public static List<Contatto> readStaticCSV(String csvPath) {
+		FileReader fileReader = null;
+		BufferedReader bufferedReader = null;
+		List<Contatto> contatti = null;
+		try {
+			fileReader = new FileReader(csvPath);
+			
+			bufferedReader = new BufferedReader(fileReader);
+			int c = 0;
+			contatti = new ArrayList<Contatto>();
+			Contatto contatto = null;
+			while (bufferedReader.ready()) {
+				String row = bufferedReader.readLine();
+				//System.out.println(++c + " " + row);
+				
+				//row = row.substring(0, row.length());
+				String[] columns = row.split(";");
+//				for (String col : columns) System.out.println(col);
+				
+				contatto = new Contatto();
+				try {
+					contatto.setCognome(columns[0]);
+				}catch(ArrayIndexOutOfBoundsException e) {
+					contatto.setCognome(null);
+				}
+				try {
+					contatto.setNome(columns[1]);
+				}catch(ArrayIndexOutOfBoundsException e) {
+					contatto.setNome(null);
+				}
+				try {
+					contatto.setEmail(columns[2]);
+				}catch(ArrayIndexOutOfBoundsException e) {
+					contatto.setEmail(null);
+				}
+				try {
+					contatto.setTelefono(columns[3]);
+				}catch(ArrayIndexOutOfBoundsException e) {
+					contatto.setTelefono(null);
+				}
+				//contatto.setNote(columns[4]);
+				
+				//System.out.println(contatto);
+				contatti.add(contatto);
+			}
+		} catch (IOException ioEx) {
+			ioEx.printStackTrace();
+		} finally {
+			try {
+				bufferedReader.close();
+				fileReader.close();
+			} catch (IOException fEx) {
+				fEx.printStackTrace();
+			}
+		}
+		
+		System.out.println("contatti: " + contatti.size());
+		return contatti;
+	}
+	
 	public static void main(String[] args) {
-
-		readCSV("/temp/prova.txt");
+		
 
 //		File file = new File("/temp/prova.txt");
 //		System.out.println("file exists? " + file.exists());
