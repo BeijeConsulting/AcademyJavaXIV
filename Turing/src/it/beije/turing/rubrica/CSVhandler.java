@@ -31,11 +31,12 @@ public class CSVhandler
 				if (contatto.charAt(0) == '"')
 				{
 					contatto = contatto.substring(1, contatto.length()-1);
+					if (contatto.charAt(contatto.length()-1) == '"') contatto += " ";
 					campi = contatto.split("\"" + separator +"\"");
 				}
 				else
 				{
-					if (contatto.charAt(contatto.length()-1) == separator.charAt(0)) contatto += '\0';				//WORKS ONLY IF SEPARATOR IS SINGLE CHAR
+					if (contatto.charAt(contatto.length()-1) == separator.charAt(0)) contatto += " ";				//WORKS ONLY IF SEPARATOR IS SINGLE CHAR
 					campi = contatto.split(separator);
 				}
 				
