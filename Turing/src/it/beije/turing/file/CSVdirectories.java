@@ -5,9 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Arrays;
 
-public class CSVcontroller {
+
+public class CSVdirectories {
 	public int countTab = 0;
 	public List<String> list = new ArrayList<String>();
 	
@@ -68,17 +68,8 @@ public class CSVcontroller {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-//		CSVcontroller cr = new CSVcontroller();
-//		
-//		File file = new File(cr.firstDirectory);
-//		System.out.println("Is a directory? " + file.isDirectory());
-//		String[] listFile = file.list();
-//		for(String s : listFile) {
-//			 File fileFromList = new File(cr.firstDirectory + "/" + s);
-//			 System.out.println(fileFromList.isFile());
-//		}
-		CSVcontroller csvC = new CSVcontroller();
+		
+		CSVdirectories csvC = new CSVdirectories();
 		
 		//csvC.printDirectories("/Users/lorenzoorru0/Desktop/CSVjava/corso_java", null);
 		csvC.takeForPrint("/Users/lorenzoorru0/Desktop/CSVjava/corso_java");
