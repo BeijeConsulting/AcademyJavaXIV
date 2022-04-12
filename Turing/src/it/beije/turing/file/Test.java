@@ -2,6 +2,7 @@ package it.beije.turing.file;
 
 import java.util.List;
 
+import it.beije.turing.file.csv.CSVReader2;
 import it.beije.turing.rubrica.Contatto;
 
 public class Test {

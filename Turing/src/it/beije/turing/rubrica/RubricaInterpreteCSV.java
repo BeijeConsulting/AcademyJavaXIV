@@ -1,10 +1,10 @@
 package it.beije.turing.rubrica;
 
-public class RubricaInterprete {
+public class RubricaInterpreteCSV {
 	int[] ordine = {-1,-1,-1,-1,-1};
 	boolean apici,prepared = false;
 	
-	public  RubricaInterprete(String s, boolean b)
+	public  RubricaInterpreteCSV(String s, boolean b)
 	{
 		apici = b;
 		String[] intest=prepareString(s,b);

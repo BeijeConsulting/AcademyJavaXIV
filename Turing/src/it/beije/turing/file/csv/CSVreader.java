@@ -1,4 +1,4 @@
-package it.beije.turing.file;
+package it.beije.turing.file.csv;
 
 import java.io.BufferedReader;
 import java.io.File;

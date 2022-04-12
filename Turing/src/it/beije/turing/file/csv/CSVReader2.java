@@ -1,11 +1,12 @@
-package it.beije.turing.file;
+package it.beije.turing.file.csv;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.beije.turing.file.Reader;
 import it.beije.turing.rubrica.Contatto;
-import it.beije.turing.rubrica.RubricaInterprete;
+import it.beije.turing.rubrica.RubricaInterpreteCSV;
 
 public class CSVReader2 {
 public static List<Contatto> readCSV(String fileName, boolean b)
@@ -16,7 +17,7 @@ public static List<Contatto> readCSV(String fileName, boolean b)
 	if(reader.canContinue())
 	{
 		String intestazione = reader.nextLine();
-		RubricaInterprete interprete = new RubricaInterprete(intestazione,b);
+		RubricaInterpreteCSV interprete = new RubricaInterpreteCSV(intestazione,b);
 		int count=0;
 		while(reader.canContinue())
 		{
