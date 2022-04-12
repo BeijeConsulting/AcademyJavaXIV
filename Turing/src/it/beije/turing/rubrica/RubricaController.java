@@ -267,7 +267,7 @@ public class RubricaController {
 			elementContatti.appendChild(elmContatto);
 		}
 
-		System.out.println("contatti : " + elementContatti.getElementsByTagName("contatto").getLength());
+		//System.out.println("contatti : " + elementContatti.getElementsByTagName("contatto").getLength());
 		
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -277,10 +277,10 @@ public class RubricaController {
 		StreamResult result = new StreamResult(new File(path));
 
 		// Output to console for testing
-		StreamResult syso = new StreamResult(System.out);
+		//StreamResult syso = new StreamResult(System.out);
 
 		transformer.transform(source, result);
-		transformer.transform(source, syso);
+		//transformer.transform(source, syso);
 		} catch(TransformerConfigurationException tcEx) {
 			tcEx.printStackTrace();
 		} catch(ParserConfigurationException pcEx) {
