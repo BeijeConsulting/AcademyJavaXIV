@@ -18,10 +18,9 @@ public static List<Contatto> readCSV(String fileName, boolean b)
 	{
 		String intestazione = reader.nextLine();
 		RubricaInterpreteCSV interprete = new RubricaInterpreteCSV(intestazione,b);
-		int count=0;
+		
 		while(reader.canContinue())
 		{
-			System.out.println(++count);
 			list.add(interprete.interpreta(reader.nextLine()));
 		}
 	}

@@ -2,11 +2,11 @@ package it.beije.turing.rubrica;
 
 public class Contatto {
 	
-	private String nome;
-	private String cognome;
-	private String telefono;
-	private String email;
-	private String note;
+	private String nome="";
+	private String cognome="";
+	private String telefono="";
+	private String email="";
+	private String note="";
 	
 	public String getNome() {
 		return nome;
@@ -45,8 +45,8 @@ public class Contatto {
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-				.append("{ cognome : ").append(this.cognome)
-				.append(", nome : ").append(this.nome)
+				.append("{ nome : ").append(this.nome)
+				.append(", cognome : ").append(this.cognome)
 				.append(", telefono : ").append(this.telefono)
 				.append(", email : ").append(this.email)
 				.append(", note : ").append(this.note).append(" }");

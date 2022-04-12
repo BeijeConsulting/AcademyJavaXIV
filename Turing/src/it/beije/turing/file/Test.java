@@ -8,9 +8,9 @@ import it.beije.turing.rubrica.Contatto;
 public class Test {
 public static void main(String...args)
 {
-	String fileName = "tmp/rubrica.csv";
+	String fileName = "tmp/Test.txt";
 	
-	List<Contatto> list = CSVReader2.readCSV(fileName,false);
+	List<Contatto> list = CSVReader2.readCSV(fileName,true);
 	for(Contatto c : list)
 	{
 		System.out.println(c);

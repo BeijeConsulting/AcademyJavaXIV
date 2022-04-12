@@ -3,7 +3,7 @@ package it.beije.turing.rubrica;
 public class RubricaInterpreteCSV {
 	int[] ordine = {-1,-1,-1,-1,-1};
 	boolean apici,prepared = false;
-	
+	private static final String DEFAULT_HEADER="\"NOME\";\"COGNOME\";\"TELEFONO\";\"EMAIL\";\"NOTE\"";
 	public  RubricaInterpreteCSV(String s, boolean b)
 	{
 		apici = b;
@@ -23,6 +23,10 @@ public class RubricaInterpreteCSV {
 			position++;
 		}
 		prepared = true;
+	}
+	public RubricaInterpreteCSV()
+	{
+		this(DEFAULT_HEADER,true);
 	}
 	public Contatto interpreta(String s)
 	{
@@ -78,6 +82,28 @@ public class RubricaInterpreteCSV {
 			intest = newArray;
 		}
 		return intest;
+	}
+	
+	public String getHeader()
+	{
+	return DEFAULT_HEADER;	
+	}
+	public String toCSV(Contatto c)
+	{
+		return toCSV(c,";",true);
+	}
+	public String toCSV(Contatto c,String separator,boolean apici)
+	{
+		int[] tmp=new int[ordine.length];
+		for(int i = 0;i< ordine.length;i++)
+		{
+			tmp[ordine[i]] = i;
+			
+		}
+		String[] data = {c.getNome(),c.getCognome(),c.getTelefono(),c.getEmail(),c.getNote()};
+		String estremi = apici ? "\"" : "";
+		String separatore = estremi+separator+estremi;
+		return estremi+data[tmp[0]]+separatore+data[tmp[1]]+separatore+data[tmp[2]]+separatore+data[tmp[3]]+separatore+data[tmp[4]]+estremi;
 	}
 
 }
