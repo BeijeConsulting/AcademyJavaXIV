@@ -1,0 +1,74 @@
+package it.beije.turing.newRubrica.rubrica;
+
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Scanner;
+
+import it.beije.turing.newRubrica.file.RubricaManager;
+import it.beije.turing.newRubrica.rubrica.Contatto;
+import it.beije.turing.newRubrica.rubrica.RubricaCSV;
+
+public class TestApp {
+
+	public static void main(String[] args) {
+		RubricaCSV r = new RubricaCSV(Paths.get("File","rubrica.csv"));
+		RubricaManager rm = new RubricaManager();
+		
+		Scanner s = new Scanner(System.in);
+		String st = "";
+		//System.out.println(r.getPath().toAbsolutePath().toString());
+		while (!st.equalsIgnoreCase("esci") && !st.equals("9")) {
+			System.out.println("Selezionare programma da eseguire:\n"
+					+ "1: Mostra tutta la rubrica\n"
+					+ "2: Cerca un contatto\n"
+					+ "3: Aggiungi un contatto\n"
+					+ "4: Modifica contatto\n"
+					+ "5: Elimina contatto\n"
+					+ "6: Trova contatti duplicati\n"
+					+ "7: Unisci contatti duplicati\n"
+					+ "8: Cambia File Rubrica\n"
+					+ "9: Esci");
+			st = s.nextLine();
+			switch(st) {
+				case "1":
+					r.vediListaContatti();
+					break;
+				case "2":
+					r.cercaContatto(s);
+					break;
+				case "3":
+					Contatto c = r.inserisciNuovoContatto(s);
+					if(c == null)continue;
+					List<Contatto> ris = r.getAllContact();
+					ris.add(c);
+					r.setAllContact(ris);
+					rm.writeRubricaCSV(r.getAllContact(), r.getPath().toAbsolutePath().toString(), ";");
+					break;
+				case "4":
+					r.modificaContatto(s);
+					break;
+				case "5":
+					r.cancellaContatto(s);
+					break;
+				case "6":
+					r.trovaContattiDuplicati();
+					break;
+				case "7":
+					r.unisciContattiDuplicati();
+					break;
+				case "8":
+					r.caricaFileContatti(s);
+					break;
+				case "9":
+					continue;
+				default:
+					break;
+			}
+			
+		}
+		
+		System.out.println("BYE!!");
+		s.close();
+	}
+
+}
