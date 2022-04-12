@@ -65,7 +65,7 @@ public class WriteFile {
 		
 		try {
 			for(int i = 0; i < count; i++) {
-				fileWriter.write("\t");
+				fileWriter.write(" ");
 			}
 			fileWriter.write(f.getName() + "\n");
 			fileWriter.flush();

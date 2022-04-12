@@ -7,15 +7,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import it.beije.turing.rubrica.Contatto;
 
 public class ReadFile {	
 	
 	public static void main(String[] args) {
-		List<Contatto> contatti = loadRubricaFromCSV("/Users/simonepitossi/File/newContatti.csv", ";");
-		for (Contatto c: contatti) {
-			System.out.println(c.toString());
-		}
+//		List<Contatto> contatti = loadRubricaFromCSV("/Users/simonepitossi/File/newContatti.csv", ";");
+//		for (Contatto c: contatti) {
+//			System.out.println(c.toString());
+//		}
+		loadRubricaFromXML("/Users/simonepitossi/File/SottoFile/SottoSottoFile/xml.xml");
 		
 	}
 
@@ -86,8 +95,6 @@ public class ReadFile {
 		return contatti;
 	}
 
-	
-
 	public static void individuaColonneCSV(ArrayList<String> s, String[] individuaCampi) {
 		for(String stringa :individuaCampi) {
 			switch(stringa.toLowerCase()) {
@@ -114,7 +121,7 @@ public class ReadFile {
 
 	public static String csvContieneVirgolette(String campi, String separator) {
 		boolean campiTraVirgolette = false;
-		String[] individuaCampi = campi.split(";");
+		String[] individuaCampi = campi.split(separator);
 		
 		switch(individuaCampi[0].toLowerCase()) {
 		case "\"nome\"":
@@ -136,6 +143,74 @@ public class ReadFile {
 		} else {
 			return separator;
 		}
+	}
+	
+	public static void loadRubricaFromXML(String pathFile) {
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = null;
+		Document document = null;
+		 
+		try {
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			document = documentBuilder.parse(pathFile);
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			Element element = document.getDocumentElement();
+			System.out.println(element.getTagName());
+			List<Element> elements = elementsInChildNodes(element);
+			
+			for(Element ele: elements) {
+				System.out.println(ele.getTagName());
+				printChildren(ele, 0);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void printChildren(Element element, int count) {
+			List<Element> el = elementsInChildNodes(element);
+				for(Element e: el) {
+					for(int i = 0; i < count; i++) {
+						System.out.print("\t");
+					}
+					switch(e.getTagName().toLowerCase()) {
+					case "nome":
+						System.out.println("Nome : " + e.getTextContent());
+						break;
+					case "cognome":
+						System.out.println("Cognome : " + e.getTextContent());						
+						break;
+					case "telefono":
+						System.out.println("Telefono : " + e.getTextContent());						
+						break;
+					case "email":
+						System.out.println("Email : " + e.getTextContent());						
+						break;
+					case "note":
+						System.out.println("Note : " + e.getTextContent());						
+						break;
+					case "contatto":
+						count += 1;
+						printChildren(e, count);
+						break;
+					default:
+						break;
+					}
+				}
+	}
+
+	private static List<Element> elementsInChildNodes(Element element) {
+		List<Element> elements = new ArrayList<>();
+		NodeList nodeList = element.getChildNodes();
+		
+		for(int i = 0; i < nodeList.getLength(); i++) {
+			Node node = nodeList.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				elements.add((Element) node);
+			}
+		}
+		
+		return elements;
 	}
 
 }
