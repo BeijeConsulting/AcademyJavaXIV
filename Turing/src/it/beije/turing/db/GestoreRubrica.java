@@ -1,10 +1,13 @@
-package it.beije.turing.rubrica;
+package it.beije.turing.db;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import it.beije.turing.rubrica.Contatto;
+import it.beije.turing.rubrica.RubricaController;
 
 public class GestoreRubrica {
 	
