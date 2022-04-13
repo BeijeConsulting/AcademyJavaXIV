@@ -2,11 +2,23 @@ package it.beije.turing.newRubrica.rubrica;
 
 public class Contatto {
 	
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
 	private String email;
 	private String note;
+	
+	public Contatto() {
+		
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getNome() {
 		return nome;

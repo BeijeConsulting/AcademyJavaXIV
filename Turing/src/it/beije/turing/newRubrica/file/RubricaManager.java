@@ -5,15 +5,27 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -60,6 +72,11 @@ public class RubricaManager {
 					contatto.setNote(columns[4]);
 				}catch(ArrayIndexOutOfBoundsException e) {
 					contatto.setNote("");
+				}
+				try {
+					contatto.setId(Integer.parseInt(columns[5]));
+				}catch(ArrayIndexOutOfBoundsException e) {
+					contatto.setId(-1);
 				}
 				eliminaVirgolette(contatto);
 				contatti.add(contatto);
@@ -184,8 +201,151 @@ public class RubricaManager {
 		return ris;
 	}
 	public void writeRubricaXML(List<Contatto> contatti, String pathFile) {
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = null;
+		try {
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		
+		Document doc = documentBuilder.newDocument();
+		
+		Element contattiEl = doc.createElement("contatti");
+		doc.appendChild(contattiEl);
+		
+		for(Contatto c : contatti) {
+			Element contatto = doc.createElement("contatto");
+			contatto.setAttribute("id", Integer.toString(c.getId()));
+			
+			Element cognome = doc.createElement("cognome");
+			cognome.setTextContent(c.getCognome());//<cognome>Marrone</cognome>
+			contatto.appendChild(cognome);
+
+			Element nome = doc.createElement("nome");
+			nome.setTextContent(c.getNome());//<nome>Emma</nome>
+			contatto.appendChild(nome);
+
+			Element telefono = doc.createElement("telefono");
+			telefono.setTextContent(c.getTelefono());
+			contatto.appendChild(telefono);
+
+			Element email = doc.createElement("email");
+			email.setTextContent(c.getEmail());
+			contatto.appendChild(email);
+
+			Element note = doc.createElement("note");
+			note.setTextContent(c.getNote());
+			contatto.appendChild(note);
+			
+			contattiEl.appendChild(contatto);
+		}
+		
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = null;
+		try {
+			transformer = transformerFactory.newTransformer();
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		}
+		DOMSource source = new DOMSource(doc);
+		
+		StreamResult result = new StreamResult(new File(pathFile));
+		StreamResult syso = new StreamResult(System.out);
+
+		try {
+			transformer.transform(source, result);
+			//transformer.transform(source, syso);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
 		
 	}
+	//////////////////////////////////////////SQL////////////////////////////////////////////
+	public static Connection getConnection(String dbName, String username, String password) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/"+dbName+"?serverTimezone=CET", username, password);
+	}
+	
+	public List<Contatto> loadRubricaFromJDBC(String dbName, String username, String password){
+		List<Contatto> allContact = new ArrayList<>();
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet rs = null;
+		try {
+			connection = getConnection(dbName,username,password);
+			statement = connection.createStatement();
+			
+			rs = statement.executeQuery("SELECT * FROM rubrica");
+			
+			while (rs.next()) {
+				Contatto c = new Contatto();
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setCognome(rs.getString("cognome"));
+				c.setTelefono( rs.getString("telefono"));
+				c.setEmail(rs.getString("email"));
+				c.setNote(rs.getString("note"));
+				allContact.add(c);
+			}
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace();
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				statement.close();
+				connection.close();
+			} catch (SQLException sqlEx) {
+				sqlEx.printStackTrace();
+			}
+		}
+		
+		return allContact;
+	}
+	
+	
+	
+	public void writeRubricaOnJDBC(List<Contatto> contatti, String username, String password, String dbName) {
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = getConnection(dbName,username,password);
+			statement = connection.createStatement();
+			
+			for(Contatto c : contatti) {
+				rs = statement.executeQuery("SELECT r.id, r.nome, r.cognome, r.telefono, r.email FROM rubrica r WHERE (r.nome = '"+c.getNome()+"' AND r.cognome = '"+c.getCognome()+"' AND "
+						+ "r.telefono = '"+c.getTelefono()+"' AND r.email = '"+c.getEmail()+"')");
+				if(rs.first()) {
+					int ris2 = statement.executeUpdate("UPDATE rubrica VALUES (null, "+c.getNome()+", "+c.getCognome()+", "
+							+c.getTelefono()+", "+c.getEmail()+", "+c.getNote()+") WHERE (`id` = '"+c.getId()+"')");
+				}else {
+					int ris2 = statement.executeUpdate("INSERT INTO rubrica VALUES (null, '"+c.getNome()+"', '"+c.getCognome()+"', '"
+							+c.getTelefono()+"', '"+c.getEmail()+"', '"+c.getNote()+"')");
+				}
+				
+				
+			}
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace();
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				statement.close();
+				connection.close();
+			} catch (SQLException sqlEx) {
+				sqlEx.printStackTrace();
+			}
+		}
+	}
+	
+	
 	
 	///////////////////////////////////////Generale//////////////////////////////////////////
 	public static boolean eliminaVirgolette(Contatto c) {

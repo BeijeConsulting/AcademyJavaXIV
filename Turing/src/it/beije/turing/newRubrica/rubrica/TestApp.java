@@ -18,6 +18,7 @@ public class TestApp {
 		
 		
 		RubricaManager rm = new RubricaManager();
+		DBManager db = new DBManager(rm);
 		
 		Scanner s = new Scanner(System.in);
 		String st = "";
@@ -38,7 +39,7 @@ public class TestApp {
 		}
 		 
 		//System.out.println(r.getPath().toAbsolutePath().toString());
-		while (!st.equalsIgnoreCase("esci") && !st.equals("9")) {
+		while (!st.equalsIgnoreCase("esci") && !st.equals("11")) {
 			System.out.println("Selezionare programma da eseguire:\n"
 					+ "1: Mostra tutta la rubrica\n"
 					+ "2: Cerca un contatto\n"
@@ -48,7 +49,9 @@ public class TestApp {
 					+ "6: Trova contatti duplicati\n"
 					+ "7: Unisci contatti duplicati\n"
 					+ "8: Cambia File Rubrica\n"
-					+ "9: Esci");
+					+ "9: Leggi da DB e salva su file\n"
+					+ "10: Scrivi su DB"
+					+ "11: Esci");
 			st = s.nextLine();
 			switch(st) {
 				case "1":
@@ -63,7 +66,12 @@ public class TestApp {
 					List<Contatto> ris = r.getAllContact();
 					ris.add(c);
 					r.setAllContact(ris);
-					rm.writeRubricaCSV(r.getAllContact(), r.getPath().toAbsolutePath().toString(), ";");
+					if(estensione.equals("csv")) {
+						rm.writeRubricaCSV(r.getAllContact(), r.getPath().toAbsolutePath().toString(), ";");
+					}
+					else {
+						rm.writeRubricaXML(r.getAllContact(), r.getPath().toAbsolutePath().toString());
+					}
 					break;
 				case "4":
 					r.modificaContatto(s);
@@ -81,6 +89,18 @@ public class TestApp {
 					r.caricaFileContatti(s);
 					break;
 				case "9":
+					r.setAllContact(db.leggiDaDB(s));
+					if(estensione.equals("csv")) {
+						rm.writeRubricaCSV(r.getAllContact(), r.getPath().toAbsolutePath().toString(), ";");
+					}
+					else {
+						rm.writeRubricaXML(r.getAllContact(), r.getPath().toAbsolutePath().toString());
+					}
+					break;
+				case "10":
+					db.scriviSuDB(r.getAllContact(),s);
+					break;
+				case "11":
 					continue;
 				default:
 					break;
