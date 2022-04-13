@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -18,24 +19,29 @@ import org.w3c.dom.NodeList;
 import it.beije.turing.rubrica.Contatto;
 
 public class ReadFile {	
+	int i = 0;
 	
 	public static void main(String[] args) {
 //		List<Contatto> contatti = loadRubricaFromCSV("/Users/simonepitossi/File/newContatti.csv", ";");
 //		for (Contatto c: contatti) {
 //			System.out.println(c.toString());
 //		}
-		loadRubricaFromXML("/Users/simonepitossi/File/SottoFile/SottoSottoFile/xml.xml");
+		ReadFile f = new ReadFile(String s);
+		System.out.println(f.i);
+		int[] s = new int[2];
+		System.out.println("java" + new StringBuilder("java"));
+	//	loadRubricaFromXML("/Users/simonepitossi/File/SottoFile/SottoSottoFile/xml.xml");
 		
 	}
 
 	public static void readFileList(File[] fL) {
-		
 		for(File f : fL) {
 			if(f.isFile() && !f.getName().equalsIgnoreCase(".DS_Store")) {
 				System.out.println(f.getName() + "\n");
 				readFile(f);
 			} else if(f.isDirectory()) {
 				readFileList(f.listFiles());
+				Date date = new Date();;
 			}
 		}
 	}

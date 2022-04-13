@@ -118,6 +118,10 @@ public class WriteFile {
 		}
 	}
 	
+	public static void writeRubricaXML(List<Contatto> contatti, String pathFile) {
+		contatti = Contatto.writeContatti();
+	}
+	
 }
 
 
