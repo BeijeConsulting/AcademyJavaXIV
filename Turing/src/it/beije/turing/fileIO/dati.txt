@@ -1,0 +1,4 @@
+"NOME","COGNOME","TELEFONO","EMAIL","NOTE"
+"Luca","Rossi","185654321","lucarossi@gmail.com","Calcetto"
+"Nicola","Capozzi","46861213","capozzinicola@gmail.com","Teatro"
+"Andrea","Nicosi","349558165","andreani@gmail.com","aperitivo"

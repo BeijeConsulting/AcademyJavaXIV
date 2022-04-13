@@ -1,5 +1,12 @@
 package it.beije.turing.rubrica;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Contatto {
 	
 	private String nome;
@@ -8,6 +15,18 @@ public class Contatto {
 	private String email;
 	private String note;
 	
+	
+	public Contatto() {
+		
+	}
+	
+	public Contatto(String nome, String cognome, String telefono, String email) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -43,6 +62,7 @@ public class Contatto {
 		this.note = note;
 	}
 	
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 				.append("{ cognome : ").append(this.cognome)
@@ -53,5 +73,38 @@ public class Contatto {
 		
 		return builder.toString();
 	}
+	
+	public static Contatto read() {
+		
+		@SuppressWarnings("resource")
+		Scanner in = new Scanner(System.in);
+	
+		System.out.print("Inserisci Nome:");
+		String nome = in.nextLine();
+		if(nome.equals("")) {return null;}
+		
+		System.out.print("inserisci Cognome :");
+		String cognome= in.nextLine();
+		if(cognome.equals("")) {return null;}
+		
+		System.out.print("inserisci telefono :");
+		String telefono = in.nextLine();
+		if(telefono.equals("")) {return null;}
+		
+		System.out.print("Email :");
+		String email = in.nextLine();
+		if(email.equals("")) {return null;}
 
+		
+		return new Contatto(nome, cognome, telefono, email);
+		
+	}
+	
+	public void stampa() {
+		
+		System.out.println ("Nome: "+ nome+ " Cognome : "+ cognome + " Tel: " + telefono+ " Email : "+ email);
+		
+	}
+		
+	
 }
