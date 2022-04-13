@@ -298,123 +298,164 @@ public class Rubrica
 			
 			switch(scelta)
 			{
-				case 1:
-					//VISUALIZZA CONTATTI
-					if (contatti.size() != 0)
+				case 1:			//VISUALIZZA CONTATTI
+					if (s == 1)
 					{
-						System.out.print("Vuoi riordinare la rubrica? ");
-						String riordina = kb.next().toLowerCase();
-						String filtro = null;
-						switch(riordina)
-						{
-							case "si":
-							case "sì":
-							case "yes":
-							case "y":
-								System.out.print("Criterio di ordinamento (nome, cognome, telefono, email, note): ");
-								filtro = kb.next().toLowerCase();
-								System.out.println();
-								break;
-								
-							default:
-								filtro = "";
-								break;
-						}
 						
-						visualizzaContatti(filtro);
 					}
-					else System.out.println("Rubrica vuota.");
-					break;
-					
-				case 2:
-					//CERCA CONTATTO
-					System.out.print("Valore di ricerca: ");
-					String filtro = kb.next();
-					System.out.println();
-					List<Contatto> contacts = cercaContatto(filtro);
-					
-					if (contacts.isEmpty()) System.out.println("Nessuno contatto corrisponde ai criteri di ricerca.");
 					else
 					{
-						for(Contatto contatto : contacts)
+						if (contatti.size() != 0)
 						{
-							System.out.println(contatto.toString());
-						}
-					}
-					
-					break;
-					
-				case 3:
-					//CREA CONTATTO
-					kb.nextLine();
-					
-					System.out.print("Nome: ");
-					String nome = kb.nextLine();
-					System.out.println();
-					
-					System.out.print("Cognome: ");
-					String cognome = kb.nextLine();
-					System.out.println();
-					
-					System.out.print("Telefono: ");
-					String telefono = kb.nextLine();
-					System.out.println();
-					
-					System.out.print("Email: ");
-					String email = kb.nextLine();
-					System.out.println();
-					
-					System.out.print("Note: ");
-					String note = kb.nextLine();
-					System.out.println();
-					
-					System.out.println(contatti.add(new Contatto(nome, cognome, telefono, email, note)) ? "Contatto creato." : "Errore creazione contatto.");
-					return;
-					
-				case 4:
-					//MODIFICA CONTATTO
-					System.out.println("Posizione in rubrica del contatto da modificare: ");
-					int pos = kb.nextInt();
-					modificaContatto(pos);
-					return;
-					
-				case 5:
-					//CANCELLA CONTATTO
-					System.out.println("Posizione in rubrica del contatto da eliminare: ");
-					int posizione = kb.nextInt();
-					cancellaContatto(posizione);
-					return;
-					
-				case 6:
-					//TROVA DUPLICATI
-					List<Contatto> duplicati = cercaDuplicati(false);
-					
-					String[] indici = duplicati.get(0).getNome().split(",");
-					int counter = indici.length-1;
-					boolean first = true;
-					
-					if (duplicati.isEmpty()) System.out.println("Nessuno contatto duplicato trovato.");
-					else
-					{
-						for(Contatto contatto : duplicati)
-						{
-							if (first)
+							System.out.print("Vuoi riordinare la rubrica? ");
+							String riordina = kb.next().toLowerCase();
+							String filtro = null;
+							switch(riordina)
 							{
-								first = false;
-								continue;
+								case "si":
+								case "sì":
+								case "yes":
+								case "y":
+									System.out.print("Criterio di ordinamento (nome, cognome, telefono, email, note): ");
+									filtro = kb.next().toLowerCase();
+									System.out.println();
+									break;
+									
+								default:
+									filtro = "";
+									break;
 							}
 							
-							System.out.println(indici[counter--] + " " + contatto.toString());
+							visualizzaContatti(filtro);
+						}
+						else System.out.println("Rubrica vuota.");
+					}
+					break;
+					
+				case 2:				//CERCA CONTATTO
+					if (s == 1)
+					{
+						
+					}
+					else
+					{
+						System.out.print("Valore di ricerca: ");
+						String filtro = kb.next();
+						System.out.println();
+						List<Contatto> contacts = cercaContatto(filtro);
+						
+						if (contacts.isEmpty()) System.out.println("Nessuno contatto corrisponde ai criteri di ricerca.");
+						else
+						{
+							for(Contatto contatto : contacts)
+							{
+								System.out.println(contatto.toString());
+							}
 						}
 					}
-					return;
+					break;
 					
-				case 7:
-					//UNISCI DUPLICATI
-					List<Contatto> duplicatiUniti = cercaDuplicati(true);
-					contatti = duplicatiUniti;
-					visualizzaContatti("");
-					return;
+				case 3:			//CREA CONTATTO
+					if (s == 1)
+					{
+						
+					}
+					else
+					{
+						kb.nextLine();
+						
+						System.out.print("Nome: ");
+						String nome = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Cognome: ");
+						String cognome = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Telefono: ");
+						String telefono = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Email: ");
+						String email = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Note: ");
+						String note = kb.nextLine();
+						System.out.println();
+						
+						System.out.println(contatti.add(new Contatto(nome, cognome, telefono, email, note)) ? "Contatto creato." : "Errore creazione contatto.");
+					}
+					break;
+					
+				case 4:			//MODIFICA CONTATTO
+					if (s == 1)
+					{
+						
+					}
+					else
+					{
+						System.out.println("Posizione in rubrica del contatto da modificare: ");
+						int pos = kb.nextInt();
+						modificaContatto(pos);
+					}
+					break;
+					
+				case 5:			//CANCELLA CONTATTO
+					if (s == 1)
+					{
+						
+					}
+					else
+					{
+						System.out.println("Posizione in rubrica del contatto da eliminare: ");
+						int posizione = kb.nextInt();
+						cancellaContatto(posizione);
+					}
+					break;
+					
+				case 6:			//TROVA DUPLICATI
+					if (s == 1)
+					{
+						
+					}
+					else
+					{
+						List<Contatto> duplicati = cercaDuplicati(false);
+						
+						String[] indici = duplicati.get(0).getNome().split(",");
+						int counter = indici.length-1;
+						boolean first = true;
+						
+						if (duplicati.isEmpty()) System.out.println("Nessuno contatto duplicato trovato.");
+						else
+						{
+							for(Contatto contatto : duplicati)
+							{
+								if (first)
+								{
+									first = false;
+									continue;
+								}
+								
+								System.out.println(indici[counter--] + " " + contatto.toString());
+							}
+						}
+					}
+					break;
+					
+				case 7:			//UNISCI DUPLICATI
+					if (s == 1)
+					{
+						
+					}
+					else
+					{
+						List<Contatto> duplicatiUniti = cercaDuplicati(true);
+						contatti = duplicatiUniti;
+						visualizzaContatti("");
+					}
+					break;
 					
 				case 8:
 					return;
