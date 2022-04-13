@@ -122,6 +122,7 @@ public class RubricaManager {
 				fileWriter.write(separator);
 				fileWriter.write(contatto.getNote());
 				fileWriter.write(separator);
+				fileWriter.write("\n");
 			}
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
@@ -353,7 +354,7 @@ public class RubricaManager {
 	
 	///////////////////////////////////////Generale//////////////////////////////////////////
 	public static boolean eliminaVirgolette(Contatto c) {
-		
+		/*
 		if(c.getNome().startsWith("\"")) {
 			c.setNome(c.getNome().substring(1));
 		}if(c.getNome().endsWith("\"")) {
@@ -395,6 +396,27 @@ public class RubricaManager {
 			c.setEmail(c.getEmail().substring(1));
 		}if(c.getEmail().endsWith("'")) {
 			c.setEmail(c.getEmail().substring(0,c.getEmail().length()-1));
+		}
+		*/
+		for(int i = 0; i < c.getNome().length(); i++) {
+			if(c.getNome().charAt(i) == '\'' || c.getNome().charAt(i) == '"') {
+				c.setNome(c.getNome().substring(0,i).concat(c.getNome().substring(i+1)));
+			}
+		}
+		for(int i = 0; i < c.getCognome().length(); i++) {
+			if(c.getCognome().charAt(i) == '\'' || c.getCognome().charAt(i) == '"') {
+				c.setCognome(c.getCognome().substring(0,i).concat(c.getCognome().substring(i+1)));
+			}
+		}
+		for(int i = 0; i < c.getTelefono().length(); i++) {
+			if(c.getTelefono().charAt(i) == '\'' || c.getTelefono().charAt(i) == '"') {
+				c.setTelefono(c.getTelefono().substring(0,i).concat(c.getTelefono().substring(i+1)));
+			}
+		}
+		for(int i = 0; i < c.getEmail().length(); i++) {
+			if(c.getEmail().charAt(i) == '\'' || c.getEmail().charAt(i) == '"') {
+				c.setEmail(c.getEmail().substring(0,i).concat(c.getEmail().substring(i+1)));
+			}
 		}
 		return true;
 	}
