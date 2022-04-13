@@ -34,7 +34,7 @@ public class Rubrica
 		
 		do
 		{
-			menuIniziale();
+			menuAvvio();
 			
 			riprova = false;
 			
@@ -44,11 +44,11 @@ public class Rubrica
 			switch(scelta)
 			{
 				case 1:
-					avviaMenuRubrica();
+					avviaMenu(scelta);
 					break;
 					
 				case 2:
-					avviaMenuContatti();
+					avviaMenu(scelta);
 					break;
 					
 				case 3:
@@ -62,9 +62,45 @@ public class Rubrica
 			
 			
 		} while (riprova);
-}
+	}
 	
-	private void avviaMenuRubrica()
+	private void avviaMenu(int s) // 1 database 2 locale
+	{
+		Scanner kb = null;
+		boolean riprova = false;
+		
+		do
+		{
+			menuIniziale(s);
+			
+			riprova = false;
+			
+			kb = new Scanner(System.in);
+			int scelta = kb.nextInt();
+			
+			switch(scelta)
+			{
+				case 1:
+					avviaMenuRubrica(s);
+					break;
+					
+				case 2:
+					avviaMenuContatti(s);
+					break;
+					
+				case 3:
+					return;
+					
+				default:
+					riprova = true;
+					break;
+			}
+			
+			
+		} while (riprova);
+	}
+	
+	private void avviaMenuRubrica(int s)
 	{
 		Scanner kb = null;
 		boolean riprova = false;
@@ -81,11 +117,11 @@ public class Rubrica
 			switch(scelta)
 			{
 				case 1:
-					avviaMenuImportazione();
+					avviaMenuImportazione(s);
 					break;
 					
 				case 2:
-					avviaMenuEsportazione();
+					avviaMenuEsportazione(s);
 					break;
 					
 				case 3:
@@ -100,14 +136,14 @@ public class Rubrica
 		} while (riprova);
 	}
 	
-	private void avviaMenuImportazione()
+	private void avviaMenuImportazione(int s)
 	{
 		Scanner kb = null;
 		boolean riprova = false;
 		
 		do
 		{
-			menuImportazione();
+			menuImportazione(s);
 			
 			riprova = false;
 			
@@ -118,22 +154,46 @@ public class Rubrica
 			switch(scelta)
 			{
 				case 1:
-					CSVhandler csvHandler = new CSVhandler();
-					System.out.print("Inserisci il path: ");
-					pathFile = kb.next();
-					System.out.print("Inserisci il carattere separatore: ");
-					String separator = kb.next();
-					
-					System.out.println("LOG path: " + pathFile + ", separatore: " + separator);
-					
-					contatti = csvHandler.loadRubricaFromCSV(pathFile, separator);
+					if (s == 1)
+					{
+						JDBChandler jdbcHandler = new JDBChandler();
+						CSVhandler csvHandler = new CSVhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						System.out.print("Inserisci il carattere separatore: ");
+						String separator = kb.next();
+						
+						
+						jdbcHandler.loadRubricaToDB(csvHandler.loadRubricaFromCSV(pathFile, separator));
+					}
+					else
+					{
+						CSVhandler csvHandler = new CSVhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						System.out.print("Inserisci il carattere separatore: ");
+						String separator = kb.next();
+						
+						contatti = csvHandler.loadRubricaFromCSV(pathFile, separator);
+					}
 					break;
 					
 				case 2:
-					XMLhandler xmlHandler = new XMLhandler();
-					System.out.print("Inserisci il path: ");
-					pathFile = kb.next();
-					contatti = xmlHandler.loadRubricaFromXML(pathFile);
+					if (s == 1)
+					{
+						JDBChandler jdbcHandler = new JDBChandler();
+						XMLhandler xmlHandler = new XMLhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						jdbcHandler.loadRubricaToDB(xmlHandler.loadRubricaFromXML(pathFile));
+					}
+					else
+					{
+						XMLhandler xmlHandler = new XMLhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						contatti = xmlHandler.loadRubricaFromXML(pathFile);
+					}
 					break;
 					
 				case 3:
@@ -148,14 +208,14 @@ public class Rubrica
 		} while (riprova);
 	}
 	
-	private void avviaMenuEsportazione()
+	private void avviaMenuEsportazione(int s)
 	{
 		Scanner kb = null;
 		boolean riprova = false;
 		
 		do
 		{
-			menuEsportazione();
+			menuEsportazione(s);
 			
 			riprova = false;
 			
@@ -167,19 +227,43 @@ public class Rubrica
 			switch(scelta)
 			{
 				case 1:
-					CSVhandler csvHandler = new CSVhandler();
-					System.out.print("Inserisci il path: ");
-					pathFile = kb.next();
-					System.out.print("Inserisci il carattere separatore: ");
-					String separator = kb.next();
-					csvHandler.writeRubricaCSV(contatti, pathFile, separator);
+					if (s == 1)
+					{
+						JDBChandler jdbcHandler = new JDBChandler();
+						CSVhandler csvHandler = new CSVhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						System.out.print("Inserisci il carattere separatore: ");
+						String separator = kb.next();
+						csvHandler.writeRubricaCSV(jdbcHandler.writeRubricaFromDB(), pathFile, separator);
+					}
+					else
+					{
+						CSVhandler csvHandler = new CSVhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						System.out.print("Inserisci il carattere separatore: ");
+						String separator = kb.next();
+						csvHandler.writeRubricaCSV(contatti, pathFile, separator);
+					}					
 					break;
 					
 				case 2:
-					XMLhandler xmlHandler = new XMLhandler();
-					System.out.print("Inserisci il path: ");
-					pathFile = kb.next();
-					xmlHandler.writeRubricaXML(contatti, pathFile);
+					if (s == 1)
+					{
+						JDBChandler jdbcHandler = new JDBChandler();
+						XMLhandler xmlHandler = new XMLhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						xmlHandler.writeRubricaXML(jdbcHandler.writeRubricaFromDB(), pathFile);
+					}
+					else
+					{
+						XMLhandler xmlHandler = new XMLhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						xmlHandler.writeRubricaXML(contatti, pathFile);
+					}
 					break;
 					
 				case 3:
@@ -194,7 +278,7 @@ public class Rubrica
 		} while (riprova);
 	}
 	
-	private void avviaMenuContatti()
+	private void avviaMenuContatti(int s)
 	{
 		Scanner kb = null;
 		boolean riprova = false;
@@ -209,7 +293,7 @@ public class Rubrica
 			
 			kb = new Scanner(System.in);
 			int scelta = kb.nextInt();
-			if (contatti.size() == 0 && scelta != 3) scelta = -1;
+			if (contatti.size() == 0 && scelta != 3 && scelta != 8) scelta = -1;
 			
 			
 			switch(scelta)
@@ -485,12 +569,30 @@ public class Rubrica
 	
 	//OUTPUT A SCHERMO
 	
-	private void menuIniziale()
+	private void menuAvvio()
 	{
-		System.out.print("\n\n------------ RUBRICA ------------\n");
+		System.out.print("------------ RUBRICA ------------\n");
 		System.out.print("---------------------------------\n");
-		
-		System.out.println((contatti.size() != 0) ? ("------- Rubrica: " + "caricata" + " -------") : ("----- Rubrica: non caricata -----"));
+		System.out.print("--------- Menu Database ---------\n");
+		System.out.print("--------------- 1 ---------------\n");
+		System.out.print("---------------------------------\n");
+		System.out.print("---------- Menu Locale ----------\n");
+		System.out.print("--------------- 2 ---------------\n");
+		System.out.print("---------------------------------\n");
+		System.out.print("------- Esci dal Programma ------\n");
+		System.out.print("--------------- 3 ---------------\n");
+		System.out.print("---------------------------------\n");
+	}
+	
+	private void menuIniziale(int s)
+	{
+		if (s == 1) System.out.print("------------ DATABASE -----------\n");
+		else
+		{
+			System.out.print("\n\n------------ LOCALE -------------\n");
+			System.out.print("---------------------------------\n");
+			System.out.println((contatti.size() != 0) ? ("------- Rubrica: " + "caricata" + " -------") : ("----- Rubrica: non caricata -----"));
+		}
 		
 		System.out.print("---------------------------------\n");
 		System.out.print("------- Gestione Rubrica --------\n");
@@ -499,7 +601,7 @@ public class Rubrica
 		System.out.print("------- Gestione Contatti -------\n");
 		System.out.print("--------------- 2 ---------------\n");
 		System.out.print("---------------------------------\n");
-		System.out.print("------ Esci dal Programma -------\n");
+		System.out.print("-------- Menu Principale --------\n");
 		System.out.print("--------------- 3 ---------------\n");
 		System.out.print("---------------------------------\n");
 	}
@@ -519,30 +621,56 @@ public class Rubrica
 		System.out.print("---------------------------------\n");
 	}
 	
-	private void menuImportazione()
+	private void menuImportazione(int s)
 	{
 		System.out.print("----- IMPORTAZIONE RUBRICA ------\n");
 		System.out.print("---------------------------------\n");
-		System.out.print("------ Importa Rubrica CSV ------\n");
-		System.out.print("--------------- 1 ---------------\n");
-		System.out.print("---------------------------------\n");
-		System.out.print("------ Importa Rubrica XML ------\n");
-		System.out.print("--------------- 2 ---------------\n");
+		
+		if (s == 1)
+		{
+			System.out.print("- Importa Rubrica su  DB da CSV -\n");
+			System.out.print("--------------- 1 ---------------\n");
+			System.out.print("---------------------------------\n");
+			System.out.print("- Importa Rubrica su  DB da XML -\n");
+			System.out.print("--------------- 2 ---------------\n");
+		}
+		else
+		{
+			System.out.print("------ Importa Rubrica CSV ------\n");
+			System.out.print("--------------- 1 ---------------\n");
+			System.out.print("---------------------------------\n");
+			System.out.print("------ Importa Rubrica XML ------\n");
+			System.out.print("--------------- 2 ---------------\n");
+		}
+		
 		System.out.print("---------------------------------\n");
 		System.out.print("-------- Menu Principale --------\n");
 		System.out.print("--------------- 3 ---------------\n");
 		System.out.print("---------------------------------\n");
 	}
 	
-	private void menuEsportazione()
+	private void menuEsportazione(int s)
 	{
 		System.out.print("----- ESPORTAZIONE RUBRICA ------\n");
 		System.out.print("---------------------------------\n");
-		System.out.print("------ Esporta Rubrica CSV ------\n");
-		System.out.print("--------------- 1 ---------------\n");
-		System.out.print("---------------------------------\n");
-		System.out.print("------ Esporta Rubrica XML ------\n");
-		System.out.print("--------------- 2 ---------------\n");
+		
+		if (s == 1)
+		{
+			System.out.print("-- Esporta Rubrica da DB a CSV --\n");
+			System.out.print("--------------- 1 ---------------\n");
+			System.out.print("---------------------------------\n");
+			System.out.print("-- Esporta Rubrica da DB a XML --\n");
+			System.out.print("--------------- 2 ---------------\n");
+		}
+		else
+		{
+			System.out.print("------ Esporta Rubrica CSV ------\n");
+			System.out.print("--------------- 1 ---------------\n");
+			System.out.print("---------------------------------\n");
+			System.out.print("------ Esporta Rubrica XML ------\n");
+			System.out.print("--------------- 2 ---------------\n");
+		}
+		
 		System.out.print("---------------------------------\n");
 		System.out.print("-------- Menu Principale --------\n");
 		System.out.print("--------------- 3 ---------------\n");
