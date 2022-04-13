@@ -434,8 +434,6 @@ public class Rubrica
 		{
 			for(int j = 0; j < contatti.size(); j++)
 			{
-				System.out.println("i: " + i + ", j: " + j);
-				
 				if (!unisci)											//TROVA DUPLICATI
 				{
 					if (i == j) continue;
@@ -450,18 +448,13 @@ public class Rubrica
 				{
 					if (i != j && contatti.get(i).equals(contatti.get(j)))
 					{
-						System.out.println("DUPLICATO: -> indice: " + contatti.indexOf(contatti.get(j)) + ", " + contatti.get(j).toString());
 						contatti.remove(j);
 						j--;
 					}
 				}
 			}
 			
-			if (unisci)
-			{
-				System.out.println("AGGIUNGO: -> indice: " + contatti.indexOf(contatti.get(i)) + ", " + contatti.get(i).toString());
-				contacts.add(contatti.get(i));
-			}
+			if (unisci) contacts.add(contatti.get(i));
 		}
 		
 		if (unisci) contacts.remove(0);
