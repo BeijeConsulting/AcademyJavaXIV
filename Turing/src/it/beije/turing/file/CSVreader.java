@@ -29,7 +29,7 @@ public class CSVreader {
 				
 				row = row.substring(1, row.length()-1);
 				String[] columns = row.split("\";\"");
-//				for (String col : columns) System.out.println(col);
+ 				for (String col : columns) System.out.println(col);
 				
 				contatto = new Contatto();
 				contatto.setNome(columns[0]);
@@ -58,8 +58,8 @@ public class CSVreader {
 
 	public static void main(String[] args) {
 
-		readCSV("/temp/prova.txt");
-
+		List<Contatto> contatti= readCSV("C:\\Users\\aless_in4zoow\\eclipse-workspace\\ESERCIZI_PROVA\\src\\prova.txt");
+		//for(Contatto contatto: contatti) System.out.println(contatto);
 //		File file = new File("/temp/prova.txt");
 //		System.out.println("file exists? " + file.exists());
 //		System.out.println("file is file? " + file.isFile());

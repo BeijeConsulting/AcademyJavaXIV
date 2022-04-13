@@ -12,7 +12,7 @@ public class JDBCmanager {
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/turing?serverTimezone=CET", "root", "beije");
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/turing?serverTimezone=CET", "root", "Marazzini");
 	}
 
 	public static void main(String[] args) {
@@ -72,7 +72,7 @@ public class JDBCmanager {
 			try {
 				rs.close();
 				statement.close();
-				connection.close();
+				//connection.close();
 			} catch (SQLException sqlEx) {
 				sqlEx.printStackTrace();
 			}

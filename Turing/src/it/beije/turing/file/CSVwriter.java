@@ -11,7 +11,7 @@ public class CSVwriter {
 
 	public static void main(String[] args) {
 		
-		File file = new File("/temp/prova123.txt");
+		File file = new File("C:\\Users\\aless_in4zoow\\eclipse-workspace\\ESERCIZI_PROVA\\src\\ciao.txt");
 		System.out.println("file exists? " + file.exists());
 		
 		if (file.exists()) {
@@ -29,7 +29,7 @@ public class CSVwriter {
 //			//"Mario";"Rossi";"3432532555";"mario.rossi@gmail.com";"vicino di casa"
 //			fileWriter.write("\"Mario\";\"Rossi\";\"00000000\";\"mario.rossi@gmail.com\";\"vicino di casa\"");
 			
-			List<Contatto> contatti = CSVreader.readCSV("/temp/prova.txt");
+			List<Contatto> contatti = CSVreader.readCSV("C:\\Users\\aless_in4zoow\\eclipse-workspace\\ESERCIZI_PROVA\\src\\prova.txt");
 			for (Contatto contatto : contatti) {
 //				fileWriter.write(row);
 				fileWriter.write(contatto.getCognome());
