@@ -268,6 +268,47 @@ public class RubricaCSV implements Rubrica {
 		
 	}
 	
+	
+	public List<Contatto> sort(String type) {
+		List<Contatto> ris = manager.loadRubricaFromCSV(path.toAbsolutePath().toString(),";");
+		boolean swapped = true;
+		switch(type.toLowerCase().charAt(0)) {
+			case 'n':
+				while(swapped) {
+					swapped = false;
+					for(int i = 0; (i+1) < ris.size(); i++) {
+						if(ris.get(i).getNome().toUpperCase().compareTo(ris.get(i+1).getNome().toUpperCase()) >= 0) {
+							if(ris.get(i).getNome().toUpperCase().compareTo(ris.get(i+1).getNome().toUpperCase()) == 0) {
+								continue;
+							}
+							swap(ris,i);
+							swapped = true;
+						}
+					}
+				}
+				break;
+			case 'c':
+				while(swapped) {
+					swapped = false;
+					for(int i = 0; (i+1) < ris.size(); i++) {
+						if(ris.get(i).getCognome().toUpperCase().compareTo(ris.get(i+1).getCognome().toUpperCase()) >= 0) {
+							if(ris.get(i).getCognome().toUpperCase().compareTo(ris.get(i+1).getCognome().toUpperCase()) == 0) {
+								continue;
+							}
+							swap(ris,i);
+							swapped = true;
+						}
+					}
+				}
+				break;
+			default:
+				break;
+		}
+		return ris;
+	}
+	
+	
+
 	////////////////////////////////////////Metodi non richiesti//////////////////////////////////
 	public Contatto cercaContattoModifica(Scanner s) {
 		System.out.println("Inserire nome da ricercare:");
@@ -287,6 +328,15 @@ public class RubricaCSV implements Rubrica {
 			}
 		}
 		return null;
+	}
+
+	private void swap(List<Contatto> contatti, int i) {
+		Contatto tmp = contatti.get(i);
+		Contatto tmp2 = contatti.get(i+1);
+		contatti.remove(i+1);
+		contatti.remove(i);
+		contatti.add(i,tmp2);
+		contatti.add(i+1,tmp);
 	}
 	
 }

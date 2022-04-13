@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import it.beije.turing.newRubrica.file.DBManager;
 import it.beije.turing.newRubrica.file.RubricaManager;
 import it.beije.turing.newRubrica.rubrica.Contatto;
 import it.beije.turing.newRubrica.rubrica.RubricaCSV;
@@ -41,7 +42,7 @@ public class TestApp {
 		//System.out.println(r.getPath().toAbsolutePath().toString());
 		while (!st.equalsIgnoreCase("esci") && !st.equals("11")) {
 			System.out.println("Selezionare programma da eseguire:\n"
-					+ "1: Mostra tutta la rubrica\n"
+					+ "1: Mostra tutta la rubrica e ordina per nome o cognome\n"
 					+ "2: Cerca un contatto\n"
 					+ "3: Aggiungi un contatto\n"
 					+ "4: Modifica contatto\n"
@@ -50,11 +51,17 @@ public class TestApp {
 					+ "7: Unisci contatti duplicati\n"
 					+ "8: Cambia File Rubrica\n"
 					+ "9: Leggi da DB e salva su file\n"
-					+ "10: Scrivi su DB"
+					+ "10: Scrivi su DB\n"
 					+ "11: Esci");
 			st = s.nextLine();
 			switch(st) {
 				case "1":
+					String type = "";
+					while(type.isBlank()) {
+						System.out.println("selezionare metodo di visualizzazione (nome,cognome):");
+						type = s.nextLine();
+					}
+					r.setAllContact(r.sort(type));
 					r.vediListaContatti();
 					break;
 				case "2":

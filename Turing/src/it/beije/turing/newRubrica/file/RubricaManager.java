@@ -76,7 +76,10 @@ public class RubricaManager {
 				try {
 					contatto.setId(Integer.parseInt(columns[5]));
 				}catch(ArrayIndexOutOfBoundsException e) {
-					contatto.setId(-1);
+					contatto.setId(0);
+				}
+				if(contatto.getNome().equalsIgnoreCase("NOME")) {
+					continue;
 				}
 				eliminaVirgolette(contatto);
 				contatti.add(contatto);
@@ -316,16 +319,17 @@ public class RubricaManager {
 		try {
 			connection = getConnection(dbName,username,password);
 			statement = connection.createStatement();
-			
+			int i = 0;
 			for(Contatto c : contatti) {
-				rs = statement.executeQuery("SELECT r.id, r.nome, r.cognome, r.telefono, r.email FROM rubrica r WHERE (r.nome = '"+c.getNome()+"' AND r.cognome = '"+c.getCognome()+"' AND "
-						+ "r.telefono = '"+c.getTelefono()+"' AND r.email = '"+c.getEmail()+"')");
+				i++;
+				rs = statement.executeQuery("SELECT r.nome, r.cognome, r.telefono, r.email FROM rubrica r WHERE r.nome = '"+c.getNome()+"' AND r.cognome = '"+c.getCognome()+"' AND "
+						+ "r.telefono = '"+c.getTelefono()+"' AND r.email = '"+c.getEmail()+"';");
 				if(rs.first()) {
-					int ris2 = statement.executeUpdate("UPDATE rubrica VALUES (null, "+c.getNome()+", "+c.getCognome()+", "
-							+c.getTelefono()+", "+c.getEmail()+", "+c.getNote()+") WHERE (`id` = '"+c.getId()+"')");
+					int ris2 = statement.executeUpdate("UPDATE rubrica r SET r.nome = '"+c.getNome()+"', r.cognome = '"+c.getCognome()+"', r.telefono = '"
+							+c.getTelefono()+"', r.email = '"+c.getEmail()+"', r.note = '"+c.getNote()+"' WHERE r.id = "+i+";");
 				}else {
 					int ris2 = statement.executeUpdate("INSERT INTO rubrica VALUES (null, '"+c.getNome()+"', '"+c.getCognome()+"', '"
-							+c.getTelefono()+"', '"+c.getEmail()+"', '"+c.getNote()+"')");
+							+c.getTelefono()+"', '"+c.getEmail()+"', '"+c.getNote()+"');");
 				}
 				
 				
@@ -352,31 +356,45 @@ public class RubricaManager {
 		
 		if(c.getNome().startsWith("\"")) {
 			c.setNome(c.getNome().substring(1));
-		}else if(c.getNome().endsWith("\"")) {
+		}if(c.getNome().endsWith("\"")) {
 			c.setNome(c.getNome().substring(0,c.getNome().length()-1));
-		}else if(c.getNome().startsWith("\"") && c.getNome().endsWith("\"")) {
-			c.setNome(c.getNome().substring(1,c.getNome().length()-1));
 		}
+		
 		if(c.getCognome().startsWith("\"")) {
 			c.setCognome(c.getCognome().substring(1));
-		}else if(c.getCognome().endsWith("\"")) {
+		}if(c.getCognome().endsWith("\"")) {
 			c.setCognome(c.getCognome().substring(0,c.getCognome().length()-1));
-		}else if(c.getCognome().startsWith("\"") && c.getCognome().endsWith("\"")) {
-			c.setCognome(c.getCognome().substring(1,c.getCognome().length()-1));
 		}
 		if(c.getTelefono().startsWith("\"")) {
 			c.setTelefono(c.getTelefono().substring(1));
-		}else if(c.getTelefono().endsWith("\"")) {
+		}if(c.getTelefono().endsWith("\"")) {
 			c.setTelefono(c.getTelefono().substring(0,c.getTelefono().length()-1));
-		}else if(c.getTelefono().startsWith("\"") && c.getTelefono().endsWith("\"")) {
-			c.setTelefono(c.getTelefono().substring(1,c.getTelefono().length()-1));
 		}
 		if(c.getEmail().startsWith("\"")) {
 			c.setEmail(c.getEmail().substring(1));
-		}else if(c.getEmail().endsWith("\"")) {
+		}if(c.getEmail().endsWith("\"")) {
 			c.setEmail(c.getEmail().substring(0,c.getEmail().length()-1));
-		}else if(c.getEmail().startsWith("\"") && c.getEmail().endsWith("\"")) {
-			c.setEmail(c.getEmail().substring(1,c.getEmail().length()-1));
+		}
+		
+		if(c.getNome().startsWith("'")) {
+			c.setNome(c.getNome().substring(1));
+		}if(c.getNome().endsWith("'")) {
+			c.setNome(c.getNome().substring(0,c.getNome().length()-1));
+		}
+		if(c.getCognome().startsWith("'")) {
+			c.setCognome(c.getCognome().substring(1));
+		}if(c.getCognome().endsWith("'")) {
+			c.setCognome(c.getCognome().substring(0,c.getCognome().length()-1));
+		}
+		if(c.getTelefono().startsWith("'")) {
+			c.setTelefono(c.getTelefono().substring(1));
+		}if(c.getTelefono().endsWith("'")) {
+			c.setTelefono(c.getTelefono().substring(0,c.getTelefono().length()-1));
+		}
+		if(c.getEmail().startsWith("'")) {
+			c.setEmail(c.getEmail().substring(1));
+		}if(c.getEmail().endsWith("'")) {
+			c.setEmail(c.getEmail().substring(0,c.getEmail().length()-1));
 		}
 		return true;
 	}

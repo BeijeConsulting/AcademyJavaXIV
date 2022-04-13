@@ -20,4 +20,5 @@ public interface Rubrica {
 	public abstract void setAllContact(List<Contatto> l);
 	public abstract Path getPath();
 	public abstract void setPath(Path p);
+	public abstract List<Contatto> sort(String type);
 }

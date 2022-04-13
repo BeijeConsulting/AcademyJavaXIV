@@ -1,9 +1,9 @@
-package it.beije.turing.newRubrica.rubrica;
+package it.beije.turing.newRubrica.file;
 
 import java.util.List;
 import java.util.Scanner;
 
-import it.beije.turing.newRubrica.file.RubricaManager;
+import it.beije.turing.newRubrica.rubrica.Contatto;
 
 public class DBManager {
 	
