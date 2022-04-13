@@ -13,6 +13,8 @@ public class Rubrica
 		Rubrica rubrica = new Rubrica();
 		while(true)
 		{
+			System.out.print("	  Mattia Pagani\n\n\n");
+			
 			rubrica.avviaMenu();
 		}
 		
@@ -260,11 +262,28 @@ public class Rubrica
 					
 				case 3:
 					//CREA CONTATTO
+					kb.nextLine();
+					
+					System.out.print("Nome: ");
 					String nome = kb.nextLine();
+					System.out.println();
+					
+					System.out.print("Cognome: ");
 					String cognome = kb.nextLine();
+					System.out.println();
+					
+					System.out.print("Telefono: ");
 					String telefono = kb.nextLine();
+					System.out.println();
+					
+					System.out.print("Email: ");
 					String email = kb.nextLine();
+					System.out.println();
+					
+					System.out.print("Note: ");
 					String note = kb.nextLine();
+					System.out.println();
+					
 					System.out.println(contatti.add(new Contatto(nome, cognome, telefono, email, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					return;
 					
