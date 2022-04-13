@@ -28,7 +28,7 @@ public class JDBCmanager {
 			//statement.executeUpdate("INSERT INTO rubrica VALUES (null, 'Piero', 'Verde', 'l.verde@beije.it', '5355223532', null)");
 			
 			//UPDATE
-			//statement.executeUpdate("UPDATE rubrica SET telefono = '123452' where id = 2");
+			//statement.executeUpdate("UPDATE rubrica SET note = 'quarto contatto' where id = 4");
 
 			//DELETE
 			//statement.executeUpdate("DELETE FROM rubrica where id = 4");
@@ -62,8 +62,6 @@ public class JDBCmanager {
 //				System.out.println("nome : " + rs.getString("nome"));				
 //				System.out.println("email : " + rs.getString("email"));				
 			}
-
-			
 		} catch (ClassNotFoundException cnfEx) {
 			cnfEx.printStackTrace();
 		} catch (SQLException sqlEx) {
@@ -72,7 +70,7 @@ public class JDBCmanager {
 			try {
 				rs.close();
 				statement.close();
-				//connection.close();
+				connection.close();
 			} catch (SQLException sqlEx) {
 				sqlEx.printStackTrace();
 			}
