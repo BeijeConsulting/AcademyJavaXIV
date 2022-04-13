@@ -8,6 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import it.beije.turing.newRubrica.rubrica.Contatto;
 
 public class RubricaManager {
@@ -110,8 +119,69 @@ public class RubricaManager {
 	
 	////////////////////////////////////////XML//////////////////////////////////////////////
 	public List<Contatto> loadRubricaFromXML(String pathFile) {
-		
-		return null;
+		List<Contatto> ris = new ArrayList<>();
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = null;
+		Document document = null;
+		try {
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			document = documentBuilder.parse(pathFile);
+			
+			Element root = document.getDocumentElement();
+			//System.out.println("root : " + root.getTagName());
+			NodeList nodes = root.getChildNodes();
+			//System.out.println("nodes num : " + nodes.getLength());
+			
+			List<Element> children = getChildElements(root);
+			System.out.println("children num : " + children.size());
+			
+			for (Element el : children) {
+				if (el.getTagName().equalsIgnoreCase("contatto")) {
+					List<Element> contatto = getChildElements(el);
+					Contatto c = new Contatto();
+					for (Element value : contatto) {
+						switch (value.getTagName().toLowerCase()) {
+						case "nome":
+							//System.out.println("nome : " + value.getTextContent());
+							c.setNome(value.getTextContent());
+							break;
+						case "cognome":
+							//System.out.println("cognome : " + value.getTextContent());
+							c.setCognome(value.getTextContent());
+							break;
+						case "telefono":
+							//System.out.println("telefono : " + value.getTextContent());	
+							c.setTelefono(value.getTextContent());
+							break;
+						case "email":
+							//System.out.println("email : " + value.getTextContent());
+							c.setEmail(value.getTextContent());
+							break;
+						case "note":
+							//System.out.println("note : " + value.getTextContent());	
+							c.setNote(value.getTextContent());
+							break;
+
+						default:
+							break;
+						}
+						
+					}
+					
+					//System.out.println("eta' : " + el.getAttribute("eta"));
+					ris.add(c);
+				}
+			}
+			
+		} catch (ParserConfigurationException pcEx) {
+			pcEx.printStackTrace();
+		} catch (IOException ioEx) {
+			ioEx.printStackTrace();
+		} catch (SAXException saxEx) {
+			saxEx.printStackTrace();
+		}
+		System.out.println("Done!");
+		return ris;
 	}
 	public void writeRubricaXML(List<Contatto> contatti, String pathFile) {
 		
@@ -149,5 +219,15 @@ public class RubricaManager {
 			c.setEmail(c.getEmail().substring(1,c.getEmail().length()-1));
 		}
 		return true;
+	}
+	
+	public static List<Element> getChildElements(Element element) {
+		List<Element> childElements = new ArrayList<Element>();
+		NodeList nodeList = element.getChildNodes();
+		for (int n = 0; n < nodeList.getLength(); n++) {
+			if (nodeList.item(n) instanceof Element) childElements.add((Element)nodeList.item(n));
+		}
+		
+		return childElements;
 	}
 }

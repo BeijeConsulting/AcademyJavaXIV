@@ -1,5 +1,6 @@
 package it.beije.turing.newRubrica.rubrica;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,4 +16,8 @@ public interface Rubrica {
 	public abstract void cancellaContatto(Scanner s);
 	public abstract List<Contatto> trovaContattiDuplicati();
 	public abstract void unisciContattiDuplicati();
+	public abstract List<Contatto> getAllContact();
+	public abstract void setAllContact(List<Contatto> l);
+	public abstract Path getPath();
+	public abstract void setPath(Path p);
 }

@@ -1,6 +1,10 @@
 package it.beije.turing.newRubrica.rubrica;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,13 +13,30 @@ import it.beije.turing.newRubrica.rubrica.Contatto;
 import it.beije.turing.newRubrica.rubrica.RubricaCSV;
 
 public class TestApp {
-
-	public static void main(String[] args) {
-		RubricaCSV r = new RubricaCSV(Paths.get("File","rubrica.csv"));
+	public Path p;
+	public static void main (String[] args)  {
+		
+		
 		RubricaManager rm = new RubricaManager();
 		
 		Scanner s = new Scanner(System.in);
 		String st = "";
+		String tmp = "";
+		System.out.println("Inserire nome ed estensione file:");
+		tmp = s.nextLine();
+		while(!new File(Paths.get("File",tmp).toAbsolutePath().toString()).exists()) {
+			System.out.println("Il File non esiste.");
+			System.out.println("Inserire nome ed estensione file:");
+			tmp = s.nextLine();
+		}
+		String estensione = tmp.substring(tmp.length()-3);
+		Rubrica r;
+		if(estensione.equals("csv")) {
+			r = new RubricaCSV(Paths.get("File",tmp));
+		}else {
+			r = new RubricaXML(Paths.get("File",tmp));
+		}
+		 
 		//System.out.println(r.getPath().toAbsolutePath().toString());
 		while (!st.equalsIgnoreCase("esci") && !st.equals("9")) {
 			System.out.println("Selezionare programma da eseguire:\n"

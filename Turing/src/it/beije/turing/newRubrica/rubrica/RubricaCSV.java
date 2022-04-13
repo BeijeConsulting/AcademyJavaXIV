@@ -48,7 +48,7 @@ public class RubricaCSV implements Rubrica {
 	
 	@Override
 	public void caricaFileContatti(Scanner s) {
-		System.out.println("Inserire il nome del file a cui accedere(senza estensione):");
+		System.out.println("Inserire il nome del file .csv a cui accedere(senza estensione):");
 		String tmp = s.nextLine();
 		if(!tmp.isBlank() && !tmp.isEmpty()) {
 			if(new File(Paths.get("File",tmp.concat(".csv")).toString()).exists()) {
