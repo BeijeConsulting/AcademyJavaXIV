@@ -180,7 +180,11 @@ public class Rubrica {
 		FileWriter fileWriter = null;
 		
 		try {
-			fileWriter = new FileWriter(file);
+			if (file.exists()) {
+				System.out.println("FILE GIÁ ESISTENTE!!!");
+				fileWriter = new FileWriter(file, true);
+			} else fileWriter = new FileWriter(file, false);
+			
 			for (Contatto contact : contacts) {
 				if (contact.getCognome() != null) {
 					fileWriter.write(contact.getCognome());

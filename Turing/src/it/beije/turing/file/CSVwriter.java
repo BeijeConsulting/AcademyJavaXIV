@@ -14,10 +14,7 @@ public class CSVwriter {
 		File file = new File("/temp/prova123.txt");
 		System.out.println("file exists? " + file.exists());
 		
-		if (file.exists()) {
-			System.out.println("FILE GIA' ESISTENTE!!!");
-//			return;
-		}
+		
 		
 		FileWriter fileWriter = null;
 		try {
