@@ -13,33 +13,59 @@ public class main {
 		 Scanner scanner = new Scanner(System.in);
 	 while (shouldBeRunning)
 	 {
-		
+		 System.out.print("-");
 		 String command = scanner.next(); 
 		 switch(command.toLowerCase())
 		 {
+		 
 		 case "import":
+			 String type = scanner.next();
+			 if(type.equalsIgnoreCase("csv"))
+			 {
 			 manager.RubricImportCSV(scanner.next(), Boolean.parseBoolean(scanner.next()));
+			 }
+			 else if(type.equalsIgnoreCase("xml"))
+			 {
+			 manager.ImportXML("tmp/Rubrica.xml");
+			 }
 			 break;
+		 
+		 
 		 case "print":
 		
 				manager.print(scanner.next());
 				break;
+		 
+		 
 		 case "save":
 			 manager.save();
 			 break;
+		 
+		 
 		 case "search":
 			 System.out.println("nome cognome telefono email. X per non includere il campo nella ricerca");
 			manager.search(scanner.next(),scanner.next(),scanner.next(),scanner.next());
+		 
+		 
 		 case "new":
 			 manager.add(scanner.next(),scanner.next(),scanner.next(),scanner.next(),scanner.next());
 			 break;
+		 
+		 
 		 case "modify":
 			 manager.modify(Integer.parseInt(scanner.next())-1, scanner.next(), scanner.next(), scanner.next(), scanner.next(),scanner.next());
 			 break;
+		 
+		 
 		 case "del":
 			 manager.delete(Integer.parseInt(scanner.next())-1);
 			 break;
-		default: 
+		
+		 case "export":
+			 manager.ExportXML("tmp/Rubrica.xml");
+			 break;
+		 
+		 default: 
 			System.out.println(INPUT_ERROR);
 			break;
 		 case "exit":

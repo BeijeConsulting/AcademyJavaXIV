@@ -1,4 +1,6 @@
-package it.beije.turing.file;
+package it.beije.turing.fileExercises;
+
+import it.beije.turing.file.Writer;
 
 public class DirectoryTreeFilePrinter {
 public static void main(String...args)

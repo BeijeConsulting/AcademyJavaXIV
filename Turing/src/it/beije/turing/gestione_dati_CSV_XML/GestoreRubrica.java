@@ -8,6 +8,7 @@ import it.beije.turing.file.Writer;
 import it.beije.turing.file.csv.CSVReader2;
 import it.beije.turing.rubrica.Contatto;
 import it.beije.turing.rubrica.RubricaInterpreteCSV;
+import it.beije.turing.rubrica.RubricaInterpreteXML;
 
 public class GestoreRubrica {
 private static final String BASE_RUBRIC="tmp/Test.txt";
@@ -21,9 +22,10 @@ private GestoreRubrica()
 	if(file.exists()&&file.isFile())
 	{
 		RubricImportCSV(BASE_RUBRIC,true);
-		AggiornaLista();
 	}
 }
+
+
 public static GestoreRubrica getInstance()
 {
 	if(self==null)
@@ -33,11 +35,6 @@ public static GestoreRubrica getInstance()
 	return self;
 }
 
-
-private void AggiornaLista() {
-	// TODO Auto-generated method stub
-	
-}
 
 public void RubricImportCSV(String fileName, boolean apici) {
  List<Contatto> tmp = CSVReader2.readCSV(fileName, apici);
@@ -51,6 +48,8 @@ public List<Contatto> getList()
 {
 	return list;
 }
+
+
 public void save() {
 	StringBuilder builder = new StringBuilder();
 	RubricaInterpreteCSV interprete = new RubricaInterpreteCSV();
@@ -61,10 +60,14 @@ public void save() {
 	}
 	save(builder.toString());
 }
+
+
 private void save(String s)
 {
 	Writer.Write(BASE_RUBRIC, s);
 }
+
+
 public void print(String mode) {
 	switch(mode.toLowerCase())
 	{
@@ -76,6 +79,8 @@ public void print(String mode) {
 	}
 	
 }
+
+
 private void printOrdinaPerNome() {
 	List<Contatto> tmp = new ArrayList<>();
 	List<Integer> indexes = new ArrayList<>();
@@ -119,6 +124,8 @@ private void printOrdinaPerNome() {
 	}
 	
 }
+
+
 public void print()
 {
 	int count=0;
@@ -127,6 +134,8 @@ public void print()
 		System.out.println(++count+")  "+c);
 	}
 }
+
+
 public void search(String nome, String cognome, String telefono, String email) {
 	List<Contatto> tmp = new ArrayList<>();
 	List<Integer> indexes  = new ArrayList<>();
@@ -144,12 +153,16 @@ public void search(String nome, String cognome, String telefono, String email) {
 	}
 	
 }
+
+
 public void add(String nome, String cognome, String telefono, String email,String note)
 {
 	Contatto c = new Contatto();
 	list.add(c);
 	modify(list.size()-1,nome,cognome,telefono,email,note);
 }
+
+
 public void modify(int x,String nome, String cognome, String telefono, String email,String note) {
 	Contatto c = list.get(x);
 	if(!nome.equalsIgnoreCase("X"))
@@ -174,7 +187,26 @@ public void modify(int x,String nome, String cognome, String telefono, String em
 	}
 	
 }
+
+
 public void delete(int i) {
 	list.remove(i);
 }
+
+public void ExportXML(String fileName)
+{
+	new RubricaInterpreteXML().ExportXML(list, fileName);
+}
+
+
+public void ImportXML(String fileName)
+{
+	List<Contatto> tmp = new ArrayList<>();
+	tmp= new RubricaInterpreteXML().importXML(fileName);
+	for(Contatto c : tmp)
+	{
+		list.add(c);
+	}
+}
+
 }
