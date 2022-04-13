@@ -31,15 +31,15 @@ public class CSVreader {
 				String[] columns = row.split("\";\"");
 //				for (String col : columns) System.out.println(col);
 				
-				contatto = new Contatto();
-				contatto.setNome(columns[0]);
-				contatto.setCognome(columns[1]);
-				contatto.setTelefono(columns[2]);
-				contatto.setEmail(columns[3]);
-				contatto.setNote(columns[4]);
+				//contatto = new Contatto();
+//				contatto.setNome(columns[0]);
+//				contatto.setCognome(columns[1]);
+//				contatto.setTelefono(columns[2]);
+//				contatto.setEmail(columns[3]);
+//				contatto.setNote(columns[4]);
 				
-				System.out.println(contatto);
-				contatti.add(contatto);
+//				System.out.println(contatto);
+//				contatti.add(contatto);
 			}
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();

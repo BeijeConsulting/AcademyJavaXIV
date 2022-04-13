@@ -8,6 +8,20 @@ public class Contatto {
 	private String email;
 	private String note;
 	
+	
+
+	public Contatto(String nome, String cognome, String telefono, String email, String note) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+		this.note = note;
+	}
+	
+	public Contatto() {
+	}
+	
+	
 	public String getNome() {
 		return nome;
 	}
@@ -45,11 +59,11 @@ public class Contatto {
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-				.append("{ cognome : ").append(this.cognome)
-				.append(", nome : ").append(this.nome)
-				.append(", telefono : ").append(this.telefono)
-				.append(", email : ").append(this.email)
-				.append(", note : ").append(this.note).append(" }");
+				.append("{ COGNOME : ").append(this.cognome)
+				.append(" , NOME : ").append(this.nome)
+				.append(" , TELEFONO : ").append(this.telefono)
+				.append(" , EMAIL : ").append(this.email)
+				.append(" , NOTE : ").append(this.note).append(" }");
 		
 		return builder.toString();
 	}
