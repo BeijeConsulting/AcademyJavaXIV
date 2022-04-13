@@ -11,8 +11,6 @@ public class Rubrica
 	public static void main(String[] args)
 	{
 		Rubrica rubrica = new Rubrica();
-		Scanner kb = null;
-		
 		while(true)
 		{
 			rubrica.avviaMenu();
@@ -262,28 +260,57 @@ public class Rubrica
 					
 				case 3:
 					//CREA CONTATTO
-					String nome = kb.next();
-					String cognome = kb.next();
-					String telefono = kb.next();
-					String email = kb.next();
-					String note = kb.next();
+					String nome = kb.nextLine();
+					String cognome = kb.nextLine();
+					String telefono = kb.nextLine();
+					String email = kb.nextLine();
+					String note = kb.nextLine();
 					System.out.println(contatti.add(new Contatto(nome, cognome, telefono, email, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					return;
 					
 				case 4:
 					//MODIFICA CONTATTO
+					System.out.println("Posizione in rubrica del contatto da modificare: ");
+					int pos = kb.nextInt();
+					modificaContatto(pos);
 					return;
 					
 				case 5:
 					//CANCELLA CONTATTO
+					System.out.println("Posizione in rubrica del contatto da eliminare: ");
+					int posizione = kb.nextInt();
+					cancellaContatto(posizione);
 					return;
 					
 				case 6:
 					//TROVA DUPLICATI
+					List<Contatto> duplicati = cercaDuplicati(false);
+					
+					String[] indici = duplicati.get(0).getNome().split(",");
+					int counter = indici.length-1;
+					boolean first = true;
+					
+					if (duplicati.isEmpty()) System.out.println("Nessuno contatto duplicato trovato.");
+					else
+					{
+						for(Contatto contatto : duplicati)
+						{
+							if (first)
+							{
+								first = false;
+								continue;
+							}
+							
+							System.out.println(indici[counter--] + " " + contatto.toString());
+						}
+					}
 					return;
 					
 				case 7:
 					//UNISCI DUPLICATI
+					List<Contatto> duplicatiUniti = cercaDuplicati(true);
+					contatti = duplicatiUniti;
+					visualizzaContatti("");
 					return;
 					
 				case 8:
@@ -301,9 +328,11 @@ public class Rubrica
 	{
 		if (filtro != "") ordinaRubrica(filtro);
 		
+		int counter = 1;
+		
 		for(Contatto contatto : contatti)
 		{
-			System.out.println(contatto.toString());
+			System.out.println(counter++ + " " + contatto.toString());
 		}
 	}
 	
@@ -351,6 +380,96 @@ public class Rubrica
 		
 		return cont;
 	}
+	
+	private void modificaContatto(int posizione)
+	{
+		if (posizione >= contatti.size())
+		{
+			System.out.println("Contatto non presente in rubrica.");
+			return;
+		}
+		
+		Contatto contatto = contatti.get(posizione-1);
+		
+		Scanner kb = new Scanner(System.in);
+		
+		System.out.print("Nome: ");
+		contatto.setNome(kb.nextLine());
+		System.out.println();
+		System.out.print("Cognome: ");
+		contatto.setCognome(kb.nextLine());
+		System.out.println();
+		System.out.print("Telefono: ");
+		contatto.setTelefono(kb.nextLine());
+		System.out.println();
+		System.out.print("Email: ");
+		contatto.setEmail(kb.nextLine());
+		System.out.println();
+		System.out.print("Note: ");
+		contatto.setNote(kb.nextLine());
+		System.out.println();
+		
+		contatti.set(posizione-1, contatto);
+	}
+	
+	private void cancellaContatto(int posizione)
+	{
+		if (posizione >= contatti.size())
+		{
+			System.out.println("Contatto non presente in rubrica.");
+			return;
+		}
+		
+		contatti.remove(posizione-1);
+	}
+	
+	private List<Contatto> cercaDuplicati(boolean unisci)
+	{
+		List<Contatto> contacts = new ArrayList<>();
+		contacts.add(new Contatto("","","","",""));
+		
+		Contatto contatto = contacts.get(0);
+		
+		for(int i = 0; i < contatti.size(); i++)
+		{
+			for(int j = 0; j < contatti.size(); j++)
+			{
+				System.out.println("i: " + i + ", j: " + j);
+				
+				if (!unisci)											//TROVA DUPLICATI
+				{
+					if (i == j) continue;
+					if (contatti.get(i).equals(contatti.get(j)))
+					{
+						contatto.setNome(i+1 + "," + contatto.getNome());
+						contacts.add(contatti.get(i));
+						break;					
+					}
+				}
+				else													//UNISCI DUPLICATI
+				{
+					if (i != j && contatti.get(i).equals(contatti.get(j)))
+					{
+						System.out.println("DUPLICATO: -> indice: " + contatti.indexOf(contatti.get(j)) + ", " + contatti.get(j).toString());
+						contatti.remove(j);
+						j--;
+					}
+				}
+			}
+			
+			if (unisci)
+			{
+				System.out.println("AGGIUNGO: -> indice: " + contatti.indexOf(contatti.get(i)) + ", " + contatti.get(i).toString());
+				contacts.add(contatti.get(i));
+			}
+		}
+		
+		if (unisci) contacts.remove(0);
+		
+		return contacts;
+	}
+	
+	
 	
 	//OUTPUT A SCHERMO
 	

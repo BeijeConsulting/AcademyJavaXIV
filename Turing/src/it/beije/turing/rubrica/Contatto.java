@@ -87,4 +87,19 @@ public class Contatto
 	{
 		return nome + separator + cognome + separator + telefono + separator + email + separator + note + "\n";
 	}
+	
+	 public boolean equals(Object obj)
+	 {
+		if (obj == this)
+		{
+			return true;
+		}
+		if (!(obj instanceof Contatto))
+		{
+		return false;
+		}
+		
+		Contatto contatto = (Contatto) obj;
+		return nome.equals(contatto.getNome()) && cognome.equals(contatto.getCognome()) && telefono.equals(contatto.getTelefono()) && email.equals(contatto.getEmail()) && note.equals(contatto.getNote());
+	}
 }
