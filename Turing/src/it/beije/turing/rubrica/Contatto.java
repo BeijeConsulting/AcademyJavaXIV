@@ -87,5 +87,4 @@ public class Contatto
 	{
 		return nome + separator + cognome + separator + telefono + separator + email + separator + note + "\n";
 	}
-
 }

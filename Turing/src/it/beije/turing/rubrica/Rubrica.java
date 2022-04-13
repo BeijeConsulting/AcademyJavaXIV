@@ -201,42 +201,89 @@ public class Rubrica
 		
 		do
 		{
+			if (contatti.size() == 0) System.out.println("Rubrica non caricata. Solo creazione nuovi contatti disponibile.");
+			
 			menuContatti();
 			
 			riprova = false;
 			
 			kb = new Scanner(System.in);
 			int scelta = kb.nextInt();
+			if (contatti.size() == 0 && scelta != 3) scelta = -1;
+			
 			
 			switch(scelta)
 			{
 				case 1:
-					if (contatti.size() != 0) System.out.println(contatti);
+					//VISUALIZZA CONTATTI
+					if (contatti.size() != 0)
+					{
+						System.out.print("Vuoi riordinare la rubrica? ");
+						String riordina = kb.next().toLowerCase();
+						String filtro = null;
+						switch(riordina)
+						{
+							case "si":
+							case "sì":
+							case "yes":
+							case "y":
+								System.out.print("Criterio di ordinamento (nome, cognome, telefono, email, note): ");
+								filtro = kb.next().toLowerCase();
+								System.out.println();
+								break;
+								
+							default:
+								filtro = "";
+								break;
+						}
+						
+						visualizzaContatti(filtro);
+					}
 					else System.out.println("Rubrica vuota.");
 					break;
 					
 				case 2:
-					//CERCACONTATTO
+					//CERCA CONTATTO
+					System.out.print("Valore di ricerca: ");
+					String filtro = kb.next();
+					System.out.println();
+					List<Contatto> contacts = cercaContatto(filtro);
+					
+					if (contacts.isEmpty()) System.out.println("Nessuno contatto corrisponde ai criteri di ricerca.");
+					else
+					{
+						for(Contatto contatto : contacts)
+						{
+							System.out.println(contatto.toString());
+						}
+					}
+					
 					break;
 					
 				case 3:
-					//CREACONTATTO
+					//CREA CONTATTO
+					String nome = kb.next();
+					String cognome = kb.next();
+					String telefono = kb.next();
+					String email = kb.next();
+					String note = kb.next();
+					System.out.println(contatti.add(new Contatto(nome, cognome, telefono, email, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					return;
 					
 				case 4:
-					//MODIFICACONTATTO
+					//MODIFICA CONTATTO
 					return;
 					
 				case 5:
-					//CANCELLACONTATTO
+					//CANCELLA CONTATTO
 					return;
 					
 				case 6:
-					//TROVADUPLICATI
+					//TROVA DUPLICATI
 					return;
 					
 				case 7:
-					//UNISCIDUPLICATI
+					//UNISCI DUPLICATI
 					return;
 					
 				case 8:
@@ -244,17 +291,72 @@ public class Rubrica
 					
 				default:
 					riprova = true;
+					System.out.println("Errore, scelta non possibile.");
 					break;
 			}
 		} while (riprova);
 	}
 	
+	private void visualizzaContatti(String filtro)
+	{
+		if (filtro != "") ordinaRubrica(filtro);
+		
+		for(Contatto contatto : contatti)
+		{
+			System.out.println(contatto.toString());
+		}
+	}
+	
+	private void ordinaRubrica(String filtro)
+	{
+		switch(filtro)
+		{
+			case "nome":
+				contatti.sort((o1, o2) -> o1.getNome().compareTo(o2.getNome()));
+				break;
+				
+			case "cognome":
+				contatti.sort((o1, o2) -> o1.getCognome().compareTo(o2.getCognome()));
+				break;
+				
+			case "telefono":
+				contatti.sort((o1, o2) -> o1.getTelefono().compareTo(o2.getTelefono()));
+				break;
+				
+			case "email":
+				contatti.sort((o1, o2) -> o1.getEmail().compareTo(o2.getEmail()));
+				break;
+				
+			case "note":
+				contatti.sort((o1, o2) -> o1.getNote().compareTo(o2.getNote()));
+				break;
+				
+			default:
+				return;
+		}		
+	}
+	
+	private List<Contatto> cercaContatto(String filtro)
+	{
+		List<Contatto> cont = new ArrayList<>();
+		
+		for(Contatto contatto : contatti)
+		{
+			if (contatto.getNome().equals(filtro)) cont.add(contatto);
+			else if (contatto.getCognome().equals(filtro)) cont.add(contatto);
+			else if (contatto.getTelefono().equals(filtro)) cont.add(contatto);
+			else if (contatto.getEmail().equals(filtro)) cont.add(contatto);
+			else if (contatto.getNote().equals(filtro)) cont.add(contatto);
+		}
+		
+		return cont;
+	}
 	
 	//OUTPUT A SCHERMO
 	
 	private void menuIniziale()
 	{
-		System.out.print("------------ RUBRICA ------------\n");
+		System.out.print("\n\n------------ RUBRICA ------------\n");
 		System.out.print("---------------------------------\n");
 		
 		System.out.println((contatti.size() != 0) ? ("------- Rubrica: " + "caricata" + " -------") : ("----- Rubrica: non caricata -----"));
@@ -273,7 +375,6 @@ public class Rubrica
 	
 	private void menuRubrica()
 	{
-		for(int x = 0; x != 10; x++) System.out.println();
 		System.out.print("------- GESTIONE RUBRICA --------\n");
 		System.out.print("---------------------------------\n");
 		System.out.print("-------- Importa Rubrica --------\n");
@@ -289,7 +390,6 @@ public class Rubrica
 	
 	private void menuImportazione()
 	{
-		for(int x = 0; x != 10; x++) System.out.println();
 		System.out.print("----- IMPORTAZIONE RUBRICA ------\n");
 		System.out.print("---------------------------------\n");
 		System.out.print("------ Importa Rubrica CSV ------\n");
@@ -305,7 +405,6 @@ public class Rubrica
 	
 	private void menuEsportazione()
 	{
-		for(int x = 0; x != 10; x++) System.out.println();
 		System.out.print("----- ESPORTAZIONE RUBRICA ------\n");
 		System.out.print("---------------------------------\n");
 		System.out.print("------ Esporta Rubrica CSV ------\n");
@@ -321,7 +420,6 @@ public class Rubrica
 	
 	private void menuContatti()
 	{
-		for(int x = 0; x != 10; x++) System.out.println();
 		System.out.print("------ GESTIONE CONTATTI --------\n");
 		System.out.print("---------------------------------\n");
 		System.out.print("--- Visualizza Lista Contatti ---\n");
