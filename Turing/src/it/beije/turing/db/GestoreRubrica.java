@@ -6,8 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import it.beije.turing.file.CSVmanager;
+import it.beije.turing.file.XMLmanager;
 import it.beije.turing.rubrica.Contatto;
-import it.beije.turing.rubrica.RubricaController;
 
 public class GestoreRubrica {
 	
@@ -131,9 +132,9 @@ public class GestoreRubrica {
 		contatti.add(contatto);
 		
 		if(typeFile.equalsIgnoreCase("csv")) {
-			RubricaController.writeRubricaCSV(contatti, path, typeFile);
+			CSVmanager.writeRubricaCSV(contatti, path, typeFile);
 		} else {
-			RubricaController.writeRubricaXML(contatti, path);
+			XMLmanager.writeRubricaXML(contatti, path);
 		}
 		
 		System.out.println("Contatto inserito -> " + contatto);
@@ -194,14 +195,14 @@ public class GestoreRubrica {
 			
 			if(typeFile.equalsIgnoreCase("csv")) {
 				try {
-					contatti = RubricaController.loadRubricaFromCSV(path, separatore, virgolette);
+					contatti = CSVmanager.loadRubricaFromCSV(path, separatore, virgolette);
 					i++;
 				} catch(IOException ioEx) {
 					System.out.print("Inserisci dati validi -> ");
 				}
 			} else if(typeFile.equalsIgnoreCase("xml")) {
 				try {
-					contatti = RubricaController.loadRubricaFromXML(path);
+					contatti = XMLmanager.loadRubricaFromXML(path);
 					i++;
 				} catch(Exception Ex) {
 					Ex.printStackTrace();

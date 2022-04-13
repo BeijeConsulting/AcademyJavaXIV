@@ -9,6 +9,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -18,26 +20,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import it.beije.turing.rubrica.Contatto;
+
 public class XMLmanager {
-/*
-<?xml version="1.0" encoding="UTF-8"?>
-<rubrica>
-    <contatto eta="30">
-		<nome>Mario</nome>
-		<cognome>Rossi</cognome>
-		<telefono>3337658390</telefono>
-		<email>mario.rossi@tim.it</email>
-		<note>compagno di squadra</note>
-	</contatto>
-	<contatto eta="35">
-		<nome>Claudio</nome>
-		<cognome>Bianchi</cognome>
-		<telefono>3352672537</telefono>
-		<email>claudio.white@virgilio.it</email>
-	</contatto>
-</rubrica>
- */
-	
+
 	public static List<Element> getChildElements(Element element) {
 		List<Element> childElements = new ArrayList<Element>();
 		NodeList nodeList = element.getChildNodes();
@@ -47,8 +33,9 @@ public class XMLmanager {
 		
 		return childElements;
 	}
-
-	public static void readXML(String path) {
+	
+	public static List<Contatto> loadRubricaFromXML(String path) throws ParserConfigurationException, IOException, SAXException {
+		List<Contatto> contatti = new ArrayList<Contatto>();
 		
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = null;
@@ -58,121 +45,89 @@ public class XMLmanager {
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			document = documentBuilder.parse(path);
 			
-			Element root = document.getDocumentElement();
-			System.out.println("root : " + root.getTagName());
-			
-//			NodeList contatti = root.getElementsByTagName("contatto");
-//			System.out.println("contatti num : " + contatti.getLength());
-
-			NodeList nodes = root.getChildNodes();
-			System.out.println("nodes num : " + nodes.getLength());
-			
+			Element root = document.getDocumentElement();			
 			List<Element> children = getChildElements(root);
-			System.out.println("children num : " + children.size());
 			
 			for (Element el : children) {
+				Contatto contatto = new Contatto();
 				if (el.getTagName().equalsIgnoreCase("contatto")) {
-					List<Element> contatto = getChildElements(el);
-					for (Element value : contatto) {
-						switch (value.getTagName().toLowerCase()) {
-						case "nome":
-							System.out.println("nome : " + value.getTextContent());
-							break;
-						case "cognome":
-							System.out.println("cognome : " + value.getTextContent());						
-							break;
-						case "telefono":
-							System.out.println("telefono : " + value.getTextContent());						
-							break;
-						case "email":
-							System.out.println("email : " + value.getTextContent());						
-							break;
-						case "note":
-							System.out.println("note : " + value.getTextContent());						
-							break;
-
-						default:
-							break;
+					List<Element> elmContatto = getChildElements(el);
+					for (Element elm : elmContatto) {
+						switch (elm.getTagName().toLowerCase()) {
+							case "nome":
+								contatto.setNome(elm.getTextContent());
+								break;
+							case "cognome":
+								contatto.setCognome(elm.getTextContent());						
+								break;
+							case "telefono":
+								contatto.setTelefono(elm.getTextContent());				
+								break;
+							case "email":
+								contatto.setEmail(elm.getTextContent());						
+								break;
+							case "note":
+								contatto.setNote(elm.getTextContent());					
+								break;
 						}
 						
 					}
-					
-					System.out.println("eta' : " + el.getAttribute("eta"));
 				}
+				contatti.add(contatto);
 			}
 			
 		} catch (ParserConfigurationException pcEx) {
 			pcEx.printStackTrace();
+			throw pcEx;
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
+			throw ioEx;
 		} catch (SAXException saxEx) {
 			saxEx.printStackTrace();
+			throw saxEx;
 		}
 		
+		return contatti;
 	}
 	
-	public static void writeXML(String path) throws Exception {
+	public static void writeRubricaXML(List<Contatto> contatti, String path) {
 		
+		try {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		
 		Document doc = documentBuilder.newDocument();
 
-		Element contatti = doc.createElement("contatti");
-		doc.appendChild(contatti);//root element
-		{
-			Element contatto = doc.createElement("contatto");
-			contatto.setAttribute("eta", "25");
+		Element elementContatti = doc.createElement("contatti");
+		doc.appendChild(elementContatti);//root element
+		
+		for(Contatto contatto : contatti) {
+			Element elmContatto = doc.createElement("contatto");
+			
+			Element nome = doc.createElement("nome");
+			nome.setTextContent(contatto.getNome());
+			elmContatto.appendChild(nome);
 			
 			Element cognome = doc.createElement("cognome");
-			cognome.setTextContent("Marrone");//<cognome>Marrone</cognome>
-			contatto.appendChild(cognome);
-	
-			Element nome = doc.createElement("nome");
-			nome.setTextContent("Emma");//<nome>Emma</nome>
-			contatto.appendChild(nome);
-	
+			cognome.setTextContent(contatto.getCognome());
+			elmContatto.appendChild(cognome);
+			
 			Element telefono = doc.createElement("telefono");
-			telefono.setTextContent("432423");
-			contatto.appendChild(telefono);
-	
+			telefono.setTextContent(contatto.getTelefono());
+			elmContatto.appendChild(telefono);
+			
 			Element email = doc.createElement("email");
-			email.setTextContent("emma@marrone.it");
-			contatto.appendChild(email);
-	
+			email.setTextContent(contatto.getEmail());
+			elmContatto.appendChild(email);
+			
 			Element note = doc.createElement("note");
-			note.setTextContent("la nota cantante");
-			contatto.appendChild(note);
+			note.setTextContent(contatto.getNote());
+			elmContatto.appendChild(note);
 			
-			contatti.appendChild(contatto);
+			elementContatti.appendChild(elmContatto);
 		}
-		{
-			Element contatto = doc.createElement("contatto");
-			contatto.setAttribute("eta", "78");
-			
-			Element cognome = doc.createElement("cognome");
-			cognome.setTextContent("Morandi");
-			contatto.appendChild(cognome);
-	
-			Element nome = doc.createElement("nome");
-			nome.setTextContent("Gianni");
-			contatto.appendChild(nome);
-	
-			Element telefono = doc.createElement("telefono");
-			telefono.setTextContent("432425233");
-			contatto.appendChild(telefono);
-	
-			Element email = doc.createElement("email");
-			email.setTextContent("gianni@morandi.it");
-			contatto.appendChild(email);
-	
-			Element note = doc.createElement("note");
-			note.setTextContent("il noto cantante");
-			contatto.appendChild(note);
-			
-			contatti.appendChild(contatto);
-		}
-		System.out.println("contatti : " + contatti.getElementsByTagName("contatto").getLength());
+
+		//System.out.println("contatti : " + elementContatti.getElementsByTagName("contatto").getLength());
 		
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -182,18 +137,20 @@ public class XMLmanager {
 		StreamResult result = new StreamResult(new File(path));
 
 		// Output to console for testing
-		StreamResult syso = new StreamResult(System.out);
+		//StreamResult syso = new StreamResult(System.out);
 
 		transformer.transform(source, result);
-		transformer.transform(source, syso);
+		//transformer.transform(source, syso);
+		} catch(TransformerConfigurationException tcEx) {
+			tcEx.printStackTrace();
+		} catch(ParserConfigurationException pcEx) {
+			pcEx.printStackTrace();
+		} catch(TransformerException tEx) {
+			tEx.printStackTrace();
+		}
 
-		//System.out.println("File saved!");	
+		//System.out.println("File saved!");
 
 	}
-
-	public static void main(String[] args) throws Exception {
-		//readXML("/temp/rubrica.xml");
-		writeXML("/temp/new_rubrica.xml");
-	}
-
+	
 }
