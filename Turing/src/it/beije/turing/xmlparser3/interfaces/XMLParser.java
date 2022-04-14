@@ -1,11 +1,11 @@
-package it.beije.turing.xmlparser3.interfaccia;
+package it.beije.turing.xmlparser3.interfaces;
 
 /**
  * @author Giuseppe Raddato
  * Data: 14 apr 2022
  */
 public interface XMLParser{
-     void   getRootElement(); //torna l'elemento root
+    void   getRootElement(); //torna l'elemento root
     void  getChildNodes(); //torna tutti i nodi "figli" interni all'elemento su cui viene eseguito
     void  getChildElements(); //torna i soli elementi figli dell'elemento su cui viene eseguito
     void getElementsByTagName(String tagName); //torna TUTTI gli elementi con quello specifico nome
