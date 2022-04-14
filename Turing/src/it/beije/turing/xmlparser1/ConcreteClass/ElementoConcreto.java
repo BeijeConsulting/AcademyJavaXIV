@@ -49,12 +49,12 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 	public List<Elemento> getElementsByTagName(String tagName, List<Elemento> r, int j){
 		String tagNameWithAttributes = null;
 		ArrayList<Elemento> ris = new ArrayList<>(r);
+		ArrayList<Attributo> attList = new ArrayList<>();
 		String[] tmp = textContent.split("\n");
 		for(int i = j; i < tmp.length; i++) {
-			if(tmp[i].contains("=") && tmp[i].contains("<") && tmp[i].contains(">") && tmp[i].trim().contains(" ")) {
+			if(tmp[i].contains("=") && tmp[i].contains("<") && tmp[i].contains(">") && tmp[i].trim().contains(" ") && tmp[i].trim().substring(1,tmp[i].indexOf(" ")-1).equals(tagName)) {
 				String a = tmp[i].trim().substring(tmp[i].indexOf(" "));
 				a = a.substring(0,a.indexOf(">"));
-				ArrayList<Attributo> attList = new ArrayList<>();
 				String bin = tmp[i];
 				bin = bin.trim();
 				bin = bin.substring(1,bin.length()-1);
@@ -63,24 +63,27 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 						bin = bin.substring(k+1);
 						String key = bin.substring(0,bin.indexOf("="));
 						String value;
-						if(bin.indexOf(" ") == -1) {
+						if(bin.indexOf("\" ") == -1) {
 							value = bin.substring(bin.indexOf("=")+1);
+							k = bin.length();
 						}else {
-							value = bin.substring(bin.indexOf("=")+1,bin.indexOf(" "));
+							value = bin.substring(bin.indexOf("=")+1,bin.indexOf("\" "));
+							k = bin.indexOf("\" ");
 						}
 						Attributo attributoTmp = new Attributo(key,value);
+						System.out.println("key: "+key+" value: "+value);
 						attList.add(attributoTmp);
-						k = 0;
 					}
 				}
-
+/*
 				for(Attributo attributoTmp: attList) {
 					attributes.putIfAbsent(attributoTmp.getNome(), attributoTmp);
 				}
+*/
 				tagNameWithAttributes = tmp[i].trim().substring(1,tmp[i].indexOf(" ")-1);
 				
 				if(tagNameWithAttributes.equals(tagName)) {
-					if(tmp[i].contains("/")){
+					if(tmp[i].contains("/>")){
 						Elemento tmpElemento = new ElementoConcreto(tmp[i]);
 						tmpElemento.setTagName(tagName);
 						tmpElemento.setTextContent(tmp[i].substring(tmp[i].indexOf(">")+1,tmp[i].lastIndexOf("<")));
@@ -88,10 +91,12 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 						return ris;
 					}
 					for(int k = i + 1; k < tmp.length; k++) {
+						if(tmp[k].indexOf("<") == -1 || tmp[k].indexOf(">") == -1) continue;
 						if(tmp[k].substring(tmp[k].indexOf("<")+1,tmp[k].indexOf(">")).equals(tagName)) {
 							ris = (ArrayList<Elemento>) getElementsByTagName(tagName, ris, k);
 							continue;
-						}if(tmp[k].substring(tmp[k].indexOf("<")+1,tmp[k].indexOf(">")).equals("/"+tagName)) {
+						}
+						if(tmp[k].substring(tmp[k].indexOf("<")+1,tmp[k].indexOf(">")).equals("/"+tagName)) {
 							String allTextChild = "";
 							for(int t = i; t <= k; t++) {
 								allTextChild += tmp[t];
@@ -103,7 +108,11 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 								e.setTextContent(e.getTextContent()+tmp[t]);
 								e.setTextContent(e.getTextContent()+"\n");
 							}
-							e.setAttributes(attributes);
+							HashMap<String,Attributo> hm = new HashMap<>();
+							for(Attributo m : attList) {
+								hm.put(m.getNome(), m);
+							}
+							e.setAttributes(hm);
 							ris.add(e);
 							i = k;
 							break;
@@ -112,6 +121,7 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 				}
 				
 			}else {
+				if(tmp[i].indexOf("<") == -1 || tmp[i].indexOf(">") == -1) continue;
 				if(tmp[i].substring(tmp[i].indexOf("<")+1,tmp[i].indexOf(">")).equals(tagName)) {
 					if(tmp[i].contains("/")){
 						Elemento tmpElemento = new ElementoConcreto(tmp[i]);
@@ -121,6 +131,7 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 						return ris;
 					}
 					for(int k = i + 1; k < tmp.length; k++) {
+						if(tmp[k].indexOf("<") == -1 || tmp[k].indexOf(">") == -1) continue;
 						if(tmp[k].substring(tmp[k].indexOf("<")+1,tmp[k].indexOf(">")).equals(tagName)) {
 							ris = (ArrayList<Elemento>) getElementsByTagName(tagName, ris, k);
 							continue;

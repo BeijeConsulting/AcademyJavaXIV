@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<contatti>
+	<contatto>
+		<nome>Pippo
+		<cognome>Pluto</cognome>
+		<telefono>3331234567</telfono>
+		<email>pippo@pluto.net</email>
+	</contatto>
+	<contatto>
+		<nome>Paolino</nome>
+		<cognome>Paperino</cognome>
+		<telefono>00423803243423
+	</contatto></telefono>
+</contatti>

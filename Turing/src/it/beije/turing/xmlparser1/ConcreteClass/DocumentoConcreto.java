@@ -64,6 +64,7 @@ public class DocumentoConcreto implements Documento {
 					if(!("/"+tmp.substring(1)).equals(tmp2.substring(1))) {
 						throw new Exception("TagName root non combacia");
 					}
+					e.setTagName(tmp.trim().substring(1,tmp.length()-1));
 				}else {
 					String a = tmp.trim();
 					if(!a.contains("=")) {
@@ -76,16 +77,23 @@ public class DocumentoConcreto implements Documento {
 					for(int i = 0; i < bin.length(); i++) {
 						if(bin.charAt(i) == ' ') {
 							bin = bin.substring(i+1);
+							if(bin.indexOf("=") == -1) {
+								if(bin.contains("http")) {
+									
+								}
+								//throw new Exception("Formato errato, aspettato un =");
+							}System.out.println("bin " +bin);
 							String key = bin.substring(0,bin.indexOf("="));
 							String value;
-							if(bin.indexOf(" ") == -1) {
+							if(bin.indexOf("\" ") == -1) {
 								value = bin.substring(bin.indexOf("=")+1);
+								i = bin.length();
 							}else {
-								value = bin.substring(bin.indexOf("=")+1,bin.indexOf(" "));
+								value = bin.substring(bin.indexOf("=")+1,bin.indexOf("\" "));
+								i = bin.indexOf("\" ");
 							}
 							Attributo attributoTmp = new Attributo(key,value);
 							att.add(attributoTmp);
-							i = 0;
 						}
 					}
 					a = a.substring(1,a.indexOf(" "));
