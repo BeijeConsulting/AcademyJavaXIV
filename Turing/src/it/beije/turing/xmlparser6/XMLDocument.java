@@ -6,7 +6,7 @@ public class XMLDocument
 	private Elemento root;			//elemento di root del documento xml
 	
 	
-	public void setProlog(Elemento prolog)
+	public void setProlog(Prolog prolog)
 	{
 		this.prolog = prolog;
 	}
@@ -16,7 +16,7 @@ public class XMLDocument
 		this.root = root;
 	}
 	
-	public Elemento getProlog()
+	public Prolog getProlog()
 	{
 		return prolog;
 	}
