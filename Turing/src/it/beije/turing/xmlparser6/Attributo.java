@@ -1,10 +1,10 @@
 package it.beije.turing.xmlparser6;
 
-public class Attributi {
+public class Attributo {
 	private String nome;
 	private String valore;
 	
-	public Attributi(String nome, String valore) {
+	public Attributo(String nome, String valore) {
 		super();
 		this.nome = nome;
 		this.valore = valore;
