@@ -75,6 +75,7 @@ public class XMLinterpreter {
 	public Node ParseRoot() throws Exception //Ritorna il nodo Root con tutti i figli e relativi attributi
 	{
 		List<Node> stack = new ArrayList<>(); //la lista dei nodi
+		Node root=null;
 		int stackCursor=-1; //indica l'ultimo nodo aperto e non ancora chiuso
 		RemoveIntest();
 		for(int i=0;i<list.size();i++)//per ogni riga 
@@ -92,6 +93,7 @@ public class XMLinterpreter {
 				{
 					if(s.substring(2,s.length()-1).equalsIgnoreCase(stack.get(stackCursor).name)) //se la TAG di chiusura corrisponde all'ultimo nodo inserito
 							{
+								stack.remove(stackCursor);
 								stackCursor--; //considero il nodo chiuso correttamente
 							}
 					else
@@ -142,7 +144,11 @@ public class XMLinterpreter {
 						{
 							stack.get(stackCursor).addChild(node); //è il figlio di qualcuno
 						}
-						stack.add(node);//lo metto in stack anceh lui ma è già stato chiuso perciò non serve modificare il contatore
+						else
+						{
+							root=node;
+						}
+						//stack.add(node);//lo metto in stack anceh lui ma è già stato chiuso perciò non serve modificare il contatore
 					}
 					else 
 					{
@@ -150,6 +156,10 @@ public class XMLinterpreter {
 						if(stackCursor!=-1)
 						{
 							stack.get(stackCursor).addChild(node);
+						}
+						else
+						{
+							root=node;
 						}
 						stack.add(node);
 						stackCursor++;
@@ -162,6 +172,10 @@ public class XMLinterpreter {
 					{
 						stack.get(stackCursor).addChild(node);
 					}
+					else
+					{
+						root=node;
+					}
 					stack.add(node);
 					if(!s.substring(s.length()-2).equals("/>")) {
 					stackCursor++;//mi aspetto una chiusura
@@ -172,7 +186,11 @@ public class XMLinterpreter {
 			}
 			
 		}
-		return stack.get(0); //do indietro il root
+		if(root==null)
+		{
+			throw new Exception("root nullo");
+		}
+		return root; //do indietro il root
 	}
 	//method for attr.
 	private void extractAttribute(String s,List<Attributes> attributes)
@@ -181,8 +199,9 @@ public class XMLinterpreter {
 		{
 		   String name;
 		   String value;
-		   s=s.substring(s.indexOf(' '));
-		   for(int k=0;k<s.length();k++)
+		   s=s.substring(s.indexOf(' ')+1);
+		   int k=0;
+		   for(;k<s.length();k++)
 		   {
 			   if(s.charAt(k)=='=')
 			   {
@@ -193,15 +212,18 @@ public class XMLinterpreter {
 					  value = s.substring(k+2,end);
 					  k=end;
 					  attributes.add(new Attributes(name,value));
+					  break;
+					  
 				   }
 				   else
 					   return;
 			   }
+		   }
 			   if(k!=s.length()-1)
 			   {
 				   extractAttribute(s.substring(k+1),attributes);
 			   }
-		   }
+		  
 		   
 		}
 	}

@@ -12,7 +12,7 @@ public class XMLParser4 {
 	public static void main(String[] args) 
 	{
 		FileParser fp = new FileParser();
-		List<String> list=fp.parseFile("tmp/test_parser6.xml");
+		List<String> list=fp.parseFile("tmp/test_parser1.xml");
 		XMLinterpreter xml = new XMLinterpreter(list);
 		//xml.print();
 		try {
