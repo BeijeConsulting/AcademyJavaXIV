@@ -1,20 +1,21 @@
 package it.beije.turing.xmlparser2;
 
-public class Element {
+import java.util.ArrayList;
 
+public class Element {
+	//commento
 	private String tag;
-	private String[] childElements;
+	private ArrayList<Element> childElements;
 	private String content;
 	
 	public Element() {
-		
 	}
 
-	public String[] getChildElements() {
+	public ArrayList<Element> getChildElements() {
 		return childElements;
 	}
 
-	public void setChildElements(String[] childElements) {
+	public void setChildElements(ArrayList<Element> childElements) {
 		this.childElements = childElements;
 	}
 
@@ -32,6 +33,15 @@ public class Element {
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	
+	public ArrayList<Element> getElementsByTagName(String tagName) {
+		ArrayList<Element> elements = new ArrayList<>();
+		for(Element e : childElements) {
+			if(e.getTag().equals(tagName))
+				elements.add(e);
+		}
+		return elements;
 	}
 
 }
