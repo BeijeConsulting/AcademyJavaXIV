@@ -10,7 +10,4 @@ public class Document {
         return root;
     }
 
-    public List<Node> getElementsByTagName(String tagName) {
-
-    }
 }

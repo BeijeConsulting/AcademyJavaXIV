@@ -24,24 +24,31 @@ public class Node  {
         this.content = content;
     }
 
-    public void getChildNodes() {
-
+    public List<Node> getChildNodes() {
+        return this.children;
     }
 
-
-    public void getChildElements() {
-
+    public List<Node> getChildElements() {
+        return this.children;
     }
 
-    public void getTagName() {
-
+    public String getTagName() {
+        return this.name;
     }
 
-    public void getTextContent() {
-
+    public String getTextContent() {
+        return this.content;
     }
 
-    public void getAttributes() {
+    public List<Attributes> getAttributes() {
+        return this.attributes;
+    }
 
+    public void addChild(Node node){
+        this.children.add(node);
+    }
+
+    public String getElementsByTagName(String tagName) {
+        return (this.name +" " + this.attributes + " " + " " + this.content);
     }
 }
