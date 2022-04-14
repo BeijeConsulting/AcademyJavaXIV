@@ -91,8 +91,8 @@ public class AlberaturaXML {
 	public List<String> getChildElements() {
 		String el = getRootElement();
 		List<String> children = new ArrayList<>();
-		int indexBegin = el.indexOf('>') + 1;
-		int indexEnd = el.lastIndexOf('<');
+		int indexBegin = el.indexOf("<", el.indexOf(">"));
+		int indexEnd = el.lastIndexOf("<");
 		String textContent = el.substring(indexBegin, indexEnd);
 		String tagName = null;
 		int firstSpacebar = textContent.indexOf(" ");
