@@ -33,9 +33,13 @@ public class Dato {
 		return new Dato(tipo, variabile);
 	}
 	
-	private String impostaTipo(s) {
-		<nome>
-			ciao
-		</nome>
+	private String impostaTipo(String s) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+	private String impostaVariabile(String s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
