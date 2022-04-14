@@ -5,13 +5,23 @@ import java.util.List;
 public class Node  {
 
     String name;
-    List <attributs> attributs;
+    List <Attributes> attributes;
     List <Node> children;
+    String content;
 
-    public Node(String name, List <attribute> ) {
+    public Node(String name, List<Attributes> attributes, String content) {
         this.name = name;
-        this.attr
+        this.attributes = attributes;
+        this.content=content;
+    }
 
+    public Node(String name) {
+        this(name, null, null);
+    }
+
+    public Node(String name, String content) {
+        this.name = name;
+        this.content = content;
     }
 
     public void getChildNodes() {
@@ -23,17 +33,14 @@ public class Node  {
 
     }
 
-    @Override
     public void getTagName() {
 
     }
 
-    @Override
     public void getTextContent() {
 
     }
 
-    @Override
     public void getAttributes() {
 
     }
