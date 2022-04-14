@@ -2,6 +2,8 @@ package it.beije.turing.xmlparser7;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.Element;
+
 public class Dato {
 	
 	private String tipo; 
@@ -31,13 +33,9 @@ public class Dato {
 		this.variabile = variabile;
 	}
 
-	
-//////////////////////////////////////////////////////      STRING						////////////////////////////
-
 	public Dato newInstanceDato(String s) {
 		String tipo = impostaTipo(s);
 		String variabile = impostaVariabile(s);
-		
 		return new Dato(tipo, variabile);
 	}
 	
