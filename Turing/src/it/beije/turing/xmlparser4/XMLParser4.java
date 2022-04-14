@@ -12,9 +12,16 @@ public class XMLParser4 {
 	public static void main(String[] args) 
 	{
 		FileParser fp = new FileParser();
-		List<String> list=fp.parseFile("tmp/test_parser3.xml");
+		List<String> list=fp.parseFile("tmp/test_parser7.xml");
 		XMLinterpreter xml = new XMLinterpreter(list);
-		xml.Test();
+		//xml.print();
+		try {
+			Node root=xml.ParseRoot();
+			System.out.println("blocl");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
