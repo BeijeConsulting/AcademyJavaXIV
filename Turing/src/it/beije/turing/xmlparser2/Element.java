@@ -1,6 +1,7 @@
 package it.beije.turing.xmlparser2;
 
 public class Element {
+<<<<<<< HEAD
 	private String tag;
 	private String[] childElements;
 	private String content;
@@ -33,4 +34,7 @@ public class Element {
 		this.tag = tag;
 	}
 
+=======
+	
+>>>>>>> refs/remotes/origin/XML_Parser_2_Orru
 }
