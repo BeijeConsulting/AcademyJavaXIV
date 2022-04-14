@@ -9,12 +9,11 @@ public class Dato {
 	private String tipo; 
 	private String variabile;
 	
-	
-	
 	private Dato(String tipo, String variabile) {
 		this.tipo = tipo;
 		this.variabile = variabile;
 	}
+	
 	
 	
 	public String getTipo() {

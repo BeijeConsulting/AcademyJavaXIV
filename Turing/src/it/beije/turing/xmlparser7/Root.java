@@ -9,6 +9,7 @@ public class Root {
 	private Integer inizioCampi;
 	private Integer fineCampi;
 
+	
 	public Root(String rootName, ArrayList<Campo> campi, Integer inizioCampi, Integer fineCampi) {
 		this.rootName = rootName;
 		this.campi = campi;
@@ -32,33 +33,49 @@ public class Root {
 		this.campi = campi;
 	}
 	
-	public Root creaInstanzaRoot(String[] splitAllInOne) {
+	public static Root creaInstanzaRoot(String[] splitAllInOne) {
 		boolean dichiarazioneTrovata = false;
 		int campi = 0;
 		int fineCampi = 0;
 		String name = "";
 		
+		
+		
+		// cercando l'inizio splitAllInOne[i].indexOf("?>")
 		for(int i = 0; i < splitAllInOne.length; i++) {
-			if(splitAllInOne[i].substring(0, "?>".length()).equalsIgnoreCase("?>")) {
-				name = splitAllInOne[i + 1].substring(0, splitAllInOne[i + 1].indexOf(">"));
-				inizioCampi = i +2;
-				dichiarazioneTrovata = true;
-				break;
+			if(splitAllInOne[i].length()> 0 && splitAllInOne[i].indexOf("?>") != -1) {
+				if(splitAllInOne[i].substring(splitAllInOne[i].indexOf("?>"),splitAllInOne[i].indexOf("?>")+ "?>".length()).equalsIgnoreCase("?>")) {
+					name = splitAllInOne[i + 1].substring(0, splitAllInOne[i + 1].indexOf(">"));
+					campi = i +2;
+					dichiarazioneTrovata = true;
+					break;
+				}
 			}
 		}
 		
+		
+		// Cerchiamo la fine 
 		for(int i = 0; i < splitAllInOne.length; i++) {
-			if(splitAllInOne[i].substring(1, name.length() + 1).equalsIgnoreCase(name)) {
-				fineCampi = i;
-				break;
+			if(splitAllInOne[i].length()> name.length()+1) {
+				if(splitAllInOne[i].substring(1, name.length() + 1).equalsIgnoreCase(name)) {
+					fineCampi = i;
+					//dichiarazioneTrovata = true;
+					break;
+				}
 			}
 		}
+			
 		
 		if(!dichiarazioneTrovata) {
-			rootName = splitAllInOne[0].substring(0, splitAllInOne[0].indexOf(">"));
+			name= splitAllInOne[0].substring(0, splitAllInOne[0].indexOf(">"));
 		}
-		
-		return new Root(name, null, campi, fineCampi);
+		System.out.println(name);
+		System.out.println(campi);
+		System.out.println(fineCampi);
+		return new Root(name, null, campi, (fineCampi-1));
 	}
+
+
+	
 
 }

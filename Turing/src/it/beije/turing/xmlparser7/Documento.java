@@ -12,6 +12,7 @@ public class Documento {
 	private String xmlDichiarazione;
 	String[] splitAllInOne;
 	
+	
 //	public String getXmlDichiarazione() {
 //		return xmlDichiarazione;
 //	}
@@ -60,11 +61,11 @@ public class Documento {
 		
 		String[] splitAllInOne = allInOne.split("<");
 		
-//		for(int i = 0; i < splitAllInOne.length; i++) {
-//			System.out.println();
-//			System.out.println("QuA INZIA LA riga " + i + splitAllInOne[i] + "QuA FINISCE LA riga " + i);
-//			System.out.println();
-//		}
+		for(int i = 0; i < splitAllInOne.length; i++) {
+			System.out.println();
+			System.out.println("QuA INZIA LA riga " + i + splitAllInOne[i] + "QuA FINISCE LA riga " + i);
+			System.out.println();
+		}
 //		if(splitAllInOne[44].substring(0, splitAllInOne[44].indexOf(">")).equalsIgnoreCase(splitAllInOne[45].substring(1, splitAllInOne[45].indexOf(">")))) {
 //			System.out.println("Spiegazione trovata");
 //		}
@@ -72,7 +73,8 @@ public class Documento {
 	}
 
 	private void creaRoot() {
-		creaInstanzaRoot();
+		Root.creaInstanzaRoot(splitAllInOne);
+	//	creaInstanzaRoot();
 //		String campo;
 //		if(splitAllInOne[1].indexOf(" ") == -1) {
 //			System.out.println("Qua c'è a[1]" + splitAllInOne[1]);
@@ -91,6 +93,9 @@ public class Documento {
 //			}
 //		}
 	}
+	
+	
+
 	
 	public static Documento parse(String s) {
 		String[]splitAllInOne = XMLToString(s);
