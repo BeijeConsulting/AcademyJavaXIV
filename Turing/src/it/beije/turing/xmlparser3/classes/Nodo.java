@@ -1,15 +1,15 @@
 package it.beije.turing.xmlparser3.classes;
 
-import it.beije.turing.xmlparser3.interfaces.ILoadFile;
+import it.beije.turing.xmlparser3.interfaces.INode;
 
 /**
  * @author Giuseppe Raddato
  * Data: 14 apr 2022
  */
-public class LoadFile implements ILoadFile {
+public class Nodo implements INode {
 
     @Override
-    public Documento parse(String file) {
+    public Elemento getChildElement() {
         return null;
     }
 }

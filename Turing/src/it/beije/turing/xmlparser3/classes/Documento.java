@@ -1,33 +1,29 @@
 package it.beije.turing.xmlparser3.classes;
 
-import it.beije.turing.xmlparser3.interfaces.XMLParser;
-
-import javax.xml.bind.Element;
-import java.util.List;
+import it.beije.turing.xmlparser3.interfaces.LoadFile;
 
 /**
  * @author Giuseppe Raddato
  * Data: 14 apr 2022
  */
-public class Documento extends LoadFile implements XMLParser{
+public class Documento implements LoadFile {
+    private static Documento d=null;
+
+    public static Documento getIstance(){
+        if(d==null){
+            d=new Documento();
+        }
+        return d;
+    }
+
+    private Documento(){}
 
     @Override
-    public ElementNode getRootElement() {
+    public Documento parse(String path) {
         return null;
     }
 
-    @Override
-    public List<ElementNode> getChildNodes() {
-        return null;
-    }
-
-    @Override
-    public Element getChildElements() {
-        return null;
-    }
-
-    @Override
-    public List<Element> getElementsByTagName(String tagName) {
+    public Elemento getRootElement() {
         return null;
     }
 }
