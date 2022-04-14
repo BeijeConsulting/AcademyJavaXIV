@@ -1,5 +1,5 @@
 package it.beije.turing.xmlparser1.Interfaces;
 
-public interface Elemento {
+public interface Elemento extends Nodo{
 
 }
