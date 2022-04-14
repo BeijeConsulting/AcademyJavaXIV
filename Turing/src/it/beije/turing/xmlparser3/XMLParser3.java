@@ -11,8 +11,8 @@ import java.util.List;
 public class XMLParser3 {
 
 	public static void main(String[] args) {
-		String path="/Users/giusepperaddato/Downloads/test_parser1.xml";
-		System.out.println("ciao");
+		String path="C:\\temp\\challenge\\test_parser1.xml";
+
 		Documento d = Documento.getIstance().parse(path);
 /*
 		Elemento root=d.getRootElement(); //restiisce elemento ROOT

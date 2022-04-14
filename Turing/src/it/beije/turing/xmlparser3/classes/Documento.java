@@ -31,10 +31,9 @@ public class Documento implements LoadFile {
     public Documento parse(String path) {
     	StringBuilder s = new StringBuilder();
     	List<StringBuilder> listElement = new ArrayList<>();
-    	System.out.println("ciao");
+
     	try {
     		File f = new File(path);
-    		System.out.println(f.exists());
 			FileReader fileReader = new FileReader(f);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
@@ -42,12 +41,12 @@ public class Documento implements LoadFile {
 				char row = (char) bufferedReader.read();
 				if(row!='\n'|| row!='\t') {
 					s.append(row);
-					System.out.print("ciao");
+
 				}
 			}
 			
-			String[] result = s.toString().split("><");
-			System.out.println(Arrays.toString(result));
+			String result = s.toString().replace('\n','\0').replace('\t','\0');
+			System.out.println(result);
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
