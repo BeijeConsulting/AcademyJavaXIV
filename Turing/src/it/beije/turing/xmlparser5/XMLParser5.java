@@ -9,7 +9,13 @@ public class XMLParser5 {
 
 	public static void main(String[] args) {
 		
-		AlberaturaXML m = parse("");
+		AlberaturaXML m = new AlberaturaXML();
+		String stringaContenutoFile = m.getContenutoFile("C:\\Users\\aless\\Desktop\\xml scaricati\\test_parser1.xml");
+		//String stringaContenutoFile = m.getContenutoFile("C:\\Users\\aless\\Desktop\\xml scaricati\\provaintestazione.txt");
+		String rootElement = m.getRootElement(stringaContenutoFile);
+		if(rootElement.contains("XML formattato male")) {
+			return;
+		}
 		
 	}
 
