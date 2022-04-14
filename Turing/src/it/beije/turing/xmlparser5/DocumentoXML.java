@@ -29,7 +29,7 @@ public class DocumentoXML {
 			String inizio = "<" + tagName;
 			String fine = "</"+tagName;
 			int index = root.indexOf("<" + tagName);
-			System.out.println("GINO PAULI");
+//			System.out.println("GINO PAULI");
 			System.out.println(root.substring(index + inizio.length() + 1, root.length()));
 			getElementsByTagName(tagName, root.substring(index + inizio.length() , root.length()));
 			String s = root.substring(root.indexOf("<"+tagName), root.indexOf("</"+tagName) + fine.length()+1);
@@ -59,17 +59,59 @@ public class DocumentoXML {
 		
 	}
 	
+	public Tag getNodeChild() {
+		String rootStringa = removeDeclarationTag();
+		String nome = getTagNameFromString(rootStringa).trim();
+		String textContent = getTextContentString(rootStringa);
+		
+		List<String> childrenStringa = getChildElements(textContent);
+		
+		Tag root = new Tag(nome, textContent);
+		
+		
+		for (String child : childrenStringa) {
+			Tag tagFiglio = new Tag(getTagNameFromString(child) , getTextContentString(child));
+			root.addTag(tagFiglio);
+		}
+		return root;
+	}
+	
 	public Tag getRootElement() {
 		String rootStringa = removeDeclarationTag();
 		String nome = getTagNameFromString(rootStringa).trim();
 		String textContent = getTextContentString(rootStringa);
+		
+		Tag root = new Tag(nome, textContent);
+		
 		List<String> childrenStringa = getChildElements(textContent);
+		
+		
 		for (String child : childrenStringa) {
 			Tag tagFiglio = new Tag(getTagNameFromString(child) , getTextContentString(child));
-			System.out.println(tagFiglio);
+			root.addTag(tagFiglio);
 		}
-		Tag root = new Tag(nome, textContent);
 		return root;
+	}
+	
+	public Tag buildDoc(Tag tag) {
+		String contentTag = tag.getContenuto();
+//		System.out.println(contentTag);
+		List<Tag> children = tag.getChildren();
+		
+		for (Tag child : children) {
+			List<String> childrenString = getChildElements(child.getContenuto());
+			
+			
+			for (String childString : childrenString) {
+				String tagName = getTagNameFromString(childString);
+				String tagContent = getTextContentString(childString);
+				Tag tagFiglio = new Tag(tagName, tagContent);
+				child.addTag(tagFiglio);
+			}
+			
+			buildDoc(child);
+		}
+		return tag;
 	}
 
 	public String getContenutoFile(String path) {
@@ -96,7 +138,7 @@ public class DocumentoXML {
 			}
 			
 		}
-		//System.out.println(s.toString());
+		
 		return s.toString();
 	}
 	
@@ -128,7 +170,7 @@ public class DocumentoXML {
 
 
 
-        while (textContent.contains(tagName)) {
+        while ((tagName != null) && textContent.contains(tagName)) {
             String closureTag = "/" + tagName + ">";
             int indexBegin = textContent.indexOf("<");
             int startClosure = textContent.indexOf(closureTag);
@@ -158,18 +200,23 @@ public class DocumentoXML {
 	
 	public String getTagNameFromString(String el) {
 		String tagName = new String();
-		int firstSpacebar = el.indexOf(" ");
-		int startIndex = el.indexOf("<") + 1;
-		int closingTag = el.indexOf(">");
-		if (firstSpacebar == -1) {
-			tagName = el.substring(startIndex, closingTag);
-		} else if(firstSpacebar > closingTag){
-			tagName = el.substring(startIndex, closingTag);
-		} else {
-			tagName = el.substring(startIndex, firstSpacebar);
+		if (el.length() > 0) {
+			
+			int firstSpacebar = el.indexOf(" ");
+			int startIndex = el.indexOf("<") + 1;
+			int closingTag = el.indexOf(">");
+			if (firstSpacebar == -1) {
+				tagName = el.substring(startIndex, closingTag);
+			} else if(firstSpacebar > closingTag){
+				tagName = el.substring(startIndex, closingTag);
+			} else {
+				tagName = el.substring(startIndex, firstSpacebar);
+			}
+			return tagName;
 		}
 		
-		return tagName;
+		return null;
+		
 	}
 	
 }
