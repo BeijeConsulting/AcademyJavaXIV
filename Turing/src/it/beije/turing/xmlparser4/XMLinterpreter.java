@@ -15,24 +15,10 @@ public class XMLinterpreter {
 	}
 	public void RemoveIntest() //toglie l'intestazione dal file
 	{
-		String s = list.get(0);
-		
-		int end=0;
-		for(int i=0;i<s.length();i++)
-		{
-			char c = s.charAt(i);
-		     if(c=='>')
+		if(list.get(0).startsWith("<?"))
 			{
-				end=i;
-				break;
+				list.remove(0);
 			}
-		}
-		if(end!=s.length()-1) {
-		s=s.substring(end);
-		list.set(0,s);
-		}
-		else
-		list.remove(0);
 	}
 	public void SeparateElements()  //sistema la lista di stringhe in un formato prevedibile
 	{
@@ -87,7 +73,17 @@ public class XMLinterpreter {
 			List<Attributes> attributes = new ArrayList<>();
 			
 			String s = list.get(i); //la prima riga
-			if(s.startsWith("<")) //se incomincia con un angolare
+			if(s.startsWith("<!--"))
+			{
+				do {
+				i++;
+				}while(!list.get(i).contains("--"));
+			}
+			else if(s.startsWith("<!"))
+			{
+				break;
+			}
+			else if(s.startsWith("<")) //se incomincia con un angolare
 			{
 				if(s.startsWith("</")) //se contiene </ "chiusura di un nodo"
 				{
