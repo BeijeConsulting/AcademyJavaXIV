@@ -25,7 +25,7 @@ public class Reader {
 	{
 		return reader.readLine();
 	}
-	public boolean canContinue() throws IOException
+	public boolean hasNext() throws IOException
 	{
 		return reader.ready();
 	}
