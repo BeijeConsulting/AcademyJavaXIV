@@ -9,10 +9,12 @@ import java.util.List;
  */
 public class XMLParser4 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		FileParser fp = new FileParser();
-		List<String> list=fp.parseFile("tmp/test_parser1.xml");
-		System.out.println(list.get(1));
+		List<String> list=fp.parseFile("tmp/test_parser3.xml");
+		XMLinterpreter xml = new XMLinterpreter(list);
+		xml.Test();
 	}
 
 }
