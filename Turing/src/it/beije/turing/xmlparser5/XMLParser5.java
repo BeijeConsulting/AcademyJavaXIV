@@ -1,5 +1,7 @@
 package it.beije.turing.xmlparser5;
 
+import java.util.List;
+
 /**
  * 
  * @author Pasqua Alessandro, Luigi Verde
@@ -17,7 +19,7 @@ public class XMLParser5 {
 		if(rootElement.contains("XML formattato male")) {
 			return;
 		}
-		
+		List<String> children = m.getChildElements();
 	}
 
 	private static AlberaturaXML parse(String string) {

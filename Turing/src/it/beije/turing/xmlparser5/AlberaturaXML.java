@@ -88,7 +88,8 @@ public class AlberaturaXML {
 		return s.toString();
 	}
 	
-	public List<String> getChildElements(String el) {
+	public List<String> getChildElements() {
+		String el = getRootElement();
 		List<String> children = new ArrayList<>();
 		int indexBegin = el.indexOf('>') + 1;
 		int indexEnd = el.lastIndexOf('<');
@@ -109,6 +110,8 @@ public class AlberaturaXML {
 			int endOfClosure = occurrenceOfClosure + closureTag.length() - 1;
 			
 			String child = textContent.substring(0, endOfClosure);
+			System.out.println(child);
+			System.out.println("=========================");
 			
 			textContent = textContent.substring(endOfClosure);
 			
