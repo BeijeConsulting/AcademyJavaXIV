@@ -7,6 +7,14 @@ public class Dato {
 	private String tipo; 
 	private String variabile;
 	
+	
+	
+	private Dato(String tipo, String variabile) {
+		this.tipo = tipo;
+		this.variabile = variabile;
+	}
+	
+	
 	public String getTipo() {
 		return tipo;
 	}
@@ -14,18 +22,18 @@ public class Dato {
 		this.tipo = tipo;
 	}
 	
+	
+	
 	public String getVariabile() {
 		return variabile;
 	}
 	public void setVariabile(String variabile) {
 		this.variabile = variabile;
 	}
+
 	
-	private Dato(String tipo, String variabile) {
-		this.tipo = tipo;
-		this.variabile = variabile;
-	}
-	
+//////////////////////////////////////////////////////      STRING						////////////////////////////
+
 	public Dato newInstanceDato(String s) {
 		String tipo = impostaTipo(s);
 		String variabile = impostaVariabile(s);
@@ -41,5 +49,8 @@ public class Dato {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	
+	
+	
 }
