@@ -25,7 +25,7 @@ public class CSVmanager {
 			contatti = new ArrayList<Contatto>();
 			Contatto contatto = null;
 			int c = 0;
-			int nome = -1, cognome = -1, telefono = -1, email = -1, note = -1;
+			int id = -1, nome = -1, cognome = -1, telefono = -1, email = -1, note = -1;
 			
 			while (bufferedReader.ready()) {
 				String row = bufferedReader.readLine();
@@ -42,6 +42,9 @@ public class CSVmanager {
 					int i = 0;
 					for(String s : columns) {
 						switch(s) {
+							case "ID":
+								id = i;
+								break;
 							case "NOME":
 								nome = i;
 								break;
@@ -62,6 +65,9 @@ public class CSVmanager {
 				} else {
 					contatto = new Contatto();
 					if(columns.length > 0) {
+						if(nome != -1) {
+							contatto.setId(Integer.parseInt(columns[id]));
+						}
 						if(nome != -1) {
 							contatto.setNome(columns[nome]);
 						}
@@ -101,44 +107,43 @@ public class CSVmanager {
 		return contatti;
 	}
 	
-	public static void writeRubricaCSV(List<Contatto> contatti, String path, String separatore) {
+	public static void writeRubricaCSV(List<Contatto> contatti, String path, String separatore) throws IOException {
 
 		File file = new File(path);
-		System.out.println("file exists? " + file.exists());
 		
 		FileWriter fileWriter = null;
 		try {
 			fileWriter = new FileWriter(file);
-			int i = 0;
+			fileWriter.write("ID" +separatore+ "COGNOME" +separatore+ "NOME" +separatore+ "EMAIL" +separatore+ "TELEFONO" +separatore+ "NOTE\n");
 			for (Contatto contatto : contatti) {
-				if(i == 0) {
-					fileWriter.write("COGNOME;NOME;EMAIL;TELEFONO;NOTE\n");
-				} else {					
-					if(contatto.getCognome() != null) {					
-						fileWriter.write(contatto.getCognome());
-					}
-					fileWriter.write(separatore);
-					if(contatto.getNome() != null) {					
-						fileWriter.write(contatto.getNome());
-					}
-					fileWriter.write(separatore);
-					if(contatto.getEmail() != null) {					
-						fileWriter.write(contatto.getEmail());
-					}
-					fileWriter.write(separatore);
-					if(contatto.getTelefono() != null) {					
-						fileWriter.write(contatto.getTelefono());
-					}
-					fileWriter.write(separatore);
-					if(contatto.getNote() != null) {				
-						fileWriter.write(contatto.getNote());
-					}	
-					fileWriter.write('\n');
+				if(Integer.toString(contatto.getId()) != null) {					
+					fileWriter.write(contatto.getId());
 				}
-				i++;
+				fileWriter.write(separatore);
+				if(contatto.getCognome() != null) {					
+					fileWriter.write(contatto.getCognome());
+				}
+				fileWriter.write(separatore);
+				if(contatto.getNome() != null) {					
+					fileWriter.write(contatto.getNome());
+				}
+				fileWriter.write(separatore);
+				if(contatto.getEmail() != null) {					
+					fileWriter.write(contatto.getEmail());
+				}
+				fileWriter.write(separatore);
+				if(contatto.getTelefono() != null) {					
+					fileWriter.write(contatto.getTelefono());
+				}
+				fileWriter.write(separatore);
+				if(contatto.getNote() != null) {				
+					fileWriter.write(contatto.getNote());
+				}	
+				fileWriter.write('\n');
 			}
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
+			throw ioEx;
 		} finally {
 			try {
 				fileWriter.flush();
@@ -146,8 +151,6 @@ public class CSVmanager {
 			} catch (IOException fEx) {
 				fEx.printStackTrace();
 			}
-			
-			System.out.println("done");
 		}
 	}
 

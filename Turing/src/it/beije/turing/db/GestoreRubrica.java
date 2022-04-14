@@ -1,13 +1,22 @@
 package it.beije.turing.db;
 
 import java.io.IOException;
+//import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
+
 import it.beije.turing.file.CSVmanager;
 import it.beije.turing.file.XMLmanager;
+//import it.beije.turing.file.CSVmanager;
+//import it.beije.turing.file.XMLmanager;
 import it.beije.turing.rubrica.Contatto;
 
 public class GestoreRubrica {
@@ -22,7 +31,31 @@ public class GestoreRubrica {
 		System.out.println("6- Trova contatti duplicati (findDup)");
 		System.out.println("7- Unisci contatti duplicati (mergeDup)");
 		System.out.println("8- Esci dal gestore della rubrica (exit)");
+		System.out.println("9- Export Database (export)");
+		System.out.println("10- Import to Database (import)");
 		System.out.print("Scrivi la parola tra parentesi per la funzione che vuoi avviare sulla rubrica inserita: ");
+	}
+	
+	public static String sceltaFile(Scanner s) {
+		String str = null;
+		
+		int x = 0;
+		do {
+			System.out.print("\nVuoi effettuare l'export su un file csv o xml? ");
+			str = s.next();
+			
+			if(str.equalsIgnoreCase("csv")) {
+				str = "csv";
+				x++;
+			} else if(str.equalsIgnoreCase("xml")) {
+				str = "xml";
+				x++;
+			} else {
+				System.out.print("Inserisci un tipo di file corretto.");
+			}
+		} while(x == 0);
+		
+		return str;
 	}
 
 	public static void stampaRubrica(List<Contatto> contatti, Scanner s) {
@@ -114,7 +147,7 @@ public class GestoreRubrica {
 		}
 	}
 	
-	public static Scanner inserisciContatto(List<Contatto> contatti, String path, String typeFile, Scanner s) {
+	public static Scanner inserisciContatto(List<Contatto> contatti, Scanner s) {
 		Contatto contatto = new Contatto();
 		s = new Scanner(System.in);
 		
@@ -131,21 +164,21 @@ public class GestoreRubrica {
 		
 		contatti.add(contatto);
 		
-		if(typeFile.equalsIgnoreCase("csv")) {
-			CSVmanager.writeRubricaCSV(contatti, path, typeFile);
-		} else {
-			XMLmanager.writeRubricaXML(contatti, path);
-		}
+//		if(typeFile.equalsIgnoreCase("csv")) {
+//			CSVmanager.writeRubricaCSV(contatti, path, typeFile);
+//		} else {
+//			XMLmanager.writeRubricaXML(contatti, path);
+//		}
 		
 		System.out.println("Contatto inserito -> " + contatto);
 		return s;
 	}
 	
-	public static void modificaContatto(List<Contatto> contatti, String path, String typeFile) {
+	public static void modificaContatto(List<Contatto> contatti) {
 		System.out.println("Modifica Contatto");
 	}
 	
-	public static void eliminaContatto(List<Contatto> contatti, String path, String typeFile) {
+	public static void eliminaContatto(List<Contatto> contatti) {
 		System.out.println("Elimina Contatto");
 	}
 	
@@ -153,15 +186,99 @@ public class GestoreRubrica {
 		System.out.println("Trova contatti duplicati");
 	}
 	
-	public static void unisciContattiDuplicati(List<Contatto> contatti, String path, String typeFile) {
+	public static void unisciContattiDuplicati(List<Contatto> contatti) {
 		System.out.println("Unisci contatti duplicati");
+	}
+	
+	public static void exportDatabase(List<Contatto> contatti, Scanner s) {
+		String str = null;
+		String typeFile = sceltaFile(s);
+		
+		int j = 0;
+		do {
+			System.out.print("\nInserisci il path del file dove vuoi esportare il database: ");
+			str = s.next();
+			if(typeFile.equals("csv")) {
+				String separator = null;
+				System.out.print("\nInserisci il separatore: ");
+				separator = s.next();
+				try {
+					CSVmanager.writeRubricaCSV(contatti, str, separator);
+					j++;
+					System.out.println("<<Export avvenuto con successo>>");
+				} catch (IOException ioEx) {
+					System.out.println("Inserisci un path valido.");
+				}
+			} else if(typeFile.equals("xml")) {
+				try {
+					XMLmanager.writeRubricaXML(contatti, str);
+					j++;
+					System.out.println("<<Export avvenuto con successo>>");
+				} catch(TransformerConfigurationException tcEx) {
+					System.out.println("Inserisci un path valido.");
+				} catch(ParserConfigurationException pcEx) {
+					System.out.println("Inserisci un path valido.");
+				} catch(TransformerException tEx) {
+					System.out.println("Inserisci un path valido.");
+				}
+			}
+		} while(j == 0);
+		
+	}
+	
+	public static void importDatabase(Scanner s) {
+		String typeFile = sceltaFile(s);
+		String str = null;
+		
+		int j = 0;
+		do {
+			System.out.print("\nInserisci il path del file da dove vuoi importare i dati per il database: ");
+			str = s.next();
+			if(typeFile.equals("csv")) {
+				System.out.print("\nInserisci il separatore: ");
+				String separator = s.next();
+				int y = 0;
+				boolean virgolette = false;
+				do {
+					System.out.print("\nIl file usa le virgolette? (Si/No) ");
+					String r = s.next();
+					if(r.equalsIgnoreCase("si")) {
+						virgolette = true;
+						y++;
+					} else if(r.equalsIgnoreCase("no")) {
+						y++;
+					} else {
+						System.out.print("Inserisci un input valido.");
+					}
+				} while(y == 0);
+				try {
+					JDBCmanager.importFromCSV(str, separator, virgolette);
+					j++;
+					System.out.println("<<Import avvenuto con successo>>");
+				} catch (IOException ioEx) {
+					System.out.println("Inserisci un path valido.");
+				}
+			} else if(typeFile.equals("xml")) {
+				try {
+					JDBCmanager.importFromXML(str);
+					j++;
+					System.out.println("<<Import avvenuto con successo>>");
+				} catch(IOException ioEx) {
+					System.out.println("Inserisci un path valido.");
+				} catch(ParserConfigurationException pcEx) {
+					System.out.println("Inserisci un path valido.");
+				} catch(SAXException saxEx) {
+					System.out.println("Inserisci un path valido.");
+				}
+			}
+		} while(j == 0);
 	}
 	
 	public static void gestoreRubrica() {
 		Scanner s = new Scanner(System.in);
 		List<Contatto> contatti = null;
 		
-		String typeFile = "";
+		/*String typeFile = "";
 		int x = 0;
 		do {
 			System.out.print("Vuoi leggere un file csv o un file xml? ");
@@ -209,7 +326,7 @@ public class GestoreRubrica {
 					System.out.print("Inserisci un path valido -> ");
 				}
 			}
-		} while(i == 0);
+		} while(i == 0);*/
 		
 		GestoreRubrica.stampaMenu();
 		//System.out.println(contatti);
@@ -217,6 +334,7 @@ public class GestoreRubrica {
 		String st = s.next();
 		while (!st.equalsIgnoreCase("exit")) {
 			st = st.toLowerCase();
+			contatti = JDBCmanager.getRubrica();
 			switch(st) {
 				case "print":
 					stampaRubrica(contatti, s);
@@ -225,19 +343,25 @@ public class GestoreRubrica {
 					trovaContatto(contatti, s);
 					break;
 				case "insert":
-					s = inserisciContatto(contatti, path, typeFile, s);
+					s = inserisciContatto(contatti, s);
 					break;
 				case "modify":
-					modificaContatto(contatti, path, typeFile);
+					modificaContatto(contatti);
 					break;
 				case "delete":
-					eliminaContatto(contatti, path, typeFile);
+					eliminaContatto(contatti);
 					break;
 				case "finddup":
 					trovaContattiDuplicati(contatti);
 					break;
 				case "mergedup":
-					unisciContattiDuplicati(contatti, path, typeFile);
+					unisciContattiDuplicati(contatti);
+					break;
+				case "export":
+					exportDatabase(contatti, s);
+					break;
+				case "import":
+					importDatabase(s);
 					break;
 				default:
 					System.out.println("\n<<Scrivi un input valido per il gestore.>>");

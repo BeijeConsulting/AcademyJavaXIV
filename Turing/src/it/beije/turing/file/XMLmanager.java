@@ -52,6 +52,10 @@ public class XMLmanager {
 				Contatto contatto = new Contatto();
 				if (el.getTagName().equalsIgnoreCase("contatto")) {
 					List<Element> elmContatto = getChildElements(el);
+					System.out.println(el.getAttribute("Id"));
+					if(el.getAttribute("Id") != "") {						
+						contatto.setId(Integer.parseInt(el.getAttribute("Id")));
+					}
 					for (Element elm : elmContatto) {
 						switch (elm.getTagName().toLowerCase()) {
 							case "nome":
@@ -90,7 +94,7 @@ public class XMLmanager {
 		return contatti;
 	}
 	
-	public static void writeRubricaXML(List<Contatto> contatti, String path) {
+	public static void writeRubricaXML(List<Contatto> contatti, String path) throws TransformerConfigurationException, ParserConfigurationException, TransformerException {
 		
 		try {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -103,6 +107,7 @@ public class XMLmanager {
 		
 		for(Contatto contatto : contatti) {
 			Element elmContatto = doc.createElement("contatto");
+			elmContatto.setAttribute("Id", Integer.toString(contatto.getId()));
 			
 			Element nome = doc.createElement("nome");
 			nome.setTextContent(contatto.getNome());
@@ -143,10 +148,13 @@ public class XMLmanager {
 		//transformer.transform(source, syso);
 		} catch(TransformerConfigurationException tcEx) {
 			tcEx.printStackTrace();
+			throw tcEx;
 		} catch(ParserConfigurationException pcEx) {
 			pcEx.printStackTrace();
+			throw pcEx; 
 		} catch(TransformerException tEx) {
 			tEx.printStackTrace();
+			throw tEx;
 		}
 
 		//System.out.println("File saved!");
