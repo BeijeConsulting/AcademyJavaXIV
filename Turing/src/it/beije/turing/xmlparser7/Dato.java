@@ -35,6 +35,7 @@ public class Dato {
 	public Dato newInstanceDato(String s) {
 		String tipo = impostaTipo(s);
 		String variabile = impostaVariabile(s);
+		System.out.println("");
 		return new Dato(tipo, variabile);
 	}
 	

@@ -20,7 +20,7 @@ public class XMLParser7 {
 		//"C:/Users/luigi/Downloads/test_parser6.xml"
 	
 		//Documento.XMLToString("C:/Users/luigi/Downloads/test_parser6.xml");
-		Root.creaInstanzaRoot(Documento.XMLToString("C:/Users/luigi/Downloads/test_parser6.xml"));
+		Root.creaInstanzaRoot(Documento.XMLToString("/Users/simonepitossi/File/test_parser6.xml"));
 	}
 
 	

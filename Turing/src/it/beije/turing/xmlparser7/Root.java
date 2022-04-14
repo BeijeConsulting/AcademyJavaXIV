@@ -35,10 +35,10 @@ public class Root {
 	
 	public static Root creaInstanzaRoot(String[] splitAllInOne) {
 		boolean dichiarazioneTrovata = false;
-		int campi = 0;
+		int inizioCampi = 0;
 		int fineCampi = 0;
 		String name = "";
-		
+		ArrayList<Campo> campi = new ArrayList<>();
 		
 		
 		// cercando l'inizio splitAllInOne[i].indexOf("?>")
@@ -46,7 +46,7 @@ public class Root {
 			if(splitAllInOne[i].length()> 0 && splitAllInOne[i].indexOf("?>") != -1) {
 				if(splitAllInOne[i].substring(splitAllInOne[i].indexOf("?>"),splitAllInOne[i].indexOf("?>")+ "?>".length()).equalsIgnoreCase("?>")) {
 					name = splitAllInOne[i + 1].substring(0, splitAllInOne[i + 1].indexOf(">"));
-					campi = i +2;
+					inizioCampi = i + 2;
 					dichiarazioneTrovata = true;
 					break;
 				}
@@ -70,9 +70,15 @@ public class Root {
 			name= splitAllInOne[0].substring(0, splitAllInOne[0].indexOf(">"));
 		}
 		System.out.println(name);
-		System.out.println(campi);
+		System.out.println(inizioCampi);
 		System.out.println(fineCampi);
-		return new Root(name, null, campi, (fineCampi-1));
+		for(int i = inizioCampi; i < fineCampi; ) {
+			i = Campo.campoNewInstance(splitAllInOne, i, fineCampi, campi) ;
+		}
+		for(Campo c: campi) {
+			System.out.println(c.toString());
+		}
+		return new Root(name, campi, inizioCampi, (fineCampi-1));
 	}
 
 
