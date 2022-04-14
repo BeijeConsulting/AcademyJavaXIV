@@ -53,8 +53,35 @@ public class Node  {
         this.children.add(node);
     }
 
-    public String getElementsByTagName(String tagName) {
-        return (this.name + " " + this.attributes + " " + " " + this.content);
+    public List<Node> getElementsByTagName(String tagName) {
+    	List<Node> tmp = new ArrayList<>();
+    	if(this.getTagName().equals(tagName))
+    	{
+    		tmp.add(this);
+    	}
+    		if(hasChildren())
+    		{
+    			for(Node n : getChildNodes())
+    			{
+    				n.recursiveSearch(tmp,tagName);
+    			}
+    		}
+    		return tmp;
+    }
+    private void recursiveSearch(List<Node> tmp,String tagName)
+    {
+    	if(this.getTagName().equals(tagName))
+    	{
+    		tmp.add(this);
+    	}
+    	else if(this.hasChildren())
+    	{
+    		for(Node child:this.getChildElements())
+    		{
+    			child.recursiveSearch(tmp, tagName);
+    		}
+    	}
+    	else return;
     }
     public boolean hasChildren()
     {
