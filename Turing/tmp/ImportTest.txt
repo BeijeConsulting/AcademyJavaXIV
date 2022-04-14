@@ -1,2 +1,0 @@
-"NOME";"EMAIL";"TELEFONO";"COGNOME";"NOTE"
-"Maria";"Maria.Bianchi@qualcosa.it";"5554587158";"Bianchi";"Qualcos'altro"

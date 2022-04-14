@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<domande>
+	<domanda id="1" book="OCA Oracle Certified Associate Java SE 8 [2014]" chapter="1" question="1">
+		<testo>
+Which of the following can replace line 2 to make this code compile? (Choose all that apply)
+
+	1: import java.util.*;
+	2: // INSERT CODE HERE
+	3: public class Imports {
+	4:   public void method(ArrayList&lt;String&gt; list) {
+	5:     sort(list);
+	6:   }
+	7: }
+		</testo>
+		<risposte type="checkbox">
+			<risposta value="A">import static java.util.Collections;</risposta>
+			<risposta value="B">import static java.util.Collections.*;</risposta>
+			<risposta value="C">import static java.util.Collections.sort(ArrayList&lt;String&gt;);</risposta>
+			<risposta value="D">static import java.util.Collections;</risposta>
+			<risposta value="E">static import java.util.Collections.*;</risposta>
+			<risposta value="F">static import java.util.Collections.sort(ArrayList&lt;String&gt;);</risposta>
+		</risposte>
+		<risposteEsatte>BE</risposteEsatte>
+		<spiegazione>
+			Explanation: A class that isn’t defined in a package gets implicitly defined in Java’s
+			default package. But such classes can’t be accessed by classes or interfaces, which are
+			explicitly defined in a package.
+			Option a is incorrect. The EJava class isn’t defined in a package, so it can’t be
+			accessed by the Guru class, which is defined in the java.oca.associate package.
+			Options b, c, and d won’t compile. Option b uses invalid syntax in the import statement. Options c and d try to import classes from nonexistent packages—java.default
+			and default. 
+		</spiegazione>
+	</domanda>
+	<domanda id="2" book="OCA Oracle Certified Associate Java SE 8 [2014]" chapter="1" question="2">
+		<testo>
+Which of the following can replace line 2 to make this code compile? (Choose all that apply)
+
+	1: import java.util.*;
+	2: // INSERT CODE HERE
+	3: public class Imports {
+	4:   public void method(ArrayList&lt;String&gt; list) {
+	5:     sort(list);
+	6:   }
+	7: }
+		</testo>
+		<risposte type="checkbox">
+			<risposta value="A">import static java.util.Collections;</risposta>
+			<risposta value="B">import static java.util.Collections.*;</risposta>
+			<risposta value="C">import static java.util.Collections.sort(ArrayList&lt;String&gt;);</risposta>
+			<risposta value="D">static import java.util.Collections;</risposta>
+			<risposta value="E">static import java.util.Collections.*;</risposta>
+			<risposta value="F">static import java.util.Collections.sort(ArrayList&lt;String&gt;);</risposta>
+		</risposte>
+		<risposteEsatte>AB</risposteEsatte>
+		<spiegazione>
+			Explanation: A class that isn’t defined in a package gets implicitly defined in Java’s
+			default package. But such classes can’t be accessed by classes or interfaces, which are
+			explicitly defined in a package.
+			Option a is incorrect. The EJava class isn’t defined in a package, so it can’t be
+			accessed by the Guru class, which is defined in the java.oca.associate package.
+			Options b, c, and d won’t compile. Option b uses invalid syntax in the import statement. Options c and d try to import classes from nonexistent packages—java.default
+			and default. 
+		</spiegazione>
+	</domanda>
+</domande>

@@ -1,5 +1,0 @@
-"NOME";"COGNOME";"TELEFONO";"EMAIL";"NOTE"
-"Mario";"Rossi";"5558467158";"Mario.Rossi@qualcosa.it";"Qualcosa"
-"Maria";"Bianchi";"5554587158";"Maria.Bianchi@qualcosa.it";"Qualcos'altro"
-"Giovanna";"Verdi";"";"Giove@qualcosa.it";""
-"Samantha";"Black";"5498721368";"Sam@black.it";""
