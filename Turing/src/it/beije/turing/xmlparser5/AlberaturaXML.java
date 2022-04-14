@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.Buffer;
+//import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +56,10 @@ public class AlberaturaXML {
 //			String intestazione = s.subSequence(s.indexOf("<?"), s.indexOf("?>") + 2) +"";
 //			System.out.println(intestazione);
 			senzaIntestazione = s.substring(s.indexOf("?>") + 2);
-			System.out.println(senzaIntestazione);
-			if(senzaIntestazione.contains("<") || senzaIntestazione.contains(">")) {
-				return "XML formattato male";
-			}
+			//System.out.println(senzaIntestazione);
+//			if(senzaIntestazione.contains("<") || senzaIntestazione.contains(">")) {
+//				return "XML formattato male";
+//			}
 		}
 		if(senzaIntestazione != null) {
 			return senzaIntestazione;
@@ -83,6 +83,14 @@ public class AlberaturaXML {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				fr.close();
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		//System.out.println(s.toString());
 		return s.toString();
@@ -94,14 +102,17 @@ public class AlberaturaXML {
 		int indexBegin = el.indexOf("<", el.indexOf(">"));
 		int indexEnd = el.lastIndexOf("<");
 		String textContent = el.substring(indexBegin, indexEnd);
+		System.out.println(" CONTENUTO PRLEVATO \n" + textContent);
 		String tagName = null;
 		int firstSpacebar = textContent.indexOf(" ");
 		int closingTag = textContent.indexOf(">");
-		
-		if ((firstSpacebar != -1) && (closingTag < firstSpacebar)) {
+		if (firstSpacebar == -1) {
 			tagName = textContent.substring(1, closingTag);
-		} else {
+			System.out.println("VOGLIO VEDERE IL TAG NAME " + tagName);
+		} else if(closingTag < firstSpacebar){
 			tagName = textContent.substring(1, firstSpacebar);
+			System.out.println("VOGLIO VEDERE IL TAG NAME 2 " + tagName);
+			
 		}
 		
 		while (textContent.contains(tagName)) {
