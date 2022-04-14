@@ -136,17 +136,32 @@ public class XMLinterpreter {
 					if(endContent.substring(k+2,endContent.length()-1).equals(name))
 					{
 						content=builder.toString();
-						stack.add(new Node(name,hasArgs?attributes:null,hasContent?content:null));
+						Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null);
+						if(stackCursor!=-1)
+						{
+							stack.get(stackCursor).addChild(node);
+						}
+						stack.add(node);
 					}
 					else 
 					{
-						stack.add(new Node(name,hasArgs?attributes:null,hasContent?content:null));
+						Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null);
+						if(stackCursor!=-1)
+						{
+							stack.get(stackCursor).addChild(node);
+						}
+						stack.add(node);
 						stackCursor++;
 					}
 				}
 				else
 				{
-					stack.add(new Node(name,hasArgs?attributes:null,hasContent?content:null));
+					Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null);
+					if(stackCursor!=-1)
+					{
+						stack.get(stackCursor).addChild(node);
+					}
+					stack.add(node);
 					stackCursor++;
 				}
 				}
@@ -172,7 +187,7 @@ public class XMLinterpreter {
 				   if(s.charAt(k+1)=='"')
 				   {
 					  int end = s.indexOf('"',k+2);
-					  value = s.substring(k+1,end);
+					  value = s.substring(k+2,end);
 					  k=end;
 					  attributes.add(new Attributes(name,value));
 				   }

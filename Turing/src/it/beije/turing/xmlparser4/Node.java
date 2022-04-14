@@ -1,5 +1,6 @@
 package it.beije.turing.xmlparser4;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Node  {
@@ -45,6 +46,10 @@ public class Node  {
     }
 
     public void addChild(Node node){
+    	if(children==null)
+    	{
+    		children=new ArrayList<>();
+    	}
         this.children.add(node);
     }
 
