@@ -61,10 +61,13 @@ public class DocumentoXML {
 	
 	public Tag getRootElement() {
 		String rootStringa = removeDeclarationTag();
-		String nome = null;
-		nome = getTagNameFromString(rootStringa);
-		System.out.println(nome);
-		String textContent = null;
+		String nome = getTagNameFromString(rootStringa).trim();
+		String textContent = getTextContentString(rootStringa);
+		List<String> childrenStringa = getChildElements(textContent);
+		for (String child : childrenStringa) {
+			Tag tagFiglio = new Tag(getTagNameFromString(child) , getTextContentString(child));
+			System.out.println(tagFiglio);
+		}
 		Tag root = new Tag(nome, textContent);
 		return root;
 	}
@@ -108,42 +111,49 @@ public class DocumentoXML {
 //		return figliInterni;
 //	}
 	
-	public List<String> getChildElements(String el) {
-		List<String> children = new ArrayList<>();
+	public String getTextContentString(String el){
 		int indexBegin = el.indexOf("<", el.indexOf(">"));
 		int indexEnd = el.lastIndexOf("<");
 		String textContent = el.substring(indexBegin, indexEnd);
-		//System.out.println(" CONTENUTO PRELEVATO \n" + textContent);
-		String tagName = null;
-		int firstSpacebar = textContent.indexOf(" ");
-		int closingTag = textContent.indexOf(">");
-		if (firstSpacebar == -1) {
-			tagName = textContent.substring(1, closingTag);
-			//System.out.println("VOGLIO VEDERE IL TAG NAME " + tagName);
-		} else if(firstSpacebar > closingTag){
-			tagName = textContent.substring(1, closingTag);
-			//System.out.println("VOGLIO VEDERE IL TAG NAME 2 " + tagName);
-		} else {
-			tagName = textContent.substring(1, closingTag);
-			//System.out.println("VOGLIO VEDERE IL TAG NAME 3 " + tagName);
-		}
-		
-		while (textContent.contains(tagName)) {
-			String closureTag = "/" + tagName + ">";
-			int occurrenceOfClosure = textContent.indexOf(closureTag);
-			int endOfClosure = occurrenceOfClosure + closureTag.length() - 1;
-			
-			String child = textContent.substring(0, endOfClosure);
-//			System.out.println(child);
-//			System.out.println("=========================");
-			
-			textContent = textContent.substring(endOfClosure);
-			
-			children.add(child);
-		}
-		
-		
-		return children;
+		return textContent;
+	}
+	
+	
+	public List<String> getChildElements(String textContent) {
+        List<String> children = new ArrayList<>();
+//        int indexBegin = getIndexOfChild(el, "<");
+//        int indexEnd = el.lastIndexOf("<");
+//        String textContent = el.substring(indexBegin, indexEnd);
+        String tagName = getTagNameFromString(textContent);
+
+
+
+        while (textContent.contains(tagName)) {
+            String closureTag = "/" + tagName + ">";
+            int indexBegin = textContent.indexOf("<");
+            int startClosure = textContent.indexOf(closureTag);
+            int endClosure = startClosure + closureTag.length();
+
+            String child = textContent.substring(indexBegin, endClosure);
+
+            int cutContentFrom = textContent.indexOf("<", startClosure);
+            if (cutContentFrom != -1) {
+                textContent = textContent.substring(cutContentFrom);
+                tagName = getTagNameFromString(textContent);
+            } else {
+                textContent = "";
+            }
+
+            children.add(child);
+        }
+
+
+        return children;
+    }
+	
+	public int getIndexOfChild(String el , String c) {
+		int index = el.indexOf(c , el.indexOf(">"));
+		return index;
 	}
 	
 	public String getTagNameFromString(String el) {

@@ -45,6 +45,19 @@ public class Tag {
 	public void addTag(Tag tag) {
 		this.children.add(tag);
 	}
+	public void setChildren(List<Tag> children) {
+		this.children = children;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Tag [nome=" + nome + ", attributi=" + attributi + ", contenuto=" + contenuto + ", children=" + children
+				+ "]";
+	}
+	
+	
+	
 	
 	
 	
