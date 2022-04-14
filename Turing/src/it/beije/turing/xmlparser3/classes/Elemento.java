@@ -11,17 +11,21 @@ import java.util.List;
  */
 public class Elemento implements IElemento {
 
+    private String tagName;
     private List<Elemento> elementoList=new ArrayList<>();
+
 
     private void setElemento(Elemento o){
         elementoList.add(o);
-
     }
+
 
     @Override
     public List<String> getAttributes() {
         return null;
     }
+
+
 
     @Override
     public List<Nodo> getChildNodes() {
@@ -30,7 +34,7 @@ public class Elemento implements IElemento {
 
     @Override
     public String getTagName() {
-        return null;
+        return this.tagName;
     }
 
     @Override
@@ -53,5 +57,9 @@ public class Elemento implements IElemento {
             }
         }
         return result;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 }

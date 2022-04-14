@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.beije.turing.xmlparser3.Exception.TagNotOpenException;
 import it.beije.turing.xmlparser3.interfaces.LoadFile;
+
+import javax.swing.text.html.HTML;
 
 /**
  * @author Giuseppe Raddato
@@ -32,7 +35,7 @@ public class Documento implements LoadFile {
     @Override
     public Documento parse(String path) {
         StringBuilder s = new StringBuilder();
-        List<StringBuilder> listElement = new ArrayList<>();
+        List<String> listElement = new ArrayList<>();
 
         try {
             File f = new File(path);
@@ -50,15 +53,36 @@ public class Documento implements LoadFile {
             int i=0;
             while (matcher.find()) {
                 String r=matcher.group().trim();
+                /*
                 if(!r.isEmpty()){
                     System.out.println((i++)+":"+matcher.group());
                 }
-
+                */
+                Elemento elemento = new Elemento();
+                if(r.indexOf('<') == 0 && r.indexOf('>')==r.length()-1){
+                    if(r.contains("/")){
+                        //check stack
+                        String e = listElement.get(listElement.size()-1);
+                        //System.out.println(e.substring(0,1).replace("<","</")+e.substring(1,e.length()));
+                        String a = e.substring(0,1).replace("<","</")+e.substring(1,e.length());
+                        //System.out.println(r+" = "+a);
+                        if(r.equals(a)){
+                            listElement.remove(listElement.size()-1);
+                        }else{
+                            throw new TagNotOpenException();
+                        }
+                    }else{
+                        //add stack
+                        listElement.add(r);
+                        if(r.contains(" ")){
+                            elemento.setTagName(r.substring(1,r.indexOf(" ")));
+                        }else{
+                            elemento.setTagName(r.substring(1,r.indexOf(">")));
+                        }
+                        System.out.println(elemento.getTagName());
+                    }
+                }
             }
-
-
-
-
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -72,4 +96,6 @@ public class Documento implements LoadFile {
     public Elemento getRootElement() {
         return null;
     }
+
+
 }
