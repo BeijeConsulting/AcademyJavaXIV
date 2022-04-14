@@ -62,6 +62,8 @@ public class DocumentoXML {
 	public Tag getRootElement() {
 		String rootStringa = removeDeclarationTag();
 		String nome = null;
+		nome = getTagNameFromString(rootStringa);
+		System.out.println(nome);
 		String textContent = null;
 		Tag root = new Tag(nome, textContent);
 		return root;
@@ -142,6 +144,22 @@ public class DocumentoXML {
 		
 		
 		return children;
+	}
+	
+	public String getTagNameFromString(String el) {
+		String tagName = new String();
+		int firstSpacebar = el.indexOf(" ");
+		int startIndex = el.indexOf("<") + 1;
+		int closingTag = el.indexOf(">");
+		if (firstSpacebar == -1) {
+			tagName = el.substring(startIndex, closingTag);
+		} else if(firstSpacebar > closingTag){
+			tagName = el.substring(startIndex, closingTag);
+		} else {
+			tagName = el.substring(startIndex, firstSpacebar);
+		}
+		
+		return tagName;
 	}
 	
 }

@@ -12,10 +12,10 @@ public class XMLParser5 {
 	public static void main(String[] args) {
 		
 
-		//DocumentoXML d = parse("/temp/test_parser1.xml");
-		DocumentoXML d = parse("C:\\Users\\aless\\Desktop\\xml scaricati\\test_parser1.xml");
+		DocumentoXML d = parse("/temp/test_parser1.xml");
+//		DocumentoXML d = parse("C:\\Users\\aless\\Desktop\\xml scaricati\\test_parser1.xml");
 		String s = d.removeDeclarationTag();
-		System.out.println(s);
+		Tag root = d.getRootElement();
 	}
 
 	private static DocumentoXML parse(String path) {
