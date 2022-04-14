@@ -13,7 +13,7 @@ public class Document {
 		
 		for(int i = 0, j = 0, x = 0, y = 0; i < fileContent.length(); i++) {
 			char c = fileContent.charAt(i);
-			
+
 			//System.out.println(strSup);
 			
 			if(i > 2 && fileContent.charAt(i - 1) == '>' && c != '<' && c != '>') {
@@ -54,6 +54,8 @@ public class Document {
 				content.add(strSup);
 				strSup = new StringBuilder();
 			} 
+			
+			
 		}
 		
 		ArrayList<StringBuilder> contentSup = new ArrayList<StringBuilder>(content);
@@ -78,6 +80,7 @@ public class Document {
 		
 		
 		return e;
+
 	}
 	
 	public static void main(String... args) throws IOException {
