@@ -8,7 +8,7 @@ package it.beije.turing.xmlparser3;
 public class XMLParser3 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		System.out.println("Ciao");
 
 	}
 
