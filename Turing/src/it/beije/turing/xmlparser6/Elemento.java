@@ -1,67 +1,59 @@
 package it.beije.turing.xmlparser6;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Elemento
-{
-	private String tagName;
-	private List<Attributi> attributes;
-	private String textContent;
+
+public class Elemento extends Nodo{
+	
+	private Testo testo;
 	private List<Elemento> childElements;
-	private List<Elemento> childNodes;
-	private Elemento father;
-	
-	public String getTagName() {
-		return tagName;
-	}
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
-	}
-	
-	
-	public List<Attributi> getAttributes() {
-		return attributes;
-	}
-	
-	public void setAttributes(List<Attributi> attributes) {
-		this.attributes = attributes;
-	}
-	
-	
-	public String getTextContent() {
-		return textContent;
-	}
-	
-	public void setTextContent(String textContent) {
-		this.textContent = textContent;
-	}
-	
-	
-	public List<Elemento> getChildElements() {
+	private List<Nodo> childNodes;
+
+	public List<Elemento> getChildElements()
+	{
 		return childElements;
 	}
 	
-	public void setChildElements(List<Elemento> childElements) {
+	public void setChildElements(List<Elemento> childElements)
+	{
 		this.childElements = childElements;
 	}
 	
 	
-	public List<Elemento> getChildNodes() {
+	public List<Nodo> getChildNodes()
+	{
 		return childNodes;
 	}
 	
-	public void setChildNodes(List<Elemento> childNodes) {
-		this.childNodes = childNodes;
+	public void setChildNodes()
+	{
+		List<Nodo> temp = new ArrayList<>();
+		
+		for(Elemento e : getChildElements())
+		{
+			temp.add(e);
+		}
+		
+		temp.add(testo);
+		
+		this.childNodes = temp;
 	}
 	
-	
-	public Elemento getFather()
+	public List<Elemento> getElementsByTagName(String tagName)
 	{
-		return father;
+		List<Elemento> lista = new ArrayList<>();
+		
+		for(Elemento el : childElements)
+		{
+			if(el.getTagName().equals(tagName)) lista.add(el);
+		}
+		
+		return lista;
 	}
 	
-	public void setFather(Elemento father)
+	public String getTextContent()
 	{
-		this.father = father;
+		return testo.getTesto();
 	}
 }

@@ -2,8 +2,8 @@ package it.beije.turing.xmlparser6;
 
 public class XMLDocument
 {
-	private Prolog prologElement;			//intestazione xml. potrebbe non esistere
-	private Elemento rootElement;			//elemento di root del documento xml
+	private Prolog prologElement;				//intestazione xml. potrebbe non esistere
+	private Elemento rootElement;				//elemento di root del documento xml
 	
 	
 	//SETTERs
@@ -28,8 +28,4 @@ public class XMLDocument
 	{
 		return rootElement;
 	}
-	
-	
-	//UTIL
-	
 }

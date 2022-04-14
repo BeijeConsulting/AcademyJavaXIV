@@ -29,7 +29,12 @@ public class XMLParser6
 	{
 		if (file == null || file.length() == 0) throw new IllegalArgumentException("File non valido.");
 		
+		XMLDocument document = new XMLDocument();
 		
+		//el1 = root
+		//document.setRootElement(el1);
+		//prolog
+		//document.setPrologElement(prolog);
 		return null;
 	}
 	
@@ -42,7 +47,7 @@ public class XMLParser6
 			throw new FileNotFoundException("File non trovato.");
 		}
 		
-		FileReader fileReader = new FileReader(file);						//apro reader con file esistente. FileNotFoundException già gestita, ma comunque non possibile.
+		FileReader fileReader = new FileReader(file);						//apro reader con file esistente. FileNotFoundException giï¿½ gestita, ma comunque non possibile.
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		
 		String fileXml = null;
@@ -73,4 +78,6 @@ public class XMLParser6
 		
 		return fileXml;
 	}
+	
+	
 }
