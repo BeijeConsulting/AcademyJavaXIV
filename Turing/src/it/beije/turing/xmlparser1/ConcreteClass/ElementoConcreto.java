@@ -1,8 +1,10 @@
 package it.beije.turing.xmlparser1.ConcreteClass;
 
+import java.util.List;
+
 import it.beije.turing.xmlparser1.Interfaces.Elemento;
 
-public class ElementoConcreto extends Nodo implements Elemento {
+public class ElementoConcreto extends NodoConcreto implements Elemento {
 	private String tagName;
 	private String textContent;
 	
@@ -27,6 +29,17 @@ public class ElementoConcreto extends Nodo implements Elemento {
 	public void setTextContent(String textContent) {
 		this.textContent = textContent;
 	}
-	
+
+	@Override
+	public List<NodoConcreto> getChildNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getTestoTotale() {
+		return testoCompleto;
+	}
+
 	
 }
