@@ -28,8 +28,8 @@ public class Node  {
         return this.children;
     }
 
-
-    public void getChildElements() {
+    public List<Node> getChildElements() {
+        return this.children;
     }
 
     public String getTagName() {
@@ -42,5 +42,13 @@ public class Node  {
 
     public List<Attributes> getAttributes() {
         return this.attributes;
+    }
+
+    public void addChild(Node node){
+        this.children.add(node);
+    }
+
+    public String getElementsByTagName(String tagName) {
+        return (this.name +" " + this.attributes + " " + " " + this.content);
     }
 }
