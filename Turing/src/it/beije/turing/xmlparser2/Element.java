@@ -1,12 +1,10 @@
 package it.beije.turing.xmlparser2;
 
 public class Element {
-<<<<<<< HEAD
-	
-=======
 	private String tag;
 	private String[] childElements;
 	private String content;
+	private String[] attributes;
 	
 	public Element() {
 		
@@ -35,6 +33,13 @@ public class Element {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
+	
+	public String getAttributes() {
+		return tag;
+	}
 
->>>>>>> refs/remotes/origin/XML_Parser_2
+	public void setAttributes(String tag) {
+		this.tag = tag;
+	}
+
 }

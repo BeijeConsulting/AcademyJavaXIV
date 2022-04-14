@@ -18,6 +18,7 @@ public class Document {
 			
 			if(i > 2 && fileContent.charAt(i - 1) == '>' && c != '<' && c != '>') {
 				y++;
+				strC.append("t-");
 			}
 			if(y == 1 && c != '<') {
 				strC.append(c);
@@ -55,7 +56,28 @@ public class Document {
 			} 
 		}
 		
+		ArrayList<StringBuilder> contentSup = new ArrayList<StringBuilder>(content);
+		root.setTag(contentSup.get(0).toString());
+		contentSup.remove(contentSup.size() - 1);
+		contentSup.remove(0);
+		System.out.println(contentSup);
+		int i = 0;
+	}
+	
+	public static void buildRoot(ArrayList<StringBuilder> content, int i) {
 		
+		root.setTag(content.get(i).toString());
+		
+		if(!content.get(i).equals(content.get(i + 1)) && !content.get(i).toString().contains("t-")) {
+			
+		}
+		i++;
+		
+		String s = "";
+		
+		
+		
+		return e;
 	}
 	
 	public static void main(String... args) throws IOException {
