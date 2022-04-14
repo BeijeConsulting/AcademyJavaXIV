@@ -17,7 +17,7 @@ public class XMLParser4 {
 		List<String> list=fp.parseFile("tmp/test_parser4.xml");
 
 		XMLinterpreter xml = new XMLinterpreter(list);
-		xml.print();
+		//xml.print();
 		test(xml);
 		//xml.print();
 		/*try {
@@ -42,8 +42,19 @@ public class XMLParser4 {
 		}*/
 
 	}
-	private static void test2()
+	private static void test2(XMLinterpreter tool)
 	{
+		Node root=null;
+		try {
+			 root = tool.ParseRoot();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Node node : root.getElementsByTagName("nome"))
+		{
+			System.out.println(node.getTagName());
+		}
 		
 	}
 	private static void test(XMLinterpreter tool)
