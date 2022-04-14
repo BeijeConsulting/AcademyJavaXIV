@@ -42,6 +42,7 @@ public class XMLmanager {
 		List<Element> childElements = new ArrayList<Element>();
 		NodeList nodeList = element.getChildNodes();
 		for (int n = 0; n < nodeList.getLength(); n++) {
+			System.out.println(nodeList.item(n));
 			if (nodeList.item(n) instanceof Element) childElements.add((Element)nodeList.item(n));
 		}
 		
@@ -193,7 +194,7 @@ public class XMLmanager {
 
 	public static void main(String[] args) throws Exception {
 		//readXML("/temp/rubrica.xml");
-		writeXML("/temp/new_rubrica.xml");
+		//writeXML("/temp/new_rubrica.xml");
 	}
 
 }

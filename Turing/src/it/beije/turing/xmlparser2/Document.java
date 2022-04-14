@@ -50,6 +50,10 @@ public class Document {
 					x--;
 				}
 				
+				if(fileContent.charAt(i - 1) == '/') {
+					strSup.append("**");
+				}
+				
 				j--;
 				content.add(strSup);
 				strSup = new StringBuilder();
@@ -58,30 +62,83 @@ public class Document {
 			
 		}
 		
+		
 		ArrayList<StringBuilder> contentSup = new ArrayList<StringBuilder>(content);
-		root.setTag(contentSup.get(0).toString());
-		contentSup.remove(contentSup.size() - 1);
-		contentSup.remove(0);
-		System.out.println(contentSup);
-		int i = 0;
+		//root.setTag(contentSup.get(i++).toString());
+//		contentSup.remove(contentSup.size() - 1);
+//		contentSup.remove(0);
+//		System.out.println(contentSup);
+//		int i = 1;
+//		ArrayList<Element> elms = new ArrayList<Element>();
+//		ArrayList<Element> elmsP = buildRoot(contentSup, i, elms);
+//		for(Element e : elmsP) {
+//			if(e != null) {				
+//				System.out.println(e.getTag() + " " + e.getContent());
+//			}
+//		}
+		//String element = contentSup.get(i++).toString();
+		int countChildren = 0;
+		//for(StringBuilder s : )
+		ArrayList<Node> parentList = new ArrayList<Node>();
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		Node root = new Node();
+		root.content = contentSup.get(0).toString();
+		parentList.add(root);
+		for(int i = 1; i < contentSup.size(); i++) {
+			Node node = new Node();
+			node.content = contentSup.get(i).toString();
+			if(!node.content.equals(parentList.get(parentList.size() - 1).content) && !node.content.toString().contains("t-") && !node.content.toString().contains("**")) {
+				node.parent = parentList.get(parentList.size() - 1);
+				parentList.get(parentList.size() - 1).child.add(node);
+				parentList.add(node);
+				//nodes.add(node);
+			} else if(node.content.toString().contains("t-") || node.content.toString().contains("**")) {
+				node.parent = parentList.get(parentList.size() - 1);
+				parentList.get(parentList.size() - 1).child.add(node);
+				nodes.add(node);
+			} else if(node.content.equals(parentList.get(parentList.size() - 1).content)) {
+				nodes.add(parentList.get(parentList.size() - 1));
+				parentList.remove(parentList.size() - 1);
+			}
+			
+			//root.child.add(node);
+		}
+		
+		for(Node node : root.child) {
+			System.out.println(node.content);
+			for(Node node1 : node.child) {
+				System.out.println("   " + node1.content);
+				for(Node node2 : node1.child) {
+					System.out.println("       " + node2.content);
+				}
+			}
+		}
 	}
 	
-	public static void buildRoot(ArrayList<StringBuilder> content, int i) {
+	public static ArrayList<Element> buildRoot(ArrayList<StringBuilder> content, int i, ArrayList<Element> elements) {
 		
-		root.setTag(content.get(i).toString());
+		Element e = null;
 		
-		if(!content.get(i).equals(content.get(i + 1)) && !content.get(i).toString().contains("t-")) {
-			
+		if (i < content.size() - 1) {
+			if(!content.get(i).equals(content.get(i + 1)) && !content.get(i + 1).toString().contains("t-")) {
+				e = new Element();
+				e.setTag(content.get(i).toString());
+				e.setChildElements(buildRoot(content, ++i, elements));
+			} else if(content.get(i + 1).toString().contains("t-")) {
+				e = new Element();
+				e.setTag(content.get(i).toString());
+				e.setContent(content.get(i + 1).substring(2, content.get(i + 1).length()));
+				e.setChildElements(buildRoot(content, ++i, elements));
+			} else {
+				//elements.add(e);
+			}
 		}
-		i++;
 		
-		String s = "";
-		
-		
-		
-		return e;
-
+		elements.add(e);
+		//elements.get((elements.size() - 1)).setChildElements(elements);
+		return elements;
 	}
+	
 	
 	public static void main(String... args) throws IOException {
 		
