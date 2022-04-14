@@ -2,14 +2,20 @@ package it.beije.turing.xmlparser5;
 
 /**
  * 
- * @author Cognome Nome, Cognome Nome
+ * @author Pasqua Alessandro, Luigi Verde
  *
  */
 public class XMLParser5 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+		AlberaturaXML m = parse("");
+		
 	}
+
+	private static AlberaturaXML parse(String string) {
+		return null;
+	}
+	
 
 }
