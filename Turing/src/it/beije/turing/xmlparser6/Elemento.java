@@ -6,7 +6,7 @@ public class Elemento {
 	private String name;
 	private List<Attributi> attribute;
 	private String testo;
-	private String listaEL;
+	private List<Elemento> listaEL;
 	
 	public String getName() {
 		return name;
@@ -34,10 +34,10 @@ public class Elemento {
 	}
 	
 	
-	public String getListaEL() {
+	public List<Elemento> getListaEL() {
 		return listaEL;
 	}
-	public void setListaEL(String listaEL) {
+	public void setListaEL(List<Elemento> listaEL) {
 		this.listaEL = listaEL;
 	}
 	
