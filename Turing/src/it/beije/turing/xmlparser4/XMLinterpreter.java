@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XMLinterpreter {
-	private List<String> list;
+	private List<String> list; //Le righe del file
 
 	public XMLinterpreter(List<String> list)
 	{
 		this.list=list;
 	}
-	public void RemoveIntest()
+	public void RemoveIntest() //toglie l'intestazione dal file
 	{
 		String s = list.get(0);
 		
@@ -34,13 +34,13 @@ public class XMLinterpreter {
 		else
 		list.remove(0);
 	}
-	public void SeparateElements()
+	public void SeparateElements()  //sistema la lista di stringhe in un formato prevedibile
 	{
 		RemoveIntest();
 		
-		for(int i=0;i<list.size();i++)
+		for(int i=0;i<list.size();i++) 
 		{
-			String split[]=list.get(i).split("><");
+			String split[]=list.get(i).split("><"); 
 			if (split.length>1)
 			{
 				int tmp=i;
@@ -72,36 +72,37 @@ public class XMLinterpreter {
 			System.out.println(s);
 		}
 	}
-	public Node ParseRoot() throws Exception
+	public Node ParseRoot() throws Exception //Ritorna il nodo Root con tutti i figli e relativi attributi
 	{
-		List<Node> stack = new ArrayList<>();
-		int stackCursor=-1;
+		List<Node> stack = new ArrayList<>(); //la lista dei nodi
+		int stackCursor=-1; //indica l'ultimo nodo aperto e non ancora chiuso
 		RemoveIntest();
-		for(int i=0;i<list.size();i++)
+		for(int i=0;i<list.size();i++)//per ogni riga 
 		{
-			boolean hasContent = false;
+			boolean hasContent = false; 
 			boolean hasArgs=false;
 			String name=null;
 			String content=null;
 			List<Attributes> attributes = new ArrayList<>();
-			String s = list.get(i);
-			if(s.startsWith("<"))
+			
+			String s = list.get(i); //la prima riga
+			if(s.startsWith("<")) //se incomincia con un angolare
 			{
-				if(s.startsWith("</"))
+				if(s.startsWith("</")) //se contiene </ "chiusura di un nodo"
 				{
-					if(s.substring(2,s.length()-1).equalsIgnoreCase(stack.get(stackCursor).name))
+					if(s.substring(2,s.length()-1).equalsIgnoreCase(stack.get(stackCursor).name)) //se la TAG di chiusura corrisponde all'ultimo nodo inserito
 							{
-								stackCursor--;
+								stackCursor--; //considero il nodo chiuso correttamente
 							}
 					else
 					{
-						throw new Exception("Missed node closure" + i);
+						throw new Exception("Missed node closure"); //altrimenti mi lamento
 					}
 				}
-				else {
-				if(s.contains(" "))
+				else { //se non si tratta di un tag di chiusura
+				if(s.contains(" ")) //ed ha degli spazi
 				{
-					name=s.substring(1,s.indexOf(" "));
+					name=s.substring(1,s.indexOf(" ")); 
 					extractAttribute(s,attributes);
 					if(!attributes.isEmpty())
 					{

@@ -40,8 +40,16 @@ public List<String> parseFile(String fileName)
 public List<String> read(String path) throws IOException
 {
 	File file = new File(path);
-	String s = Files.readString(file.toPath());
-	return format(s);
+	Reader reader= new Reader(path);
+	StringBuilder builder=new StringBuilder();
+	while(reader.hasNext())
+	{
+		builder.append(reader.nextLine());
+	}
+	//String s = Files.readString(file.toPath());
+	
+	
+	return format(builder.toString());
 }
 private static StringBuilder addReturns(String s,int c)
 {
