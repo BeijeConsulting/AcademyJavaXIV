@@ -75,6 +75,7 @@ public class XMLinterpreter {
 	public Node ParseRoot() throws Exception //Ritorna il nodo Root con tutti i figli e relativi attributi
 	{
 		List<Node> stack = new ArrayList<>(); //la lista dei nodi
+		Node root=null;
 		int stackCursor=-1; //indica l'ultimo nodo aperto e non ancora chiuso
 		RemoveIntest();
 		for(int i=0;i<list.size();i++)//per ogni riga 
@@ -92,6 +93,7 @@ public class XMLinterpreter {
 				{
 					if(s.substring(2,s.length()-1).equalsIgnoreCase(stack.get(stackCursor).name)) //se la TAG di chiusura corrisponde all'ultimo nodo inserito
 							{
+								stack.remove(stackCursor);
 								stackCursor--; //considero il nodo chiuso correttamente
 							}
 					else
@@ -102,47 +104,51 @@ public class XMLinterpreter {
 				else { //se non si tratta di un tag di chiusura
 				if(s.contains(" ")) //ed ha degli spazi
 				{
-					name=s.substring(1,s.indexOf(" ")); 
-					extractAttribute(s,attributes);
-					if(!attributes.isEmpty())
+					name=s.substring(1,s.indexOf(" ")); //il tag senza la prima angolare
+					extractAttribute(s,attributes);//chiamo il metodo per la lista di attributi
+					if(!attributes.isEmpty())//se ha attributi
 					{
 						hasArgs=true;
 					}
 				}
 				else
 				{
-					name=s.substring(1,s.length()-1);
+					name=s.substring(1,s.length()-1); //il nome del tag è la stringa senza angolari
 				}
-				if(!list.get(i+1).startsWith("<"))
+				if(!list.get(i+1).startsWith("<")) //se la riga dopo non è un tag
 				{
-					hasContent=true;
+					hasContent=true; //si tratta di testo
 					StringBuilder builder = new StringBuilder();
-					int k=i+1;
-					while(!list.get(k+1).startsWith("<"))
+					int k=i+1; //k è l'indica della riga seguente
+					while(!list.get(k+1).startsWith("<")) //finchè la riga dopo è testo
 					{
-						builder.append(list.get(k));
+						builder.append(list.get(k));	//aggiungi al testo
 						k++;
 					}
-					String endContent = list.get(k);
-					i=k;
-					k=endContent.indexOf('<');
-					if(k==-1)
+					String endContent = list.get(k);  //questa è l'ultima riga del testo
+					i=k;							// avanzo il ciclo oltre il testo
+					k=endContent.indexOf('<');		//la chiusura del tag rimane, nel formato, attaccata al testo, così dove finisce il testo ed inizia il tag
+					if(k==-1)	
 					{
-						throw new Exception();
+						throw new Exception("Errore nella formattazione di input oppure mancata chiusura di un nodo con testo");		//se non viene chiuso il tag c'è un errore
 					}
 					else
 					{
-						builder.append(endContent.substring(0,k));
+						builder.append(endContent.substring(0,k)); //includo la parte non tag nel testo
 					}
-					if(endContent.substring(k+2,endContent.length()-1).equals(name))
+					if(endContent.substring(k+2,endContent.length()-1).equals(name))  //se il tag di chiusura corrisponde all'ultimo nodo aperto	
 					{
-						content=builder.toString();
-						Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null);
-						if(stackCursor!=-1)
+						content=builder.toString(); //fisso il testo
+						Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null); //creo nodo
+						if(stackCursor!=-1) //se non è il root
 						{
-							stack.get(stackCursor).addChild(node);
+							stack.get(stackCursor).addChild(node); //è il figlio di qualcuno
 						}
-						stack.add(node);
+						else
+						{
+							root=node;
+						}
+						//stack.add(node);//lo metto in stack anceh lui ma è già stato chiuso perciò non serve modificare il contatore
 					}
 					else 
 					{
@@ -151,26 +157,40 @@ public class XMLinterpreter {
 						{
 							stack.get(stackCursor).addChild(node);
 						}
+						else
+						{
+							root=node;
+						}
 						stack.add(node);
 						stackCursor++;
 					}
 				}
-				else
+				else//se non ha testo
 				{
-					Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null);
+					Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null); //lo metto dentro senza problemi
 					if(stackCursor!=-1)
 					{
 						stack.get(stackCursor).addChild(node);
 					}
+					else
+					{
+						root=node;
+					}
 					stack.add(node);
-					stackCursor++;
+					if(!s.substring(s.length()-2).equals("/>")) {
+					stackCursor++;//mi aspetto una chiusura
+					}
 				}
 				}
 				
 			}
 			
 		}
-		return stack.get(0);
+		if(root==null)
+		{
+			throw new Exception("root nullo");
+		}
+		return root; //do indietro il root
 	}
 	//method for attr.
 	private void extractAttribute(String s,List<Attributes> attributes)
@@ -179,8 +199,9 @@ public class XMLinterpreter {
 		{
 		   String name;
 		   String value;
-		   s=s.substring(s.indexOf(' '));
-		   for(int k=0;k<s.length();k++)
+		   s=s.substring(s.indexOf(' ')+1);
+		   int k=0;
+		   for(;k<s.length();k++)
 		   {
 			   if(s.charAt(k)=='=')
 			   {
@@ -191,16 +212,23 @@ public class XMLinterpreter {
 					  value = s.substring(k+2,end);
 					  k=end;
 					  attributes.add(new Attributes(name,value));
+					  break;
+					  
 				   }
 				   else
 					   return;
 			   }
+		   }
 			   if(k!=s.length()-1)
 			   {
 				   extractAttribute(s.substring(k+1),attributes);
 			   }
-		   }
+		  
 		   
 		}
 	}
+
+
+
+
 }
