@@ -5,15 +5,18 @@ import it.beije.turing.xmlparser3.classes.Documento;
 import it.beije.turing.xmlparser3.classes.Elemento;
 import it.beije.turing.xmlparser3.classes.Nodo;
 
+import java.io.*;
+import java.net.URL;
 import java.util.List;
 
 
 public class XMLParser3 {
 
-	public static void main(String[] args) {
-		String path="C:\\temp\\challenge\\test_parser1.xml";
+	public static void main(String[] args) throws FileNotFoundException {
 
-		Documento d = Documento.getIstance().parse(path);
+
+
+		Documento d = Documento.getIstance().parse("Turing/res/test_parser1.xml");
 /*
 		Elemento root=d.getRootElement(); //restiisce elemento ROOT
 
