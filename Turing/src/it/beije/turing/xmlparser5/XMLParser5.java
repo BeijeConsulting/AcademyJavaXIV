@@ -11,20 +11,17 @@ public class XMLParser5 {
 
 	public static void main(String[] args) {
 		
-		AlberaturaXML m = new AlberaturaXML();
-		//m.setPath("/temp/test_parser1.xml");
-		m.setPath("C:\\Users\\aless\\Desktop\\xml scaricati\\test_parser1.xml");
-		String stringaContenutoFile = m.getContenutoFile();
-		//String stringaContenutoFile = m.getContenutoFile("C:\\Users\\aless\\Desktop\\xml scaricati\\provaintestazione.txt");
-		String rootElement = m.getRootElement();
-//		if(rootElement.contains("XML formattato male")) {
-//			return;
-//		}
-		List<String> children = m.getChildElements();
+		//DocumentoXML d = parse("/temp/test_parser1.xml");
+		DocumentoXML d = parse("C:\\Users\\aless\\Desktop\\xml scaricati\\test_parser1.xml");
+		String s = d.removeDeclarationTag();
+		System.out.println(s);
 	}
 
-	private static AlberaturaXML parse(String string) {
-		return null;
+	private static DocumentoXML parse(String path) {
+		DocumentoXML m = new DocumentoXML();
+		String contenutoFile = m.getContenutoFile(path);
+		m.setStringaFile(contenutoFile);
+		return m;
 	}
 	
 
