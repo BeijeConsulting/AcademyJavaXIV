@@ -58,36 +58,34 @@ public class Campo {
 //		String argomento = "";
 		ArrayList<Campo> arrayCampiFigli = new ArrayList<Campo>();
 		ArrayList<Dato> dato = new  ArrayList<Dato>();
+		ArrayList<Argomento> argomenti = new ArrayList<>();
 			String campo;
 			Integer fine = 0;
 			//CASO SENZA ARGOMENTI
 
 			if(splitAllInOne[inizioCampo].indexOf(" ") == -1) {
 				//QUI SALVIAMO IL NOME DEL CAMPO
-				System.out.println("Sono dopo questo " + splitAllInOne[inizioCampo] + "Sono prima di questo");
 				campo = splitAllInOne[inizioCampo].substring(0, splitAllInOne[inizioCampo].indexOf(">"));
 				}
 			// CASO IN CUI CI SONO GLI ARGOMENTI
 			else {
 				campo = splitAllInOne[inizioCampo].substring(0, splitAllInOne[inizioCampo].indexOf(" "));
-
+				argomenti = Argomento.argomentoNewInstance(splitAllInOne[inizioCampo]);
 			}
 				//Argomento.newArgomentiCampo();
 				
 				for(int i = inizioCampo + 1 ; i < fineCampo; ) {
+					System.out.println("Il valori di i è " + i);
 					//a[i] contiene la variabile più il testo, a[i + 1] contiene la variabile che possiamo usare per rimuovere la prima parte del testo per ottenerlo
-					System.out.println("Il valore di i è " + i);
-					System.out.println("Il valore di campo è " + campo);
 					if(splitAllInOne[i].length() > campo.length() + 1 && campo.equalsIgnoreCase(splitAllInOne[i].substring(1, campo.length() + 1))) {
-						System.out.println("Il valore di campo è " + campo + " il valore dell'altro campo è " + splitAllInOne[i].substring(1, campo.length() + 1));
 						i += 1;
 						fine = i;
 						break;
 					} else if(splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(">")).equalsIgnoreCase(splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">")))){
-						dato.add(newDatoInstance(splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(">")), splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">"))));
+						dato.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
 						i += 2;
 					} else if(splitAllInOne[i].indexOf(" ") != -1 && splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(" ")).equalsIgnoreCase(splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">")))) {
-						dato.add(newDatoInstance(splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(" ")), splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">"))));
+						dato.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
 						i += 2;
 					} else {
 						i = campoNewInstance(splitAllInOne, i, fineCampo, arrayCampiFigli);
@@ -97,26 +95,23 @@ public class Campo {
 			}
 
 		System.out.println("Il ciclo è stato completato.");
-			arrayCampi.add(new Campo(campo, null, dato, arrayCampiFigli));
+			arrayCampi.add(new Campo(campo, argomenti, dato, arrayCampiFigli));
 			return fine;
 		}
-	
-	
-
-	
-	
-	
-	private static Dato newDatoInstance(String string, String string2) {
-		System.out.println("Ho inserito il dato " + string + " con il dato " + string2);
-		return null;
-		// TODO Auto-generated method stub
-		
-	}
 
 	public String toString() {
 		System.out.println(campo);
-		for(Campo c: campiFigli) {
-			c.toString();
+		System.out.println();
+		for(Dato dato1: dato) {
+			dato1.toString();
+		}
+
+		for(Campo campo1: campiFigli) {
+			campo1.toString();
+			System.out.println();
+			for (Dato dato1: dato) {
+				dato1.toString();
+			}
 		}
 		return "";
 	}

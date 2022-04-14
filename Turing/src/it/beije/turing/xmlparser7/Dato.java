@@ -8,10 +8,11 @@ public class Dato {
 	
 	private String tipo; 
 	private String variabile;
-	
-	private Dato(String tipo, String variabile) {
+	private ArrayList<Argomento> argomenti;
+	private Dato(String tipo, String variabile, ArrayList<Argomento> argomenti) {
 		this.tipo = tipo;
 		this.variabile = variabile;
+		this.argomenti = argomenti;
 	}
 	
 	
@@ -22,9 +23,7 @@ public class Dato {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
-	
-	
+
 	public String getVariabile() {
 		return variabile;
 	}
@@ -32,23 +31,23 @@ public class Dato {
 		this.variabile = variabile;
 	}
 
-	public Dato newInstanceDato(String s) {
-		String tipo = impostaTipo(s);
-		String variabile = impostaVariabile(s);
-		System.out.println("");
-		return new Dato(tipo, variabile);
+	public static Dato newDatoInstance(String string, String string2) {
+		String tipo = "";
+		String variabile = "";
+		ArrayList<Argomento> argomenti = new ArrayList<>();
+		if(string.substring(0, string.indexOf(">")).contains(" ")) {
+			argomenti = Argomento.argomentoNewInstance(string);
+		}
+		tipo = string2.substring(1, string2.indexOf(">"));
+		variabile = string.substring(string.indexOf(">") + 1).trim();
+
+		return new Dato(tipo, variabile, argomenti);
 	}
 	
-	private String impostaTipo(String s) {
-		// TODO Auto-generated method stub
-		return null;
+	public String toString() {
+		for(Argomento argomento: argomenti) {
+			argomento.toString();
+		}
+		return "";
 	}
-	private String impostaVariabile(String s) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	
-	
 }
