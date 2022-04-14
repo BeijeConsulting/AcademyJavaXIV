@@ -36,7 +36,7 @@ public class XMLmanager {
 		<email>claudio.white@virgilio.it</email>
 	</contatto>
 </rubrica>
- */
+*/
 	
 	public static List<Element> getChildElements(Element element) {
 		List<Element> childElements = new ArrayList<Element>();
