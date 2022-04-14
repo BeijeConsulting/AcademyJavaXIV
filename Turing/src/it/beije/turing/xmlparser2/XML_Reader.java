@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.xml.sax.SAXException;
+
 public class XML_Reader {
 	
-	public StringBuilder readText(String path) {
+	public StringBuilder readText(String path) throws IOException {
 		StringBuilder stringBuilder = new StringBuilder();
 		
 		File file = new File(path);
@@ -20,9 +22,21 @@ public class XML_Reader {
 			while(bufferedReader.ready()) {
 				stringBuilder.append(bufferedReader.readLine());
 			}
-		}catch(IOException e) {e.printStackTrace();}
+		}catch(IOException e) {throw e;}
+		finally {
+			try {
+				bufferedReader.close();
+				fileReader.close();
+			}catch(IOException fEx) {
+				fEx.printStackTrace();
+				throw fEx;
+			}
+		}
 		
 		return stringBuilder;
 	}
+	
+	
+	
 
 }
