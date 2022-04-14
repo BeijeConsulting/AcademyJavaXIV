@@ -96,41 +96,56 @@ public class AlberaturaXML {
 		return s.toString();
 	}
 	
-	public List<String> getChildElements() {
-		String el = getRootElement();
+	public List<String> getChildElements(String el) {
 		List<String> children = new ArrayList<>();
-		int indexBegin = el.indexOf("<", el.indexOf(">"));
+		int indexBegin = getIndexOfChild(el, "<");
 		int indexEnd = el.lastIndexOf("<");
 		String textContent = el.substring(indexBegin, indexEnd);
-		System.out.println(" CONTENUTO PRLEVATO \n" + textContent);
-		String tagName = null;
-		int firstSpacebar = textContent.indexOf(" ");
-		int closingTag = textContent.indexOf(">");
-		if (firstSpacebar == -1) {
-			tagName = textContent.substring(1, closingTag);
-			System.out.println("VOGLIO VEDERE IL TAG NAME " + tagName);
-		} else if(closingTag < firstSpacebar){
-			tagName = textContent.substring(1, firstSpacebar);
-			System.out.println("VOGLIO VEDERE IL TAG NAME 2 " + tagName);
-			
-		}
+		String tagName = getTagName(textContent);
+		
+		
 		
 		while (textContent.contains(tagName)) {
 			String closureTag = "/" + tagName + ">";
-			int occurrenceOfClosure = textContent.indexOf(closureTag);
-			int endOfClosure = occurrenceOfClosure + closureTag.length() - 1;
+			indexBegin = textContent.indexOf("<");
+			int startClosure = textContent.indexOf(closureTag);
+			int endClosure = startClosure + closureTag.length();
 			
-			String child = textContent.substring(0, endOfClosure);
-			System.out.println(child);
-			System.out.println("=========================");
+			String child = textContent.substring(indexBegin, endClosure);
 			
-			textContent = textContent.substring(endOfClosure);
-			
+			int cutContentFrom = textContent.indexOf("<", startClosure);
+			if (cutContentFrom != -1) {
+				textContent = textContent.substring(cutContentFrom);
+				tagName = getTagName(textContent);
+			} else {
+				textContent = "";
+			}
+				
 			children.add(child);
 		}
 		
 		
 		return children;
+	}
+	
+	public String getTagName(String el) {
+		String tagName = new String();
+		int firstSpacebar = el.indexOf(" ");
+		int closingTag = el.indexOf(">");
+		if (firstSpacebar == -1) {
+			tagName = el.substring(1, closingTag);
+		} else if(firstSpacebar > closingTag){
+			tagName = el.substring(1, closingTag);
+		} else {
+			tagName = el.substring(1, firstSpacebar);
+		}
+		
+		return tagName;
+	}
+	
+	public int getIndexOfChild(String el, String c) {
+		int index = el.indexOf(c, el.indexOf(">"));
+		return index;
 	}
 	
 }
