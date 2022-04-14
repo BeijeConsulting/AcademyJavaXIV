@@ -2,15 +2,15 @@
 <domande>
 	<domanda id="1" book="OCA Oracle Certified Associate Java SE 8 [2014]" chapter="1" question="1">
 		<testo>
-Which of the following can replace line 2 to make this code compile? (Choose all that apply)
+			Which of the following can replace line 2 to make this code compile? (Choose all that apply)
 
-	1: import java.util.*;
-	2: // INSERT CODE HERE
-	3: public class Imports {
-	4:   public void method(ArrayList&lt;String&gt; list) {
-	5:     sort(list);
-	6:   }
-	7: }
+			1: import java.util.*;
+			2: // INSERT CODE HERE
+			3: public class Imports {
+			4:   public void method(ArrayList&lt;String&gt; list) {
+			5:     sort(list);
+			6:   }
+			7: }
 		</testo>
 		<risposte type="checkbox">
 			<risposta value="A">import static java.util.Collections;</risposta>

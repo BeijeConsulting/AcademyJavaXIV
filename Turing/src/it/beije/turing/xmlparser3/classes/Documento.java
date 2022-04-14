@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import it.beije.turing.xmlparser3.interfaces.LoadFile;
 
@@ -39,14 +41,23 @@ public class Documento implements LoadFile {
 
             while(bufferedReader.ready()) {
                 char row = (char) bufferedReader.read();
-                if(row!='\n'|| row!='\t') {
-                    s.append(row);
+                s.append(row);
 
+            }
+            Pattern pattern = Pattern.compile("(<.*?>)|(.+?(?=<|$))");
+            //Pattern pattern = Pattern.compile("/(<.[^(><.)]+>)/g");
+            Matcher matcher = pattern.matcher(s.toString());
+            int i=0;
+            while (matcher.find()) {
+                String r=matcher.group().trim();
+                if(!r.isEmpty()){
+                    System.out.println((i++)+":"+matcher.group());
                 }
+
             }
 
-            String result = s.toString().replace('\n','\0').replace('\t','\0');
-            System.out.println(result);
+
+
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block

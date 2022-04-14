@@ -16,7 +16,7 @@ public class XMLParser3 {
 
 
 
-		Documento d = Documento.getIstance().parse("Turing/res/test_parser1.xml");
+		Documento d = Documento.getIstance().parse("Turing/res/test_parser6_mini.xml");
 /*
 		Elemento root = d.getRootElement(); //restiisce elemento ROOT
 
