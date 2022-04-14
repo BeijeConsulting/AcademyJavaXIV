@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XMLinterpreter {
+
 	private List<String> list;
 
-	public XMLinterpreter(List<String> list)
-	{
+	public XMLinterpreter(List<String> list) {
 		this.list=list;
 	}
-	public void RemoveIntest()
-	{
+
+	public void RemoveIntest() {
 		String s = list.get(0);
 		
 		int end=0;
@@ -31,6 +31,7 @@ public class XMLinterpreter {
 		else
 		list.remove(0);
 	}
+
 	public void SeparateElements()
 	{
 		RemoveIntest();
@@ -63,7 +64,7 @@ public class XMLinterpreter {
 	
 	public void Test()
 	{
-		List<Nodo> stack = new ArrayList<>();
+		List<Node> stack = new ArrayList<>();
 		SeparateElements();
 		/*for(String s:list)
 		{
