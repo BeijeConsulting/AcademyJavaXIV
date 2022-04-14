@@ -22,13 +22,18 @@ public class XMLParser1 {
 		System.out.println(root.getTestoCompleto());
 		System.out.println("TagName: " + root.getTagName());
 		System.out.println("Text Content: " + root.getTextContent());
+		System.out.println("id = "+root.getAttribute("id"));
+		System.out.println("eta = "+root.getAttribute("eta"));
 		List<Elemento> lE = root.getElementsByTagName("contatto",new ArrayList<Elemento>(),0);
-		System.out.println(lE.size());
+		System.out.println("Numero contatti: " + lE.size());
 		for(int i = 0; i < lE.size(); i++) {
 			System.out.println(lE.get(i).getTagName());
 			System.out.println(lE.get(i).getTestoCompleto());
 			System.out.println(lE.get(i).getTextContent());
+			System.out.println(lE.get(i).getAttribute("id"));
+			System.out.println(lE.get(i).getAttribute("eta"));
 		}
+		
 	}
 
 }

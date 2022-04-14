@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rubrica>
-	<contatto>
+<rubrica id=1 eta=30>
+	<contatto id=1 eta=30>
 		<nome>Claudio</nome>
 		<cognome>Bianchi</cognome>
 		<contatto></contatto>

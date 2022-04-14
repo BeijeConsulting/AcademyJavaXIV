@@ -52,8 +52,7 @@ public class DocumentoConcreto implements Documento {
 			try {
 				if(tmp == null) {
 					throw new Exception("Formato riga 1 errato, null");
-				}
-				if(tmp2 == null) {
+				} else if(tmp2 == null) {
 					throw new Exception("Formato ultima riga errato, null");
 				}
 				if(tmp.charAt(0) != '<' || tmp.charAt(tmp.length()-1) != '>') {
@@ -61,10 +60,44 @@ public class DocumentoConcreto implements Documento {
 				} else if(tmp2.charAt(0) != '<' || tmp2.charAt(tmp2.length()-1) != '>') {
 					throw new Exception("Formato ultima riga errato");
 				}
-				if(!("/"+tmp.substring(1)).equals(tmp2.substring(1))) {
-					throw new Exception("TagName root non combacia");
+				if(tmp.indexOf(" ") == -1) {
+					if(!("/"+tmp.substring(1)).equals(tmp2.substring(1))) {
+						throw new Exception("TagName root non combacia");
+					}
+				}else {
+					String a = tmp.trim();
+					if(!a.contains("=")) {
+						throw new Exception("formato attributo errato");
+					}
+					ArrayList<Attributo> att = new ArrayList<>();
+					String bin = tmp;
+					bin = bin.trim();
+					bin = bin.substring(0,bin.length()-1);
+					for(int i = 0; i < bin.length(); i++) {
+						if(bin.charAt(i) == ' ') {
+							bin = bin.substring(i+1);
+							String key = bin.substring(0,bin.indexOf("="));
+							String value;
+							if(bin.indexOf(" ") == -1) {
+								value = bin.substring(bin.indexOf("=")+1);
+							}else {
+								value = bin.substring(bin.indexOf("=")+1,bin.indexOf(" "));
+							}
+							Attributo attributoTmp = new Attributo(key,value);
+							att.add(attributoTmp);
+							i = 0;
+						}
+					}
+					a = a.substring(1,a.indexOf(" "));
+					
+					if(!("/"+a).equals(tmp2.trim().substring(1,tmp2.length()-1))) {
+						throw new Exception("TagName root non combacia");
+					}
+					for(Attributo attributoTmp: att) {
+						e.getAttributes().putIfAbsent(attributoTmp.getNome(), attributoTmp);
+					}
+					e.setTagName(a);
 				}
-				e.setTagName(tmp.substring(1,tmp.length()-1));
 				for(int i = 2; i < testoTotale.size()-1; i++) {
 					e.setTextContent(e.getTextContent().concat(testoTotale.get(i)+"\n"));
 				}
