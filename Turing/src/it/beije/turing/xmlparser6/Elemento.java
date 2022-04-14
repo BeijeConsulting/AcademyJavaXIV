@@ -2,46 +2,66 @@ package it.beije.turing.xmlparser6;
 
 import java.util.List;
 
-public class Elemento {
-	private String name;
-	private List<Attributi> attribute;
-	private String testo;
-	private List<Elemento> listaEL;
+public class Elemento
+{
+	private String tagName;
+	private List<Attributi> attributes;
+	private String textContent;
+	private List<Elemento> childElements;
+	private List<Elemento> childNodes;
+	private Elemento father;
 	
-	public String getName() {
-		return name;
+	public String getTagName() {
+		return tagName;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	
-	public List<Attributi> getAttribute() {
-		return attribute;
-	}
-	
-	public void setAttribute(List<Attributi> attribute) {
-		this.attribute = attribute;
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
 	}
 	
 	
-	public String getTesto() {
-		return testo;
+	public List<Attributi> getAttributes() {
+		return attributes;
 	}
 	
-	public void setTesto(String testo) {
-		this.testo = testo;
-	}
-	
-	
-	public List<Elemento> getListaEL() {
-		return listaEL;
-	}
-	public void setListaEL(List<Elemento> listaEL) {
-		this.listaEL = listaEL;
+	public void setAttributes(List<Attributi> attributes) {
+		this.attributes = attributes;
 	}
 	
 	
+	public String getTextContent() {
+		return textContent;
+	}
 	
-
+	public void setTextContent(String textContent) {
+		this.textContent = textContent;
+	}
+	
+	
+	public List<Elemento> getChildElements() {
+		return childElements;
+	}
+	
+	public void setChildElements(List<Elemento> childElements) {
+		this.childElements = childElements;
+	}
+	
+	
+	public List<Elemento> getChildNodes() {
+		return childNodes;
+	}
+	
+	public void setChildNodes(List<Elemento> childNodes) {
+		this.childNodes = childNodes;
+	}
+	
+	
+	public Elemento getFather()
+	{
+		return father;
+	}
+	
+	public void setFather(Elemento father)
+	{
+		this.father = father;
+	}
 }

@@ -2,27 +2,34 @@ package it.beije.turing.xmlparser6;
 
 public class XMLDocument
 {
-	private Prolog prolog;			//intestazione xml. potrebbe non esistere
-	private Elemento root;			//elemento di root del documento xml
+	private Prolog prologElement;			//intestazione xml. potrebbe non esistere
+	private Elemento rootElement;			//elemento di root del documento xml
 	
 	
-	public void setProlog(Prolog prolog)
+	//SETTERs
+	public void setPrologElement(Prolog prologElement)
 	{
-		this.prolog = prolog;
+		this.prologElement = prologElement;
 	}
 	
-	public void setRoot(Elemento root)
+	public void setRootElement(Elemento rootElement)
 	{
-		this.root = root;
+		this.rootElement = rootElement;
 	}
 	
-	public Prolog getProlog()
+	
+	//GETTERs
+	public Prolog getPrologElement()
 	{
-		return prolog;
+		return prologElement;
 	}
 	
-	public Elemento getRoot()
+	public Elemento getRootElement()
 	{
-		return root;
+		return rootElement;
 	}
+	
+	
+	//UTIL
+	
 }

@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 /**
  * 
- * @author Cognome Pagani, Cognome Provezza
+ * @author Pagani Mattia, Provezza Matteo
  *
  */
 
@@ -18,15 +18,16 @@ public class XMLParser6
 	public static void main(String[] args) throws FileNotFoundException, IllegalArgumentException
 	{
 		Scanner kb = new Scanner(System.in);								//creo tastiera
-		XMLDocument document = parse(readFile(kb.next()));					//parsing del file preso da input utente
+		XMLDocument document = parse(readFile(kb.next()));					//parsing del file preso da input utente e metto in nuovo xmldocument
 		
 		kb.close();															//chiudo tastiera
 	}
 	
+	
+	
 	public static XMLDocument parse(String file)
 	{
 		if (file == null || file.length() == 0) throw new IllegalArgumentException("File non valido.");
-		
 		
 		
 		return null;
@@ -61,10 +62,10 @@ public class XMLParser6
 		{
 			try
 			{
-				bufferedReader.close();											//chiudo il bufferedreader
-				fileReader.close();												//chiudo il reader
+				bufferedReader.close();										//chiudo il bufferedreader
+				fileReader.close();											//chiudo il reader
 			}
-			catch (IOException e)												//reader exceptions
+			catch (IOException e)											//reader exceptions
 			{
 				e.printStackTrace();
 			}

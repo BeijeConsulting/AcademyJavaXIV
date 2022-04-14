@@ -61,7 +61,9 @@ public class XMLmanager {
 			Element root = document.getDocumentElement();
 			System.out.println("root : " + root.getTagName());
 			
-//			NodeList contatti = root.getElementsByTagName("contatto");
+			NodeList contatti = root.getElementsByTagName("contatto");
+			System.out.println("TEST NODO: " + contatti.item(0).getChildNodes().getLength());
+			System.out.println("TEST ELEMENTO: " + getChildElements((Element)contatti.item(0)).size());
 //			System.out.println("contatti num : " + contatti.getLength());
 
 			NodeList nodes = root.getChildNodes();
@@ -193,7 +195,7 @@ public class XMLmanager {
 
 	public static void main(String[] args) throws Exception {
 		//readXML("/temp/rubrica.xml");
-		writeXML("/temp/new_rubrica.xml");
+		readXML("/temp/new_rubrica.xml");
 	}
 
 }
