@@ -7,6 +7,16 @@ import java.io.IOException;
 import java.nio.Buffer;
 
 public class AlberaturaXML {
+	
+	private String path = "";
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 //  getPrimaRiga();
 //	getRootElement() //torna l'elemento root
@@ -33,9 +43,12 @@ public class AlberaturaXML {
 //		</contatto>
 //	</contatti>
 
+
+
 	// se è presenta la riga di dichiarazione xml la elimina e restituisce il contenuto del file senza la prima riga,
 	// altrimenti restituisce il contenuto senza nesusna modifica
-	public String getRootElement(String s) {
+	public String getRootElement() {
+		String s = this.getContenutoFile();
 		String senzaIntestazione = null;
 		if(s.startsWith("<?") && s.contains("?>")) {
 //			String intestazione = s.subSequence(s.indexOf("<?"), s.indexOf("?>") + 2) +"";
@@ -53,12 +66,12 @@ public class AlberaturaXML {
 		
 	}
 
-	public String getContenutoFile(String path) {
+	public String getContenutoFile() {
 		StringBuilder s = new StringBuilder();
 		FileReader fr = null;
 		BufferedReader br = null;
 		try {
-			fr = new FileReader(path);
+			fr = new FileReader(this.path);
 			br = new BufferedReader(fr);
 
 			while (br.ready()) {
