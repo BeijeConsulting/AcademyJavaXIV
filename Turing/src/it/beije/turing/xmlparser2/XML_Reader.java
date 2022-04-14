@@ -117,7 +117,6 @@ public class XML_Reader {
 	}
 
 	private static String findNameTag(StringBuilder sb, int i) {
-
 		return "ciao";
 	}
 
