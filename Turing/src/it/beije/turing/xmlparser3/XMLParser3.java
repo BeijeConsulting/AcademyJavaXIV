@@ -11,7 +11,7 @@ import java.util.List;
 public class XMLParser3 {
 
 	public static void main(String[] args) {
-		String path="C:\\temp\\challenge\\test_parser1.xml";
+		String path="/Users/giusepperaddato/Downloads/test_parser1.xml";
 		System.out.println("ciao");
 		Documento d = Documento.getIstance().parse(path);
 /*
