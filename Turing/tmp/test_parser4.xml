@@ -11,4 +11,10 @@
 		<cognome>Paperino</cognome>
 		<telefono>00423803243423</telefono>
 	</contatto-->
+	<contatto>
+		<nome>Pippo</nome>
+		<cognome>Pluto</cognome>
+		<telefono>3331234567</telefono>
+		<email>pippo@pluto.net</email>
+	</contatto>
 </contatti>

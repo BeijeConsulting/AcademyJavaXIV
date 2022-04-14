@@ -56,4 +56,12 @@ public class Node  {
     public String getElementsByTagName(String tagName) {
         return (this.name + " " + this.attributes + " " + " " + this.content);
     }
+    public boolean hasChildren()
+    {
+    	if(children!=null&&!children.isEmpty())
+    	{
+    		return true;
+    	}
+    	return false;
+    }
 }
