@@ -18,7 +18,7 @@ public class XMLParser3 {
 
 		Documento d = Documento.getIstance().parse("Turing/res/test_parser1.xml");
 /*
-		Elemento root=d.getRootElement(); //restiisce elemento ROOT
+		Elemento root = d.getRootElement(); //restiisce elemento ROOT
 
 		root.getAttributes();
 
@@ -37,8 +37,8 @@ public class XMLParser3 {
 
 			List<Elemento> listElement=element.getElementsByTagName("NOME");
 		}
-*/
 
+*/
 	}
 
 }

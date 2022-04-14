@@ -29,32 +29,32 @@ public class Documento implements LoadFile {
 
     @Override
     public Documento parse(String path) {
-    	StringBuilder s = new StringBuilder();
-    	List<StringBuilder> listElement = new ArrayList<>();
+        StringBuilder s = new StringBuilder();
+        List<StringBuilder> listElement = new ArrayList<>();
 
-    	try {
-    		File f = new File(path);
-			FileReader fileReader = new FileReader(f);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			
-			while(bufferedReader.ready()) {
-				char row = (char) bufferedReader.read();
-				if(row!='\n'|| row!='\t') {
-					s.append(row);
+        try {
+            File f = new File(path);
+            FileReader fileReader = new FileReader(f);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-				}
-			}
-			
-			String result = s.toString().replace('\n','\0').replace('\t','\0');
-			System.out.println(result);
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            while(bufferedReader.ready()) {
+                char row = (char) bufferedReader.read();
+                if(row!='\n'|| row!='\t') {
+                    s.append(row);
+
+                }
+            }
+
+            String result = s.toString().replace('\n','\0').replace('\t','\0');
+            System.out.println(result);
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return null;
     }
 
