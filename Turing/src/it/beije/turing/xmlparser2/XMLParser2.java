@@ -2,12 +2,12 @@ package it.beije.turing.xmlparser2;
 
 /**
  * 
- * @author Nardella Marco, Lorenzo Orrù
- * 	Il parser dovrà leggere e "costruire" in memoria l'alberatura del file XML partendo da un metodo
+ * @author Nardella Marco, Lorenzo Orrï¿½
+ * 	Il parser dovrï¿½ leggere e "costruire" in memoria l'alberatura del file XML partendo da un metodo
  *
  *	public static VostroOggettoDocumento parse(String file) {...}
  *
- *	che restituirà appunto un VostroOggettoDocumento (nome che deciderete voi).
+ *	che restituirï¿½ appunto un VostroOggettoDocumento (nome che deciderete voi).
  *
  *	I metodi da implementare sono:
  *
@@ -25,7 +25,10 @@ public class XMLParser2 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
+		//ciao
+		//prova
+
 	}
 
 }
