@@ -14,7 +14,7 @@ public class XMLParser4 {
 	{
 		FileParser fp = new FileParser();
 
-		List<String> list=fp.parseFile("tmp/test_parser4.xml");
+		List<String> list=fp.parseFile("C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\tmp\\test_parser5.xml");
 
 		XMLinterpreter xml = new XMLinterpreter(list);
 		xml.print();
@@ -51,11 +51,12 @@ public class XMLParser4 {
 		Node root=null;
 		try {
 			 root = tool.ParseRoot();
+			 System.out.println("attributi:             "+ root.getAttributes());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("il root è: "+root.getTagName());
+		System.out.println("il root Ã¨: "+root.getTagName());
 		if(root.hasChildren())
 		{
 			List<Node> children = root.getChildNodes();
