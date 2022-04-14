@@ -5,5 +5,5 @@ public interface Elemento extends Nodo{
 	public void setTagName(String tagName);
 	public String getTextContent();
 	public void setTextContent(String textContent);
-	public String getTestoTotale();
+	
 }

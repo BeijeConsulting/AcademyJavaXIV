@@ -37,7 +37,7 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 	}
 
 	@Override
-	public String getTestoTotale() {
+	public String getTestoCompleto() {
 		return testoCompleto;
 	}
 

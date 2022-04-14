@@ -16,7 +16,7 @@ public class XMLParser1 {
 	public static void main(String[] args) {
 		Documento test = DocumentoBuilder.parse(Paths.get("File", "Challenge", "rub.xml").toAbsolutePath().toString());
 		Elemento root = test.getDocumentElement();
-		System.out.println(root.getTestoTotale());
+		System.out.println(root.getTestoCompleto());
 		System.out.println("TagName: " + root.getTagName());
 		System.out.println("Text Content: " + root.getTextContent());	
 	}
