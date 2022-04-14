@@ -11,8 +11,8 @@ public class XMLParser4 {
 
 	public static void main(String[] args) {
 		FileParser fp = new FileParser();
-		List<String> list=fp.parseFile("tmp/test_parser1.xml");
-		System.out.println(list.get(1));
+		List<String> list=fp.parseFile("C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\tmp\\test_parser1.xml");
+		Node node= new Node(list);
+		System.out.println(node.element);
 	}
-
 }
