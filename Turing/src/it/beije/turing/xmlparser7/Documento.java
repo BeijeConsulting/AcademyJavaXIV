@@ -1,5 +1,9 @@
 package it.beije.turing.xmlparser7;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Documento {
@@ -42,5 +46,23 @@ public class Documento {
 		return false;
 	}
 	
-	public void 
+	private static String xmlToString(String s) {
+		String allInOne = "";
+		try {
+			FileReader fileReader = new FileReader(new File(s));
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			while (bufferedReader.ready()) {
+				allInOne += bufferedReader.readLine() + "\n";
+			}
+			System.out.println(allInOne);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		return allInOne;
+	}
+	
+	public static Documento parse(String s) {
+		return new Documento();
+	}
 }

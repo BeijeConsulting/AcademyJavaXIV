@@ -6,5 +6,7 @@ public class Campo {
 
 	private String campo;
 	private ArrayList<Argomento> argomenti;
-	private ArrayList<Dato> dato;
+	private ArrayList<Dato> dato; 
+	
+	
 }
