@@ -54,6 +54,6 @@ public class Node  {
     }
 
     public String getElementsByTagName(String tagName) {
-        return (this.name +" " + this.attributes + " " + " " + this.content);
+        return (this.name + " " + this.attributes + " " + " " + this.content);
     }
 }
