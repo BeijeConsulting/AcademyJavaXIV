@@ -25,16 +25,28 @@ public class XMLParser1 {
 		System.out.println("Text Content: " + root.getTextContent());
 		System.out.println("id = "+root.getAttribute("id"));
 		System.out.println("eta = "+root.getAttribute("eta"));
-		List<Elemento> lE = root.getElementsByTagName("spiegazione",new ArrayList<Elemento>(),0);
-		System.out.println("Numero contatti: " + lE.size());
+		List<Elemento> lE = root.getElementsByTagName("properties",new ArrayList<Elemento>(),0);
+		Elemento el = null;
+		System.out.println("Numero properties: " + lE.size());
 		for(int i = 0; i < lE.size(); i++) {
+			el = lE.get(0);
 			System.out.println(lE.get(i).getTagName());
 			System.out.println(lE.get(i).getTestoCompleto());
 			System.out.println(lE.get(i).getTextContent());
-			System.out.println(lE.get(i).getAttribute("id"));
-			System.out.println(lE.get(i).getAttribute("question"));
+			System.out.println(lE.get(i).getAttribute("name"));
+			System.out.println(lE.get(i).getAttribute("value"));
 		}
-		
+		/*
+		List<Elemento> lE2 = el.getElementsByTagName("property",new ArrayList<Elemento>(),0);
+		System.out.println("Numero property: " + lE2.size());
+		for(int i = 0; i < lE2.size(); i++) {
+			System.out.println(lE2.get(i).getTagName());
+			System.out.println(lE2.get(i).getTestoCompleto());
+			System.out.println(lE2.get(i).getTextContent());
+			System.out.println(lE2.get(i).getAttribute("name"));
+			System.out.println(lE2.get(i).getAttribute("value"));
+		}
+		*/
 	}
 
 }

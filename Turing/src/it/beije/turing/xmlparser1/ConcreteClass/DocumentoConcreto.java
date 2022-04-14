@@ -82,14 +82,14 @@ public class DocumentoConcreto implements Documento {
 									
 								}
 								//throw new Exception("Formato errato, aspettato un =");
-							}System.out.println("bin " +bin);
+							}
 							String key = bin.substring(0,bin.indexOf("="));
 							String value;
 							if(bin.indexOf("\" ") == -1) {
 								value = bin.substring(bin.indexOf("=")+1);
 								i = bin.length();
 							}else {
-								value = bin.substring(bin.indexOf("=")+1,bin.indexOf("\" "));
+								value = bin.substring(bin.indexOf("=")+1,bin.indexOf("\" ")+1);
 								i = bin.indexOf("\" ");
 							}
 							Attributo attributoTmp = new Attributo(key,value);
@@ -115,6 +115,10 @@ public class DocumentoConcreto implements Documento {
 			
 		}
 		return e;
+	}
+	
+	public void checkFileFormat() {
+		
 	}
 	
 }

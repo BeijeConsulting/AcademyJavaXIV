@@ -52,12 +52,28 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 		ArrayList<Attributo> attList = new ArrayList<>();
 		String[] tmp = textContent.split("\n");
 		for(int i = j; i < tmp.length; i++) {
-			if(tmp[i].contains("=") && tmp[i].contains("<") && tmp[i].contains(">") && tmp[i].trim().contains(" ") && tmp[i].trim().substring(1,tmp[i].indexOf(" ")-1).equals(tagName)) {
+			if(tmp[i].trim().isBlank()) continue;
+			int space = tmp[i].indexOf(" ");
+			if(tmp[i].contains("=") && tmp[i].contains("<") && tmp[i].contains(">") && tmp[i].contains(" ")) {
+				String q = null;
+				for(int p = 0; p < tmp[i].length(); p++) {
+					if(tmp[i].trim().charAt(p) == ' ') {
+						q = tmp[i].trim().substring(1,p);
+						break;
+					}
+				}
+				if(!q.equals(tagName)) {
+					continue;
+				}
 				String a = tmp[i].trim().substring(tmp[i].indexOf(" "));
 				a = a.substring(0,a.indexOf(">"));
 				String bin = tmp[i];
 				bin = bin.trim();
-				bin = bin.substring(1,bin.length()-1);
+				if(tmp[i].trim().indexOf("/>") != -1) {
+					bin = bin.substring(1,bin.length()-2);
+				}else {
+					bin = bin.substring(1,bin.length()-1);
+				}
 				for(int k = 0; k < bin.length(); k++) {
 					if(bin.charAt(k) == ' ') {
 						bin = bin.substring(k+1);
@@ -67,28 +83,36 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 							value = bin.substring(bin.indexOf("=")+1);
 							k = bin.length();
 						}else {
-							value = bin.substring(bin.indexOf("=")+1,bin.indexOf("\" "));
+							value = bin.substring(bin.indexOf("=")+1,bin.indexOf("\" ")+1);
 							k = bin.indexOf("\" ");
 						}
 						Attributo attributoTmp = new Attributo(key,value);
-						System.out.println("key: "+key+" value: "+value);
 						attList.add(attributoTmp);
 					}
 				}
-/*
-				for(Attributo attributoTmp: attList) {
-					attributes.putIfAbsent(attributoTmp.getNome(), attributoTmp);
-				}
-*/
-				tagNameWithAttributes = tmp[i].trim().substring(1,tmp[i].indexOf(" ")-1);
-				
+				tagNameWithAttributes = q;
 				if(tagNameWithAttributes.equals(tagName)) {
 					if(tmp[i].contains("/>")){
 						Elemento tmpElemento = new ElementoConcreto(tmp[i]);
 						tmpElemento.setTagName(tagName);
-						tmpElemento.setTextContent(tmp[i].substring(tmp[i].indexOf(">")+1,tmp[i].lastIndexOf("<")));
+						tmpElemento.setTextContent("");
+						HashMap<String,Attributo> hm = new HashMap<>();
+						for(Attributo m : attList) {
+							hm.put(m.getNome(), m);
+						}
+						tmpElemento.setAttributes(hm);
 						ris.add(tmpElemento);
-						return ris;
+						//return ris;
+					} else if(tmp[i].contains("/")){
+						Elemento tmpElemento = new ElementoConcreto(tmp[i]);
+						tmpElemento.setTagName(tagName);
+						tmpElemento.setTextContent(tmp[i].substring(tmp[i].indexOf(">")+1,tmp[i].lastIndexOf("<")));
+						HashMap<String,Attributo> hm = new HashMap<>();
+						for(Attributo m : attList) {
+							hm.put(m.getNome(), m);
+						}
+						tmpElemento.setAttributes(hm);
+						ris.add(tmpElemento);
 					}
 					for(int k = i + 1; k < tmp.length; k++) {
 						if(tmp[k].indexOf("<") == -1 || tmp[k].indexOf(">") == -1) continue;
@@ -123,12 +147,22 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 			}else {
 				if(tmp[i].indexOf("<") == -1 || tmp[i].indexOf(">") == -1) continue;
 				if(tmp[i].substring(tmp[i].indexOf("<")+1,tmp[i].indexOf(">")).equals(tagName)) {
-					if(tmp[i].contains("/")){
+					if(tmp[i].contains("/>")){
+						Elemento tmpElemento = new ElementoConcreto(tmp[i]);
+						tmpElemento.setTagName(tagName);
+						tmpElemento.setTextContent("");
+						HashMap<String,Attributo> hm = new HashMap<>();
+						for(Attributo m : attList) {
+							hm.put(m.getNome(), m);
+						}
+						tmpElemento.setAttributes(hm);
+						ris.add(tmpElemento);
+						//return ris;
+					}else if(tmp[i].contains("/")) {
 						Elemento tmpElemento = new ElementoConcreto(tmp[i]);
 						tmpElemento.setTagName(tagName);
 						tmpElemento.setTextContent(tmp[i].substring(tmp[i].indexOf(">")+1,tmp[i].lastIndexOf("<")));
 						ris.add(tmpElemento);
-						return ris;
 					}
 					for(int k = i + 1; k < tmp.length; k++) {
 						if(tmp[k].indexOf("<") == -1 || tmp[k].indexOf(">") == -1) continue;
