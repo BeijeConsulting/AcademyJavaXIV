@@ -144,6 +144,19 @@ public class Campo implements Element {
 		return i;
 	}
 
+	@Override
+	public String getTextContent() {
+		String s = "";
+		for(Dato d: dato) {
+			s += d.getTextContent() + "\n";
+		}
+
+		for(Campo campo1: campiFigli) {
+			s += campo1.getTextContent();
+		}
+		return s;
+	}
+
 
 	@Override
 	public ArrayList<Element> getChildElements() {

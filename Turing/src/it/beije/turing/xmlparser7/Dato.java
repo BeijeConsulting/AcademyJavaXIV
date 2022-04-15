@@ -66,6 +66,11 @@ public class Dato implements Element {
 		return i;
 	}
 
+	@Override
+	public String getTextContent() {
+		return variabile;
+	}
+
 	public String getAttribute(String attribute) {
 		for(Argomento argomento: argomenti) {
 			if(argomento.getArgomento().equalsIgnoreCase(attribute)) {

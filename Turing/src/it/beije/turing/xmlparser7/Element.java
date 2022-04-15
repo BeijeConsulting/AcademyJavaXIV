@@ -15,4 +15,6 @@ public interface Element {
     int getElementsByTagName(String tagName);
 
 
+    String getTextContent();
+
 }
