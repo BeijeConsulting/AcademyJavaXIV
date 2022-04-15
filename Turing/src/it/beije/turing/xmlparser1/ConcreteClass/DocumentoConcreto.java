@@ -45,16 +45,25 @@ public class DocumentoConcreto implements Documento {
 		if(testoTotale.size() >= 2) {
 			if(testoTotale.size() == 2) {
 				List<String> testoTotaleUnaRiga = new ArrayList<>();
+				testoTotaleUnaRiga.add(testoTotale.get(0));
+				String tmp = "";
 				for(int i = 0; i < testoTotale.get(1).length(); i++) {
 					if(testoTotale.get(1).charAt(i) == '<') {
 						for(int k = i+1; k < testoTotale.get(1).length(); k++) {
 							if(testoTotale.get(1).charAt(k) == '>') {
-								testoTotaleUnaRiga.add(testoTotale.get(1).substring(i,k+1));
+								System.out.println(tmp+testoTotale.get(1).substring(i,k+1));
+								testoTotaleUnaRiga.add(tmp+testoTotale.get(1).substring(i,k+1));
+								tmp = "";
+								i = k;
+								break;
 							}
 						}
-						
+					}else {
+						tmp += testoTotale.get(1).charAt(i);
+						//System.out.println(tmp);
 					}
 				}
+				System.out.println(testoTotaleUnaRiga);
 				testoTotale = testoTotaleUnaRiga;
 			}
 			List<String> text = new ArrayList<>();
@@ -161,6 +170,12 @@ public class DocumentoConcreto implements Documento {
 			if((testoTotale.get(i).contains("</") || testoTotale.get(i).contains("/>")) && testoTotale.get(i).contains("<") && testoTotale.get(i).contains(">")) {
 				String s = null;
 				if(testoTotale.get(i).contains("/>")) {
+					if(testoTotale.get(i).contains(" ")) {
+						if(checkFormatoAttributi(testoTotale.get(i))) {
+							System.out.println("Formato attributi non corretto! Errore sulla linea " + (i+1));
+							return true;
+						}
+					}
 					continue;
 				}else if(testoTotale.get(i).contains("</")) {
 					String check = testoTotale.get(i).trim();
@@ -174,14 +189,22 @@ public class DocumentoConcreto implements Documento {
 					s = s.substring(1,s.length()-1);
 				}
 				
-				if(!openClose.get(openClose.size()-1).equals(s)) {
+				if(openClose.size() != 0 && !openClose.get(openClose.size()-1).equals(s)) {
 					//System.out.println(openClose.get(openClose.size()-1)+" "+s);
 					System.out.println("Formato file non corretto! Errore sulla linea " + (i+1));
 					return true;
 				}
-				openClose.remove(openClose.size()-1);
+				if(openClose.size() == 0) {
+					continue;
+				}else {
+					openClose.remove(openClose.size()-1);
+				}
 			}else if(testoTotale.get(i).contains("<") && testoTotale.get(i).contains(">")) {
 				if(testoTotale.get(i).trim().contains(" ") && testoTotale.get(i).contains("=")) {
+					if(checkFormatoAttributi(testoTotale.get(i))) {
+						System.out.println("Formato attributi non corretto! Errore sulla linea " + (i+1));
+						return true;
+					}
 					String s = testoTotale.get(i).trim();
 					s = s.substring(1,s.indexOf(" "));
 					//System.out.println("s: "+s);
@@ -194,6 +217,69 @@ public class DocumentoConcreto implements Documento {
 					openClose.add(s);				
 				}
 			} 
+		}
+		return false;
+	}
+
+	
+private boolean checkFormatoAttributi(String string) {
+		
+		String s = string.trim();
+		s = s.substring(s.indexOf(" "));
+		if(s.contains("/>")) {
+			s = s.substring(0,s.length()-2);
+		}else {
+			s = s.substring(0,s.length()-1);
+		}
+		List<String> att = new ArrayList<>();
+		String t = null;
+		for(int i = 0; i < s.length(); i++) {
+			if(s.charAt(i) == ' ') {
+				
+				for(int k = i+1; k < s.length(); k++) {
+					
+					s = s.substring(k);
+					
+					if(s.substring(s.indexOf("\"")+1).indexOf(" ") < s.substring(s.indexOf("\"")+1).indexOf("\"") && s.substring(s.indexOf("\"")+1).indexOf(" ") != -1) {
+						
+						String t2 = s.substring(s.indexOf("\"")+1);
+						for(int q = 1; q < t2.length(); q++) {
+							if(t2.charAt(q) == '"') {
+								t2 = "\"" + t2.substring(0,q+1);
+								
+								break;
+							}
+						}
+						t = s.substring(0,s.indexOf("\""));
+						
+						t = t.concat(t2);
+						
+						s = s.substring(t.length());
+						break;
+					}else if(s.indexOf(" ") != -1 && !(s.substring(s.indexOf("\"")+1).indexOf(" ") < s.substring(s.indexOf("\"")+1).indexOf("\""))) {
+						t = s.substring(0,s.indexOf(" "));
+						
+						s = s.substring(s.indexOf(" "));
+						
+						break;
+					}else{
+						t = s.substring(k);
+					
+						s = "";
+						break;
+					}
+				}
+				att.add(t);
+				t = null;
+				i = -1;
+			}
+		}
+		if(att.size() == 0) return true;
+		for(int i = 0; i < att.size(); i++) {
+			if(att.get(i).contains("=") && att.get(i).contains("\"") && (att.get(i).indexOf("\"") != att.get(i).lastIndexOf("\""))) {
+				continue;
+			}
+			return true;
 		}
 		return false;
 	}

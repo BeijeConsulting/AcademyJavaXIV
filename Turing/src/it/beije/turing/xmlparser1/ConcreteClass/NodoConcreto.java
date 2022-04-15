@@ -39,9 +39,10 @@ public class NodoConcreto implements Nodo{
 					i++;
 				}
 				tagName=st.toString().substring(1);
-				return tagName;
-	}
-		}return null;
+				return tagName;	
+			}
+		}
+		return null;
 	}
 	
 
@@ -57,7 +58,7 @@ public class NodoConcreto implements Nodo{
 			return nodeList;
 		}
 //		System.out.println("tagname in testa: "+tagName);
-//		System.out.println("nodeText in testa: "+nodeText+"///////");
+//		System.out.println("nodeText in testa: "+nodeText+"*///////");
 		st.append(nodeText.trim());
 //		System.out.println(st);
 		st.delete(0, st.indexOf(">")+1);
@@ -72,7 +73,7 @@ public class NodoConcreto implements Nodo{
 		String nodeContent = st.toString();
 		st = new StringBuilder();
 		for (int i = 0; i<nodeContent.length(); i++) {
-	//		System.out.println(nodeContent.charAt(i));
+//			System.out.println("char at for beginning: " + nodeContent.charAt(i));
 			st2 = new StringBuilder();
 			for (;nodeContent.charAt(i)!='<';i++) {
 				st2.append(nodeContent.charAt(i));
@@ -93,12 +94,22 @@ public class NodoConcreto implements Nodo{
 				}
 			}
 			if(nodeContent.charAt(i)=='<') {
-//				NodoConcreto n = null;
 				String newText = nodeContent.substring(i);
 				String subTagName = getTagName(newText);
 //				System.out.println("subTagName: "+subTagName);
-//				System.out.println("substring if nodeText " + newText.substring(0,newText.indexOf("</"+subTagName , newText.indexOf("</"+subTagName)+1)+3+subTagName.length()));
-//				System.out.println("substring else nodeText " + newText.substring(0,newText.indexOf("</"+subTagName+'>')+3+subTagName.length()));
+//				System.out.println("newText: "+newText);
+				
+				if (newText.charAt(newText.substring(1).indexOf('>'))=='/') {
+					
+					String oneLiner = newText.substring(0,newText.indexOf('>')+1);
+//					System.out.println("entered if, create node : "+ oneLiner);
+					nodeList.add(new ElementoConcreto(oneLiner));
+					st.append(oneLiner);
+//					System.out.println(i);
+					i+=oneLiner.length()-1;
+//					System.out.println(i);
+					continue;
+				}
 	//			if (newText.substring(newText.indexOf('>')).indexOf("<"+subTagName)!=-1 
 	//					&& newText.substring(newText.indexOf('>')).indexOf("<"+subTagName)!=-1){
 	//				System.out.println("if");

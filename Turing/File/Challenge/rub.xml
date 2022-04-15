@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rubrica id="5" eta="155">
-	<contatto id="1" eta="30">
+<rubrica>
+	<contatto>
 		<nome>Claudio</nome>
 		<cognome>Bianchi</cognome>
-		<contatto></contatto>
 		<telefono>3352672537</telefono>
 		<email>claudio.white@virgilio.it</email>
 	</contatto>
