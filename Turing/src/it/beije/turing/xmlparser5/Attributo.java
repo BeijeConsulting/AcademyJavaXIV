@@ -5,7 +5,6 @@ public class Attributo {
 	private String value;
 	
 	public Attributo(String nome, String value) {
-		super();
 		this.nome = nome;
 		this.value = value;
 	}

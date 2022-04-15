@@ -22,10 +22,10 @@ public class DocumentoXML {
 	
 
 //	getChildNodes() //torna tutti i nodi "figli" interni all'elemento su cui viene eseguito
-//	getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
+////	getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
 //	getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome
-//	getTagName() //torna il nome del tag
-//	getTextContent() //torna il contenuto del tag
+////	getTagName() //torna il nome del tag
+////	getTextContent() //torna il contenuto del tag
 //	getAttributes() //torna l'elenco degli attributi dell'elemento
 //	getAttribute(String attribute) //torna il valore dell'attributo specificato
 
@@ -39,14 +39,10 @@ public class DocumentoXML {
 			String inizio = "<" + tagName;
 			String fine = "</"+tagName;
 			int index = root.indexOf("<" + tagName);
-//			System.out.println("GINO PAULI");
-			System.out.println(root.substring(index + inizio.length() + 1, root.length()));
 			getElementsByTagName(tagName, root.substring(index + inizio.length() , root.length()));
 			String s = root.substring(root.indexOf("<"+tagName), root.indexOf("</"+tagName) + fine.length()+1);
 
 			lista.add(s);
-			System.out.println(s);
-			System.out.println("DIMENSIONE LISTA " + tagName + " " + lista.size());
 			root.delete(root.indexOf("<"+tagName), root.indexOf(fine) + fine.length()+1);
 		}
 		return lista;
@@ -69,20 +65,19 @@ public class DocumentoXML {
 		
 		
 		for (String child : childrenStringa) {
-			Tag tagFiglio = new Tag(getTagNameFromString(child) , getTextContentString(child));
+			String tagName = getTagNameFromString(child);
+			String tagContent = getTextContentString(child);
+			Tag tagFiglio = new Tag(tagName, tagContent);
 			root.addTag(tagFiglio);
 		}
 		return root;
 	}
 		
 	public Tag buildDoc(Tag tag) {
-		String contentTag = tag.getContenuto();
-//		System.out.println(contentTag);
 		List<Tag> children = tag.getChildren();
 		
 		for (Tag child : children) {
 			List<String> childrenString = getChildElements(child.getContenuto());
-			
 			
 			for (String childString : childrenString) {
 				String tagName = getTagNameFromString(childString);
@@ -95,21 +90,47 @@ public class DocumentoXML {
 		}
 		return tag;
 	}
+	
+	public List<String> getAttributeFromString(String text) {
+		List<String> attrs = new ArrayList<>();
+		if (text.length() > 0) {
+			String tagName = getTagNameFromString(text);
+			int firstSpacebar = text.indexOf(" ");
+			if (tagName == null) return null;
+			if (firstSpacebar == -1) return null;
+			int indexOfTagName = text.indexOf(tagName);
+			int closingTag = text.indexOf(">", indexOfTagName);
+			if (firstSpacebar > closingTag) return null;
+			else {
+				int startAttr = firstSpacebar + 1;
+				
+				while (firstSpacebar < closingTag) {
+					String attr = new String();
+//					int startValue = text.indexOf();
+//					int endAttr = text.indexOf("\"", )
+					
+//					attr = text.substring(startAttr, indexOfTagName)
+				}
+			}
+		}
+		
+		return null;
+		
+	}
 
 	public String getTextContentString(String el){
 		int indexBegin = el.indexOf("<", el.indexOf(">"));
 		int indexEnd = el.lastIndexOf("<");
+		if (indexBegin == indexEnd) {
+			indexBegin = el.indexOf(">") + 1;
+		}
 		String textContent = el.substring(indexBegin, indexEnd);
 		return textContent;
 	}
 	
 	public List<String> getChildElements(String textContent) {
         List<String> children = new ArrayList<>();
-//        int indexBegin = getIndexOfChild(el, "<");
-//        int indexEnd = el.lastIndexOf("<");
-//        String textContent = el.substring(indexBegin, indexEnd);
         String tagName = getTagNameFromString(textContent);
-
 
 
         while ((tagName != null) && textContent.contains(tagName)) {
@@ -147,6 +168,9 @@ public class DocumentoXML {
 			int firstSpacebar = el.indexOf(" ");
 			int startIndex = el.indexOf("<") + 1;
 			int closingTag = el.indexOf(">");
+			if (closingTag == -1 ) {
+				return null;
+			}
 			if (firstSpacebar == -1) {
 				tagName = el.substring(startIndex, closingTag);
 			} else if(firstSpacebar > closingTag){
@@ -171,11 +195,18 @@ public class DocumentoXML {
 		Tag root = new Tag(nome, textContent);
 		
 		List<String> childrenStringa = getChildElements(textContent);
-		
+		List<String> attributeString = getAttributeFromString(rootStringa);
 		
 		for (String child : childrenStringa) {
 			Tag tagFiglio = new Tag(getTagNameFromString(child) , getTextContentString(child));
 			root.addTag(tagFiglio);
+			
+//			for (String attr : attributeString) {
+//				String nomeAttr = getAttributeNameFromString(attr);
+//				String valueAttr = getAttributeValueFromString(attr);
+//				Attributo attributo = new Attributo(nomeAttr, valueAttr);
+//				tagFiglio.addAttributo(attributo);
+//			}
 		}
 		return root;
 	}
