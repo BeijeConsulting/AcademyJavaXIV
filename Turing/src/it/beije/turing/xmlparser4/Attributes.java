@@ -33,6 +33,6 @@ public class Attributes
 	}
 	public String toString()
 	{
-		return("name: "+name+" value: "+value);
+		return(name+"=\""+value+"\"");
 	}
 }

@@ -41,18 +41,30 @@ public class Node  {
     }
 
     public String getTextContent() {
-    	StringBuilder builder = new StringBuilder();
-    	builder.append(content+" ");
-    	if(this.hasChildren())
+    	StringBuilder builder = new StringBuilder("<"+name+(hasAttributes()?" "+printAttributes():"")+">\n"+content+"\n");
+    		if(this.hasChildren())
     	{
     		for(Node n :this.children)
     		{
     			builder.append(n.getTextContent());
     		}
     	}
+    	builder.append("</"+name+">\n");
         return builder.toString();
     }
-    public boolean hasAttributes()
+    private String printAttributes() {
+    	StringBuilder s = new StringBuilder();
+		if(hasAttributes())
+		{
+			for(Attributes a : attributes)
+			{
+				s.append(a);
+			}
+		}
+		return s.toString();
+	}
+
+	public boolean hasAttributes()
     {
     	if(attributes.isEmpty())
     	{
@@ -127,6 +139,9 @@ public class Node  {
     }
     public String toString()
     {
-    	return("nome:"+name);
+    	StringBuilder builder = new StringBuilder("<"+name+">\n"+content+"\n"+"</"+name+">");
+    	return builder.toString();
+    	
     }
+    
 }
