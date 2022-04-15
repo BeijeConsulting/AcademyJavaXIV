@@ -12,7 +12,14 @@ import java.util.List;
 
 
 public class XMLParser3 {
+
+	//TODO getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
+
+	//TODO getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome
+
 	//TODO MODIFICA PER FILE 5 TAG AUTOCHIUDENTE
+
+	//TODO MATCH DI TESTI LUNGHI
 
 	public static void main(String[] args) throws FileNotFoundException {
 
