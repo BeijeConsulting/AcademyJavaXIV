@@ -3,7 +3,6 @@ package it.beije.turing.xmlparser3;
 
 import it.beije.turing.xmlparser3.classes.Documento;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
-import it.beije.turing.xmlparser3.interfaces.Node;
 
 
 import java.io.*;
@@ -16,7 +15,7 @@ public class XMLParser3 {
 
 
 
-		Documento d = Documento.getIstance().parse("Turing/res/test_parser1.xml");
+		/*Documento d = Documento.getIstance().parse("Turing/res/test_parser1.xml");
 
 		Elemento contatti = d.getRootElement();
 
@@ -29,7 +28,7 @@ public class XMLParser3 {
 			//e.getAttributi().getAttributes("name");
 			Elemento cognome = n.getElementsByTagName("Cognome");
 			//e.getAttributi();
-		}
+		}*/
 
 
 

@@ -1,7 +1,6 @@
 package it.beije.turing.xmlparser3.classes;
 
 import it.beije.turing.xmlparser3.interfaces.Elemento;
-import it.beije.turing.xmlparser3.interfaces.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,25 @@ public class ConcreteElement implements Elemento {
     private String tagName;
     private String contenuto;
     private List<Attributo> attributoList=new ArrayList<>();
-    private List<Node> childList=new ArrayList<>();
+
+
+    public ConcreteElement(String tagName){
+        this.tagName=tagName;
+    }
+
+    public ConcreteElement(String tagName,String contenuto){
+        this(tagName);
+        this.contenuto=contenuto;
+    }
+
+    public ConcreteElement(String tagName,String contenuto, List<Attributo> attributoList){
+        this(tagName,contenuto);
+        this.attributoList=attributoList;
+    }
+    public ConcreteElement(String tagName, List<Attributo> attributoList){
+        this(tagName);
+        this.attributoList=attributoList;
+    }
 
     @Override
     public void setAttributi(Attributo a) {
@@ -49,18 +66,7 @@ public class ConcreteElement implements Elemento {
     }
 
     @Override
-    public List<Node> getListChiled() {
-        return this.childList;
-    }
-
-    @Override
-    public void setListChiled(Node node) {
-        this.childList.add(node);
-    }
-
-    @Override
-    public Elemento getElementsByTagName(String nome) {
-        //TODO
-        return null;
+    public String toString() {
+        return this.tagName;
     }
 }
