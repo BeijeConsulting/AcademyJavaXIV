@@ -3,23 +3,36 @@ package it.beije.turing.xmlparser2;
 
 import java.util.ArrayList;
 
-public class Element {
+public class Element extends Node {
 	//commento
 
-	private String tag;
-	private ArrayList<Element> childElements;
 	private String content;
-	private String[] attributes;
+	private ArrayList<Element> childElements = new ArrayList<>();
 	
-	public Element() {
+	private ArrayList<Attribute> attributes = new ArrayList<>();
+	
+	public Element(Node node) {
+		this.parent = node.parent;
+		
+		if(node.child.size() != 0)
+			this.child = (ArrayList<Node>) node.child.clone();
+		
+		this.tag = node.tag;
 	}
+	
+	
 
 	public ArrayList<Element> getChildElements() {
 		return childElements;
 	}
 
 	public void setChildElements(ArrayList<Element> childElements) {
-		this.childElements = childElements;
+		for(Element e : childElements) {
+			setChildElements(e);
+		}
+	}
+	public void setChildElements(Element childElement) {
+		this.childElements.add(childElement);
 	}
 
 	public String getContent() {
