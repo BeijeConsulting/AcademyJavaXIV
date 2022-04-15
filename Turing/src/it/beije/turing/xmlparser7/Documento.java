@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public class Documento {
 
 	private String xmlDichiarazione;
-	String[] splitAllInOne;
+	private String[] splitAllInOne;
+	private Root root;
 	
 	
 //	public String getXmlDichiarazione() {
@@ -30,10 +31,11 @@ public class Documento {
 //		}
 //	}
 	
-	private Documento(String[] splitAllInOne) {
+	private Documento(String[] splitAllInOne, Root root) {
+		this.root = root;
 		this.splitAllInOne = splitAllInOne;
 	}
-	
+
 	public static String[] XMLToString(String s) {
 		String allInOne = "";
 		String campo = "";
@@ -73,8 +75,9 @@ public class Documento {
 	}
 
 	private void creaRoot() {
-		Root.creaInstanzaRoot(splitAllInOne);
-	//	creaInstanzaRoot();
+		this.root = Root.creaInstanzaRoot(splitAllInOne);
+
+		//	creaInstanzaRoot();
 //		String campo;
 //		if(splitAllInOne[1].indexOf(" ") == -1) {
 //			System.out.println("Qua c'è a[1]" + splitAllInOne[1]);
@@ -93,12 +96,13 @@ public class Documento {
 //			}
 //		}
 	}
-	
-	
 
-	
+
+
+
 	public static Documento parse(String s) {
 		String[]splitAllInOne = XMLToString(s);
-		return new Documento(splitAllInOne);
+		Root root = Root.creaInstanzaRoot(splitAllInOne);
+		return new Documento(splitAllInOne, root);
 	}
 }
