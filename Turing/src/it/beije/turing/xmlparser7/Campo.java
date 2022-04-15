@@ -90,7 +90,6 @@ public class Campo implements Element {
 
 			}
 		} catch (StringIndexOutOfBoundsException e) {
-			System.out.println("Sono nel exception");
 			throw new IllegalArgumentException("E' stato inserito un xml che non rispetta gli standard. ");
 		}
 
