@@ -87,7 +87,7 @@ public class XMLinterpreter {
 			{
 				if(s.startsWith("</")) //se contiene </ "chiusura di un nodo"
 				{
-					if(s.substring(2,s.length()-1).equalsIgnoreCase(stack.get(stackCursor).name)) //se la TAG di chiusura corrisponde all'ultimo nodo inserito
+					if(s.substring(2,s.length()-1).equalsIgnoreCase(stack.get(stackCursor).getTagName())) //se la TAG di chiusura corrisponde all'ultimo nodo inserito
 							{
 								stack.remove(stackCursor);
 								stackCursor--; //considero il nodo chiuso correttamente
