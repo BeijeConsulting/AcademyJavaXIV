@@ -58,14 +58,9 @@ public class Documento {
 				ioE.printStackTrace();
 			}
 		}
+
 		
 		String[] splitAllInOne = allInOne.split("<");
-		
-		for(int i = 0; i < splitAllInOne.length; i++) {
-			System.out.println();
-			System.out.println("QuA INZIA LA riga " + i + splitAllInOne[i] + "QuA FINISCE LA riga " + i);
-			System.out.println();
-		}
 
 		return splitAllInOne;
 	}

@@ -49,13 +49,17 @@ public class Argomento {
         String contenuto = "";
         ArrayList<Argomento> argomenti = new ArrayList<>();
 
-        for(int i = 0; i < campoArgomenti.length; i++) {
-            String[] split = campoArgomenti[i].split("=");
-            argomento = split[0];
-            System.out.println("L'argomento è " + argomento);
-            contenuto = split[1].replace("\"", " ").trim();
-            System.out.println("Il contenuto è " + contenuto);
-            argomenti.add(new Argomento(argomento, contenuto));
+        try {
+            for (int i = 0; i < campoArgomenti.length; i++) {
+                String[] split = campoArgomenti[i].split("=");
+                argomento = split[0];
+                System.out.println("L'argomento è " + argomento);
+                contenuto = split[1].replace("\"", " ").trim();
+                System.out.println("Il contenuto è " + contenuto);
+                argomenti.add(new Argomento(argomento, contenuto));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("E' stato inserito un xml che non rispetta gli standard. ");
         }
 
 

@@ -17,8 +17,8 @@ public class XMLParser7 {
 //		"/Users/simonepitossi/File/test_parser6.xml"
 		//"C:/Users/luigi/Downloads/test_parser6.xml"
 
-		Documento documento = Documento.parse("C:/Users/luigi/Downloads/test_parser6.xml");
-		//Documento documento = Documento.parse("/Users/simonepitossi/File/test_parser1.xml");
+		//Documento documento = Documento.parse("C:/Users/luigi/Downloads/test_parser6.xml");
+		Documento documento = Documento.parse("/Users/simonepitossi/File/test_parser2.xml");
 		documento.getRootElement().toString();
 	}
 

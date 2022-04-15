@@ -9,6 +9,8 @@ public class Root implements Element {
 	private Integer inizioCampi;
 	private Integer fineCampi;
 
+	private ArrayList<Argomento> argomenti = new ArrayList<>();
+
 	
 	public Root(String rootName, ArrayList<Element> campi, Integer inizioCampi, Integer fineCampi) {
 		this.rootName = rootName;
@@ -17,18 +19,24 @@ public class Root implements Element {
 		this.fineCampi = fineCampi;
 	}
 
+
+
 	public String getTagName() {
 		return rootName;
 	}
 
 	@Override
 	public String getAttribute(String attribute) {
-		return null;
+		for(Argomento argomento: argomenti) {
+			if(argomento.getArgomento().equalsIgnoreCase(attribute)) {
+				return argomento.getContenuto();
+			}
+		}return null;
 	}
 
 	@Override
 	public ArrayList<Argomento> getAttributes() {
-		return new ArrayList<Argomento>();
+		return argomenti;
 	}
 
 	public void setRootName(String root) {
@@ -49,13 +57,17 @@ public class Root implements Element {
 		int fineCampi = 0;
 		String name = "";
 		ArrayList<Element> campi = new ArrayList<>();
-		
+		ArrayList<Argomento> argomenti = new ArrayList<>();
 		
 		// cercando l'inizio splitAllInOne[i].indexOf("?>")
 		for(int i = 0; i < splitAllInOne.length; i++) {
 			if(splitAllInOne[i].length()> 0 && splitAllInOne[i].indexOf("?>") != -1) {
 				if(splitAllInOne[i].substring(splitAllInOne[i].indexOf("?>"),splitAllInOne[i].indexOf("?>")+ "?>".length()).equalsIgnoreCase("?>")) {
 					name = splitAllInOne[i + 1].substring(0, splitAllInOne[i + 1].indexOf(">"));
+					if(name.contains(" ")) {
+						argomenti = Argomento.argomentoNewInstance(splitAllInOne[i + 1]);
+						name = name.substring(0, name.indexOf(" "));
+					}
 					inizioCampi = i + 2;
 					dichiarazioneTrovata = true;
 					break;
@@ -85,9 +97,7 @@ public class Root implements Element {
 		for(int i = inizioCampi; i < fineCampi; ) {
 			i = Campo.campoNewInstance(splitAllInOne, i, fineCampi, campi) ;
 		}
-		for(Element c: campi) {
-			c.toString();
-		}
+
 		return new Root(name, campi, inizioCampi, (fineCampi-1));
 	}
 
@@ -125,26 +135,27 @@ public class Root implements Element {
 		System.out.println("La root è : " + rootName);
 		System.out.println("La root inizia : " + inizioCampi);
 		System.out.println("La root finisce : " + fineCampi);
-
+		System.out.println(campi.size());
+		System.out.println("Metodo getAttribute: " + getAttribute("version"));
 
 		for(Element element: campi) {
 			element.toString();
 		}
-
-		System.out.println("Metodo getElementsByTagName: " + getElementsByTagName("risposta"));
-		System.out.println("Metodo getChildElements: " + getChildElements());
-		System.out.println("Metodo getTagName: " + getTagName());
-		System.out.println("Metodo getTextContent: " + getTextContent());
-		ArrayList<Argomento> argomentos = getAttributes();
-		if (argomentos.size() != 0){
-			for( Argomento a : getAttributes()){
-				System.out.println("Metodo getAttributes: " + a.toString());
-			}
-
-		}
-		System.out.println("Metodo getAttribute: " + getAttribute("Value"));
-
-		System.out.println("///////////  FINE ROOT   //////////////////");
+//
+//		System.out.println("Metodo getElementsByTagName: " + getElementsByTagName("risposta"));
+//		System.out.println("Metodo getChildElements: " + getChildElements());
+//		System.out.println("Metodo getTagName: " + getTagName());
+//		System.out.println("Metodo getTextContent: " + getTextContent());
+//		ArrayList<Argomento> argomentos = getAttributes();
+//		if (argomentos.size() != 0){
+//			for( Argomento a : getAttributes()){
+//				System.out.println("Metodo getAttributes: " + a.toString());
+//			}
+//
+//		}
+//		System.out.println("Metodo getAttribute: " + getAttribute("Value"));
+//
+//		System.out.println("///////////  FINE ROOT   //////////////////");
 
 
 		return "";

@@ -52,7 +52,7 @@ public class Campo implements Element {
 		ArrayList<Element> elementi = new ArrayList<Element>();
 		ArrayList<Argomento> argomenti = new ArrayList<>();
 			String campo;
-			Integer fine = 0;
+			Integer fine = fineCampo;
 			//CASO SENZA ARGOMENTI
 
 			if(splitAllInOne[inizioCampo].indexOf(" ") == -1) {
@@ -65,25 +65,34 @@ public class Campo implements Element {
 				argomenti = Argomento.argomentoNewInstance(splitAllInOne[inizioCampo]);
 			}
 				//Argomento.newArgomentiCampo();
-				
-				for(int i = inizioCampo + 1 ; i < fineCampo; ) {
-					//a[i] contiene la variabile più il testo, a[i + 1] contiene la variabile che possiamo usare per rimuovere la prima parte del testo per ottenerlo
-					if(splitAllInOne[i].length() > campo.length() + 1 && campo.equalsIgnoreCase(splitAllInOne[i].substring(1, campo.length() + 1))) {
-						i += 1;
-						fine = i;
-						break;
-					} else if(splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(">")).equalsIgnoreCase(splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">")))){
-						elementi.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
-						i += 2;
-					} else if(splitAllInOne[i].indexOf(" ") != -1 && splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(" ")).equalsIgnoreCase(splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">")))) {
-						elementi.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
-						i += 2;
-					} else {
-						i = campoNewInstance(splitAllInOne, i, fineCampo, elementi);
 
-					}
-				
+		try {
+			for (int i = inizioCampo + 1; i < fineCampo; ) {
+				//a[i] contiene la variabile più il testo, a[i + 1] contiene la variabile che possiamo usare per rimuovere la prima parte del testo per ottenerlo
+
+				if (splitAllInOne[i].length() > campo.length() + 1 && campo.equalsIgnoreCase(splitAllInOne[i].substring(1, campo.length() + 1))) {
+					i += 1;
+					fine = i;
+					break;
+				} else if (splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(">")).equalsIgnoreCase(splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">")))) {
+					elementi.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
+					i += 2;
+				} else if (splitAllInOne[i].indexOf(" ") != -1 && splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(" ")).equalsIgnoreCase(splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">")))) {
+					elementi.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
+					i += 2;
+				} else if(splitAllInOne[i].contains("/>")) {
+					elementi.add(Dato.newDatoInstance(splitAllInOne[i]));
+					i += 1;
+				} else {
+					i = campoNewInstance(splitAllInOne, i, fineCampo, elementi);
+
+				}
+
 			}
+		} catch (StringIndexOutOfBoundsException e) {
+			System.out.println("Sono nel exception");
+			throw new IllegalArgumentException("E' stato inserito un xml che non rispetta gli standard. ");
+		}
 
 		arrayElementi.add(new Campo(campo, argomenti, elementi));
 			return fine;
@@ -92,24 +101,22 @@ public class Campo implements Element {
 	public String toString() {
 		System.out.println("///////////// TESTA CAMPO  ////////////////");
 		System.out.println("Il nome del campo è : " + campo);
-
-		for(Argomento argomento: argomenti) {
-			argomento.toString();
-		}
+		System.out.println(elementi.size());
+		System.out.println(argomenti.size());
 
 		for(Element element: elementi) {
 			element.toString();
 		}
 
-		System.out.println("Metodo getElementsByTagName: " + getElementsByTagName("risposta"));
-		System.out.println("Metodo getChildElements: " + getChildElements());
-		System.out.println("Metodo getTagName: " + getTagName());
-		System.out.println("Metodo getTextContent: " + getTextContent());
-		for( Argomento a : getAttributes()){
-			System.out.println("Metodo getAttributes: " + a.toString());
-		}
-		System.out.println("Metodo getAttribute: " + getAttribute("Value"));
-
+//		System.out.println("Metodo getElementsByTagName: " + getElementsByTagName("nome"));
+//		System.out.println("Metodo getChildElements: " + getChildElements());
+//		System.out.println("Metodo getTagName: " + getTagName());
+//		System.out.println("Metodo getTextContent: " + getTextContent());
+//		for( Argomento a : getAttributes()){
+//			System.out.println("Metodo getAttributes: " + a.toString());
+//		}
+//		System.out.println("Metodo getAttribute: " + getAttribute("Value"));
+//
 		System.out.println("/////////////    CODA CAMPO   ////////////////");
 
 
