@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Elemento extends Nodo{
-	
-	private Testo testo;
+public class Elemento extends Nodo
+{
+	private Testo textContent;
 	private List<Elemento> childElements;
-	private List<Nodo> childNodes;
-
+	
 	public List<Elemento> getChildElements()
 	{
 		return childElements;
@@ -20,25 +19,6 @@ public class Elemento extends Nodo{
 		this.childElements = childElements;
 	}
 	
-	
-	public List<Nodo> getChildNodes()
-	{
-		return childNodes;
-	}
-	
-	public void setChildNodes()
-	{
-		List<Nodo> temp = new ArrayList<>();
-		
-		for(Elemento e : getChildElements())
-		{
-			temp.add(e);
-		}
-		
-		temp.add(testo);
-		
-		this.childNodes = temp;
-	}
 	
 	public List<Elemento> getElementsByTagName(String tagName)
 	{
@@ -54,6 +34,18 @@ public class Elemento extends Nodo{
 	
 	public String getTextContent()
 	{
-		return testo.getTesto();
+		return textContent.getTesto();
+	}
+
+	@Override
+	public String getTagName() 
+	{
+		return tagName;
+	}
+
+	@Override
+	public void setTagName(String tagName)
+	{
+		this.tagName = tagName;
 	}
 }

@@ -4,9 +4,14 @@ import java.util.List;
 
 public abstract class Nodo
 {
-	protected List<Attributo> attributes;
 	protected String tagName;
-	protected Elemento father;
+	private List<Attributo> attributes;
+	private List<Nodo> childNodes;
+	private Nodo parent;
+	
+	public abstract String getTagName();	
+	public abstract void setTagName(String tagName);
+	
 	
 	public List<Attributo> getAttributes()
 	{
@@ -29,13 +34,24 @@ public abstract class Nodo
 	}
 	
 	
-	public String getTagName()
+	public List<Nodo> getChildNodes()
 	{
-		return tagName;
+		return childNodes;
 	}
 	
-	public void setTagName(String tagName)
+	public void setChildNodes(List<Nodo> childNodes)
 	{
-		this.tagName = tagName;
+		this.childNodes = childNodes;
+	}
+	
+	
+	public void setParent(Nodo parent)
+	{
+		this.parent = parent;
+	}
+	
+	public Nodo getParent()
+	{
+		return parent;
 	}
 }

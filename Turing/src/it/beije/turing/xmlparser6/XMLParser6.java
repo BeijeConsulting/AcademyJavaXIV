@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -31,6 +34,13 @@ public class XMLParser6
 		
 		XMLDocument document = new XMLDocument();
 		
+		System.out.println(file);
+		
+		for(int i = 0; i < file.length(); i++)
+		{
+			if (file.charAt(i) == '<') {}
+		}
+		
 		//el1 = root
 		//document.setRootElement(el1);
 		//prolog
@@ -50,7 +60,7 @@ public class XMLParser6
 		FileReader fileReader = new FileReader(file);						//apro reader con file esistente. FileNotFoundException gi� gestita, ma comunque non possibile.
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		
-		String fileXml = null;
+		String fileXml = "";
 		
 		try
 		{

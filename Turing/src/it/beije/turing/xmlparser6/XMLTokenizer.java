@@ -2,7 +2,10 @@ package it.beije.turing.xmlparser6;
 
 public class XMLTokenizer
 {
-	String text;
+	Token t;
 	
-	//public static tryConsume
+	public void tryConsumeToken()
+	{
+		t = new Token();
+	}
 }
