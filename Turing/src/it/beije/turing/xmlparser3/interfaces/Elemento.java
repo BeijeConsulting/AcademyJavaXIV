@@ -7,10 +7,7 @@ import it.beije.turing.xmlparser3.classes.TreeNode;
 
 import java.util.List;
 
-/**
- * @author Giuseppe Raddato
- * Data: 14 apr 2022
- */
+
 public interface Elemento{
     public  void setAttributi(Attributo a);
     public List<Attributo> getAttributi();

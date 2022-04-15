@@ -15,10 +15,7 @@ import it.beije.turing.xmlparser3.Exception.TagNotOpenException;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
 import it.beije.turing.xmlparser3.interfaces.LoadFile;
 
-/**
- * @author Giuseppe Raddato
- * Data: 14 apr 2022
- */
+
 public class Documento implements LoadFile {
     private static Documento d = null;
     private TreeNode<Elemento> rootNode;

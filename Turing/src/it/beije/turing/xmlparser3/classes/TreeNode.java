@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author Giuseppe Raddato
- * Data: 14 apr 2022
- */
+
 public class TreeNode<T> {
     private final List<TreeNode<T>> children;
     private TreeNode<T> parent;

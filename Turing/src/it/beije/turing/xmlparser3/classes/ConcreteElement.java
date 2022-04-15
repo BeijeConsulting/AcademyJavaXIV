@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * @author Giuseppe Raddato
- * Data: 14 apr 2022
- */
+
 public class ConcreteElement implements Elemento {
     private String tagName;
     private String contenuto;
