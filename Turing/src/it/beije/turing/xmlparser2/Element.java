@@ -4,12 +4,12 @@ package it.beije.turing.xmlparser2;
 import java.util.ArrayList;
 
 public class Element extends Node {
-	//commento
 
 	private String content = "";
 	private ArrayList<Element> childElements = new ArrayList<>();
 	private ArrayList<Attribute> attributes = new ArrayList<>();
 	
+	@SuppressWarnings("unchecked")
 	public Element(Node node) {
 		this.parent = node.parent;
 		
@@ -50,6 +50,7 @@ public class Element extends Node {
 			setChildElements(e);
 		}
 	}
+	
 	public void setChildElements(Element childElement) {
 		this.childElements.add(childElement);
 	}
@@ -73,12 +74,29 @@ public class Element extends Node {
 		this.tag = tag;
 	}
 	
-
 	public ArrayList<Attribute> getAttributes() {
-		return this.attributes;
+		if(this.attributes.size() > 0) {			
+			return this.attributes;
+		} else {
+			return null;
+		}
 	}
 	
-	
+	public Attribute getAttribute(String attribute) {
+		Attribute a = new Attribute();
+		
+		if(this.attributes.size() > 0) {
+			for(Attribute atr : this.attributes) {
+				if(atr.getName().equals(attribute)) {
+					a = atr;
+				}
+			}
+			return a;
+		} else {
+			return null;
+		}
+		
+	}
 
 	public void setAttributes(Node node) {
 		String attributesString = "";

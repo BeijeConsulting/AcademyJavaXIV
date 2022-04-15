@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 
 public class XML_Reader {
 
-	public static StringBuilder readText(String path) throws IOException {
+	public static StringBuilder readText(String path) throws IOException, SAXException {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		File file = new File(path);
@@ -34,12 +34,25 @@ public class XML_Reader {
 				throw fEx;
 			}
 		}
+		
+		isFileValid(stringBuilder);
+		
 		return stringBuilder;
 	}
 
 	public static StringBuilder removeVersion(StringBuilder stringBuilder) {
+		
+		if(stringBuilder.toString().startsWith("<?")) {
+			for(int i = 0; i < stringBuilder.length(); i++) {
+				if(stringBuilder.charAt(i) == '>' && stringBuilder.charAt(i - 1) == '?') {
+					String str = stringBuilder.substring(i + 1, stringBuilder.length());
+					return new StringBuilder(str);
+				}
+			}
+		}  
+		
+		return new StringBuilder(stringBuilder);
 
-		return stringBuilder;
 	}
 
 	public static boolean isFileValid(StringBuilder stringBuilder) throws SAXException {
@@ -47,18 +60,11 @@ public class XML_Reader {
 
 		StringBuilder sb = new StringBuilder(removeVersion(stringBuilder));
 
-		if (!isBracketsValid(stringBuilder)) {
+		if (!isBracketsValid(sb)) {
 			throw new SAXException("Parentesi del file non valide");
 		}
 
-		for (int i = 0; i < stringBuilder.length(); i++) {
-
-		}
 		return true;
-	}
-
-	public static void main(String args[]) {
-		
 	}
 
 	public static boolean isBracketsValid(StringBuilder stringBuilder) {
@@ -82,15 +88,10 @@ public class XML_Reader {
 				} else if (sb.charAt(1) == '/') {
 					if (sb.charAt(sb.length() - 2) == '/')
 						return false;
-					System.out.println(sb.toString());
 					if (brackets.get(brackets.size() - 1).equals(sb.toString())) {
 						brackets.remove(brackets.size() - 1);
 						sb = new StringBuilder();
-						// System.out.println(sb.toString());
 					} else {
-						// System.out.println(sb.toString());
-						System.out.println(brackets);
-						System.out.println("Sono qui");
 						return false;
 					}
 				} else {
@@ -106,18 +107,10 @@ public class XML_Reader {
 				}
 
 			}
-
-			System.out.println(brackets);
 		}
-		System.out.println(brackets);
 		if (brackets.isEmpty())
 			return true;
 		else
 			return false;
 	}
-
-	private static String findNameTag(StringBuilder sb, int i) {
-		return "ciao";
-	}
-
 }
