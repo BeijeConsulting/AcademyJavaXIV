@@ -20,7 +20,7 @@ public class Campo {
 	}
 	
 	
-	public String getCampo() {
+	public String getTagName(){
 		return campo;
 	}
 	public void setCampo(String campo) {

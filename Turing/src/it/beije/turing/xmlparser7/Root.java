@@ -17,7 +17,7 @@ public class Root {
 		this.fineCampi = fineCampi;
 	}
 
-	public String getRootName() {
+	public String getTagName() {
 		return rootName;
 	}
 
@@ -79,10 +79,6 @@ public class Root {
 			c.toString();
 		}
 		return new Root(name, campi, inizioCampi, (fineCampi-1));
-	}
-
-	public String getTagName() {
-		return rootName;
 	}
 
 	public int getElementsByTagName(String tagName) {

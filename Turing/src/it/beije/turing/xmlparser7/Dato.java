@@ -17,7 +17,7 @@ public class Dato {
 	
 	
 	
-	public String getTipo() {
+	public String getTagName() {
 		return tipo;
 	}
 	public void setTipo(String tipo) {
