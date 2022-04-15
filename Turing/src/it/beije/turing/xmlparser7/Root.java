@@ -28,7 +28,7 @@ public class Root implements Element {
 
 	@Override
 	public ArrayList<Argomento> getAttributes() {
-		return null;
+		return new ArrayList<Argomento>();
 	}
 
 	public void setRootName(String root) {
@@ -118,5 +118,35 @@ public class Root implements Element {
 		return elements;
 
 
+	}
+
+	public String toString() {
+		System.out.println("////////// INIZIO ROOOT ///////////////////");
+		System.out.println("La root è : " + rootName);
+		System.out.println("La root inizia : " + inizioCampi);
+		System.out.println("La root finisce : " + fineCampi);
+
+
+		for(Element element: campi) {
+			element.toString();
+		}
+
+		System.out.println("Metodo getElementsByTagName: " + getElementsByTagName("risposta"));
+		System.out.println("Metodo getChildElements: " + getChildElements());
+		System.out.println("Metodo getTagName: " + getTagName());
+		System.out.println("Metodo getTextContent: " + getTextContent());
+		ArrayList<Argomento> argomentos = getAttributes();
+		if (argomentos.size() != 0){
+			for( Argomento a : getAttributes()){
+				System.out.println("Metodo getAttributes: " + a.toString());
+			}
+
+		}
+		System.out.println("Metodo getAttribute: " + getAttribute("Value"));
+
+		System.out.println("///////////  FINE ROOT   //////////////////");
+
+
+		return "";
 	}
 }

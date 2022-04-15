@@ -64,7 +64,13 @@ public class Argomento {
     }
 
     public String toString() {
-        System.out.println(contenuto);
+
+        System.out.println("////////////   TESTA  ARGOMENTO   /////////////////");
+        System.out.println("Il nome dell'argomento è : " + argomento);
+        System.out.println("Il contenuto è : " + contenuto);
+        System.out.println("//////////////  CODA  ARGOMENTO  ///////////////");
         return "";
     }
+
+
 }

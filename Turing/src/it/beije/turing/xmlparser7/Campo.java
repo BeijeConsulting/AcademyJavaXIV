@@ -90,7 +90,9 @@ public class Campo implements Element {
 		}
 
 	public String toString() {
-		System.out.println(campo);
+		System.out.println("///////////// TESTA CAMPO  ////////////////");
+		System.out.println("Il nome del campo è : " + campo);
+
 		for(Argomento argomento: argomenti) {
 			argomento.toString();
 		}
@@ -98,6 +100,19 @@ public class Campo implements Element {
 		for(Element element: elementi) {
 			element.toString();
 		}
+
+		System.out.println("Metodo getElementsByTagName: " + getElementsByTagName("risposta"));
+		System.out.println("Metodo getChildElements: " + getChildElements());
+		System.out.println("Metodo getTagName: " + getTagName());
+		System.out.println("Metodo getTextContent: " + getTextContent());
+		for( Argomento a : getAttributes()){
+			System.out.println("Metodo getAttributes: " + a.toString());
+		}
+		System.out.println("Metodo getAttribute: " + getAttribute("Value"));
+
+		System.out.println("/////////////    CODA CAMPO   ////////////////");
+
+
 		return "";
 	}
 

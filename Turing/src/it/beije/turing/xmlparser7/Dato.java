@@ -43,11 +43,24 @@ public class Dato implements Element {
 	}
 	
 	public String toString() {
+		System.out.println("/////////////  TESTA DATO  ////////////////");
 		System.out.println("Il tipo di dato è " + tipo);
 		System.out.println("Il tipo di variabile è " + variabile);
+
 		for(Argomento argomento: argomenti) {
 			argomento.toString();
 		}
+
+		System.out.println("Metodo getElementsByTagName: " + getElementsByTagName("risposta"));
+		System.out.println("Metodo getChildElements: " + getChildElements());
+		System.out.println("Metodo getTagName: " + getTagName());
+		System.out.println("Metodo getTextContent: " + getTextContent());
+		for( Argomento a : getAttributes()){
+		System.out.println("Metodo getAttributes: " + a.toString());
+		}
+		System.out.println("Metodo getAttribute: " + getAttribute("Value"));
+
+		System.out.println("/////////////   CODA   DATO   ////////////////");
 		return "";
 	}
 
