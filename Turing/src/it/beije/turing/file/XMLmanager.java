@@ -193,7 +193,7 @@ public class XMLmanager {
 	}
 
 	public static void main(String[] args) throws Exception {
-		//readXML("/temp/rubrica.xml");
+		//readXML("/Users/lorenzoorru0/Desktop/CSVjava/newRubrica.xml");
 		//writeXML("/temp/new_rubrica.xml");
 	}
 
