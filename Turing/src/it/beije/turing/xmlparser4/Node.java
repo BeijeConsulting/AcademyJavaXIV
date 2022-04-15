@@ -1,5 +1,6 @@
 package it.beije.turing.xmlparser4;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,20 @@ public class Node  {
     		children=new ArrayList<>();
     	}
         this.children.add(node);
+    }
+
+    public String getAttribute(String attribute) {
+        String attValue= null;
+
+            for (Attributes attr : this.attributes) {
+                if (attr.getName().equals(attribute)) {
+                    attValue=attr.getContent();
+                }
+            }
+         if (attValue==null) {
+             throw new IllegalArgumentException("Nel nodo: " + this.getTagName() + " non è presente l'attributo specificato: " + attribute);
+         }
+        return attValue;
     }
 
     public List<Node> getElementsByTagName(String tagName) {
