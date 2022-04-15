@@ -39,7 +39,16 @@ public class Node  {
     }
 
     public String getTextContent() {
-        return this.content;
+    	StringBuilder builder = new StringBuilder();
+    	builder.append(content+" ");
+    	if(this.hasChildren())
+    	{
+    		for(Node n :this.children)
+    		{
+    			builder.append(n.getTextContent());
+    		}
+    	}
+        return builder.toString();
     }
     public boolean hasAttributes()
     {

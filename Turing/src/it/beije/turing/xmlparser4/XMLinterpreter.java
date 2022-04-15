@@ -175,7 +175,7 @@ public class XMLinterpreter {
 					}
 					else //SE NON VIENE CHIUSO IN RIGA POTREBBE AVERE FIGLI
 					{
-						Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null);
+						Node node = new Node(name,hasArgs?attributes:null,hasContent?content:"");
 						if(stackCursor!=-1)
 						{
 							stack.get(stackCursor).addChild(node);
@@ -192,7 +192,7 @@ public class XMLinterpreter {
 				
 				else//se non ha testo
 				{
-					Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null); //lo metto dentro senza problemi
+					Node node = new Node(name,hasArgs?attributes:null,hasContent?content:""); //lo metto dentro senza problemi
 					if(stackCursor!=-1)
 					{
 						stack.get(stackCursor).addChild(node);

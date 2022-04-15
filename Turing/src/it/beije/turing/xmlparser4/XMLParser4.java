@@ -14,15 +14,15 @@ public class XMLParser4 {
 
 	public static void main(String[] args) 
 	{
-		DocXml doc = DocXml.parse("tmp/test_parser6.xml");
+		DocXml doc = DocXml.parse("tmp/test_parser1.xml");
 		//xml.print();
 		test2(doc);
 	}
 	private static void test2(DocXml doc)
 	{
 		Node root=doc.getRootElement();
-		System.out.println(root.getElementsByTagName("domanda").get(0).getAttribute("chapter"));
-		//System.out.println(children.get(0).getAttribute("l"));
+		//System.out.println(root.getElementsByTagName("domanda").get(0).getAttribute("chapter"));
+		System.out.println(root.getTextContent());
 	}
 	private static void test(DocXml doc)
 	{
