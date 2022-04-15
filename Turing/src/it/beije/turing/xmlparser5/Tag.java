@@ -59,7 +59,6 @@ public class Tag extends Nodo{
 		this.children = children;
 	}
 	
-//	public 
 
 	@Override
 	public String toString() {
@@ -90,7 +89,7 @@ public class Tag extends Nodo{
 		return l1;
 	}
 
-	public List<Tag> getChildNodes(){
+	public List<Nodo> getChildNodes(){
 		return null;
 	}
 
