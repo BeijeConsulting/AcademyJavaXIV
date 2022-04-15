@@ -60,112 +60,54 @@ public class Document {
 			}
 
 		}
-
-		ArrayList<StringBuilder> contentSup = new ArrayList<StringBuilder>(content);
-		// root.setTag(contentSup.get(i++).toString());
-//		contentSup.remove(contentSup.size() - 1);
-//		contentSup.remove(0);
-//		System.out.println(contentSup);
-//		int i = 1;
-//		ArrayList<Element> elms = new ArrayList<Element>();
-//		ArrayList<Element> elmsP = buildRoot(contentSup, i, elms);
-//		for(Element e : elmsP) {
-//			if(e != null) {				
-//				System.out.println(e.getTag() + " " + e.getContent());
-//			}
-//		}
-		Node root = Node.getNodes(contentSup);
-		Element e = new Element(root);
-		e.setChildElements(getRootElement(root));
-		
-		
-
-		for (Element el : e.getChildElements()) {
-			System.out.println(el.tag);
-			for (Element ez : el.getChildElements()) {
-				System.out.println("         " + ez.tag);
-			}
-
-		}System.out.println("Count : " + count);
-		/*
-		 * for(Node node : root.child) { System.out.println(node.tag); for(Node node1 :
-		 * node.child) { System.out.println("   " + node1.tag); for(Node node2 :
-		 * node1.child) { System.out.println("       " + node2.tag); } } }
-		 */
 	}
-	public static int count = 0;
-	public ArrayList<Element> getRootElement(Node node) {
-		Element current = new Element(node);
-		ArrayList<Node> nodes = new ArrayList<>();
-		nodes = (ArrayList)current.child.clone();
-		count++;
-		//System.out.println(node.child);
+	
+	public Element getRootElement(Node node) {
+		Element rootElm = new Element(node);
 		
-		//System.out.println(current.child.size());
-		//System.out.println(nodes.size());
+		rootElm.setAttributes(node);
 		
-		System.out.println("Prova" + current.child.get(1).child.get(1).tag);
-		for (Node n : current.child) {
-			System.out.println(n.tag.substring(0, 2).equals("t-"));
-			//System.out.println(nodes.size());
-			
-			while (!nodes.isEmpty()) {
-				System.out.println("Nodes.size = " + nodes.size());
-				/*
-				if (!(n.tag.substring(0, 2).equals("t-"))) {
-					current.setChildElements(new Element(n));
-					System.out.println(nodes.size());
-					nodes.remove(0);
-					System.out.println(nodes.size());
-				}*/
-				for(int i = 0; i < n.child.size(); i++) {
-					System.out.println("SON QUI");
-					System.out.println(n.child.get(i).tag);
-				}
-				
-				if (!(n.tag.substring(0, 2).equals("t-"))) {
-					System.out.println("IF");
-					current.setChildElements(getRootElement(new Node(n)));
-					nodes.remove(0);
-				}
-				else{
-					System.out.println("ELSE");
-					current.setContent(n.tag);		
-					nodes.remove(0);
-				}
-				
-			}
-			
-		}
-		
-		return current.getChildElements();
-	}
-
-	public Element getChildElements(ArrayList<Node> nodes) {
-		Node node = null;
-		Element ele = null;
-		for (Node n : nodes) {
-			String content = "";
-			for (Node n2 : n.child) {
-				if (n2.tag.contains("t-")) {
-					content += n2.tag;
-				}
-			}
-			if (!n.child.isEmpty()) {
-
-				// node = (Element)n;
-				ele = new Element(n);
-				ele.setContent(content);
-				ele.setChildElements(getChildElements(n.child));
-
-			}
-		}
-		return ele;
+		return rootElm;
 	}
 
 	public static void main(String... args) throws IOException {
 
-		Document elm = new Document(XML_Reader.readText("C:\\Users\\Marco\\Desktop\\test_parser1.xml"));
-		System.out.println(elm.content);
+		Document document = new Document(XML_Reader.readText("/Users/lorenzoorru0/Desktop/CSVjava/test_parser1.xml"));
+		//System.out.println(document.content);
+		
+		ArrayList<StringBuilder> contentSup = new ArrayList<StringBuilder>(document.content);
+
+		Node root = Node.getNodes(contentSup);
+		
+		Element rootElm = document.getRootElement(root);
+		System.out.println(rootElm.getAttributes().get(0).getName() + ": " + rootElm.getAttributes().get(0).getValue());
+
+		System.out.println(rootElm.getChildElements().size());
+		for (Element el : rootElm.getChildElements()) {
+			System.out.println(el.tag);
+			if(el.getAttributes() != null) {
+				System.out.println(el.getAttributes().get(0).getName() + ": " + el.getAttributes().get(0).getValue());
+			}
+			for (Element el1 : el.getChildElements()) {
+				System.out.println("	" + el1.tag);
+				System.out.println("		" + el1.getTextContent());
+			}
+		}
+		
+//		ArrayList<Node> rootChildNodes = rootElm.getChildNodes();
+//		for(Node n : rootChildNodes) {
+//			System.out.println(n.tag);
+//		}
+		
+//		for(Node node : root.child) { 
+//			System.out.println(node.tag); 
+//			for(Node node1 : node.child) { 
+//				System.out.println("   " + node1.tag); 
+//				for(Node node2 : node1.child) { 
+//					System.out.println("       " + node2.tag); 
+//				} 
+//			} 
+//		}
+		 
 	}
 }
