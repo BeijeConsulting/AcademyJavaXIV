@@ -54,7 +54,5 @@ public class Element {
 				elements.add(e);
 		}
 		return elements;
-
 	}
-
 }
