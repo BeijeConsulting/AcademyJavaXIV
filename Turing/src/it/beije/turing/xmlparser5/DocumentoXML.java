@@ -172,12 +172,13 @@ public class DocumentoXML {
 			String tagContent = getTextContentString(child);
 			Tag tagFiglio = new Tag(tagName, tagContent);
 			
-			
-			for (String attr : attributeString) {
-				String nomeAttr = getAttributeNameFromString(attr);
-				String valueAttr = getAttributeValueFromString(attr);
-				Attributo attributo = new Attributo(nomeAttr, valueAttr);
-				tagFiglio.addAttributo(attributo);
+			if (attributeString != null) {
+				for (String attr : attributeString) {
+					String nomeAttr = getAttributeNameFromString(attr);
+					String valueAttr = getAttributeValueFromString(attr);
+					Attributo attributo = new Attributo(nomeAttr, valueAttr);
+					tagFiglio.addAttributo(attributo);
+				}
 			}
 			
 			root.addTag(tagFiglio);

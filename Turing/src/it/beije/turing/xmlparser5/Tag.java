@@ -110,7 +110,7 @@ public class Tag extends Nodo{
 			Nodo nodo = new Nodo();
 			l.add(nodo);
 		}
-		System.out.println(l.size());
+		System.out.println(l.toString());
 		return l;
 	}
 
