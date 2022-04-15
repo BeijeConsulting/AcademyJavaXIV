@@ -13,6 +13,7 @@ public class XMLParser5 {
 
 		DocumentoXML d = parse("/temp/test_parser1.xml");
 		Tag root = d.getRootElement();
+		System.out.println(root.getChildren().size());
 		Tag doc = d.getTreeDocument(root);
 		
 		System.out.println(doc.toString());
