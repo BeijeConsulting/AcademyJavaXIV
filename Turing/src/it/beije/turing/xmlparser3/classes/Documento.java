@@ -44,7 +44,7 @@ public class Documento implements LoadFile {
                 char row = (char) bufferedReader.read();
                 s.append(row);
             }
-            Pattern pattern = Pattern.compile("(<.*?>)|(<.*?/>)");
+            Pattern pattern = Pattern.compile("(<.*?>)|(.+?(?=<|$))");
             //Pattern pattern = Pattern.compile("/(<.[^(><.)]+>)/g");
 
             if (s.toString().contains("<!--")) {
@@ -56,7 +56,6 @@ public class Documento implements LoadFile {
             while (matcher.find()) {
                 String r = matcher.group().trim();
 
-                System.out.println(r);
                 if (r.contains("?xml")) {
                     continue;
                 }
