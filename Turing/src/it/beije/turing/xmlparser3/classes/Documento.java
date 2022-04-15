@@ -20,85 +20,93 @@ import it.beije.turing.xmlparser3.interfaces.LoadFile;
  * Data: 14 apr 2022
  */
 public class Documento implements LoadFile {
-    private static Documento d=null;
+    private static Documento d = null;
     private TreeNode<Elemento> rootNode;
 
-    public static Documento getIstance(){
-        if(d==null){
-            d=new Documento();
+    public static Documento getIstance() {
+        if (d == null) {
+            d = new Documento();
         }
         return d;
     }
 
-    private Documento(){}
+    private Documento() {
+    }
 
     @Override
     public Documento parse(String path) {
         StringBuilder s = new StringBuilder();
-
-        List<String> listElement=new ArrayList<>();
-
+        List<String> listElement = new ArrayList<>();
 
         try {
             File f = new File(path);
             FileReader fileReader = new FileReader(f);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            while(bufferedReader.ready()) {
+            while (bufferedReader.ready()) {
                 char row = (char) bufferedReader.read();
                 s.append(row);
+
             }
             Pattern pattern = Pattern.compile("(<.*?>)|(.+?(?=<|$))");
             //Pattern pattern = Pattern.compile("/(<.[^(><.)]+>)/g");
             Matcher matcher = pattern.matcher(s.toString());
-            int i=0;
+            int i = 0;
             while (matcher.find()) {
-                String r=matcher.group().trim();
-        /*
-                if(r.contains("?xml")){
+                String r = matcher.group().trim();
+
+                /*TODO da togliere il commento ci serve questo controllo
+                        if(r.contains("?xml")){
+                            continue;
+                        }*/
+
+
+                if (r.isEmpty()) {    //se r è vuota  salta lo spazio
                     continue;
-                }
-        */
-                if(!r.isEmpty()){
-                    //System.out.println((i++)+":"+matcher.group());
-                }
-                //System.out.println(listElement.isEmpty()+" "+listElement.size());
-                if(listElement.isEmpty()){
-                    Elemento elemento = new ConcreteElement(r);
-                    rootNode = new TreeNode<>(elemento);
-                }
-                if(r.indexOf('<') == 0 && r.indexOf('>')==r.length()-1){
-                    if(r.contains("/")){
-                        //check stack
-                        String e = listElement.get(listElement.size()-1);
-                        String a = e.substring(0,1).replace("<","</")+e.substring(1,e.length());
+                } else {
+                    System.out.print((i++) + ":" + matcher.group());
 
-                        if(r.equals(a)){
-                            listElement.remove(listElement.size()-1);
-                        }else{
-                            throw new TagNotOpenException();
-                        }
-                    }else{
-                        listElement.add(r);
+                    if (r.startsWith("<") && (r.endsWith(">") || r.endsWith("/>"))) { //è un TAG
 
-                        if(r.contains(" ")){
-                            //elemento.setTagName(r.substring(1,r.indexOf(" ")));
-                        }else{
-                            //elemento.setTagName(r.substring(1,r.indexOf(">")));
-                        }
+                        String nameTag = parseName(r);
+                        List<Attributo> attributoList = null;
 
-                        if(!listElement.get(listElement.size()-1).contains("/")&& !listElement.isEmpty()) {
-                           // Elemento figlio = new Elemento();
+                        if (!(nameTag.indexOf('/') == 0)) {   //se è un tag di apertua
+                            attributoList = parseAttribute(r);
+                            if (listElement.isEmpty()) {
+                                Elemento elemento = new ConcreteElement(nameTag);
+                                rootNode = new TreeNode<>(elemento);
+                            }else{
+                                //crea nodo
+                            }
+
+                            listElement.add(nameTag);
+
+                        }else{ //se è un tag di chiusutra check stack
+                            String e = "/"+listElement.get(listElement.size() - 1);
+
+                            if (nameTag.equals(e)) {
+                                listElement.remove(listElement.size() - 1);
+                            } else {
+                                throw new TagNotOpenException(); // il tag non è stato chiuso
+                            }
                         }
-                        //System.out.println(elemento.getTagName());
+                    } else {
+                      String contenuto = r;
+                      System.out.println(" NO");
                     }
+
+
+                    //  }
                 }
+
+
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
         return this.d;
@@ -108,7 +116,7 @@ public class Documento implements LoadFile {
         return rootNode.getData();
     }
 
-    private List<Attributo> parseAttribute(String attr){
+    private List<Attributo> parseAttribute(String attr) {
         //se non ci sono attributi return null, altrimenti ritorna la lista di attributi
         List<Attributo> listAttr = new ArrayList<>();
         if (attr.contains(" ")){
@@ -136,20 +144,20 @@ public class Documento implements LoadFile {
         Documento d = new Documento();
         String s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>";
         String b = "<nome/>";
+
         List<Attributo> list = d.parseAttribute(s);
         String parseName = d.parseName(b);
-        for (Attributo a:list
-             ) {System.out.println(a.getName());
+        for (Attributo a:list) {
+            System.out.println(a);
         }
         System.out.println(parseName);
 
 
     }
-    private String parseContent(String attr){
-        //contenuto attributo
-        return null;
-    }
-    private String parseName(String attr){
+
+
+
+    private String parseName(String attr) {
         //nome del nodo xml
         String nomeAttr = null;
         if(attr.contains(" ")){
@@ -162,4 +170,6 @@ public class Documento implements LoadFile {
 
         return nomeAttr;
     }
+
+
 }
