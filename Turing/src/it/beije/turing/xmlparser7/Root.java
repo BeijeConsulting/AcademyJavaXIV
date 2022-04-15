@@ -105,8 +105,14 @@ public class Root implements Element{
 
 	@Override
 	public ArrayList<Element> getChildElements() {
+		ArrayList<Element> elements = new ArrayList<Element>();
 
-		return null;
+		for(Campo c : campi) {
+			elements.add(c);
+		}
+
+		return elements;
+
 
 	}
 }

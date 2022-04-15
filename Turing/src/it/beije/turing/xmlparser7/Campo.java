@@ -147,6 +147,16 @@ public class Campo implements Element {
 
 	@Override
 	public ArrayList<Element> getChildElements() {
-		return null;
+		ArrayList<Element> elements = new ArrayList<Element>();
+
+		for(Campo c : campiFigli) {
+			elements.add(c);
+		}
+
+		for(Dato d : dato){
+			elements.add(d);
+		}
+		return elements;
+
 	}
 }
