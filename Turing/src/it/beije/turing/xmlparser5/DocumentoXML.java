@@ -30,11 +30,6 @@ public class DocumentoXML {
 //	getAttribute(String attribute) //torna il valore dell'attributo specificato
 
 
-
-
-	//rimuove l intestazione del XML eventualmente esiste
-	
-	
 	public List<String> getAttributeFromString(String text) {
 		List<String> attrs = new ArrayList<>();
 		if (text.length() > 0) {
@@ -102,15 +97,39 @@ public class DocumentoXML {
 	public List<String> getChildElements(String textContent) {
         List<String> children = new ArrayList<>();
         String tagName = getTagNameFromString(textContent);
-
+        System.out.println("PRIMA:" + tagName);
 
         while ((tagName != null) && textContent.contains(tagName)) {
+            System.out.println(tagName);
             String closureTag = "/" + tagName + ">";
             int indexBegin = textContent.indexOf("<");
             int startClosure = textContent.indexOf(closureTag);
             int endClosure = startClosure + closureTag.length();
 
             String child = textContent.substring(indexBegin, endClosure);
+            String openingTag = "<" + tagName;
+            
+            int nextBegin = child.indexOf(openingTag, indexBegin + 1);
+            
+            if (nextBegin != -1) {
+            	int tagOpen = 0;
+            	
+            	while (nextBegin != -1) {
+            		tagOpen++;
+            		String nextOpen = textContent.substring(nextBegin, endClosure);
+            		nextBegin = nextOpen.indexOf("<" + tagName, nextBegin + 1);
+            	}
+            	
+            	startClosure = textContent.indexOf(closureTag, startClosure + 1);
+                int nextEnd = startClosure + closureTag.length();
+                
+                while (tagOpen-- > 0) {
+                	child = textContent.substring(indexBegin, nextEnd);
+                	if (tagOpen == 0) break;
+                	startClosure = textContent.indexOf(closureTag, startClosure + 1);
+                	nextEnd = startClosure + closureTag.length();
+                }
+            }
 
             int cutContentFrom = textContent.indexOf("<", startClosure);
             if (cutContentFrom != -1) {
@@ -122,8 +141,7 @@ public class DocumentoXML {
 
             children.add(child);
         }
-
-
+        
         return children;
     }
 	
