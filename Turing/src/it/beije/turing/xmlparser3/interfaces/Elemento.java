@@ -24,6 +24,7 @@ public interface Elemento{
     void setNode(TreeNode<Elemento> rootNode);
 
     List<TreeNode<Elemento>> getChildNodes();
+
     public String getAttribute(String attribute) throws AttributeNonFound;
- /*   List<Elemento> getChildElements();*/
+    /*   List<Elemento> getChildElements();*/
 }

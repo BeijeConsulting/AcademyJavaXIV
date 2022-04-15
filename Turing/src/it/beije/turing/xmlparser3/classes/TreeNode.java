@@ -3,7 +3,6 @@ package it.beije.turing.xmlparser3.classes;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -43,11 +42,11 @@ public class TreeNode<T> {
     }
 
     public List<T> getChildElements() {
-            List<T> elementoList= new ArrayList<>();
-            for(TreeNode<T> child : children) {
-                    elementoList.add(child.getData());
-            }
-            return elementoList;
+        List<T> elementoList= new ArrayList<>();
+        for(TreeNode<T> child : children) {
+            elementoList.add(child.getData());
+        }
+        return elementoList;
     }
 
     public List<Elemento> getElementsByTagName(String tagName){
@@ -103,7 +102,7 @@ public class TreeNode<T> {
     public String toString() {
         String result = "";
         result += "Nodo: " + this.getData().toString() + " | Profondita: " + this.depth + " | Parente: " + (this.getParent() == null ? "None" : this.parent.getData().toString()) + " | Figli: " + (this.getChildren().size() == 0 ? "None" : "");
-       for(TreeNode<T> child : this.getChildren()) {
+        for(TreeNode<T> child : this.getChildren()) {
             result += "\n\t" + child.getData().toString() + " | Parente: " + (child.getParent() == null ? "None" : child.getParent().getData());
         }
         return result;

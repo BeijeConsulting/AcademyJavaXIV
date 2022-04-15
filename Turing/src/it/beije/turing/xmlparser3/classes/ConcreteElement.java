@@ -4,7 +4,6 @@ import it.beije.turing.xmlparser3.Exception.AttributeNonFound;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -14,7 +13,7 @@ public class ConcreteElement implements Elemento {
     private List<Attributo> attributoList=new ArrayList<>();
     public String getAttribute(String attribute){
         System.out.println(attributoList.size());
-         if(attributoList.isEmpty()){
+        if(attributoList.isEmpty()){
             throw new AttributeNonFound(attribute);
         } else{
             for (Attributo attr : attributoList) {
