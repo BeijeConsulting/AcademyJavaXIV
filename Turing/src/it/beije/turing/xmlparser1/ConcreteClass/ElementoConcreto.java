@@ -63,7 +63,7 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 		ArrayList<Attributo> attList = new ArrayList<>();
 		String[] tmp = textContent.split("\n");
 		for(int i = j; i < tmp.length; i++) {
-			if(tmp[i].trim().isBlank()) continue;
+			if(tmp[i].trim().equals("")) continue;
 			int space = tmp[i].indexOf(" ");
 			if(tmp[i].contains("=") && tmp[i].contains("<") && tmp[i].contains(">") && tmp[i].contains(" ")) {
 				String q = null;
