@@ -4,21 +4,29 @@ import java.io.FileNotFoundException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import it.beije.turing.xmlparser1.ConcreteClass.DocumentoBuilder;
 import it.beije.turing.xmlparser1.Interfaces.Documento;
 import it.beije.turing.xmlparser1.Interfaces.Elemento;
-
+import java.util.Scanner;
 /**
  * 
- * @author Cognome Nome, Cognome Nome
+ * @author Ercole Corraro, Lorenzo Leopardi
  *
  */
 public class XMLParser1 {
 
 	public static void main(String[] args) {
+
+		System.out.println("Per uscire, digitare \"exit\".");
+		System.out.println("Inserisci nome del file .xml: ");
+		
+		Scanner s = new Scanner(System.in);
+		String st = s.nextLine();
+
 		Documento test = null;
-		test = DocumentoBuilder.parse(Paths.get("File", "Challenge", "rub"
+		test = DocumentoBuilder.parse(Paths.get("Turing","File", "Challenge", st
 					+ ".xml").toAbsolutePath().toString());
 		
 		Elemento root = test.getDocumentElement();
@@ -26,40 +34,60 @@ public class XMLParser1 {
 			return;
 		}
 		
-		
-		System.out.println(root.getTestoCompleto());
-		System.out.println("TagName: " + root.getTagName());
-		System.out.println("Text Content: " + root.getTextContent());
-		System.out.println("id = "+root.getAttribute("id"));
-		System.out.println("eta = "+root.getAttribute("eta"));
-		//System.out.println(root.getElementsByTagName("contatto",new ArrayList<Elemento>(),0));
-		System.out.println(root.getChildElements());
-		System.out.println(root.getChildElements().size());
-		System.out.println(root.getChildNodes());
-		System.out.println(root.getChildNodes().size());
-		System.out.println(root.getAttributes());
-		List<Elemento> lE = root.getElementsByTagName("contatto",new ArrayList<Elemento>(),0);
-		Elemento el = null;
-		System.out.println("Numero properties: " + lE.size());
-		for(int i = 0; i < lE.size(); i++) {
-			el = lE.get(0);
-			System.out.println(lE.get(i).getTagName());
-			System.out.println(lE.get(i).getTestoCompleto());
-			System.out.println(lE.get(i).getTextContent());
-			System.out.println(lE.get(i).getAttributes());
-			System.out.println(lE.get(i).getAttribute("value"));
-		}
-		/*
-		List<Elemento> lE2 = el.getElementsByTagName("risposta",new ArrayList<Elemento>(),0);
-		System.out.println("Numero property: " + lE2.size());
-		for(int i = 0; i < lE2.size(); i++) {
-			System.out.println(lE2.get(i).getTagName());
-			System.out.println(lE2.get(i).getTestoCompleto());
-			System.out.println(lE2.get(i).getTextContent());
-			System.out.println(lE2.get(i).getAttribute("name"));
-			System.out.println(lE2.get(i).getAttribute("value"));
-		}
-		*/
+		while (!st.equalsIgnoreCase("exit")) {
+			
+			System.out.println("\n\n"
+								+"1: get complete text\n"
+								+"2: get tag name\n"
+								+"3: get text content\n"
+								+"4: get attribute by name\n"
+								+"5: get all attributes\n"
+								+"6: get child nodes\n"
+								+"7: get child elements\n"
+								+"8: get all elements by tag name\n"
+								+"exit: leave the program");
+			String command = s.nextLine();
+			
+			switch (command) {
+				case("1"):
+					System.out.println(root.getTestoCompleto());
+					break;
+				case("2"):
+					System.out.println("TagName: \n" + root.getTagName());
+					break;	
+				case("3"):
+					System.out.println("Text Content: \n" + root.getTextContent());
+					break;
+				case("4"):
+					System.out.println("Insert attribute name to search:");
+					String attributeName = s.nextLine();
+					System.out.println(attributeName+" = "+root.getAttribute(attributeName));
+					break;
+				case("5"):
+					System.out.println(root.getAttributes());
+					break;
+				case("6"):
+					System.out.println(root.getChildNodes());
+					break;
+				case("7"):
+					System.out.println(root.getChildElements());
+					break;
+				case("8"):
+					System.out.println("Insert attribute name to search:");
+					String tagNameSearch = s.nextLine();
+					System.out.println(root.getElementsByTagName(tagNameSearch,new ArrayList<Elemento>(),0));
+					break;
+				case("exit"):
+					System.out.println("Leaving program.");
+					st = command;
+					continue;
+				default:
+					System.out.println("Invalid input");
+					continue;
+			}
+		}		
+		System.out.println("BYE!!");
+		s.close();
 	}
 
 }
