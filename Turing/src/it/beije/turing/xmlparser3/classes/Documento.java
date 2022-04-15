@@ -21,6 +21,7 @@ import it.beije.turing.xmlparser3.interfaces.LoadFile;
  */
 public class Documento implements LoadFile {
     private static Documento d=null;
+    TreeNode<Elemento> rootNode;
 
     public static Documento getIstance(){
         if(d==null){
@@ -33,10 +34,10 @@ public class Documento implements LoadFile {
 
     @Override
     public Documento parse(String path) {
-       /* StringBuilder s = new StringBuilder();
+        StringBuilder s = new StringBuilder();
 
+        List<String> listElement=new ArrayList<>();
 
-        LinkedList<Elemento> lkde= new LinkedList<>();
 
         try {
             File f = new File(path);
@@ -54,14 +55,21 @@ public class Documento implements LoadFile {
             int i=0;
             while (matcher.find()) {
                 String r=matcher.group().trim();
-                *//*
-                if(!r.isEmpty()){
-                    System.out.println((i++)+":"+matcher.group());
-                }
-                *//*
 
-                System.out.println(r);
-                Elemento elemento = new ConcreteElement();
+                if(!r.isEmpty()){
+                    //System.out.println((i++)+":"+matcher.group());
+                }
+                //System.out.println(listElement.isEmpty()+" "+listElement.size());
+                if(listElement.isEmpty()){
+                    Elemento elemento = new ConcreteElement(r);
+                    rootNode = new TreeNode<>(elemento);
+                    System.out.println(elemento);
+                    //System.out.println(rootNode);
+                }
+
+
+                //System.out.println(r);
+                Elemento childElement;
 
                 if(r.indexOf('<') == 0 && r.indexOf('>')==r.length()-1){
                     if(r.contains("/")){
@@ -75,12 +83,12 @@ public class Documento implements LoadFile {
                             throw new TagNotOpenException();
                         }
                     }else{
-
                         listElement.add(r);
+
                         if(r.contains(" ")){
-                            elemento.setTagName(r.substring(1,r.indexOf(" ")));
+                            //elemento.setTagName(r.substring(1,r.indexOf(" ")));
                         }else{
-                            elemento.setTagName(r.substring(1,r.indexOf(">")));
+                            //elemento.setTagName(r.substring(1,r.indexOf(">")));
                         }
 
                         if(!listElement.get(listElement.size()-1).contains("/")&& !listElement.isEmpty()) {
@@ -91,19 +99,22 @@ public class Documento implements LoadFile {
                     }
                 }
             }
+            System.out.println(rootNode);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }*/
+        }
         return null;
     }
 
     public Elemento getRootElement() {
-        return null;
+        System.out.println(rootNode);
+        return rootNode.getData();
     }
+
 
 
 }

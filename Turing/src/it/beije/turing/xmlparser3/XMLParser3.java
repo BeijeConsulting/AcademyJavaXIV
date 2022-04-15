@@ -1,6 +1,7 @@
 package it.beije.turing.xmlparser3;
 
 
+import it.beije.turing.xmlparser3.classes.ConcreteElement;
 import it.beije.turing.xmlparser3.classes.Documento;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
 
@@ -15,10 +16,11 @@ public class XMLParser3 {
 
 
 
-		/*Documento d = Documento.getIstance().parse("Turing/res/test_parser1.xml");
+		Documento d = Documento.getIstance().parse("Turing/res/test_parser1.xml");
 
 		Elemento contatti = d.getRootElement();
-
+		System.out.println(contatti);
+/*
 		List<Node>  contatto = contatti.getListChiled();
 
 		List<Node> listNode = contatto.get(0).getListChiled();
