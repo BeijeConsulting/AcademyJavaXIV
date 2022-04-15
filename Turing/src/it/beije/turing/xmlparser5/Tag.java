@@ -60,6 +60,19 @@ public class Tag extends Nodo{
 		this.children = children;
 	}
 	
+	public String getAttribute(String attrName) {
+		String value = null;
+		
+		for (Attributo attr : attributi) {
+			if (attr.getNome().equals(attrName)) {
+				value = attr.getValue();
+				break;
+			}
+		}
+		
+		return value;
+	}
+
 
 	@Override
 	public String toString() {
