@@ -7,8 +7,8 @@ import java.util.List;
 public class Node  {
 
     private String name="";
-    private List <Attributes> attributes;
-    private List <Node> children;
+    private List <Attributes> attributes=new ArrayList<>();
+    private List <Node> children=new ArrayList<>();
     private String content="";
 
     public Node(String name, List<Attributes> attributes, String content) {
@@ -52,7 +52,7 @@ public class Node  {
     }
     public boolean hasAttributes()
     {
-    	if(attributes==null)
+    	if(attributes.isEmpty())
     	{
     		return false;
     	}
