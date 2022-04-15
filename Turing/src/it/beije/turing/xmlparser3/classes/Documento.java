@@ -21,7 +21,7 @@ import it.beije.turing.xmlparser3.interfaces.LoadFile;
  */
 public class Documento implements LoadFile {
     private static Documento d=null;
-    TreeNode<Elemento> rootNode;
+    private TreeNode<Elemento> rootNode;
 
     public static Documento getIstance(){
         if(d==null){
@@ -63,14 +63,7 @@ public class Documento implements LoadFile {
                 if(listElement.isEmpty()){
                     Elemento elemento = new ConcreteElement(r);
                     rootNode = new TreeNode<>(elemento);
-                    System.out.println(elemento);
-                    //System.out.println(rootNode);
                 }
-
-
-                //System.out.println(r);
-                Elemento childElement;
-
                 if(r.indexOf('<') == 0 && r.indexOf('>')==r.length()-1){
                     if(r.contains("/")){
                         //check stack
@@ -93,13 +86,12 @@ public class Documento implements LoadFile {
 
                         if(!listElement.get(listElement.size()-1).contains("/")&& !listElement.isEmpty()) {
                            // Elemento figlio = new Elemento();
-
                         }
                         //System.out.println(elemento.getTagName());
                     }
                 }
             }
-            System.out.println(rootNode);
+
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -107,11 +99,10 @@ public class Documento implements LoadFile {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return null;
+        return this.d;
     }
 
     public Elemento getRootElement() {
-        System.out.println(rootNode);
         return rootNode.getData();
     }
 

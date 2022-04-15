@@ -52,7 +52,7 @@ public class ConcreteElement implements Elemento {
 
     @Override
     public String getTagName() {
-        return null;
+        return this.tagName;
     }
 
     @Override
