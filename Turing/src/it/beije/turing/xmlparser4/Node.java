@@ -6,10 +6,10 @@ import java.util.List;
 
 public class Node  {
 
-    private String name;
+    private String name="";
     private List <Attributes> attributes;
     private List <Node> children;
-    private String content;
+    private String content="";
 
     public Node(String name, List<Attributes> attributes, String content) {
         this.name = name;
@@ -71,7 +71,7 @@ public class Node  {
                 }
             }
          if (attValue==null) {
-             throw new IllegalArgumentException("Nel nodo: " + this.getTagName() + " non è presente l'attributo specificato: " + attribute);
+             return "";
          }
         return attValue;
     }
