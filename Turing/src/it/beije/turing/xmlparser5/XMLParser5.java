@@ -17,13 +17,18 @@ public class XMLParser5 {
 //		DocumentoXML d = parse("C:\\Users\\aless\\Desktop\\xml scaricati\\test_parser1 - Copia.xml");
 //		String s = d.removeDeclarationTag();
 		Tag root = d.getRootElement();
-		System.out.println(root.toString());
+//		System.out.println(root.toString());
 		
 		//dobbiamo lavorare con la root.
 		//dalla variabile root dobbiamo chiamare gli altri metodi
 		
-//		Tag doc = d.buildDoc(root);
+		Tag doc = d.buildDoc(root);
 //		System.out.println(doc.toString());
+		List<Tag> lista = doc.getElementsByTagName("contatto");
+		System.out.println("dimensione lista " + lista.size());
+		for (Tag tag : lista) {
+			System.out.println(tag.toString());
+		}
 	}
 
 	private static DocumentoXML parse(String path) {

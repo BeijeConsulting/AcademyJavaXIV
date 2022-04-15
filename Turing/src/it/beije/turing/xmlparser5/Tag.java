@@ -66,7 +66,18 @@ public class Tag {
 	}
 	
 	
-	
+	public List<Tag> getElementsByTagName(String tagName){
+		List<Tag> tagsByName = new ArrayList<Tag>();
+		if(this.getNome().equalsIgnoreCase(tagName)) {
+			tagsByName.add(this);
+		}
+		for (Tag tag : getChildren()) {
+			if(tag.getNome().equalsIgnoreCase(tagName)) {
+				tagsByName.add(tag);
+			}
+		}
+		return tagsByName;
+	}
 	
 	
 	
