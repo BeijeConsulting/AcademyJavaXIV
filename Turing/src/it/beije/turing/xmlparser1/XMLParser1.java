@@ -18,7 +18,7 @@ public class XMLParser1 {
 
 	public static void main(String[] args) {
 		Documento test = null;
-		test = DocumentoBuilder.parse(Paths.get("File", "Challenge", "rub2"
+		test = DocumentoBuilder.parse(Paths.get("File", "Challenge", "rub"
 					+ ".xml").toAbsolutePath().toString());
 		
 		Elemento root = test.getDocumentElement();
@@ -32,13 +32,13 @@ public class XMLParser1 {
 		System.out.println("Text Content: " + root.getTextContent());
 		System.out.println("id = "+root.getAttribute("id"));
 		System.out.println("eta = "+root.getAttribute("eta"));
-		System.out.println(root.getElementsByTagName("contatto",new ArrayList<Elemento>(),0));
+		//System.out.println(root.getElementsByTagName("contatto",new ArrayList<Elemento>(),0));
 		System.out.println(root.getChildElements());
 		System.out.println(root.getChildElements().size());
 		System.out.println(root.getChildNodes());
 		System.out.println(root.getChildNodes().size());
 		System.out.println(root.getAttributes());
-		List<Elemento> lE = root.getElementsByTagName("property",new ArrayList<Elemento>(),0);
+		List<Elemento> lE = root.getElementsByTagName("contatto",new ArrayList<Elemento>(),0);
 		Elemento el = null;
 		System.out.println("Numero properties: " + lE.size());
 		for(int i = 0; i < lE.size(); i++) {

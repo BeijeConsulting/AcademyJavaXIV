@@ -113,7 +113,6 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 						}
 						tmpElemento.setAttributes(hm);
 						ris.add(tmpElemento);
-						//return ris;
 					} else if(tmp[i].contains("/")){
 						Elemento tmpElemento = new ElementoConcreto(tmp[i]);
 						tmpElemento.setTagName(tagName);
@@ -168,7 +167,6 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 						}
 						tmpElemento.setAttributes(hm);
 						ris.add(tmpElemento);
-						//return ris;
 					}else if(tmp[i].contains("/")) {
 						Elemento tmpElemento = new ElementoConcreto(tmp[i]);
 						tmpElemento.setTagName(tagName);

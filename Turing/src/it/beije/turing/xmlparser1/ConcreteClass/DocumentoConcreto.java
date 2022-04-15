@@ -60,7 +60,6 @@ public class DocumentoConcreto implements Documento {
 						}
 					}else {
 						tmp += testoTotale.get(1).charAt(i);
-						//System.out.println(tmp);
 					}
 				}
 				testoTotale = testoTotaleUnaRiga;
@@ -103,11 +102,9 @@ public class DocumentoConcreto implements Documento {
 				if(tmp.charAt(0) != '<' || tmp.charAt(tmp.length()-1) != '>') {
 					throw new Exception("Formato riga 1 errato");
 				} else if(tmp2.charAt(0) != '<' || tmp2.charAt(tmp2.length()-1) != '>') {
-					//System.out.println("tmp2: "+tmp2);
 					throw new Exception("Formato ultima riga errato");
 				}
 				if(tmp.indexOf(" ") == -1) {
-					//System.out.println(tmp.substring(1)+" "+ tmp2.substring(1));
 					if(!("/"+tmp.substring(1)).equals(tmp2.substring(1))) {
 						throw new Exception("TagName root non combacia");
 					}
@@ -124,7 +121,6 @@ public class DocumentoConcreto implements Documento {
 					for(int i = 0; i < bin.length(); i++) {
 						if(bin.charAt(i) == ' ') {
 							bin = bin.substring(i+1);
-							
 							String key = bin.substring(0,bin.indexOf("="));
 							String value;
 							if(bin.indexOf("\" ") == -1) {
@@ -162,9 +158,6 @@ public class DocumentoConcreto implements Documento {
 	//ritorna true se il file format è errato
 	private boolean checkFileFormat() {
 		List<String> openClose = new ArrayList<>();
-		/*String q = testoTotale.get(1).trim();
-		q = q.substring(1,q.length()-1);
-		openClose.add(q);*/
 		for(int i = 1; i < testoTotale.size(); i++) {
 			if((testoTotale.get(i).contains("</") || testoTotale.get(i).contains("/>")) && testoTotale.get(i).contains("<") && testoTotale.get(i).contains(">")) {
 				String s = null;
@@ -187,9 +180,7 @@ public class DocumentoConcreto implements Documento {
 					s = testoTotale.get(i).trim();
 					s = s.substring(1,s.length()-1);
 				}
-				
 				if(openClose.size() != 0 && !openClose.get(openClose.size()-1).equals(s)) {
-					//System.out.println(openClose.get(openClose.size()-1)+" "+s);
 					System.out.println("Formato file non corretto! Errore sulla linea " + (i+1));
 					return true;
 				}
@@ -206,7 +197,6 @@ public class DocumentoConcreto implements Documento {
 					}
 					String s = testoTotale.get(i).trim();
 					s = s.substring(1,s.indexOf(" "));
-					//System.out.println("s: "+s);
 					openClose.add(s);
 				}else if(testoTotale.get(i).contains("/>") || testoTotale.get(i).contains("</")) {
 					
