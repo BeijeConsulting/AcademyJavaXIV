@@ -47,7 +47,6 @@ public class Documento implements LoadFile {
             while(bufferedReader.ready()) {
                 char row = (char) bufferedReader.read();
                 s.append(row);
-
             }
             Pattern pattern = Pattern.compile("(<.*?>)|(.+?(?=<|$))");
             //Pattern pattern = Pattern.compile("/(<.[^(><.)]+>)/g");
@@ -55,7 +54,11 @@ public class Documento implements LoadFile {
             int i=0;
             while (matcher.find()) {
                 String r=matcher.group().trim();
-
+        /*
+                if(r.contains("?xml")){
+                    continue;
+                }
+        */
                 if(!r.isEmpty()){
                     //System.out.println((i++)+":"+matcher.group());
                 }
@@ -91,7 +94,6 @@ public class Documento implements LoadFile {
                     }
                 }
             }
-
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -106,6 +108,16 @@ public class Documento implements LoadFile {
         return rootNode.getData();
     }
 
-
-
+    private List<Attributo> parseAttribute(String attr){
+        //se non ci sono attributi return null, altrimenti ritorna la lista di attributi
+        return null;
+    }
+    private String parseContent(String attr){
+        //contenuto attributo
+        return null;
+    }
+    private String parseName(String attr){
+        //nome del nodo xml
+        return null;
+    }
 }
