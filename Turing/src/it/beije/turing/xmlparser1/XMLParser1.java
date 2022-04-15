@@ -32,6 +32,7 @@ public class XMLParser1 {
 		System.out.println("Text Content: " + root.getTextContent());
 		System.out.println("id = "+root.getAttribute("id"));
 		System.out.println("eta = "+root.getAttribute("eta"));
+		System.out.println(root.getElementsByTagName("contatto",new ArrayList<Elemento>(),0));
 		System.out.println(root.getChildElements());
 		System.out.println(root.getChildElements().size());
 		System.out.println(root.getChildNodes());

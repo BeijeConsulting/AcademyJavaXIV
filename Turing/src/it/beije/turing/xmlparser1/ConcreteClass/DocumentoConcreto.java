@@ -51,7 +51,7 @@ public class DocumentoConcreto implements Documento {
 					if(testoTotale.get(1).charAt(i) == '<') {
 						for(int k = i+1; k < testoTotale.get(1).length(); k++) {
 							if(testoTotale.get(1).charAt(k) == '>') {
-								System.out.println(tmp+testoTotale.get(1).substring(i,k+1));
+								
 								testoTotaleUnaRiga.add(tmp+testoTotale.get(1).substring(i,k+1));
 								tmp = "";
 								i = k;
@@ -63,7 +63,6 @@ public class DocumentoConcreto implements Documento {
 						//System.out.println(tmp);
 					}
 				}
-				System.out.println(testoTotaleUnaRiga);
 				testoTotale = testoTotaleUnaRiga;
 			}
 			List<String> text = new ArrayList<>();
