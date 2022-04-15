@@ -28,6 +28,6 @@ public class Attributo{
 
     @Override
     public String toString() {
-        return "Name= "+this.name+" Value="+this.value;
+        return "Name= "+this.name+" Value= "+this.value;
     }
 }

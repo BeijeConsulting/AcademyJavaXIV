@@ -125,9 +125,14 @@ public class Documento implements LoadFile {
                 if(attr.charAt(i)==' '){
                     if(attr.indexOf('=',i)!=-1){
                         String el = attr.substring(i+1,attr.indexOf('=',i));
+                        i+=el.length();
+                        String value = attr.substring(attr.indexOf('\"',i)+1,attr.indexOf('\"',attr.indexOf('\"',i)+1));
+                        if (value.isEmpty()) {
+                            value = "";
+                        }
                         Attributo attributo = new Attributo();
                         attributo.setName(el);
-                        //System.out.println(el);
+                        attributo.setValue(value);
                         listAttr.add(attributo);
                     }else{
                         continue;
@@ -143,7 +148,7 @@ public class Documento implements LoadFile {
     public static void main(String[]args){
         Documento d = new Documento();
         String s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>";
-        String b = "<nome/>";
+        String b = "</nome>";
 
         List<Attributo> list = d.parseAttribute(s);
         String parseName = d.parseName(b);
@@ -163,7 +168,7 @@ public class Documento implements LoadFile {
         if(attr.contains(" ")){
             nomeAttr = attr.substring(attr.indexOf('<')+1, attr.indexOf(' '));
         }else if(attr.contains("/")){
-            nomeAttr =  attr.substring(attr.indexOf('<')+1,attr.indexOf('/'));
+            nomeAttr =  attr.substring(attr.indexOf('/')+1,attr.indexOf('>'));
         }else{
             nomeAttr =  attr.substring(attr.indexOf('<')+1,attr.indexOf('>'));
         }
