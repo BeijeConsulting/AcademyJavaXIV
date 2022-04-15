@@ -4,6 +4,7 @@ package it.beije.turing.xmlparser3.classes;
  * @author Giuseppe Raddato
  * Data: 14 apr 2022
  */
+
 public class Attributo{
 
     public String getName() {
