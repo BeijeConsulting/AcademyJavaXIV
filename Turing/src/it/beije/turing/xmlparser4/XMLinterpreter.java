@@ -139,7 +139,7 @@ public class XMLinterpreter {
 					hasContent=true; //si tratta di testo
 					StringBuilder builder = new StringBuilder();
 					int k=i+1; //k è l'indica della riga seguente
-					while(!list.get(k+1).startsWith("<")) //finchè la riga dopo è testo
+					while(!list.get(k+1).contains("<")) //finchè la riga dopo è testo
 					{
 						builder.append(list.get(k));	//aggiungi al testo
 						k++;
@@ -208,6 +208,11 @@ public class XMLinterpreter {
 				}
 				}
 				
+			}
+			else if(s.contains("<"))
+			{
+				list.set(i,s.substring(s.indexOf('<')));
+				i--;
 			}
 			
 		}
