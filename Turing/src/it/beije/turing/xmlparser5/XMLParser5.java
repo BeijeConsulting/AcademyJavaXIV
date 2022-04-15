@@ -26,17 +26,21 @@ public class XMLParser5 {
 //		for (Tag tag : lista) {
 //			System.out.println(tag.toString());
 //		}
-		List<Tag> lista = doc.getElementsByTagName("nome");
-		System.out.println("dimensione lista" + lista.size());
-		for (Tag tag : lista) {
-			System.out.println(tag.toString());
-		}
+//		List<Tag> lista = doc.getElementsByTagName("nome");
+//		System.out.println("dimensione lista" + lista.size());
+//		for (Tag tag : lista) {
+//			System.out.println(tag.toString());
+//		}
+//		
+//		List<Tag> l2 = doc.getElementsByTagName("contatto");
+//		System.out.println("dimensione lista" + l2.size());
+//		for (Tag tag : l2) {
+//			System.out.println(tag.toString());
+//		}
 		
-		List<Tag> l2 = doc.getElementsByTagName("contatto");
-		System.out.println("dimensione lista" + l2.size());
-		for (Tag tag : l2) {
-			System.out.println(tag.toString());
-		}
+		List<Nodo> l3 = root.getChildNodes();
+		
+		
 
 	}
 

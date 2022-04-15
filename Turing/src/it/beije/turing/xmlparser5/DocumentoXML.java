@@ -29,49 +29,11 @@ public class DocumentoXML {
 ////	getAttributes() //torna l'elenco degli attributi dell'elemento
 //	getAttribute(String attribute) //torna il valore dell'attributo specificato
 
-	
-
-
-	public List<String> getElementsByTagName(String tagName , String rootEle){
-		List<String> lista = new ArrayList<String>();
-		StringBuilder root = new StringBuilder(rootEle);
-		while(root.toString().contains(tagName)) {
-			String inizio = "<" + tagName;
-			String fine = "</"+tagName;
-			int index = root.indexOf("<" + tagName);
-			getElementsByTagName(tagName, root.substring(index + inizio.length() , root.length()));
-			String s = root.substring(root.indexOf("<"+tagName), root.indexOf("</"+tagName) + fine.length()+1);
-
-			lista.add(s);
-			root.delete(root.indexOf("<"+tagName), root.indexOf(fine) + fine.length()+1);
-		}
-		return lista;
-	}
-
 
 
 
 	//rimuove l intestazione del XML eventualmente esiste
 	
-	
-	public Tag getNodeChild() {
-		String rootStringa = removeDeclarationTag();
-		String nome = getTagNameFromString(rootStringa).trim();
-		String textContent = getTextContentString(rootStringa);
-		
-		List<String> childrenStringa = getChildElements(textContent);
-		
-		Tag root = new Tag(nome, textContent);
-		
-		
-		for (String child : childrenStringa) {
-			String tagName = getTagNameFromString(child);
-			String tagContent = getTextContentString(child);
-			Tag tagFiglio = new Tag(tagName, tagContent);
-			root.addTag(tagFiglio);
-		}
-		return root;
-	}
 	
 	public List<String> getAttributeFromString(String text) {
 		List<String> attrs = new ArrayList<>();
@@ -194,7 +156,6 @@ public class DocumentoXML {
 		
 	}
 	
-	//--------------------------------------------CONCLUSO CHE FUNZIONA------------------------------------
 	
 	public Tag getRootElement() {
 		String rootStringa = removeDeclarationTag();

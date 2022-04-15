@@ -3,6 +3,7 @@ package it.beije.turing.xmlparser5;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Tag extends Nodo{
 
 	private String nome;
@@ -90,7 +91,14 @@ public class Tag extends Nodo{
 	}
 
 	public List<Nodo> getChildNodes(){
-		return null;
+		List<Nodo> l = new ArrayList<Nodo>();
+		l.addAll(this.children);
+		for(int i = 0 ; i < children.size() + 1 ; i++) {
+			Nodo nodo = new Nodo();
+			l.add(nodo);
+		}
+		System.out.println(l.size());
+		return l;
 	}
 
 }
