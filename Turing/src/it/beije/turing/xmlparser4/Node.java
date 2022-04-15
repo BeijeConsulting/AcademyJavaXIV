@@ -106,4 +106,14 @@ public class Node  {
     	}
     	return false;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "name='" + name + '\'' +
+                ", attributes=" + attributes +
+                ", children=" + children +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

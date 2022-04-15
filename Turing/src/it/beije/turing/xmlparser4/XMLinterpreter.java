@@ -24,7 +24,7 @@ public class XMLinterpreter {
 	}
 	
 	
-	/*public void SeparateElements()  //non più usato
+	/*public void SeparateElements()  //non piÃ¹ usato
 	{
 		RemoveIntest();
 		
@@ -129,28 +129,28 @@ public class XMLinterpreter {
 					//ALTRIMENTI PROCEDO A STABILIRNE IL NOME
 				else
 				{
-					name=s.substring(1,s.length()-1); //il nome del tag è la stringa senza angolari
+					name=s.substring(1,s.length()-1); //il nome del tag ï¿½ la stringa senza angolari
 				}
 				
 				
 					//CONTROLLO SE HA UN TESTO ASSOCIATO
-				if(!list.get(i+1).startsWith("<")) //se la riga dopo non è un tag
+				if(!list.get(i+1).startsWith("<")) //se la riga dopo non Ã¨ un tag
 				{
 					hasContent=true; //si tratta di testo
 					StringBuilder builder = new StringBuilder();
-					int k=i+1; //k è l'indica della riga seguente
-					while(!list.get(k+1).contains("<")) //finchè la riga dopo è testo
+					int k=i+1; //k ï¿½ l'indica della riga seguente
+					while(!list.get(k+1).contains("<")) //finchÃ¨ la riga dopo Ã¨ testo
 					{
 						builder.append(list.get(k));	//aggiungi al testo
 						k++;
 					}
-					String endContent = list.get(k);  //questa è l'ultima riga del testo
+					String endContent = list.get(k);  //questa Ã¨ l'ultima riga del testo
 					i=k;							// avanzo il ciclo for oltre il testo
 					k=endContent.indexOf('<');		//la chiusura del tag rimane, nel formato, attaccata all' ultima riga di testo, questo mi da l'indice dove finisce il testo ed inizia il tag
 					if(k==-1)	
 					{
 						//Se per qualche motivo manca la chiusura inline del testo
-						throw new Exception("Errore nella formattazione di input oppure mancata chiusura di un nodo con testo");		//se non viene chiuso il tag c'è un errore
+						throw new Exception("Errore nella formattazione di input oppure mancata chiusura di un nodo con testo");		//se non viene chiuso il tag c'Ã¨ un errore
 					}
 					else
 					{
@@ -163,9 +163,9 @@ public class XMLinterpreter {
 					{
 						content=builder.toString(); //fisso il testo
 						Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null); //creo nodo
-						if(stackCursor!=-1) //se non è il root
+						if(stackCursor!=-1) //se non ï¿½ il root
 						{
-							stack.get(stackCursor).addChild(node); //è il figlio di qualcuno
+							stack.get(stackCursor).addChild(node); //ï¿½ il figlio di qualcuno
 						}
 						else
 						{
