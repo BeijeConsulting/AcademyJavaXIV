@@ -14,11 +14,11 @@ public class XMLParser4 {
 	{
 		FileParser fp = new FileParser();
 
-		List<String> list=fp.parseFile("C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\tmp\\test_parser5.xml");
+		List<String> list=fp.parseFile("C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\tmp\\test_parser1.xml");
 
 		XMLinterpreter xml = new XMLinterpreter(list);
 		//xml.print();
-		test(xml);
+		test2(xml);
 		//xml.print();
 		/*try {
 			Node root=xml.ParseRoot();
@@ -44,19 +44,16 @@ public class XMLParser4 {
 	}
 	private static void test2(XMLinterpreter tool)
 	{
-		Node root=null;
-		try {
-			 root = tool.ParseRoot();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for(Node node : root.getElementsByTagName("nome"))
 		{
-			System.out.println(node.getTagName());
+			Node root=doc.getRootElement();
+			for(Node node : root.getElementsByTagName("nome"))
+			{
+				System.out.println(node.getTagName());
+			}
+
 		}
-		
 	}
+
 	private static void test(XMLinterpreter tool)
 	{
 		Node root=null;

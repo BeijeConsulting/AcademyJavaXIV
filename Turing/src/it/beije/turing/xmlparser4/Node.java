@@ -53,6 +53,12 @@ public class Node  {
         this.children.add(node);
     }
 
+    //public String getAttribute(String attribute){
+
+    //}
+
+
+
     public List<Node> getElementsByTagName(String tagName) {
     	List<Node> tmp = new ArrayList<>();
     	if(this.getTagName().equals(tagName))
