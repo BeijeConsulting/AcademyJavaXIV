@@ -4,6 +4,7 @@ import it.beije.turing.xmlparser3.Exception.AttributeNonFound;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -27,6 +28,9 @@ public class ConcreteElement implements Elemento {
             throw new AttributeNonFound(attribute);
         }
     }
+
+
+
     private TreeNode<Elemento> rootNode;
 
 

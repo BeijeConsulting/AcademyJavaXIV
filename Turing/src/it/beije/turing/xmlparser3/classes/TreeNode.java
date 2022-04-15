@@ -3,6 +3,7 @@ package it.beije.turing.xmlparser3.classes;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -44,6 +45,24 @@ public class TreeNode<T> {
         return children;
     }
 
+    public List<T> getChildElements() {
+            List<T> elementoList= new ArrayList<>();
+            for(TreeNode<T> child : children) {
+                    elementoList.add(child.getData());
+            }
+            return elementoList;
+    }
+
+    public List<Elemento> getElementsByTagName(String tagName){
+        List<Elemento> c= (List<Elemento>) getChildElements();
+        List<Elemento> elementoList= new ArrayList<>();
+        for(Elemento child :c) {
+            if(child.getTagName().equals(tagName)){
+                elementoList.add(child);
+            }
+        }
+        return elementoList;
+    }
     public void setParent(TreeNode<T> parent) {
         this.setDepth(parent.getDepth() + 1);
         parent.addChild(this);

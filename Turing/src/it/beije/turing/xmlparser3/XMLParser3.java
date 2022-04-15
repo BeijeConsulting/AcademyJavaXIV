@@ -13,10 +13,6 @@ import java.util.List;
 
 public class XMLParser3 {
 
-	//TODO getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
-
-	//TODO getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome
-
 	//TODO MODIFICA PER FILE 5 TAG AUTOCHIUDENTE
 
 	//TODO MATCH DI TESTI LUNGHI
@@ -31,20 +27,38 @@ public class XMLParser3 {
 
 		List<TreeNode<Elemento>> contatto = contatti.getChildNodes();
 
-		int i=0;
+		int i=1;
 		for (TreeNode<Elemento> padre:contatto) {
 			System.out.println("Padre :"+padre.getData().getTagName()+
 					" Lista attr:"+padre.getData().getAttributi());
-			System.out.print("\tFiglio "+(++i)+": ");
+			System.out.print("\tFiglio "+(i)+": ");
 
-			System.out.println("Il valore dell' attributo eta "+padre.getData().getAttribute("eta"));
-
+		//	System.out.println("Il valore dell' attributo eta "+padre.getData().getAttribute("eta"));
+			System.out.println("//=================ESEGUO getChildren()======================");
 			for(TreeNode<Elemento> child :padre.getChildren()) {
 				System.out.println( "\t\tNomeTag: " + child.getData().getTagName());
 				System.out.println( "\t\tTextContenuto: " + child.getData().getTextContent());
 				System.out.println( "\t\tAttributi: " + child.getData().getAttributi());
 
 			}
+			System.out.print("\tFiglio "+(i++)+": ");
+			System.out.println("//=================ESEGUO getChildElements()======================");
+
+			for(Elemento child :padre.getChildElements()) {
+				System.out.println( "\t\tNomeTag: " + child.getTagName());
+				System.out.println( "\t\tTextContenuto: " + child.getTextContent());
+				System.out.println( "\t\tAttributi: " + child.getAttributi());
+			}
+
+			System.out.print("\tFiglio "+(i++)+": ");
+			System.out.println("//=================ESEGUO getElementsByTagName()======================");
+			for(Elemento child :padre.getElementsByTagName("nome")) {
+				System.out.println( "\t\tNomeTag: " + child.getTagName());
+				System.out.println( "\t\tTextContenuto: " + child.getTextContent());
+				System.out.println( "\t\tAttributi: " + child.getAttributi());
+			}
+
+
 		}
 
 
