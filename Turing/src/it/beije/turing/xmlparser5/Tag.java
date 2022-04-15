@@ -3,7 +3,7 @@ package it.beije.turing.xmlparser5;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tag {
+public class Tag extends Nodo{
 
 	private String nome;
 	private List<Attributo> attributi = new ArrayList<Attributo>();
@@ -88,5 +88,8 @@ public class Tag {
 		return l1;
 	}
 
+	public List<Tag> getChildNodes(){
+		return null;
+	}
 
 }
