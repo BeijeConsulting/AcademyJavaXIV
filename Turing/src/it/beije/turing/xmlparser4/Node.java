@@ -7,13 +7,15 @@ import java.util.List;
 public class Node  {
 
     private String name="";
-    private List <Attributes> attributes=new ArrayList<>();
+    private List <Attributes> attributes= new ArrayList<>();
     private List <Node> children=new ArrayList<>();
     private String content="";
 
     public Node(String name, List<Attributes> attributes, String content) {
         this.name = name;
+        if(attributes!=null) {
         this.attributes = attributes;
+        }
         this.content=content;
     }
 
@@ -72,7 +74,7 @@ public class Node  {
     }
 
     public String getAttribute(String attribute) {
-        String attValue= null;
+        String attValue= "";
 
             for (Attributes attr : this.attributes) {
                 if (attr.getName().equals(attribute)) {
