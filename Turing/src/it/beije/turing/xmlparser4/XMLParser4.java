@@ -12,8 +12,7 @@ public class XMLParser4 {
 
 	public static void main(String[] args) 
 	{
-		DocXml doc = DocXml.parse("tmp/test_parser4.xml");
-		//xml.print();
+		DocXml doc = DocXml.parse("tmp/test_parser7.xml");
 		test(doc);
 	}
 	private static void test2(DocXml doc)

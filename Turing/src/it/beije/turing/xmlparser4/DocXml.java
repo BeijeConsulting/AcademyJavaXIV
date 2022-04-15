@@ -15,11 +15,13 @@ public class DocXml {
     	this.root=root;
     }
     
+    
     public static DocXml parse(String fileName)
     {
     	FileParser fp = new FileParser();
 		List<String> list=fp.parseFile(fileName);
 		XMLinterpreter tool = new XMLinterpreter(list);
+		tool.print();
 		try {
 			return new DocXml(tool.ParseRoot());
 		} catch (Exception e) {
