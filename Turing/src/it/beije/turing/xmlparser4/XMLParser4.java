@@ -56,7 +56,7 @@ public class XMLParser4 {
 		System.out.println("ed attributi:");
 		for(Attributes att:attributes)
 		{
-			System.out.println(att.getName()+" : "+att.getValue());
+			System.out.println(att);
 		}
 		}
 		

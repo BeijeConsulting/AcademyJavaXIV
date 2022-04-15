@@ -114,4 +114,8 @@ public class Node  {
     	}
     	return false;
     }
+    public String toString()
+    {
+    	return("nome:"+name);
+    }
 }

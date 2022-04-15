@@ -31,4 +31,8 @@ public class Attributes
 		this.name=name;
 		this.value=content;
 	}
+	public String toString()
+	{
+		return("name: "+name+" value: "+value);
+	}
 }
