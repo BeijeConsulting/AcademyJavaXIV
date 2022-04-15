@@ -216,6 +216,16 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 	public void setAttributes(Map<String, Attributo> attributes) {
 		this.attributes = (HashMap<String, Attributo>) attributes;
 	}
+
+	@Override
+	public List<Elemento> getChildElements() {
+		 List<Elemento> childElements = new ArrayList<Elemento>();
+	        List<NodoConcreto> nodeList = getChildNodes();
+	        for (int n = 0; n < nodeList.size(); n++) {
+	            if (nodeList.get(n) instanceof ElementoConcreto) childElements.add((ElementoConcreto)nodeList.get(n));
+	        }
+		return childElements;
+	}
 	
 	
 }

@@ -15,4 +15,5 @@ public interface Elemento extends Nodo{
 	public String getAttribute(String attribute);
 	public void setAttributes(Map<String,Attributo> attributes);
 	public List<Attributo> getAttributes();
+	public List<Elemento> getChildElements();
 }
