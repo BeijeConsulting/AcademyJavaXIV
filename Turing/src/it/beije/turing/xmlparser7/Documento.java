@@ -9,28 +9,26 @@ import java.util.ArrayList;
 
 public class Documento {
 
-	private String xmlDichiarazione;
 	private String[] splitAllInOne;
 	private Root root;
-	
-	
-//	public String getXmlDichiarazione() {
-//		return xmlDichiarazione;
-//	}
-//
-//	public void setXmlDichiarazione(String xmlDichiarazione) {
-//		this.xmlDichiarazione = xmlDichiarazione;
-//	}
 
-	
-//	public void isXmlDichiarazione(String s) {
-//		if(s.contentEquals("<?xml")) {
-//			setXmlDichiarazione(s);
-//		} else {
-//			
-//		}
-//	}
-	
+
+	public String[] getSplitAllInOne() {
+		return splitAllInOne;
+	}
+
+	public void setSplitAllInOne(String[] splitAllInOne) {
+		this.splitAllInOne = splitAllInOne;
+	}
+
+	public Root getRootElement() {
+		return root;
+	}
+
+	public void setRoot(Root root) {
+		this.root = root;
+	}
+
 	private Documento(String[] splitAllInOne, Root root) {
 		this.root = root;
 		this.splitAllInOne = splitAllInOne;
@@ -68,37 +66,9 @@ public class Documento {
 			System.out.println("QuA INZIA LA riga " + i + splitAllInOne[i] + "QuA FINISCE LA riga " + i);
 			System.out.println();
 		}
-//		if(splitAllInOne[44].substring(0, splitAllInOne[44].indexOf(">")).equalsIgnoreCase(splitAllInOne[45].substring(1, splitAllInOne[45].indexOf(">")))) {
-//			System.out.println("Spiegazione trovata");
-//		}
+
 		return splitAllInOne;
 	}
-
-	private void creaRoot() {
-		this.root = Root.creaInstanzaRoot(splitAllInOne);
-
-		//	creaInstanzaRoot();
-//		String campo;
-//		if(splitAllInOne[1].indexOf(" ") == -1) {
-//			System.out.println("Qua c'è a[1]" + splitAllInOne[1]);
-//			campo = splitAllInOne[1].substring(0, splitAllInOne[1].indexOf(">"));
-//			
-//		} else {
-//			campo = splitAllInOne[1].substring(0, splitAllInOne[1].indexOf(" "));
-//			for(int i = 1; i < splitAllInOne.length; i+= 2) {
-//				//a[i] contiene la variabile più il testo, a[i + 1] contiene la variabile che possiamo usare per rimuovere la prima parte del testo per ottenerlo
-//				newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]);
-//				if(campo.equalsIgnoreCase(splitAllInOne[i].substring(1, campo.length() + 1))) {
-//					System.out.println(splitAllInOne[i].replace("/",  " ").replace(">",  " ").replace("/t",  " ").trim() + "\tQua finisce la stringa\n");
-//					System.out.println("Campo trovato.");
-//					break;
-//				}
-//			}
-//		}
-	}
-
-
-
 
 	public static Documento parse(String s) {
 		String[]splitAllInOne = XMLToString(s);

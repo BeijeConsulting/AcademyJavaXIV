@@ -22,7 +22,7 @@ public class XMLParser7 {
 	}
 
 	/*
-getRootElement() //torna l'elemento root
+getRootElement() //torna l'elemento root ////////////////////////////////////////////////Fatto
 getChildNodes() //torna tutti i nodi "figli" interni all'elemento su cui viene eseguito
 getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
 getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome

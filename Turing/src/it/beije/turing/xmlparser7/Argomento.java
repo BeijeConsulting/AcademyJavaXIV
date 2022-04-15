@@ -64,7 +64,7 @@ public class Argomento {
     }
 
     public String toString() {
-        System.out.println("L'argomento è " + argomento);
+        System.out.println("Il contenuto dell'argomento " + argomento + " è: \n" + contenuto);
         return "";
     }
 }

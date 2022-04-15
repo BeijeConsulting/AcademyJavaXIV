@@ -1,6 +1,7 @@
 package it.beije.turing.xmlparser7;
 
 import java.util.ArrayList;
+import java.util.jar.Attributes;
 
 public class Campo {
 
@@ -110,6 +111,18 @@ public class Campo {
 		}
 		return "";
 	}
+
+	public ArrayList<Argomento> getAttributes() {
+		return argomenti;
+	}
+
+	public void getAttribute(String attribute) {
+		for(Argomento argomento: argomenti) {
+			if(argomento.getArgomento().equalsIgnoreCase(attribute)) {
+				argomento.toString();
+			}
+		}
+	} //torna il valore dell'attributo specificato
 	
 	//public ArrayList<Dato> cercaDati( String[] splitAllInOne, )
 	
