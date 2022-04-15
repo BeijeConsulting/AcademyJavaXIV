@@ -3,6 +3,7 @@ package it.beije.turing.xmlparser3;
 
 import it.beije.turing.xmlparser3.classes.ConcreteElement;
 import it.beije.turing.xmlparser3.classes.Documento;
+import it.beije.turing.xmlparser3.classes.TreeNode;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
 
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 
 public class XMLParser3 {
+	//TODO MODIFICA PER FILE 5 TAG AUTOCHIUDENTE
 
 	public static void main(String[] args) throws FileNotFoundException {
 
@@ -19,18 +21,18 @@ public class XMLParser3 {
 		Documento d = Documento.getIstance().parse("Turing/res/test_parser1.xml");
 
 		Elemento contatti = d.getRootElement();
-		System.out.println(contatti.getTagName());
-/*
-		List<Node>  contatto = contatti.getListChiled();
 
-		List<Node> listNode = contatto.get(0).getListChiled();
+		List<TreeNode<Elemento>> contatto = contatti.getChildNodes();
 
-		for (Node n:listNode) {
-			Elemento nome = n.getElementsByTagName("Nome");
-			//e.getAttributi().getAttributes("name");
-			Elemento cognome = n.getElementsByTagName("Cognome");
-			//e.getAttributi();
-		}*/
+		for (TreeNode<Elemento> padre:contatto) {
+			for(TreeNode<Elemento> child :padre.getChildren()) {
+				System.out.println( "\n\t" + child.getData().toString() + " | Parente: " + (child.getParent() == null ? "None" : child.getParent().getData()));
+			}
+		}
+
+
+
+
 
 
 

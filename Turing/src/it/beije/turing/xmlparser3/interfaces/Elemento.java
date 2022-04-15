@@ -2,6 +2,7 @@ package it.beije.turing.xmlparser3.interfaces;
 
 
 import it.beije.turing.xmlparser3.classes.Attributo;
+import it.beije.turing.xmlparser3.classes.TreeNode;
 
 import java.util.List;
 
@@ -20,7 +21,9 @@ public interface Elemento{
 
 
     public String getContent();
+    public TreeNode<Elemento> getRootNode();
 
+    void setNode(TreeNode<Elemento> rootNode);
 
-
+    List<TreeNode<Elemento>> getChildNodes();
 }

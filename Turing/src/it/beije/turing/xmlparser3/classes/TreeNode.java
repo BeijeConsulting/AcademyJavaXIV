@@ -86,9 +86,9 @@ public class TreeNode<T> {
     @Override
     public String toString() {
         String out = "";
-        out += "Node: " + this.getData().toString() + " | Depth: " + this.depth + " | Parent: " + (this.getParent() == null ? "None" : this.parent.getData().toString()) + " | Children: " + (this.getChildren().size() == 0 ? "None" : "");
+        out += "Nodo: " + this.getData().toString() + " | Profondita: " + this.depth + " | Parente: " + (this.getParent() == null ? "None" : this.parent.getData().toString()) + " | Figli: " + (this.getChildren().size() == 0 ? "None" : "");
         for(TreeNode<T> child : this.getChildren()) {
-            out += "\n\t" + child.getData().toString() + " | Parent: " + (child.getParent() == null ? "None" : child.getParent().getData());
+            out += "\n\t" + child.getData().toString() + " | Parente: " + (child.getParent() == null ? "None" : child.getParent().getData());
         }
         return out;
     }
@@ -103,8 +103,13 @@ public class TreeNode<T> {
 
         System.out.println(rootContatti);
 
-        System.out.println(rootContatto);
+        //System.out.println(rootContatto);
 
+
+        System.out.println(nome);
+        System.out.println(cognome);
+        System.out.println(email);
+        System.out.println(tel);
 
         System.out.println("Is rootNode a root node? - " + rootContatti.isRootNode());
         System.out.println("Is firstNode a root node? - " + rootContatto.isRootNode());

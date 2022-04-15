@@ -14,6 +14,11 @@ public class ConcreteElement implements Elemento {
     private String contenuto;
     private List<Attributo> attributoList=new ArrayList<>();
 
+    private TreeNode<Elemento> rootNode;
+
+    public TreeNode<Elemento> getRootNode() {
+        return rootNode;
+    }
 
     public ConcreteElement(String tagName){
         this.tagName=tagName;
@@ -66,7 +71,21 @@ public class ConcreteElement implements Elemento {
     }
 
     @Override
+    public void setNode(TreeNode<Elemento> rootNode) {
+        this.rootNode=rootNode;
+    }
+
+    @Override
+    public List<TreeNode<Elemento>> getChildNodes() {
+        return  this.rootNode.getChildren();
+    }
+
+    @Override
     public String toString() {
-        return this.tagName;
+        return "ConcreteElement{" +
+                "tagName='" + tagName + '\'' +
+                ", contenuto='" + contenuto + '\'' +
+                ", attributoList=" + attributoList +
+                '}';
     }
 }

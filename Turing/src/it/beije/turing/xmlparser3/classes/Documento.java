@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,13 +30,13 @@ public class Documento implements LoadFile {
         return d;
     }
 
-    private Documento() {
-    }
+    private Documento() {}
 
     @Override
     public Documento parse(String path) {
         StringBuilder s = new StringBuilder();
-        List<String> listElement = new ArrayList<>();
+        Stack<String > stackTag = new Stack<>();//il controllo se c'è la chiusura e apertura
+        Stack<TreeNode<Elemento> > stackGER = new Stack<>();
 
         try {
             File f = new File(path);
@@ -50,69 +50,74 @@ public class Documento implements LoadFile {
             }
             Pattern pattern = Pattern.compile("(<.*?>)|(.+?(?=<|$))");
             //Pattern pattern = Pattern.compile("/(<.[^(><.)]+>)/g");
+
+            s= s.delete(s.indexOf("<!--"),s.indexOf("-->"));
             Matcher matcher = pattern.matcher(s.toString());
-            int i = 0;
+
+
+
             while (matcher.find()) {
                 String r = matcher.group().trim();
 
-                /*TODO da togliere il commento ci serve questo controllo
+                /*TODO da togliere il commento ci serve questo controllo*/
                         if(r.contains("?xml")){
-                            continue;
-                        }*/
-
+                            continue;}
 
                 if (r.isEmpty()) {    //se r è vuota  salta lo spazio
                     continue;
                 } else {
-                    System.out.print((i++) + ":" + matcher.group());
+                 //   System.out.print((i++) + ":" + matcher.group());
 
                     if (r.startsWith("<") && (r.endsWith(">") || r.endsWith("/>"))) { //è un TAG
-
                         String nameTag = parseName(r);
                         List<Attributo> attributoList = null;
 
                         if (!(nameTag.indexOf('/') == 0)) {   //se è un tag di apertua
                             attributoList = parseAttribute(r);
-                            if (listElement.isEmpty()) {
+
+                            if (stackTag.isEmpty()) {
                                 Elemento elemento = new ConcreteElement(nameTag);
                                 rootNode = new TreeNode<>(elemento);
+                                stackGER.push(rootNode);
+
                             }else{
-                                //crea nodo
+                                    TreeNode<Elemento> elementoTreeNode= new TreeNode<>(new ConcreteElement(nameTag,attributoList),stackGER.peek());
+                                    stackGER.push(elementoTreeNode);
+
+
+                            }
+                            stackTag.push(nameTag);
+
+                        }else{ //se è un tag di chiusutra check stackTag
+
+                            String e = "/"+stackTag.pop();
+                            if (!nameTag.equals(e)) {
+                                throw new TagNotOpenException(e); // il tag non è stato chiuso
                             }
 
-                            listElement.add(nameTag);
+                            //System.out.println(stackGER.peek());
+                            stackGER.pop();
 
-                        }else{ //se è un tag di chiusutra check stack
-                            String e = "/"+listElement.get(listElement.size() - 1);
-
-                            if (nameTag.equals(e)) {
-                                listElement.remove(listElement.size() - 1);
-                            } else {
-                                throw new TagNotOpenException(); // il tag non è stato chiuso
-                            }
                         }
                     } else {
                       String contenuto = r;
-                      System.out.println(" NO");
+                        Elemento elemento =  stackGER.peek().getData();
+                        elemento.setContent(contenuto);
                     }
-
-
-                    //  }
                 }
-
-
             }
         } catch (FileNotFoundException e) {
-
             e.printStackTrace();
         } catch (IOException e) {
-
             e.printStackTrace();
         }
+
         return this.d;
     }
 
     public Elemento getRootElement() {
+
+        rootNode.getData().setNode(rootNode);
         return rootNode.getData();
     }
 
@@ -157,7 +162,6 @@ public class Documento implements LoadFile {
         }
         System.out.println(parseName);
 
-
     }
 
 
@@ -168,7 +172,7 @@ public class Documento implements LoadFile {
         if(attr.contains(" ")){
             nomeAttr = attr.substring(attr.indexOf('<')+1, attr.indexOf(' '));
         }else if(attr.contains("/")){
-            nomeAttr =  attr.substring(attr.indexOf('/')+1,attr.indexOf('>'));
+            nomeAttr =  attr.substring(attr.indexOf('/'),attr.indexOf('>'));
         }else{
             nomeAttr =  attr.substring(attr.indexOf('<')+1,attr.indexOf('>'));
         }
