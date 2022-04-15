@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Node  {
 
-    String name;
-    List <Attributes> attributes;
-    List <Node> children;
-    String content;
+    private String name;
+    private List <Attributes> attributes;
+    private List <Node> children;
+    private String content;
 
     public Node(String name, List<Attributes> attributes, String content) {
         this.name = name;
@@ -69,12 +69,12 @@ public class Node  {
     		{
     			for(Node n : getChildNodes())
     			{
-    				n.recursiveSearch(tmp,tagName);
+    				n.recursiveTagSearch(tmp,tagName);
     			}
     		}
     		return tmp;
     }
-    private void recursiveSearch(List<Node> tmp,String tagName)
+    private void recursiveTagSearch(List<Node> tmp,String tagName)
     {
     	if(this.getTagName().equals(tagName))
     	{
@@ -84,7 +84,7 @@ public class Node  {
     	{
     		for(Node child:this.getChildElements())
     		{
-    			child.recursiveSearch(tmp, tagName);
+    			child.recursiveTagSearch(tmp, tagName);
     		}
     	}
     	else return;
