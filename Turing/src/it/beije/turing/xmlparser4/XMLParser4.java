@@ -7,7 +7,7 @@ import javax.print.attribute.Attribute;
 
 /**
  * 
- * @author Cognome Nome, Cognome Nome
+ * @author Frontini Luca, Sancesario Giuseppe
  *
  */
 public class XMLParser4 {
