@@ -12,14 +12,14 @@ public class XMLParser4 {
 
 	public static void main(String[] args) 
 	{
-		DocXml doc = DocXml.parse("tmp/test_parser4.xml");
+		DocXml doc = DocXml.parse("C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\tmp\\test_parser1.xml");
 		//xml.print();
-		test(doc);
+		test2(doc);
 	}
 	private static void test2(DocXml doc)
 	{
 		Node root=doc.getRootElement();
-		for(Node node : root.getElementsByTagName("nome"))
+		for(Node node : root.getElementsByTagName("contatti"))
 		{
 			System.out.println(node.getTagName());
 		}
@@ -28,7 +28,7 @@ public class XMLParser4 {
 	private static void test(DocXml doc)
 	{
 		Node root=doc.getRootElement();
-		System.out.println("il root è: "+root.getTagName());
+		System.out.println("il root Ã¨: "+root.getTagName());
 		if(root.hasChildren())
 		{
 			List<Node> children = root.getChildNodes();

@@ -109,24 +109,24 @@ public class XMLinterpreter {
 				}
 				else
 				{
-					name=s.substring(1,s.length()-1); //il nome del tag è la stringa senza angolari
+					name=s.substring(1,s.length()-1); //il nome del tag ï¿½ la stringa senza angolari
 				}
-				if(!list.get(i+1).startsWith("<")) //se la riga dopo non è un tag
+				if(!list.get(i+1).startsWith("<")) //se la riga dopo non ï¿½ un tag
 				{
 					hasContent=true; //si tratta di testo
 					StringBuilder builder = new StringBuilder();
-					int k=i+1; //k è l'indica della riga seguente
-					while(!list.get(k+1).startsWith("<")) //finchè la riga dopo è testo
+					int k=i+1; //k ï¿½ l'indica della riga seguente
+					while(!list.get(k+1).startsWith("<")) //finchï¿½ la riga dopo ï¿½ testo
 					{
 						builder.append(list.get(k));	//aggiungi al testo
 						k++;
 					}
-					String endContent = list.get(k);  //questa è l'ultima riga del testo
+					String endContent = list.get(k);  //questa ï¿½ l'ultima riga del testo
 					i=k;							// avanzo il ciclo oltre il testo
-					k=endContent.indexOf('<');		//la chiusura del tag rimane, nel formato, attaccata al testo, così dove finisce il testo ed inizia il tag
+					k=endContent.indexOf('<');		//la chiusura del tag rimane, nel formato, attaccata al testo, cosï¿½ dove finisce il testo ed inizia il tag
 					if(k==-1)	
 					{
-						throw new Exception("Errore nella formattazione di input oppure mancata chiusura di un nodo con testo");		//se non viene chiuso il tag c'è un errore
+						throw new Exception("Errore nella formattazione di input oppure mancata chiusura di un nodo con testo");		//se non viene chiuso il tag c'ï¿½ un errore
 					}
 					else
 					{
@@ -136,15 +136,15 @@ public class XMLinterpreter {
 					{
 						content=builder.toString(); //fisso il testo
 						Node node = new Node(name,hasArgs?attributes:null,hasContent?content:null); //creo nodo
-						if(stackCursor!=-1) //se non è il root
+						if(stackCursor!=-1) //se non ï¿½ il root
 						{
-							stack.get(stackCursor).addChild(node); //è il figlio di qualcuno
+							stack.get(stackCursor).addChild(node); //ï¿½ il figlio di qualcuno
 						}
 						else
 						{
 							root=node;
 						}
-						//stack.add(node);//lo metto in stack anceh lui ma è già stato chiuso perciò non serve modificare il contatore
+						//stack.add(node);//lo metto in stack anceh lui ma ï¿½ giï¿½ stato chiuso perciï¿½ non serve modificare il contatore
 					}
 					else 
 					{
@@ -223,8 +223,4 @@ public class XMLinterpreter {
 		   
 		}
 	}
-
-
-
-
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Node  {
 
-    private String name;
+    public String name;
     private List <Attributes> attributes;
     private List <Node> children;
     private String content;
@@ -53,9 +53,11 @@ public class Node  {
         this.children.add(node);
     }
 
-    //public String getAttribute(String attribute){
+    public String getAttribute(String attribute){
+        List <Node> tmp = new ArrayList<>();
+        System.out.println();
 
-    //}
+    }
 
 
 
