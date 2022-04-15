@@ -13,11 +13,11 @@ public class TreeNode<T> {
     private int depth;
 
     public TreeNode(T data) {
-        // a fresh node, without a parent reference
+
         this.children = new ArrayList<>();
         this.parent = null;
         this.data = data;
-        this.depth = 0; // 0 is the base level (only the root should be on there)
+        this.depth = 0;
     }
 
     public TreeNode(T data, TreeNode<T> parent) {
