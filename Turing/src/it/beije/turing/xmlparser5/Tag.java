@@ -60,20 +60,6 @@ public class Tag extends Nodo{
 		this.children = children;
 	}
 	
-	public String getAttribute(String attrName) {
-		String value = null;
-		
-		for (Attributo attr : attributi) {
-			if (attr.getNome().equals(attrName)) {
-				value = attr.getValue();
-				break;
-			}
-		}
-		
-		return value;
-	}
-
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -87,6 +73,18 @@ public class Tag extends Nodo{
 			sb.append("Child " + "\n" + tag.toString() + "\n");
 		}
 		return sb.toString();
+	}
+	
+	public String getAttribute(String attrName) {
+		String value = null;	
+		for (Attributo attr : attributi) {
+			if (attr.getNome().equals(attrName)) {
+				value = attr.getValue();
+				break;
+			}
+		}
+		
+		return value;
 	}
 
 	public List<Tag> getElementsByTagName(String tagName) {
@@ -110,7 +108,6 @@ public class Tag extends Nodo{
 			Nodo nodo = new Nodo();
 			l.add(nodo);
 		}
-		System.out.println(l.toString());
 		return l;
 	}
 
