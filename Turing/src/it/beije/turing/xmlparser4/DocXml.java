@@ -21,7 +21,7 @@ public class DocXml {
     	FileParser fp = new FileParser();
 		List<String> list=fp.parseFile(fileName);
 		XMLinterpreter tool = new XMLinterpreter(list);
-		tool.print();
+		//tool.print();
 		try {
 			return new DocXml(tool.ParseRoot());
 		} catch (Exception e) {

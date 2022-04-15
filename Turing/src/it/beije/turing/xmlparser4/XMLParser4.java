@@ -3,6 +3,8 @@ package it.beije.turing.xmlparser4;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.attribute.Attribute;
+
 /**
  * 
  * @author Cognome Nome, Cognome Nome
@@ -12,27 +14,20 @@ public class XMLParser4 {
 
 	public static void main(String[] args) 
 	{
-		DocXml doc = DocXml.parse("C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\tmp\\test_parser1.xml");
+		DocXml doc = DocXml.parse("tmp/test_parser1.xml");
 		//xml.print();
-		test2(doc);
+		test(doc);
 	}
 	private static void test2(DocXml doc)
 	{
 		Node root=doc.getRootElement();
-		String a= null;
-		List<Node> children = root.getChildNodes();
-		List<Attributes> e=root.getAttributes();
-		for (Attributes attr : e){
-			System.out.println(attr.getName());
-		}
-		String b=root.getAttribute("ciaohukik");
-		System.out.println(b);
+		System.out.println(root.getElementsByTagName("contatto").get(0).getAttribute("id"));
 		//System.out.println(children.get(0).getAttribute("l"));
 	}
 	private static void test(DocXml doc)
 	{
 		Node root=doc.getRootElement();
-		System.out.println("il root ├и: "+root.getTagName());
+		System.out.println("il root ши: "+root.getTagName());
 		if(root.hasChildren())
 		{
 			List<Node> children = root.getChildNodes();
@@ -54,6 +49,17 @@ public class XMLParser4 {
 				PrintMessage(child);
 			}
 		}
+		
+		if(node.hasAttributes())	
+		{
+			List<Attributes> attributes= node.getAttributes();
+		System.out.println("ed attributi:");
+		for(Attributes att:attributes)
+		{
+			System.out.println(att.getName()+" : "+att.getValue());
+		}
+		}
+		
 	}
 
 }

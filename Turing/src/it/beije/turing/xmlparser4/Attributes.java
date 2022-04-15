@@ -5,7 +5,7 @@ public class Attributes
 {
 	private String name;
 	
-	private String content;
+	private String value;
 	
 	
 	public String getName() {
@@ -17,11 +17,11 @@ public class Attributes
 	}
 	
 	
-	public String getContent() {
-		return content;
+	public String getValue() {
+		return value;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setValue(String content) {
+		this.value = content;
 	}
 	
 	
@@ -29,6 +29,6 @@ public class Attributes
 	public Attributes(String name,String content)
 	{
 		this.name=name;
-		this.content=content;
+		this.value=content;
 	}
 }

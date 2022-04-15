@@ -41,8 +41,16 @@ public class Node  {
     public String getTextContent() {
         return this.content;
     }
-
+    public boolean hasAttributes()
+    {
+    	if(attributes==null)
+    	{
+    		return false;
+    	}
+    	return true;
+    }
     public List<Attributes> getAttributes() {
+    
         return this.attributes;
     }
 
@@ -59,7 +67,7 @@ public class Node  {
 
             for (Attributes attr : this.attributes) {
                 if (attr.getName().equals(attribute)) {
-                    attValue=attr.getContent();
+                    attValue=attr.getValue();
                 }
             }
          if (attValue==null) {
