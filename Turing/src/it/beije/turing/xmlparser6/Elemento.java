@@ -32,6 +32,11 @@ public class Elemento extends Nodo
 		return lista;
 	}
 	
+	public void setTextContent(Testo textContent)
+	{
+		this.textContent = textContent;
+	}
+	
 	public String getTextContent()
 	{
 		return textContent.getTesto();

@@ -1,9 +1,12 @@
 package it.beije.turing.xmlparser6;
 
+import java.util.List;
+
 public class XMLDocument
 {
 	private Prolog prologElement;				//intestazione xml. potrebbe non esistere
 	private Elemento rootElement;				//elemento di root del documento xml
+	private List<Elemento> listElement;
 	
 	
 	//SETTERs
@@ -17,6 +20,11 @@ public class XMLDocument
 		this.rootElement = rootElement;
 	}
 	
+	public void setListElement(List<Elemento> listElement)
+	{
+		this.listElement = listElement;
+	}
+	
 	
 	//GETTERs
 	public Prolog getPrologElement()
@@ -27,5 +35,10 @@ public class XMLDocument
 	public Elemento getRootElement()
 	{
 		return rootElement;
+	}
+	
+	public List<Elemento> getListElement()
+	{
+		return listElement;
 	}
 }
