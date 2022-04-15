@@ -136,7 +136,7 @@ public class DocumentoConcreto implements Documento {
 						throw new Exception("TagName root non combacia");
 					}
 					for(Attributo attributoTmp: att) {
-						e.getAttributes().putIfAbsent(attributoTmp.getNome(), attributoTmp);
+						e.getAttributes(true).putIfAbsent(attributoTmp.getNome(), attributoTmp);
 					}
 					e.setTagName(a);
 				}
@@ -154,21 +154,11 @@ public class DocumentoConcreto implements Documento {
 	//ritorna true se il file format è errato
 	private boolean checkFileFormat() {
 		List<String> openClose = new ArrayList<>();
-		String q = testoTotale.get(1).trim();
+		/*String q = testoTotale.get(1).trim();
 		q = q.substring(1,q.length()-1);
-		openClose.add(q);
-		for(int i = 2; i < testoTotale.size(); i++) {
-			if(testoTotale.get(i).contains("<") && testoTotale.get(i).contains(">") && !testoTotale.get(i).contains("/")) {
-				if(testoTotale.get(i).contains(" ") && testoTotale.get(i).contains("=")) {
-					String s = testoTotale.get(i).trim();
-					s = s.substring(1,s.indexOf(" "));
-					openClose.add(s);
-				}else {
-					String s = testoTotale.get(i).trim();
-					s = s.substring(1,s.length()-1);		
-					openClose.add(s);				
-				}
-			} else if(testoTotale.get(i).contains("<") && testoTotale.get(i).contains(">") && testoTotale.get(i).contains("/")) {
+		openClose.add(q);*/
+		for(int i = 1; i < testoTotale.size(); i++) {
+			if((testoTotale.get(i).contains("</") || testoTotale.get(i).contains("/>")) && testoTotale.get(i).contains("<") && testoTotale.get(i).contains(">")) {
 				String s = null;
 				if(testoTotale.get(i).contains("/>")) {
 					continue;
@@ -185,11 +175,25 @@ public class DocumentoConcreto implements Documento {
 				}
 				
 				if(!openClose.get(openClose.size()-1).equals(s)) {
+					System.out.println(openClose.get(openClose.size()-1)+" "+s);
 					System.out.println("Formato file non corretto! Errore sulla linea " + (i+1));
 					return true;
 				}
 				openClose.remove(openClose.size()-1);
-			}
+			}else if(testoTotale.get(i).contains("<") && testoTotale.get(i).contains(">")) {
+				if(testoTotale.get(i).trim().contains(" ") && testoTotale.get(i).contains("=")) {
+					String s = testoTotale.get(i).trim();
+					s = s.substring(1,s.indexOf(" "));
+					//System.out.println("s: "+s);
+					openClose.add(s);
+				}else if(testoTotale.get(i).contains("/>") || testoTotale.get(i).contains("</")) {
+					
+				}else {
+					String s = testoTotale.get(i).trim();
+					s = s.substring(1,s.length()-1);		
+					openClose.add(s);				
+				}
+			} 
 		}
 		return false;
 	}

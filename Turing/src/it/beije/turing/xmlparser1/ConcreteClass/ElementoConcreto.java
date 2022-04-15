@@ -37,12 +37,23 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 		this.textContent = textContent;
 	}
 	
-	public HashMap<String, Attributo> getAttributes() {
+	public HashMap<String, Attributo> getAttributes(boolean bool) {
 		return attributes;
 	}
 
 	public void setAttributes(HashMap<String, Attributo> attributes) {
 		this.attributes = attributes;
+	}
+	
+	
+	@Override
+	public List<Attributo> getAttributes() {
+		List<Attributo> ris = new ArrayList<>();
+		
+		for(Attributo a: getAttributes(true).values()) {
+			ris.add(a);
+		}
+		return ris;
 	}
 	
 	@Override
@@ -195,8 +206,8 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 
 	@Override
 	public String getAttribute(String attribute) {
-		if(getAttributes().get(attribute) != null) {
-			return getAttributes().get(attribute).getValue();
+		if(getAttributes(true).get(attribute) != null) {
+			return getAttributes(true).get(attribute).getValue();
 		}
 		return null;
 	}
@@ -205,4 +216,6 @@ public class ElementoConcreto extends NodoConcreto implements Elemento {
 	public void setAttributes(Map<String, Attributo> attributes) {
 		this.attributes = (HashMap<String, Attributo>) attributes;
 	}
+	
+	
 }

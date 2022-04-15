@@ -24,4 +24,9 @@ public class Attributo {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
+	@Override
+	public String toString() {
+		return "Attributo [nome=" + nome + ", value=" + value + "]";
+	}
 }

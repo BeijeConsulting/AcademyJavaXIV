@@ -11,7 +11,8 @@ public interface Elemento extends Nodo{
 	public String getTextContent();
 	public void setTextContent(String textContent);
 	public List<Elemento> getElementsByTagName(String tagName, List<Elemento> ris, int level);
-	public Map<String,Attributo> getAttributes();
+	public Map<String,Attributo> getAttributes(boolean bool);
 	public String getAttribute(String attribute);
 	public void setAttributes(Map<String,Attributo> attributes);
+	public List<Attributo> getAttributes();
 }
