@@ -3,7 +3,7 @@ package it.beije.turing.xmlparser7;
 import java.util.ArrayList;
 import java.util.jar.Attributes;
 
-public class Campo {
+public class Campo implements Element {
 
 	private String campo;
 	private ArrayList<Argomento> argomenti;
@@ -116,13 +116,12 @@ public class Campo {
 		return argomenti;
 	}
 
-	public void getAttribute(String attribute) {
+	public String getAttribute(String attribute) {
 		for(Argomento argomento: argomenti) {
 			if(argomento.getArgomento().equalsIgnoreCase(attribute)) {
-				System.out.println("Il valore dell'attributo " + attribute + " è: ");
-				argomento.toString();
+				return argomento.getContenuto();
 			}
-		}
+		}return null;
 	} //torna il valore dell'attributo specificato
 	
 	//public ArrayList<Dato> cercaDati( String[] splitAllInOne, )
@@ -146,4 +145,8 @@ public class Campo {
 	}
 
 
+	@Override
+	public ArrayList<Element> getChildElements() {
+		return null;
+	}
 }

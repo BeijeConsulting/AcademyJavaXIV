@@ -2,7 +2,7 @@ package it.beije.turing.xmlparser7;
 
 import java.util.ArrayList;
 
-public class Root {
+public class Root implements Element{
 
 	private String rootName;
 	private ArrayList<Campo> campi;
@@ -91,6 +91,12 @@ public class Root {
 		return i;
 	}
 
-	
 
+
+	@Override
+	public ArrayList<Element> getChildElements() {
+
+		return campi;
+
+	}
 }

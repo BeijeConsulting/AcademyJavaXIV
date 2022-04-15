@@ -2,9 +2,7 @@ package it.beije.turing.xmlparser7;
 
 import java.util.ArrayList;
 
-import org.w3c.dom.Element;
-
-public class Dato {
+public class Dato implements Element {
 	
 	private String tipo; 
 	private String variabile;
@@ -57,16 +55,8 @@ public class Dato {
 		return argomenti;
 	}
 
-	public void getAttribute(String attribute) {
-		for(Argomento argomento: argomenti) {
-			if(argomento.getArgomento().equalsIgnoreCase(attribute)) {
-				System.out.println("Il valore dell'attributo " + attribute + " è: ");
-				argomento.toString();
-			}
-		}
-	}
-
-	public int getElementsByTagName(String tagName) {
+	@Override
+	public int getElementsTagNames(String tagName) {
 		int i = 0;
 
 		if (tipo.equalsIgnoreCase(tagName)) {
@@ -74,5 +64,20 @@ public class Dato {
 		}
 
 		return i;
+	}
+
+	public String getAttribute(String attribute) {
+		for(Argomento argomento: argomenti) {
+			if(argomento.getArgomento().equalsIgnoreCase(attribute)) {
+				return argomento.getContenuto();
+			}
+		}return null;
+	}
+
+
+
+	@Override
+	public ArrayList<Element> getChildElements() {
+		return null;
 	}
 }
