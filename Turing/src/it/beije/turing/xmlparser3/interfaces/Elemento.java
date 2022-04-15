@@ -1,6 +1,7 @@
 package it.beije.turing.xmlparser3.interfaces;
 
 
+import it.beije.turing.xmlparser3.Exception.AttributeNonFound;
 import it.beije.turing.xmlparser3.classes.Attributo;
 import it.beije.turing.xmlparser3.classes.TreeNode;
 
@@ -17,13 +18,14 @@ public interface Elemento{
     public  void setTagName(String name);
     public  String getTagName();
 
-    public void setContent(String s);
+    public void setTextContent(String s);
 
 
-    public String getContent();
+    public String getTextContent();
     public TreeNode<Elemento> getRootNode();
 
     void setNode(TreeNode<Elemento> rootNode);
 
     List<TreeNode<Elemento>> getChildNodes();
+    public String getAttribute(String attribute) throws AttributeNonFound;
 }

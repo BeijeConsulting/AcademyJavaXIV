@@ -85,12 +85,12 @@ public class TreeNode<T> {
 
     @Override
     public String toString() {
-        String out = "";
-        out += "Nodo: " + this.getData().toString() + " | Profondita: " + this.depth + " | Parente: " + (this.getParent() == null ? "None" : this.parent.getData().toString()) + " | Figli: " + (this.getChildren().size() == 0 ? "None" : "");
-        for(TreeNode<T> child : this.getChildren()) {
-            out += "\n\t" + child.getData().toString() + " | Parente: " + (child.getParent() == null ? "None" : child.getParent().getData());
+        String result = "";
+        result += "Nodo: " + this.getData().toString() + " | Profondita: " + this.depth + " | Parente: " + (this.getParent() == null ? "None" : this.parent.getData().toString()) + " | Figli: " + (this.getChildren().size() == 0 ? "None" : "");
+       for(TreeNode<T> child : this.getChildren()) {
+            result += "\n\t" + child.getData().toString() + " | Parente: " + (child.getParent() == null ? "None" : child.getParent().getData());
         }
-        return out;
+        return result;
     }
 
     public static void main(String[] args) {

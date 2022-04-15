@@ -1,5 +1,6 @@
 package it.beije.turing.xmlparser3.classes;
 
+import it.beije.turing.xmlparser3.Exception.AttributeNonFound;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
 
 import java.util.ArrayList;
@@ -13,8 +14,22 @@ public class ConcreteElement implements Elemento {
     private String tagName;
     private String contenuto;
     private List<Attributo> attributoList=new ArrayList<>();
-
+    public String getAttribute(String attribute){
+        System.out.println(attributoList.size());
+         if(attributoList.isEmpty()){
+            throw new AttributeNonFound(attribute);
+        } else{
+            for (Attributo attr : attributoList) {
+                if(attr.getName().equals(attribute)){
+                    return attr.getValue();
+                }
+            }
+            throw new AttributeNonFound(attribute);
+        }
+    }
     private TreeNode<Elemento> rootNode;
+
+
 
     public TreeNode<Elemento> getRootNode() {
         return rootNode;
@@ -61,12 +76,12 @@ public class ConcreteElement implements Elemento {
     }
 
     @Override
-    public void setContent(String s) {
+    public void setTextContent(String s) {
         this.contenuto=s;
     }
 
     @Override
-    public String getContent() {
+    public String getTextContent() {
         return this.contenuto;
     }
 

@@ -24,11 +24,22 @@ public class XMLParser3 {
 
 		List<TreeNode<Elemento>> contatto = contatti.getChildNodes();
 
+		int i=0;
 		for (TreeNode<Elemento> padre:contatto) {
+			System.out.println("Padre :"+padre.getData().getTagName()+
+					" Lista attr:"+padre.getData().getAttributi());
+			System.out.print("\tFiglio "+(++i)+": ");
+
+			System.out.println("Il valore dell' attributo eta "+padre.getData().getAttribute("eta"));
+
 			for(TreeNode<Elemento> child :padre.getChildren()) {
-				System.out.println( "\n\t" + child.getData().toString() + " | Parente: " + (child.getParent() == null ? "None" : child.getParent().getData()));
+				System.out.println( "\t\tNomeTag: " + child.getData().getTagName());
+				System.out.println( "\t\tTextContenuto: " + child.getData().getTextContent());
+				System.out.println( "\t\tAttributi: " + child.getData().getAttributi());
+
 			}
 		}
+
 
 
 
