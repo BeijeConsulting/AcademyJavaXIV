@@ -48,6 +48,8 @@ public class Tag {
 	public void setChildren(List<Tag> children) {
 		this.children = children;
 	}
+	
+//	public 
 
 
 	@Override

@@ -26,7 +26,7 @@ public class DocumentoXML {
 //	getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome
 ////	getTagName() //torna il nome del tag
 ////	getTextContent() //torna il contenuto del tag
-//	getAttributes() //torna l'elenco degli attributi dell'elemento
+////	getAttributes() //torna l'elenco degli attributi dell'elemento
 //	getAttribute(String attribute) //torna il valore dell'attributo specificato
 
 	
@@ -72,24 +72,6 @@ public class DocumentoXML {
 		}
 		return root;
 	}
-		
-	public Tag buildDoc(Tag tag) {
-		List<Tag> children = tag.getChildren();
-		
-		for (Tag child : children) {
-			List<String> childrenString = getChildElements(child.getContenuto());
-			
-			for (String childString : childrenString) {
-				String tagName = getTagNameFromString(childString);
-				String tagContent = getTextContentString(childString);
-				Tag tagFiglio = new Tag(tagName, tagContent);
-				child.addTag(tagFiglio);
-			}
-			
-			buildDoc(child);
-		}
-		return tag;
-	}
 	
 	public List<String> getAttributeFromString(String text) {
 		List<String> attrs = new ArrayList<>();
@@ -106,7 +88,7 @@ public class DocumentoXML {
 				
 				while ((firstSpacebar != -1) && (firstSpacebar < closingTag)) {
 					String attr = new String();
-					int startAttrValue = text.indexOf("=") + 1;
+					int startAttrValue = text.indexOf("=", firstSpacebar) + 2;
 					int endAttr = text.indexOf("\"", startAttrValue) + 1;
 					
 					attr = text.substring(startAttr, endAttr);
@@ -127,7 +109,7 @@ public class DocumentoXML {
 	
 	public String getAttributeValueFromString(String attr) {
 		String value = null;
-		int beginValue = attr.indexOf("=") + 1;
+		int beginValue = attr.indexOf("=") + 2;
 		if (beginValue > 0) {
 			int endValue = attr.length() - 1;
 			value = attr.substring(beginValue, endValue);
@@ -240,6 +222,35 @@ public class DocumentoXML {
 			root.addTag(tagFiglio);
 		}
 		return root;
+	}
+	
+	public Tag buildDoc(Tag tag) {
+		List<Tag> children = tag.getChildren();
+		
+		for (Tag child : children) {
+			List<String> childrenString = getChildElements(child.getContenuto());
+			
+			for (String childString : childrenString) {
+				List<String> attributeString = getAttributeFromString(childString);
+				String tagName = getTagNameFromString(childString);
+				String tagContent = getTextContentString(childString);
+				Tag tagFiglio = new Tag(tagName, tagContent);
+				
+				if (attributeString != null) {
+					for (String attr : attributeString) {
+						String nomeAttr = getAttributeNameFromString(attr);
+						String valueAttr = getAttributeValueFromString(attr);
+						Attributo attributo = new Attributo(nomeAttr, valueAttr);
+						tagFiglio.addAttributo(attributo);
+					}
+				}
+				
+				child.addTag(tagFiglio);
+			}
+			
+			buildDoc(child);
+		}
+		return tag;
 	}
 
 	public String getContenutoFile(String path) {
