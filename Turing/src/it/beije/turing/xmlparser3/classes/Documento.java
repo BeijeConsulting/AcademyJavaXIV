@@ -110,7 +110,40 @@ public class Documento implements LoadFile {
 
     private List<Attributo> parseAttribute(String attr){
         //se non ci sono attributi return null, altrimenti ritorna la lista di attributi
-        return null;
+        List<Attributo> listAttr = new ArrayList<>();
+        if (attr.contains(" ")){
+            int a = attr.indexOf(' ');
+            for (int i = a; i<attr.length()-1;i++){
+                if(attr.charAt(i)==' '){
+                    if(attr.indexOf('=',i)!=-1){
+                        String el = attr.substring(i+1,attr.indexOf('=',i));
+                        Attributo attributo = new Attributo();
+                        attributo.setName(el);
+                        //System.out.println(el);
+                        listAttr.add(attributo);
+                    }else{
+                        continue;
+                    }
+
+                }
+            }
+        }else{
+            return null;
+        }
+        return listAttr;
+    }
+    public static void main(String[]args){
+        Documento d = new Documento();
+        String s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>";
+        String b = "<nome/>";
+        List<Attributo> list = d.parseAttribute(s);
+        String parseName = d.parseName(b);
+        for (Attributo a:list
+             ) {System.out.println(a.getName());
+        }
+        System.out.println(parseName);
+
+
     }
     private String parseContent(String attr){
         //contenuto attributo
@@ -118,6 +151,15 @@ public class Documento implements LoadFile {
     }
     private String parseName(String attr){
         //nome del nodo xml
-        return null;
+        String nomeAttr = null;
+        if(attr.contains(" ")){
+            nomeAttr = attr.substring(attr.indexOf('<')+1, attr.indexOf(' '));
+        }else if(attr.contains("/")){
+            nomeAttr =  attr.substring(attr.indexOf('<')+1,attr.indexOf('/'));
+        }else{
+            nomeAttr =  attr.substring(attr.indexOf('<')+1,attr.indexOf('>'));
+        }
+
+        return nomeAttr;
     }
 }
