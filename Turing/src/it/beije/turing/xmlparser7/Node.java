@@ -5,4 +5,6 @@ import java.util.ArrayList;
 public interface Node {
 
     ArrayList<Element> getChildNodes();
+    
+    //ciao
 }
