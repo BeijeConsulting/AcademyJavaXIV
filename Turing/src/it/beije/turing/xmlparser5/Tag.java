@@ -58,6 +58,8 @@ public class Tag extends Nodo{
 	public void setChildren(List<Tag> children) {
 		this.children = children;
 	}
+	
+//	public 
 
 	@Override
 	public String toString() {
