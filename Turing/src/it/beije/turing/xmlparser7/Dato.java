@@ -52,4 +52,27 @@ public class Dato {
 		}
 		return "";
 	}
+
+	public ArrayList<Argomento> getAttributes() {
+		return argomenti;
+	}
+
+	public void getAttribute(String attribute) {
+		for(Argomento argomento: argomenti) {
+			if(argomento.getArgomento().equalsIgnoreCase(attribute)) {
+				System.out.println("Il valore dell'attributo " + attribute + " è: ");
+				argomento.toString();
+			}
+		}
+	}
+
+	public int getElementsByTagName(String tagName) {
+		int i = 0;
+
+		if (tipo.equalsIgnoreCase(tagName)) {
+			i++;
+		}
+
+		return i;
+	}
 }

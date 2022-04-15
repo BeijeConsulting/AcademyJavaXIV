@@ -81,6 +81,19 @@ public class Root {
 		return new Root(name, campi, inizioCampi, (fineCampi-1));
 	}
 
+	public String getTagName() {
+		return rootName;
+	}
+
+	public int getElementsByTagName(String tagName) {
+		int i = 0;
+
+		for(Campo campo: campi) {
+			i += campo.getElementsByTagName(tagName);
+		}
+
+		return i;
+	}
 
 	
 

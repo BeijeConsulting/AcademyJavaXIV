@@ -119,12 +119,30 @@ public class Campo {
 	public void getAttribute(String attribute) {
 		for(Argomento argomento: argomenti) {
 			if(argomento.getArgomento().equalsIgnoreCase(attribute)) {
+				System.out.println("Il valore dell'attributo " + attribute + " è: ");
 				argomento.toString();
 			}
 		}
 	} //torna il valore dell'attributo specificato
 	
 	//public ArrayList<Dato> cercaDati( String[] splitAllInOne, )
-	
+
+	public int getElementsByTagName(String tagName) {
+		int i = 0;
+
+		if(campo.equalsIgnoreCase(tagName)) {
+			i++;
+		}
+
+		for(Campo campo1: campiFigli) {
+			i += campo1.getElementsByTagName(tagName);
+		}
+
+		for(Dato dato1: dato) {
+			i += dato1.getElementsByTagName(tagName);
+		}
+
+		return i;
+	}
 	
 }

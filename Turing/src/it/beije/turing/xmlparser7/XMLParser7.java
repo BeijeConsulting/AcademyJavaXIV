@@ -18,18 +18,24 @@ public class XMLParser7 {
 		//"C:/Users/luigi/Downloads/test_parser6.xml"
 
 		//Documento.XMLToString("C:/Users/luigi/Downloads/test_parser6.xml");
-		Root.creaInstanzaRoot(Documento.XMLToString("C:/Users/luigi/Downloads/test_parser6.xml"));
+		Documento documento = Documento.parse("/Users/simonepitossi/File/test_parser6.xml");
+		System.out.println(documento.getRootElement().getCampi().get(0).getElementsByTagName("value"));
 	}
 
 	/*
 getRootElement() //torna l'elemento root ////////////////////////////////////////////////Fatto
-getChildNodes() //torna tutti i nodi "figli" interni all'elemento su cui viene eseguito
+
 getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
-getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome
+
 getTagName() //torna il nome del tag
 getTextContent() //torna il contenuto del tag
-getAttributes() //torna l'elenco degli attributi dell'elemento
-getAttribute(String attribute) //torna il valore dell'attributo specificato
+
+getAttributes() //torna l'elenco degli attributi dell'elemento////////////////////////////////////////////////Fatto
+getAttribute(String attribute) //torna il valore dell'attributo specificato////////////////////////////////////////////////Fatto
+getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome////////////////////////////////////////////////Fatto
+
+
+getChildNodes() //torna tutti i nodi "figli" interni all'elemento su cui viene eseguito
 	 */
 	
 	
