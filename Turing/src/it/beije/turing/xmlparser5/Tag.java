@@ -49,7 +49,18 @@ public class Tag {
 		this.children = children;
 	}
 	
-//	public 
+	public String getAttribute(String attrName) {
+		String value = null;
+		
+		for (Attributo attr : attributi) {
+			if (attr.getNome().equals(attrName)) {
+				value = attr.getValue();
+				break;
+			}
+		}
+		
+		return value;
+	}
 
 
 	@Override
