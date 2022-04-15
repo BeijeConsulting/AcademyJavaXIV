@@ -56,7 +56,7 @@ public class Dato implements Element {
 	}
 
 	@Override
-	public int getElementsTagNames(String tagName) {
+	public int getElementsByTagName(String tagName) {
 		int i = 0;
 
 		if (tipo.equalsIgnoreCase(tagName)) {

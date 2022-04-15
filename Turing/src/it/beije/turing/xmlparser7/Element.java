@@ -12,6 +12,6 @@ public interface Element {
 
     ArrayList<Argomento> getAttributes();
 
-    int getElementsTagNames(String tagName);
+    int getElementsByTagName(String tagName);
 
 }

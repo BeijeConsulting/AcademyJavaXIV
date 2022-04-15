@@ -21,6 +21,16 @@ public class Root implements Element{
 		return rootName;
 	}
 
+	@Override
+	public String getAttribute(String attribute) {
+		return null;
+	}
+
+	@Override
+	public ArrayList<Argomento> getAttributes() {
+		return null;
+	}
+
 	public void setRootName(String root) {
 		this.rootName = root;
 	}
@@ -96,7 +106,7 @@ public class Root implements Element{
 	@Override
 	public ArrayList<Element> getChildElements() {
 
-		return campi;
+		return null;
 
 	}
 }
