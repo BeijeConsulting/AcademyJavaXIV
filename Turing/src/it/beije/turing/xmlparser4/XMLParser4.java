@@ -19,11 +19,15 @@ public class XMLParser4 {
 	private static void test2(DocXml doc)
 	{
 		Node root=doc.getRootElement();
-		for(Node node : root.getElementsByTagName("contatti"))
-		{
-			System.out.println(node.getTagName());
+		String a= null;
+		List<Node> children = root.getChildNodes();
+		List<Attributes> e=root.getAttributes();
+		for (Attributes attr : e){
+			System.out.println(attr.getName());
 		}
-		
+		String b=root.getAttribute("ciaohukik");
+		System.out.println(b);
+		//System.out.println(children.get(0).getAttribute("l"));
 	}
 	private static void test(DocXml doc)
 	{
