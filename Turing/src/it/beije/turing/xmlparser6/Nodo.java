@@ -7,7 +7,6 @@ public abstract class Nodo
 	protected String tagName;
 	private List<Attributo> attributes;
 	private List<Nodo> childNodes;
-	private Nodo parent;
 	
 	public abstract String getTagName();	
 	public abstract void setTagName(String tagName);
@@ -42,16 +41,5 @@ public abstract class Nodo
 	public void setChildNodes(List<Nodo> childNodes)
 	{
 		this.childNodes = childNodes;
-	}
-	
-	
-	public void setParent(Nodo parent)
-	{
-		this.parent = parent;
-	}
-	
-	public Nodo getParent()
-	{
-		return parent;
 	}
 }

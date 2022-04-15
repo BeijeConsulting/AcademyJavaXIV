@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,7 +25,13 @@ public class XMLParser6
 		
 		
 		System.out.println("Root: " + document.getRootElement().getTagName());
-		//System.out.println(document.getListElement().get(0).getElementsByTagName("contatto"));
+		
+		for(Elemento a : document.getRootElement().getElementsByTagName("contatto"))
+		{
+			System.out.println(a.getTagName());
+		}
+		
+		
 		System.out.println("TagName: " + document.getListElement().get(0).getTagName());
 		System.out.println("TextContent: " + document.getListElement().get(2).getTextContent());
 		
@@ -79,7 +84,6 @@ public class XMLParser6
 						if (current.charAt(current.length()-2) == '?')
 						{
 							Prolog p = new Prolog();
-							p.setParent(null);
 							p.setTagName(null);
 							p.setChildNodes(null);
 							
@@ -168,11 +172,13 @@ public class XMLParser6
 		if (!lexer.checkClosing(elementTags)) throw new RuntimeException("TAG NOT CLOSED.");
 		else System.out.println("PARSING CORRETTO");
 		
+		
+		for(int j = elementList.size()-1; j >= 0; j--)
+		{
+			if (elementList.get(j).getParent() != null)	elementList.get(j).getParent().setChildElements(elementList.get(j)); 
+		}
+		
 		document.setListElement(elementList);
-		//el1 = root
-		//document.setRootElement(el1);
-		//prolog
-		//document.setPrologElement(prolog);
 		return document;
 	}
 	

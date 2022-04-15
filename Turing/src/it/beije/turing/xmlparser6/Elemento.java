@@ -7,16 +7,17 @@ import java.util.List;
 public class Elemento extends Nodo
 {
 	private Testo textContent;
-	private List<Elemento> childElements;
+	private List<Elemento> childElements = new ArrayList<>();
+	private Elemento parent;
 	
 	public List<Elemento> getChildElements()
 	{
 		return childElements;
 	}
 	
-	public void setChildElements(List<Elemento> childElements)
+	public void setChildElements(Elemento childElement)
 	{
-		this.childElements = childElements;
+		this.childElements.add(childElement);
 	}
 	
 	
@@ -52,5 +53,15 @@ public class Elemento extends Nodo
 	public void setTagName(String tagName)
 	{
 		this.tagName = tagName;
+	}
+	
+	public void setParent(Elemento parent)
+	{
+		this.parent = parent;
+	}
+	
+	public Elemento getParent()
+	{
+		return parent;
 	}
 }
