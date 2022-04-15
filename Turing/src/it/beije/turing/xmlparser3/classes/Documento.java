@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import it.beije.turing.xmlparser3.Exception.TagNotOpenException;
 import it.beije.turing.xmlparser3.interfaces.Elemento;
 import it.beije.turing.xmlparser3.interfaces.LoadFile;
@@ -45,17 +44,19 @@ public class Documento implements LoadFile {
                 char row = (char) bufferedReader.read();
                 s.append(row);
             }
-            Pattern pattern = Pattern.compile("(<.*?>)|(.+?(?=<|$))");
+            Pattern pattern = Pattern.compile("(<.*?>)|(<.*?/>)");
             //Pattern pattern = Pattern.compile("/(<.[^(><.)]+>)/g");
 
             if (s.toString().contains("<!--")) {
                 s = s.delete(s.indexOf("<!--"), s.indexOf("-->"));
             }
 
+
             Matcher matcher = pattern.matcher(s.toString());
             while (matcher.find()) {
                 String r = matcher.group().trim();
 
+                System.out.println(r);
                 if (r.contains("?xml")) {
                     continue;
                 }
@@ -63,6 +64,7 @@ public class Documento implements LoadFile {
                 if (r.isEmpty()) {    //se r è vuota  salta lo spazio
                     continue;
                 } else {
+
                     if (r.startsWith("<") && (r.endsWith(">") || r.endsWith("/>"))) { //è un TAG
                         String nameTag = parseName(r);
                         List<Attributo> attributoList = null;
@@ -82,14 +84,22 @@ public class Documento implements LoadFile {
                             stackTag.push(nameTag);
 
                         } else { //se è un tag di chiusutra check stackTag
-                            String e = "/" + stackTag.pop();
-                            if (!nameTag.equals(e)) {
-                                throw new TagNotOpenException(e); // il tag non è stato chiuso
-                            }
 
-                            stackGER.pop();
 
-                        }
+
+                          /**  if(r.contains("=\"")){
+                                System.out.println("attributoList");
+                                List<Attributo> attr = parseAttribute(r);
+                               TreeNode<Elemento> elementoTreeNode = new TreeNode<>(new ConcreteElement(nameTag, attr), stackGER.peek());
+
+                           }else{**/
+                               String e = "/" + stackTag.pop();
+                               if (!nameTag.equals(e)) {
+                                   throw new TagNotOpenException(e); // il tag non è stato chiuso
+                               }
+                               stackGER.pop();
+                           }
+                       // }
                     } else {
                         String contenuto = r;
                         Elemento elemento = stackGER.peek().getData();

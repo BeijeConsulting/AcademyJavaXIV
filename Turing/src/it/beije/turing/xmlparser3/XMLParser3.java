@@ -15,7 +15,7 @@ public class XMLParser3 {
 	public static void main(String[] args) throws FileNotFoundException {
 
 
-		Documento d = Documento.getIstance().parse("Turing/res/test_parser1.xml");
+		Documento d = Documento.getIstance().parse("Turing/res/test_parser6.xml");
 
 		Elemento contatti = d.getRootElement();
 
