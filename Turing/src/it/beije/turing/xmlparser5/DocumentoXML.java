@@ -104,18 +104,45 @@ public class DocumentoXML {
 			else {
 				int startAttr = firstSpacebar + 1;
 				
-				while (firstSpacebar < closingTag) {
+				while ((firstSpacebar != -1) && (firstSpacebar < closingTag)) {
 					String attr = new String();
-//					int startValue = text.indexOf();
-//					int endAttr = text.indexOf("\"", )
+					int startAttrValue = text.indexOf("=") + 1;
+					int endAttr = text.indexOf("\"", startAttrValue) + 1;
 					
-//					attr = text.substring(startAttr, indexOfTagName)
+					attr = text.substring(startAttr, endAttr);
+					System.out.println("ATTRIBUTO:"+attr);
+					attrs.add(attr);
+					
+					firstSpacebar = text.indexOf(" ", endAttr);
+					startAttr = firstSpacebar + 1;
 				}
+				
+				return attrs;
 			}
 		}
 		
 		return null;
 		
+	}
+	
+	public String getAttributeValueFromString(String attr) {
+		String value = null;
+		int beginValue = attr.indexOf("=") + 1;
+		if (beginValue > 0) {
+			int endValue = attr.length() - 1;
+			value = attr.substring(beginValue, endValue);
+		}
+		
+		return value;
+	}
+	
+	public String getAttributeNameFromString(String attr) {
+		String name = null;
+		int endName = attr.indexOf("=");
+		if (endName != -1)
+			name = attr.substring(0, endName);
+		
+		return name;
 	}
 
 	public String getTextContentString(String el){
@@ -195,18 +222,22 @@ public class DocumentoXML {
 		Tag root = new Tag(nome, textContent);
 		
 		List<String> childrenStringa = getChildElements(textContent);
-		List<String> attributeString = getAttributeFromString(rootStringa);
 		
 		for (String child : childrenStringa) {
-			Tag tagFiglio = new Tag(getTagNameFromString(child) , getTextContentString(child));
-			root.addTag(tagFiglio);
+			List<String> attributeString = getAttributeFromString(child);
+			String tagName = getTagNameFromString(child);
+			String tagContent = getTextContentString(child);
+			Tag tagFiglio = new Tag(tagName, tagContent);
 			
-//			for (String attr : attributeString) {
-//				String nomeAttr = getAttributeNameFromString(attr);
-//				String valueAttr = getAttributeValueFromString(attr);
-//				Attributo attributo = new Attributo(nomeAttr, valueAttr);
-//				tagFiglio.addAttributo(attributo);
-//			}
+			
+			for (String attr : attributeString) {
+				String nomeAttr = getAttributeNameFromString(attr);
+				String valueAttr = getAttributeValueFromString(attr);
+				Attributo attributo = new Attributo(nomeAttr, valueAttr);
+				tagFiglio.addAttributo(attributo);
+			}
+			
+			root.addTag(tagFiglio);
 		}
 		return root;
 	}

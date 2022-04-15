@@ -21,6 +21,10 @@ public class Attributo {
 		this.value = value;
 	}
 	
-	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(nome + "=\"" + value + "\"");
+		return sb.toString();
+	}
 
 }
