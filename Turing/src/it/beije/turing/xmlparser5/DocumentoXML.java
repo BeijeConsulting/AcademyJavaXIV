@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 //import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class DocumentoXML {
@@ -21,14 +22,26 @@ public class DocumentoXML {
 	}
 	
 
-//	getChildNodes() //torna tutti i nodi "figli" interni all'elemento su cui viene eseguito
-////	getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
-//	getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome
-////	getTagName() //torna il nome del tag
-////	getTextContent() //torna il contenuto del tag
-////	getAttributes() //torna l'elenco degli attributi dell'elemento
-//	getAttribute(String attribute) //torna il valore dell'attributo specificato
+//	DENTRO TAG
+//	getChildNodes() //torna tutti i nodi "figli" interni all'elemento su cui viene eseguito 
+	
+//  GETCHILDER()
+//	getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
+	
+//	DENTRO TAG
+//	getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome 
+	
+//	CORRISPONDE AL GETNOME DI TAG
+//	getTagName() //torna il nome del tag 
 
+//	CORRISPONDE AL GETCONTENUTO DI TAG
+//	getTextContent() //torna il contenuto del tag 
+	
+//	CORRISPONDE AL GTATTRIBUTI DI TAG
+//	getAttributes() //torna l'elenco degli attributi dell'elemento 
+	
+//	CORRISPONDE AL getAttribute DI TAG
+//	getAttribute(String attribute) //torna il valore dell'attributo specificato 
 
 	public List<String> getAttributeFromString(String text) {
 		List<String> attrs = new ArrayList<>();
@@ -49,7 +62,7 @@ public class DocumentoXML {
 					int endAttr = text.indexOf("\"", startAttrValue) + 1;
 					
 					attr = text.substring(startAttr, endAttr);
-					System.out.println("ATTRIBUTO:"+attr);
+//					System.out.println("ATTRIBUTO:"+attr);
 					attrs.add(attr);
 					
 					firstSpacebar = text.indexOf(" ", endAttr);
@@ -97,10 +110,8 @@ public class DocumentoXML {
 	public List<String> getChildElements(String textContent) {
         List<String> children = new ArrayList<>();
         String tagName = getTagNameFromString(textContent);
-        System.out.println("PRIMA:" + tagName);
 
         while ((tagName != null) && textContent.contains(tagName)) {
-            System.out.println(tagName);
             String closureTag = "/" + tagName + ">";
             int indexBegin = textContent.indexOf("<");
             int startClosure = textContent.indexOf(closureTag);
@@ -204,7 +215,7 @@ public class DocumentoXML {
 		return root;
 	}
 	
-	public Tag buildDoc(Tag tag) {
+	public Tag getTreeDocument(Tag tag) {
 		List<Tag> children = tag.getChildren();
 		
 		for (Tag child : children) {
@@ -228,7 +239,7 @@ public class DocumentoXML {
 				child.addTag(tagFiglio);
 			}
 			
-			buildDoc(child);
+			getTreeDocument(child);
 		}
 		return tag;
 	}
