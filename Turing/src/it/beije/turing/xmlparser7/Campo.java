@@ -7,16 +7,15 @@ public class Campo implements Element {
 
 	private String campo;
 	private ArrayList<Argomento> argomenti;
-	private ArrayList<Dato> dato;
-	private ArrayList<Campo> campiFigli;
+	private ArrayList<Element> elementi;
+
 	
 ////////////////////////////////////////////// COSTRUTTORE ///////////////////////////////////////////////////////////////	
-	public Campo(String campo, ArrayList<Argomento> argomenti, ArrayList<Dato> dato, ArrayList<Campo> campiFigli) {
+	public Campo(String campo, ArrayList<Argomento> argomenti, ArrayList<Element> elementi) {
 
 		this.campo = campo;
 		this.argomenti = argomenti;
-		this.dato = dato;
-		this.campiFigli = campiFigli;
+		this.elementi = elementi;
 	}
 	
 	
@@ -34,22 +33,15 @@ public class Campo implements Element {
 		this.argomenti = argomenti;
 	}
 	
-	public ArrayList<Dato> getDato() {
-		return dato;
+	public ArrayList<Element> getElementi() {
+		return elementi;
 	}
-	public void setDato(ArrayList<Dato> dato) {
-		this.dato = dato;
-	} 
-	
-	public ArrayList<Campo> getCampiFigli() {
-		return campiFigli;
-	}
-	public void setCampiFigli(ArrayList<Campo> campiFigli) {
-		this.campiFigli = campiFigli;
+	public void setElementi(ArrayList<Element> elementi) {
+		this.elementi = elementi;
 	}
 	
 	// restituisce un int (fine 
-	public static Integer campoNewInstance(String[] splitAllInOne, Integer inizioCampo , Integer fineCampo, ArrayList<Campo> arrayCampi) {
+	public static Integer campoNewInstance(String[] splitAllInOne, Integer inizioCampo , Integer fineCampo, ArrayList<Element> arrayElementi) {
 //		String campo = s.substring(0, s.indexOf(" "));
 //		s = s.substring(campo.length());
 //		
@@ -57,8 +49,7 @@ public class Campo implements Element {
 //		System.out.println(campo);
 //		System.out.println(s);
 //		String argomento = "";
-		ArrayList<Campo> arrayCampiFigli = new ArrayList<Campo>();
-		ArrayList<Dato> dato = new  ArrayList<Dato>();
+		ArrayList<Element> elementi = new ArrayList<Element>();
 		ArrayList<Argomento> argomenti = new ArrayList<>();
 			String campo;
 			Integer fine = 0;
@@ -76,27 +67,25 @@ public class Campo implements Element {
 				//Argomento.newArgomentiCampo();
 				
 				for(int i = inizioCampo + 1 ; i < fineCampo; ) {
-					System.out.println("Il valori di i è " + i);
 					//a[i] contiene la variabile più il testo, a[i + 1] contiene la variabile che possiamo usare per rimuovere la prima parte del testo per ottenerlo
 					if(splitAllInOne[i].length() > campo.length() + 1 && campo.equalsIgnoreCase(splitAllInOne[i].substring(1, campo.length() + 1))) {
 						i += 1;
 						fine = i;
 						break;
 					} else if(splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(">")).equalsIgnoreCase(splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">")))){
-						dato.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
+						elementi.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
 						i += 2;
 					} else if(splitAllInOne[i].indexOf(" ") != -1 && splitAllInOne[i].substring(0, splitAllInOne[i].indexOf(" ")).equalsIgnoreCase(splitAllInOne[i + 1].substring(1, splitAllInOne[i + 1].indexOf(">")))) {
-						dato.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
+						elementi.add(Dato.newDatoInstance(splitAllInOne[i], splitAllInOne[i + 1]));
 						i += 2;
 					} else {
-						i = campoNewInstance(splitAllInOne, i, fineCampo, arrayCampiFigli);
+						i = campoNewInstance(splitAllInOne, i, fineCampo, elementi);
 
 					}
 				
 			}
 
-		System.out.println("Il ciclo è stato completato.");
-			arrayCampi.add(new Campo(campo, argomenti, dato, arrayCampiFigli));
+		arrayElementi.add(new Campo(campo, argomenti, elementi));
 			return fine;
 		}
 
@@ -106,8 +95,8 @@ public class Campo implements Element {
 			argomento.toString();
 		}
 
-		for(Campo campo1: campiFigli) {
-			campo1.toString();
+		for(Element element: elementi) {
+			element.toString();
 		}
 		return "";
 	}
@@ -133,12 +122,8 @@ public class Campo implements Element {
 			i++;
 		}
 
-		for(Campo campo1: campiFigli) {
-			i += campo1.getElementsByTagName(tagName);
-		}
-
-		for(Dato dato1: dato) {
-			i += dato1.getElementsByTagName(tagName);
+		for(Element element: elementi) {
+			i += element.getElementsByTagName(tagName);
 		}
 
 		return i;
@@ -147,12 +132,8 @@ public class Campo implements Element {
 	@Override
 	public String getTextContent() {
 		String s = "";
-		for(Dato d: dato) {
-			s += d.getTextContent() + "\n";
-		}
-
-		for(Campo campo1: campiFigli) {
-			s += campo1.getTextContent();
+		for(Element element: elementi) {
+			s += element.getTextContent() + "\n";
 		}
 		return s;
 	}
@@ -162,13 +143,10 @@ public class Campo implements Element {
 	public ArrayList<Element> getChildElements() {
 		ArrayList<Element> elements = new ArrayList<Element>();
 
-		for(Campo c : campiFigli) {
-			elements.add(c);
+		for(Element element: elementi) {
+			elements.add(element);
 		}
 
-		for(Dato d : dato){
-			elements.add(d);
-		}
 		return elements;
 
 	}

@@ -2,15 +2,15 @@ package it.beije.turing.xmlparser7;
 
 import java.util.ArrayList;
 
-public class Root implements Element{
+public class Root implements Element {
 
 	private String rootName;
-	private ArrayList<Campo> campi;
+	private ArrayList<Element> campi;
 	private Integer inizioCampi;
 	private Integer fineCampi;
 
 	
-	public Root(String rootName, ArrayList<Campo> campi, Integer inizioCampi, Integer fineCampi) {
+	public Root(String rootName, ArrayList<Element> campi, Integer inizioCampi, Integer fineCampi) {
 		this.rootName = rootName;
 		this.campi = campi;
 		this.inizioCampi = inizioCampi;
@@ -35,11 +35,11 @@ public class Root implements Element{
 		this.rootName = root;
 	}
 
-	public ArrayList<Campo> getCampi() {
+	public ArrayList<Element> getCampi() {
 		return campi;
 	}
 
-	public void setCampi(ArrayList<Campo> campi) {
+	public void setCampi(ArrayList<Element> campi) {
 		this.campi = campi;
 	}
 	
@@ -48,7 +48,7 @@ public class Root implements Element{
 		int inizioCampi = 0;
 		int fineCampi = 0;
 		String name = "";
-		ArrayList<Campo> campi = new ArrayList<>();
+		ArrayList<Element> campi = new ArrayList<>();
 		
 		
 		// cercando l'inizio splitAllInOne[i].indexOf("?>")
@@ -85,7 +85,7 @@ public class Root implements Element{
 		for(int i = inizioCampi; i < fineCampi; ) {
 			i = Campo.campoNewInstance(splitAllInOne, i, fineCampi, campi) ;
 		}
-		for(Campo c: campi) {
+		for(Element c: campi) {
 			c.toString();
 		}
 		return new Root(name, campi, inizioCampi, (fineCampi-1));
@@ -94,20 +94,24 @@ public class Root implements Element{
 	public int getElementsByTagName(String tagName) {
 		int i = 0;
 
-		for(Campo campo: campi) {
+		for(Element campo: campi) {
 			i += campo.getElementsByTagName(tagName);
 		}
 
 		return i;
 	}
 
+	@Override
+	public String getTextContent() {
+		return null;
+	}
 
 
 	@Override
 	public ArrayList<Element> getChildElements() {
 		ArrayList<Element> elements = new ArrayList<Element>();
 
-		for(Campo c : campi) {
+		for(Element c : campi) {
 			elements.add(c);
 		}
 

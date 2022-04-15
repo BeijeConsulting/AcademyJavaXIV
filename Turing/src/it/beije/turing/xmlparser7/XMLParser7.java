@@ -18,16 +18,12 @@ public class XMLParser7 {
 		//"C:/Users/luigi/Downloads/test_parser6.xml"
 
 		//Documento.XMLToString("C:/Users/luigi/Downloads/test_parser6.xml");
-		Documento documento = Documento.parse("/Users/simonepitossi/File/test_parser6.xml");
-		System.out.println(documento.getRootElement().getCampi().get(0).getElementsByTagName("value"));
+		Documento documento = Documento.parse("/Users/simonepitossi/File/test_parser1.xml");
 	}
 
 	/*
 getRootElement() //torna l'elemento root ////////////////////////////////////////////////Fatto
-
-
-getTextContent() //torna il contenuto del tag
-
+getTextContent() //torna il contenuto del tag///////////////////////////////////////////////Fatto
 getTagName() //torna il nome del tag////////////////////////////////////////////////Fatto
 getAttributes() //torna l'elenco degli attributi dell'elemento////////////////////////////////////////////////Fatto
 getAttribute(String attribute) //torna il valore dell'attributo specificato////////////////////////////////////////////////Fatto
