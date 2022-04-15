@@ -6,7 +6,7 @@ public class Node {
 	public Node parent;
 	public ArrayList<Node> child = new ArrayList<Node>();
 	public String tag;
-	
+	//Debug
 	public Node() {}
 	public Node(Node n) {
 		this.parent = n.parent;
