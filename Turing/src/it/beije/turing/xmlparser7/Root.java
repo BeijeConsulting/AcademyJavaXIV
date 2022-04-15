@@ -76,7 +76,7 @@ public class Root {
 			i = Campo.campoNewInstance(splitAllInOne, i, fineCampi, campi) ;
 		}
 		for(Campo c: campi) {
-			System.out.println(c.toString());
+			c.toString();
 		}
 		return new Root(name, campi, inizioCampi, (fineCampi-1));
 	}

@@ -101,17 +101,12 @@ public class Campo {
 
 	public String toString() {
 		System.out.println(campo);
-		System.out.println();
-		for(Dato dato1: dato) {
-			dato1.toString();
+		for(Argomento argomento: argomenti) {
+			argomento.toString();
 		}
 
 		for(Campo campo1: campiFigli) {
 			campo1.toString();
-			System.out.println();
-			for (Dato dato1: dato) {
-				dato1.toString();
-			}
 		}
 		return "";
 	}

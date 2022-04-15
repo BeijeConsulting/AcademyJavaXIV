@@ -52,15 +52,18 @@ public class Argomento {
         for(int i = 0; i < campoArgomenti.length; i++) {
             String[] split = campoArgomenti[i].split("=");
             argomento = split[0];
-            contenuto = split[1] + "\"";
+            System.out.println("L'argomento è " + argomento);
+            contenuto = split[1].replace("\"", " ").trim();
+            System.out.println("Il contenuto è " + contenuto);
             argomenti.add(new Argomento(argomento, contenuto));
         }
 
         return argomenti;
+
     }
 
     public String toString() {
-        System.out.println(argomento);
+        System.out.println("L'argomento è " + argomento);
         return "";
     }
 }

@@ -45,6 +45,8 @@ public class Dato {
 	}
 	
 	public String toString() {
+		System.out.println("Il tipo di dato è " + tipo);
+		System.out.println("Il tipo di variabile è " + variabile);
 		for(Argomento argomento: argomenti) {
 			argomento.toString();
 		}
