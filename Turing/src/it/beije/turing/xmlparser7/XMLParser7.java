@@ -7,7 +7,7 @@ import java.io.IOException;
 
 /**
  * 
- * @author Cognome Nome, Cognome Nome
+ * @author De Gruttola Luigi, Pitossi Simone
  *
  */
 public class XMLParser7 {
