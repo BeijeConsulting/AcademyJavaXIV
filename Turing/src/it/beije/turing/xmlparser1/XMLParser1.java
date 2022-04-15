@@ -16,7 +16,7 @@ import it.beije.turing.xmlparser1.Interfaces.Elemento;
 public class XMLParser1 {
 
 	public static void main(String[] args) {
-		Documento test = DocumentoBuilder.parse(Paths.get("File", "Challenge", "test_parser6"
+		Documento test = DocumentoBuilder.parse(Paths.get("File", "Challenge", "test_parser4"
 				+ ".xml").toAbsolutePath().toString());
 		Elemento root = test.getDocumentElement();
 		
@@ -25,7 +25,7 @@ public class XMLParser1 {
 		System.out.println("Text Content: " + root.getTextContent());
 		System.out.println("id = "+root.getAttribute("id"));
 		System.out.println("eta = "+root.getAttribute("eta"));
-		List<Elemento> lE = root.getElementsByTagName("properties",new ArrayList<Elemento>(),0);
+		List<Elemento> lE = root.getElementsByTagName("contatto",new ArrayList<Elemento>(),0);
 		Elemento el = null;
 		System.out.println("Numero properties: " + lE.size());
 		for(int i = 0; i < lE.size(); i++) {
@@ -37,7 +37,7 @@ public class XMLParser1 {
 			System.out.println(lE.get(i).getAttribute("value"));
 		}
 		/*
-		List<Elemento> lE2 = el.getElementsByTagName("property",new ArrayList<Elemento>(),0);
+		List<Elemento> lE2 = el.getElementsByTagName("risposta",new ArrayList<Elemento>(),0);
 		System.out.println("Numero property: " + lE2.size());
 		for(int i = 0; i < lE2.size(); i++) {
 			System.out.println(lE2.get(i).getTagName());

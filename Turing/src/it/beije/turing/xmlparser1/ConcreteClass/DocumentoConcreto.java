@@ -41,14 +41,51 @@ public class DocumentoConcreto implements Documento {
 	}
 	
 	public Elemento getDocumentElement(){
-		String s = ToStringTestoTotale();
-		ElementoConcreto e = new ElementoConcreto(s);
+		ElementoConcreto e = null;
 		if(testoTotale.size() >= 2) {
 			if(testoTotale.size() == 2) {
-				
+				List<String> testoTotaleUnaRiga = new ArrayList<>();
+				for(int i = 0; i < testoTotale.get(1).length(); i++) {
+					if(testoTotale.get(1).charAt(i) == '<') {
+						for(int k = i+1; k < testoTotale.get(1).length(); k++) {
+							if(testoTotale.get(1).charAt(k) == '>') {
+								testoTotaleUnaRiga.add(testoTotale.get(1).substring(i,k+1));
+							}
+						}
+						
+					}
+				}
+				testoTotale = testoTotaleUnaRiga;
 			}
+			List<String> text = new ArrayList<>();
+			for(int i = 0; i < testoTotale.size(); i++) {
+				if(testoTotale.get(i).contains("<!--")) {
+					for(int k = i+1; k < testoTotale.size(); k++) {
+						if(testoTotale.get(k).contains("-->")) {
+							i = k;
+							break;
+						}
+					}
+				}else {
+					text.add(testoTotale.get(i));
+				}
+			}
+			setTestoTotale(text);
+			String s = ToStringTestoTotale();
+			try {
+				if(checkFileFormat()) {
+					throw new Exception("Formato file non corretto!");
+				}
+			}catch(Exception ex) {
+				ex.printStackTrace();
+				return null;
+			}
+			
+			e = new ElementoConcreto(s);
 			String tmp = testoTotale.get(1);
 			String tmp2 = testoTotale.get(testoTotale.size()-1);
+			tmp = tmp.trim();
+			tmp2 = tmp2.trim();
 			try {
 				if(tmp == null) {
 					throw new Exception("Formato riga 1 errato, null");
@@ -58,9 +95,11 @@ public class DocumentoConcreto implements Documento {
 				if(tmp.charAt(0) != '<' || tmp.charAt(tmp.length()-1) != '>') {
 					throw new Exception("Formato riga 1 errato");
 				} else if(tmp2.charAt(0) != '<' || tmp2.charAt(tmp2.length()-1) != '>') {
+					System.out.println("tmp2: "+tmp2);
 					throw new Exception("Formato ultima riga errato");
 				}
 				if(tmp.indexOf(" ") == -1) {
+					System.out.println(tmp.substring(1)+" "+ tmp2.substring(1));
 					if(!("/"+tmp.substring(1)).equals(tmp2.substring(1))) {
 						throw new Exception("TagName root non combacia");
 					}
@@ -77,12 +116,7 @@ public class DocumentoConcreto implements Documento {
 					for(int i = 0; i < bin.length(); i++) {
 						if(bin.charAt(i) == ' ') {
 							bin = bin.substring(i+1);
-							if(bin.indexOf("=") == -1) {
-								if(bin.contains("http")) {
-									
-								}
-								//throw new Exception("Formato errato, aspettato un =");
-							}
+							
 							String key = bin.substring(0,bin.indexOf("="));
 							String value;
 							if(bin.indexOf("\" ") == -1) {
@@ -117,8 +151,47 @@ public class DocumentoConcreto implements Documento {
 		return e;
 	}
 	
-	public void checkFileFormat() {
-		
+	//ritorna true se il file format è errato
+	private boolean checkFileFormat() {
+		List<String> openClose = new ArrayList<>();
+		String q = testoTotale.get(1).trim();
+		q = q.substring(1,q.length()-1);
+		openClose.add(q);
+		for(int i = 2; i < testoTotale.size(); i++) {
+			if(testoTotale.get(i).contains("<") && testoTotale.get(i).contains(">") && !testoTotale.get(i).contains("/")) {
+				if(testoTotale.get(i).contains(" ") && testoTotale.get(i).contains("=")) {
+					String s = testoTotale.get(i).trim();
+					s = s.substring(1,s.indexOf(" "));
+					openClose.add(s);
+				}else {
+					String s = testoTotale.get(i).trim();
+					s = s.substring(1,s.length()-1);		
+					openClose.add(s);				
+				}
+			} else if(testoTotale.get(i).contains("<") && testoTotale.get(i).contains(">") && testoTotale.get(i).contains("/")) {
+				String s = null;
+				if(testoTotale.get(i).contains("/>")) {
+					continue;
+				}else if(testoTotale.get(i).contains("</")) {
+					String check = testoTotale.get(i).trim();
+					s = testoTotale.get(i).trim();
+					s = s.substring(s.indexOf("/")+1,s.lastIndexOf(">"));
+					if(check.indexOf("<") != check.indexOf("</")) {
+						openClose.add(s);
+					}
+				}else {
+					s = testoTotale.get(i).trim();
+					s = s.substring(1,s.length()-1);
+				}
+				
+				if(!openClose.get(openClose.size()-1).equals(s)) {
+					System.out.println("Formato file non corretto! Errore sulla linea " + (i+1));
+					return true;
+				}
+				openClose.remove(openClose.size()-1);
+			}
+		}
+		return false;
 	}
 	
 }
