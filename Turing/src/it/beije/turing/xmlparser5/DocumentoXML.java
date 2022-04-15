@@ -21,6 +21,16 @@ public class DocumentoXML {
 	}
 	
 
+//	getChildNodes() //torna tutti i nodi "figli" interni all'elemento su cui viene eseguito
+//	getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
+//	getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome
+//	getTagName() //torna il nome del tag
+//	getTextContent() //torna il contenuto del tag
+//	getAttributes() //torna l'elenco degli attributi dell'elemento
+//	getAttribute(String attribute) //torna il valore dell'attributo specificato
+
+	
+
 
 	public List<String> getElementsByTagName(String tagName , String rootEle){
 		List<String> lista = new ArrayList<String>();
@@ -46,18 +56,7 @@ public class DocumentoXML {
 
 
 	//rimuove l intestazione del XML eventualmente esiste
-	public String removeDeclarationTag() {
-		String s = this.stringaFile;
-		String senzaIntestazione = null;
-		if(s.startsWith("<?") && s.contains("?>")) {
-			senzaIntestazione = s.substring(s.indexOf("?>") + 2);
-		}
-		if(senzaIntestazione != null) {
-			return senzaIntestazione;
-		}
-		return s;
-		
-	}
+	
 	
 	public Tag getNodeChild() {
 		String rootStringa = removeDeclarationTag();
@@ -75,24 +74,7 @@ public class DocumentoXML {
 		}
 		return root;
 	}
-	
-	public Tag getRootElement() {
-		String rootStringa = removeDeclarationTag();
-		String nome = getTagNameFromString(rootStringa).trim();
-		String textContent = getTextContentString(rootStringa);
 		
-		Tag root = new Tag(nome, textContent);
-		
-		List<String> childrenStringa = getChildElements(textContent);
-		
-		
-		for (String child : childrenStringa) {
-			Tag tagFiglio = new Tag(getTagNameFromString(child) , getTextContentString(child));
-			root.addTag(tagFiglio);
-		}
-		return root;
-	}
-	
 	public Tag buildDoc(Tag tag) {
 		String contentTag = tag.getContenuto();
 //		System.out.println(contentTag);
@@ -114,52 +96,12 @@ public class DocumentoXML {
 		return tag;
 	}
 
-	public String getContenutoFile(String path) {
-		StringBuilder s = new StringBuilder();
-		FileReader fr = null;
-		BufferedReader br = null;
-		try {
-			fr = new FileReader(path);
-			br = new BufferedReader(fr);
-
-			while (br.ready()) {
-				s.append((char) br.read());
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				fr.close();
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-		return s.toString();
-	}
-	
-//	public List<String> getNodeChild(String e) {
-//		List<String> figliInterni = new ArrayList<String>();
-//		List<String> figli = getChildElements(e);
-//		for (String string : figli) {
-//			figliInterni.addAll(getChildElements(string));
-//			System.out.println("STAMPA FIGLI DEI FIGLI");
-//			System.out.println(figliInterni);
-//		}
-//		return figliInterni;
-//	}
-	
 	public String getTextContentString(String el){
 		int indexBegin = el.indexOf("<", el.indexOf(">"));
 		int indexEnd = el.lastIndexOf("<");
 		String textContent = el.substring(indexBegin, indexEnd);
 		return textContent;
 	}
-	
 	
 	public List<String> getChildElements(String textContent) {
         List<String> children = new ArrayList<>();
@@ -193,7 +135,7 @@ public class DocumentoXML {
         return children;
     }
 	
-	public int getIndexOfChild(String el , String c) {
+	public int getIndexOfChild(String el , String c) { 
 		int index = el.indexOf(c , el.indexOf(">"));
 		return index;
 	}
@@ -219,4 +161,64 @@ public class DocumentoXML {
 		
 	}
 	
+	//--------------------------------------------CONCLUSO CHE FUNZIONA------------------------------------
+	
+	public Tag getRootElement() {
+		String rootStringa = removeDeclarationTag();
+		String nome = getTagNameFromString(rootStringa).trim(); // ritorna "contatti"
+		String textContent = getTextContentString(rootStringa); // ritorna tutto il contenuto del tag contatti
+		
+		Tag root = new Tag(nome, textContent);
+		
+		List<String> childrenStringa = getChildElements(textContent);
+		
+		
+		for (String child : childrenStringa) {
+			Tag tagFiglio = new Tag(getTagNameFromString(child) , getTextContentString(child));
+			root.addTag(tagFiglio);
+		}
+		return root;
+	}
+
+	public String getContenutoFile(String path) {
+		StringBuilder s = new StringBuilder();
+		FileReader fr = null;
+		BufferedReader br = null;
+		try {
+			fr = new FileReader(path);
+			br = new BufferedReader(fr);
+
+			while (br.ready()) {
+				s.append((char) br.read());
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fr.close();
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return s.toString();
+	}
+
+	public String removeDeclarationTag() {
+		String s = this.stringaFile;
+		String senzaIntestazione = null;
+		if(s.startsWith("<?") && s.contains("?>")) {
+			senzaIntestazione = s.substring(s.indexOf("?>") + 2);
+		}
+		if(senzaIntestazione != null) {
+			return senzaIntestazione;
+		}
+		return s;
+		
+	}
+
 }

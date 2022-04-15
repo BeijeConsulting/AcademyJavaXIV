@@ -52,8 +52,17 @@ public class Tag {
 
 	@Override
 	public String toString() {
-		return "Tag [nome=" + nome + ", attributi=" + attributi + ", contenuto=" + contenuto + ", children=" + children
-				+ "]";
+		StringBuilder sb = new StringBuilder();
+		sb.append("Nome " + this.nome + "\n");
+		sb.append("Contenuto " + this.contenuto + "\n");
+		for (Attributo attributo : attributi) {
+			sb.append("Attributo " + "\n" + attributo.toString() + "\n");
+		}
+		
+		for (Tag tag: children) {
+			sb.append("Child " + "\n" + tag.toString()  + "\n");
+		}
+		return sb.toString();
 	}
 	
 	
