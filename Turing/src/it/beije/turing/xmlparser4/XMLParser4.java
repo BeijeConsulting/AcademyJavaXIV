@@ -12,60 +12,22 @@ public class XMLParser4 {
 
 	public static void main(String[] args) 
 	{
-		FileParser fp = new FileParser();
-
-		List<String> list=fp.parseFile("tmp/test_parser4.xml");
-
-		XMLinterpreter xml = new XMLinterpreter(list);
+		DocXml doc = DocXml.parse("tmp/test_parser4.xml");
 		//xml.print();
-		test(xml);
-		//xml.print();
-		/*try {
-			Node root=xml.ParseRoot();
-			System.out.println("root ok");
-			List<Node> nodes= new ArrayList<>();
-			List<Node> nodes2= new ArrayList<>();
-			nodes=root.getChildNodes();
-			Node nodo1 = null;
-			for (Node el: nodes){
-				nodo1=el;
-			
-			System.out.println(nodo1.getTagName());
-			nodes2=nodo1.getChildNodes();
-			for (Node el2: nodo1.getChildNodes()){
-				System.out.println(el2.getTagName());
-			}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-
+		test(doc);
 	}
-	private static void test2(XMLinterpreter tool)
+	private static void test2(DocXml doc)
 	{
-		Node root=null;
-		try {
-			 root = tool.ParseRoot();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Node root=doc.getRootElement();
 		for(Node node : root.getElementsByTagName("nome"))
 		{
 			System.out.println(node.getTagName());
 		}
 		
 	}
-	private static void test(XMLinterpreter tool)
+	private static void test(DocXml doc)
 	{
-		Node root=null;
-		try {
-			 root = tool.ParseRoot();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Node root=doc.getRootElement();
 		System.out.println("il root è: "+root.getTagName());
 		if(root.hasChildren())
 		{
