@@ -137,50 +137,6 @@ public class DocumentoXML {
         return children;
     }
 	
-	public List<TagNamePosition> getListaNomeTag(String tag , String textContent){
-		List<TagNamePosition> l = new ArrayList<TagNamePosition>();
-		int verifica = 0;
-		int indice = -(tag.length());
-		while(indice != -1) {
-			indice = textContent.indexOf(tag , indice);
-			if(indice != -1) {
-				l.add(new TagNamePosition(tag, indice));
-				indice = indice + tag.length();
-			}
-		}
-		return l;
-	}
-	
-	public List<String> getSubStringAperturaChiusura(String textContent){
-		List<String> listaSub = new ArrayList<String>();
-		List<TagNamePosition> l4 = getListaNomeTag("<contatto" , textContent);
-		List<TagNamePosition> l5 = getListaNomeTag("</contatto" , textContent);
-		if(l4.size() != l5.size()) {
-			System.out.println("vedi entro nel null");
-			return null;
-		}
-		
-		for (int i = 0; i < l4.size(); i++) {
-			int indiceApertura = l4.get(i).getPosizione();
-			int indiceChiusura = l5.get(i).getPosizione();
-			int conta = 0;
-			for (TagNamePosition t : l4) {
-				if(t.getPosizione() > indiceApertura && t.getPosizione() < indiceChiusura) {
-					conta++;
-				}
-				if(conta != 0) { // && (l4.size() + conta) <= l4.size() verifica eccessiva 
-					TagNamePosition t1 = l5.get(i+conta);
-					System.out.println("conta " + conta);
-					System.out.println("conta + i " + (i + conta));
-					String s = textContent.substring(indiceApertura, t1.getPosizione()-1);
-					listaSub.add(s);
-				}
-			}
-			
-		}
-		return listaSub;
-	}
-	
 	public int getIndexOfChild(String el , String c) { 
 		int index = el.indexOf(c , el.indexOf(">"));
 		return index;
