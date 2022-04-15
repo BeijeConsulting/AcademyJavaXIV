@@ -7,4 +7,6 @@ public interface Node {
     ArrayList<Element> getChildNodes();
     
     //ciao
+    //ciao
+    //ciao
 }
