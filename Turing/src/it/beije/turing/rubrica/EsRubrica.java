@@ -312,7 +312,6 @@ public class EsRubrica {
     }
 
 
-
     public static void main(String[] args) throws Exception {
         EsRubrica es = new EsRubrica();
         // First exercise
