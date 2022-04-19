@@ -11,11 +11,49 @@ import java.util.List;
 
 public class XMLParser3 {
 
+//	public static void printElements(List<Node> elements, String tabs) {
+//		for (Node element : elements) {
+////			System.out.println(tabs + "element : " + element);
+//			System.out.println(tabs + "element.getTagName() : " + element.getTagName());
+////			System.out.println(tabs + "element.getTextContent() : " + element.getTextContent());
+//			System.out.println(tabs + "element.getChildNodes() : " + element.getChildNodes());
+//			List<Node> innerElements = element.getChildElements();
+//			System.out.println(tabs + "element.getChildElements() : " + innerElements);
+//			System.out.println(tabs + "element.getElementsByTagName(\"contatto\") : " + element.getElementsByTagName("contatto"));
+//			System.out.println(tabs + "element.getElementsByTagName(\"altro\") : " + element.getElementsByTagName("altro"));
+//			System.out.println(tabs + "element.getAttributes() : " + element.getAttributes());
+//			System.out.println(tabs + "element.getAttribute(\"name\") : " + element.getAttribute("name"));
+//			
+//			if (innerElements != null && !innerElements.isEmpty()) {
+//				printElements(innerElements, tabs + '\t');
+//			}
+//		}
+//	}
+//	
+//	public static void testChallenge(String path) {
+//		Documento d = Documento.getIstance().parse(path);
+//
+//		Elemento root = d.getRootElement();
+////		System.out.println("root : " + root);
+//		System.out.println("root.getTagName() : " + root.getTagName());
+//		System.out.println("root.getTextContent() : " + root.getTextContent());
+//		List<TreeNode<Elemento>> nodes = root.getChildNodes();
+//		System.out.println("root.getChildNodes() : " + nodes);
+////		System.out.println("root.getChildElements() : " + elements);
+//		System.out.println("root.getElementsByTagName(\"contatto\") : " + root.getElementsByTagName("contatto"));
+//		System.out.println("root.getElementsByTagName(\"altro\") : " + root.getElementsByTagName("altro"));
+//		System.out.println("root.getAttributes() : " + root.getAttributes());
+//		System.out.println("root.getAttribute(\"question\") : " + root.getAttribute("question"));
+//		
+//		printElements(elements, "\t");
+//	}
+//
+//	public static void main(String[] args) {
+//		testChallenge("/tmp/test_parser1.xml");
+//	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-
-
-		Documento d = Documento.getIstance().parse("Turing/res/test_parser6.xml");
+		Documento d = Documento.getIstance().parse("/tmp/test_parser2.xml");//"Turing/res/test_parser6.xml");
 
 		Elemento contatti = d.getRootElement();
 
