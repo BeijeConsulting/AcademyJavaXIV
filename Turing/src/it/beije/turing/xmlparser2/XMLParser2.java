@@ -2,6 +2,7 @@ package it.beije.turing.xmlparser2;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.xml.sax.SAXException;
 
@@ -28,7 +29,52 @@ import org.xml.sax.SAXException;
  */
 public class XMLParser2 {
 
+	public static void printElements(List<Element> elements, String tabs) {
+		for (Element element : elements) {
+//			System.out.println(tabs + "element : " + element);
+			System.out.println(tabs + "element.getTagName() : " + element.getTagName());
+//			System.out.println(tabs + "element.getTextContent() : " + element.getTextContent());
+			System.out.println(tabs + "element.getChildNodes() : " + element.getChildNodes());
+			List<Element> innerElements = element.getChildElements();
+			System.out.println(tabs + "element.getChildElements() : " + innerElements);
+			System.out.println(tabs + "element.getElementsByTagName(\"contatto\") : " + element.getElementsByTagName("contatto"));
+			System.out.println(tabs + "element.getElementsByTagName(\"altro\") : " + element.getElementsByTagName("altro"));
+			System.out.println(tabs + "element.getAttributes() : " + element.getAttributes());
+			System.out.println(tabs + "element.getAttribute(\"name\") : " + element.getAttribute("name"));
+			
+			if (innerElements != null && !innerElements.isEmpty()) {
+				printElements(innerElements, tabs + '\t');
+			}
+		}
+	}
+	
+	public static void testChallenge(String path) throws IOException, SAXException {
+		Document document = new Document(XML_Reader.readText(path));
+		ArrayList<StringBuilder> contentSup = new ArrayList<StringBuilder>(document.content);
+
+		Node rootNode = Node.getNodes(contentSup);
+		Element root = document.getRootElement(rootNode);
+		
+//		System.out.println("root : " + root);
+		System.out.println("root.getTagName() : " + root.getTagName());
+		System.out.println("root.getTextContent() : " + root.getTextContent());
+		System.out.println("root.getChildNodes() : " + root.getChildNodes());
+		List<Element> elements = root.getChildElements();
+		System.out.println("root.getChildElements() : " + elements);
+		System.out.println("root.getElementsByTagName(\"contatto\") : " + root.getElementsByTagName("contatto"));
+		System.out.println("root.getElementsByTagName(\"altro\") : " + root.getElementsByTagName("altro"));
+		System.out.println("root.getAttributes() : " + root.getAttributes());
+		System.out.println("root.getAttribute(\"question\") : " + root.getAttribute("question"));
+		
+		printElements(elements, "\t");
+	}
+
 	public static void main(String[] args) throws IOException, SAXException {
+		
+		testChallenge("/tmp/test_parser6.xml");
+	}
+
+	public static void main2(String[] args) throws IOException, SAXException {
 		
 		Document document = new Document(XML_Reader.readText("/Users/lorenzoorru0/Desktop/CSVjava/test_parser6.xml"));
 		//System.out.println(document.content);
