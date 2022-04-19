@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name = "it.beije.turing.rubrica.Contatto" table = "rubrica">
+      
+      <meta attribute = "class-description">
+         This class contains the contatti detail.
+      </meta>
+      
+      <id name = "id" type = "int" column = "id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "cognome" column = "cognome" type = "string"/>
+      <property name = "nome" column = "nome" type = "string"/>
+      <property name = "telefono" column = "telefono" type = "string"/>
+      <property name = "email" column = "email" type = "string"/>
+      
+   </class>
+</hibernate-mapping>
