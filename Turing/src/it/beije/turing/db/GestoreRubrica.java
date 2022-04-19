@@ -30,9 +30,9 @@ public class GestoreRubrica {
 		System.out.println("5- Cancella contatto (delete)");
 		System.out.println("6- Trova contatti duplicati (findDup)");
 		System.out.println("7- Unisci contatti duplicati (mergeDup)");
-		System.out.println("8- Esci dal gestore della rubrica (exit)");
-		System.out.println("9- Export Database (export)");
-		System.out.println("10- Import to Database (import)");
+		System.out.println("8- Export Database (export)");
+		System.out.println("9- Import to Database (import)");
+		System.out.println("10- Esci dal gestore della rubrica (exit)");
 		System.out.print("Scrivi la parola tra parentesi per la funzione che vuoi avviare sulla rubrica inserita: ");
 	}
 	
@@ -61,7 +61,6 @@ public class GestoreRubrica {
 	public static void stampaRubrica(List<Contatto> contatti, Scanner s) {
 		//Scanner s = new Scanner(System.in);
 		List<Contatto> contattiSupport = null;
-		int i = 0;
 		int x = 0;
 		
 		do {
@@ -111,8 +110,7 @@ public class GestoreRubrica {
 		} while(x == 0);
 		
 		for(Contatto c : contatti) {
-			System.out.println(i +" - "+ c);
-			i++;
+			System.out.println(c);
 		}
 	}
 	
@@ -147,8 +145,9 @@ public class GestoreRubrica {
 		}
 	}
 	
-	public static Scanner inserisciContatto(List<Contatto> contatti, Scanner s) {
+	public static Scanner inserisciContatto(Scanner s) {
 		Contatto contatto = new Contatto();
+		List<Contatto> contatti = new ArrayList<>();
 		s = new Scanner(System.in);
 		
 		System.out.print("\nInserisci il nome : ");
@@ -170,12 +169,28 @@ public class GestoreRubrica {
 //			XMLmanager.writeRubricaXML(contatti, path);
 //		}
 		
+		HBmanager.saveIntoDB(contatti);
+		
 		System.out.println("Contatto inserito -> " + contatto);
 		return s;
 	}
 	
-	public static void modificaContatto(List<Contatto> contatti) {
-		System.out.println("Modifica Contatto");
+	public static void modificaContatto(List<Contatto> contatti, Scanner s) {
+		String str = "";
+		
+		for(Contatto c : contatti) {
+			System.out.println(c);
+		}
+		
+		System.out.println("Inserisci l'id del contatto che vuoi modificare: ");
+		str = s.next();
+		
+		Contatto contatto = null;
+		for(Contatto c : contatti) {
+			if(c.getId() == Integer.parseInt(str)) {
+				contatto = c;
+			}
+		}
 	}
 	
 	public static void eliminaContatto(List<Contatto> contatti) {
@@ -252,7 +267,7 @@ public class GestoreRubrica {
 					}
 				} while(y == 0);
 				try {
-					JDBCmanager.importFromCSV(str, separator, virgolette);
+					HBmanager.importFromCSV(str, separator, virgolette);
 					j++;
 					System.out.println("<<Import avvenuto con successo>>");
 				} catch (IOException ioEx) {
@@ -260,7 +275,7 @@ public class GestoreRubrica {
 				}
 			} else if(typeFile.equals("xml")) {
 				try {
-					JDBCmanager.importFromXML(str);
+					HBmanager.importFromXML(str);
 					j++;
 					System.out.println("<<Import avvenuto con successo>>");
 				} catch(IOException ioEx) {
@@ -334,30 +349,36 @@ public class GestoreRubrica {
 		String st = s.next();
 		while (!st.equalsIgnoreCase("exit")) {
 			st = st.toLowerCase();
-			contatti = JDBCmanager.getRubrica();
 			switch(st) {
 				case "print":
+					contatti = HBmanager.getRubrica();
 					stampaRubrica(contatti, s);
 					break;
 				case "find":
+					contatti = HBmanager.getRubrica();
 					trovaContatto(contatti, s);
 					break;
 				case "insert":
-					s = inserisciContatto(contatti, s);
+					s = inserisciContatto(s);
 					break;
 				case "modify":
-					modificaContatto(contatti);
+					contatti = HBmanager.getRubrica();
+					modificaContatto(contatti, s);
 					break;
 				case "delete":
+					contatti = HBmanager.getRubrica();
 					eliminaContatto(contatti);
 					break;
 				case "finddup":
+					contatti = HBmanager.getRubrica();
 					trovaContattiDuplicati(contatti);
 					break;
 				case "mergedup":
+					contatti = HBmanager.getRubrica();
 					unisciContattiDuplicati(contatti);
 					break;
 				case "export":
+					contatti = HBmanager.getRubrica();
 					exportDatabase(contatti, s);
 					break;
 				case "import":
