@@ -12,9 +12,6 @@ import javax.persistence.Table;
 @Table(name = "rubrica")
 public class Contatto {
 
-	private int id;
-
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
