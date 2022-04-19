@@ -66,15 +66,9 @@ public class SQLManager implements OpRubrica{
             boolean r = statement.execute(s.toString());
             if(r){
                  resultSet= statement.getResultSet();
+
                 while (resultSet.next()){
-                    Contatto c = new Contatto();
-                    c.setId(resultSet.getInt("ID"));
-                    c.setNome(resultSet.getString("Nome"));
-                    c.setCognome(resultSet.getString("Cognome"));
-                    c.setEmail(resultSet.getString("Email"));
-                    c.setTelefono(resultSet.getString("Telefono"));
-                    c.setEmail(resultSet.getString("Email"));
-                    lista.add(c);
+                   lista.add(createContatto(resultSet));
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -83,62 +77,140 @@ public class SQLManager implements OpRubrica{
             close(connection, statement, resultSet);
         }
 
-
-
-
-
-
-
         return lista;
+    }
+
+    private Contatto createContatto(ResultSet resultSet) throws SQLException {
+        Contatto c = new Contatto();
+        c.setId(resultSet.getInt("ID"));
+        c.setNome(resultSet.getString("Nome"));
+        c.setCognome(resultSet.getString("Cognome"));
+        c.setEmail(resultSet.getString("Email"));
+        c.setTelefono(resultSet.getString("Telefono"));
+        c.setNote(resultSet.getString("Note"));
+        return c;
     }
 
     @Override
     public List<Contatto> search(String s) {
-        return null;
+        StringBuilder sql=new StringBuilder("Select * from rubrica WHERE nome LIKE \'"+s+"%\' OR "+
+                "cognome LIKE \'"+s+"%\' OR "+
+                "email LIKE \'"+s+"%\' OR "+
+                "telefono LIKE \'"+s+"%\' OR "+
+                "note LIKE \'"+s+"%\'");
+        Connection connection=null;
+        Statement statement= null;
+        ResultSet resultSet=null;
+        List<Contatto> result=new ArrayList<>();
+        try {
+            connection=getConnection();
+            statement= connection.createStatement();
+            ResultSet rs= statement.executeQuery(sql.toString());
+
+            while (rs.next()){
+                result.add(createContatto(rs));
+            }
+
+        }catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            close(connection, statement, resultSet);
+        }
+        return result;
     }
 
     @Override
-    public void insert(Contatto c) {
+    public boolean insert(Contatto c) {
+        boolean result=false;
+
+        StringBuilder sql= new StringBuilder("INSERT INTO Rubrica Values( ");
+        sql.append(" null,");
+        sql.append("\'"+c.getNome()+"\',");
+        sql.append("\'"+c.getCognome()+"\',");
+        sql.append("\'"+c.getEmail()+"\',");
+        sql.append("\'"+c.getTelefono()+"\',");
+        sql.append("\'"+c.getNote()+"\'");
+        sql.append(" )");
+
+
+        Connection connection=null;
+        Statement statement= null;
+        try {
+            connection = getConnection();
+            statement= connection.createStatement();
+            result= statement.executeUpdate(sql.toString())>=1;
+        } catch (ClassNotFoundException e) {
+          e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
 
     }
 
     @Override
-    public void modificaContatto(Contatto c) {
+    public boolean modificaContatto(Contatto c) {
+        Connection connection=null;
+        Statement statement= null;
+        boolean b=false;
+        StringBuilder sql= new StringBuilder("UPDATE Rubrica SET");
+        sql.append(" nome=\'"+c.getNome()+"\'");
+        sql.append(", cognome=\'"+c.getCognome()+"\'");
+        sql.append(", email=\'"+c.getEmail()+"\'");
+        sql.append(", telefono=\'"+c.getTelefono()+"\'");
+        sql.append(", note=\'"+c.getNote()+"\'");
+        sql.append(" where id=\'"+c.getId()+"\'");
 
+        System.out.println(sql);
+        try {
+            connection=getConnection();
+            statement=connection.createStatement();
+           b= statement.executeUpdate(sql.toString()) >= 1;
+        } catch (ClassNotFoundException e) {
+           e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return b;
     }
 
     @Override
     public void deleteContatto(Contatto c) {
+        //TODO
 
     }
 
     @Override
     public List<Contatto> contattiDuplicati() {
+        //TODO
         return null;
     }
 
     @Override
     public void unisciContatti() {
+        //TODO
 
     }
 
     @Override
     public List<Contatto> importFromCVS(String path) {
+        //TODO
         return null;
     }
 
     @Override
     public List<Contatto> importFromXML(String path) {
+        //TODO
         return null;
     }
 
     @Override
     public void exportFromCVS(String path, List<Contatto> contatti) {
-
+        //TODO
     }
 
     @Override
     public void exportFromXML(String path, List<Contatto> contatti) {
-
+        //TODO
     }
 }

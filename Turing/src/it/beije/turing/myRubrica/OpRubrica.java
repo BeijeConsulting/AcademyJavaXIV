@@ -12,8 +12,8 @@ public interface OpRubrica {
 
     public List<Contatto> showContact(Order order);
     public List<Contatto> search(String s);
-    public void insert(Contatto c);
-    public void modificaContatto(Contatto c);
+    public boolean insert(Contatto c);
+    public boolean modificaContatto(Contatto c);
     public void deleteContatto(Contatto c);
     public List<Contatto> contattiDuplicati();
     public void unisciContatti();
