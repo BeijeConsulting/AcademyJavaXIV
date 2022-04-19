@@ -33,29 +33,29 @@ public class HBManager {
 			//Transaction transaction = session.beginTransaction();
 //			Transaction transaction = session.getTransaction();
 //			transaction.begin();
-			
-//			//INSERT
+//			
+////			//INSERT
 //			Contatto newContatto = new Contatto();
 //			newContatto.setId(3);
 //			newContatto.setCognome("Giuseppe");
 //			newContatto.setNome("Verde");
 //			newContatto.setEmail("g.verde@beije.it");
 //			System.out.println("contatto PRE : " + newContatto);
-//			
+////			
 //			session.save(newContatto);
-//			
+////			
 //			System.out.println("contatto POST : " + newContatto);
-
-			
+//
+//			
 			//SELECT HQL
-			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
-			List<Contatto> contatti = query.getResultList();
-			
-			Contatto contatto = null;
-			for (Contatto c : contatti) {
-				System.out.println(c);
-				if (c.getId() == 12) contatto = c;
-			}
+//			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
+//			List<Contatto> contatti = query.getResultList();
+//			
+//			Contatto contatto = null;
+//			for (Contatto c : contatti) {
+//				System.out.println(c);
+//				if (c.getId() == 12) contatto = c;
+//			}
 
 			
 //			//UPDATE
