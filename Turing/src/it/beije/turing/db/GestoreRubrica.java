@@ -175,7 +175,7 @@ public class GestoreRubrica {
 		return s;
 	}
 	
-	public static void modificaContatto(List<Contatto> contatti, Scanner s) {
+	public static Scanner modificaContatto(List<Contatto> contatti, Scanner s) {
 		String str = "";
 		
 		for(Contatto c : contatti) {
@@ -191,6 +191,21 @@ public class GestoreRubrica {
 				contatto = c;
 			}
 		}
+		
+		s = new Scanner(System.in);
+		System.out.print("\nInserisci il nome : ");
+		contatto.setNome(s.nextLine());
+		System.out.print("Inserisci il cognome : ");
+		contatto.setCognome(s.nextLine()); 
+		System.out.print("Inserisci il numero di telefono : ");
+		contatto.setTelefono(s.nextLine()); 
+		System.out.print("Inserisci l' email : ");
+		contatto.setEmail(s.nextLine()); 
+		System.out.print("Inserisci il note : ");
+		contatto.setNote(s.nextLine()); 
+		
+		HBmanager.updateDB(contatto, contatto.getId());
+		return s;
 	}
 	
 	public static void eliminaContatto(List<Contatto> contatti) {

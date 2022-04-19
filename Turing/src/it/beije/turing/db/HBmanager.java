@@ -90,7 +90,59 @@ public class HBmanager {
 		}
 	}
 	
-	
+	public static void updateDB(Contatto contattoNuovo, int id) {
+		Session session = null;
+		try {
+			Configuration configuration = new Configuration().configure()
+					.addAnnotatedClass(Contatto.class);							
+
+			SessionFactory sessionFactory = configuration.buildSessionFactory();
+
+			session = sessionFactory.openSession();
+			
+			Transaction transaction = session.beginTransaction();
+			
+			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
+			List<Contatto> contatti = query.getResultList();
+			
+			Contatto contatto = null;
+			for (Contatto c : contatti) {
+				if (c.getId() == id) contatto = c;
+			}
+
+			
+			//UPDATE
+			
+			System.out.println(contattoNuovo.getNome());
+			if(!contattoNuovo.getNome().equals("")) {
+				contatto.setNome(contattoNuovo.getNome());
+			}
+			if(!contattoNuovo.getCognome().equals("")) {
+				contatto.setCognome(contattoNuovo.getCognome());
+			}
+			if(!contattoNuovo.getTelefono().equals("")) {
+				contatto.setTelefono(contattoNuovo.getTelefono());
+			}
+			if(!contattoNuovo.getEmail().equals("")) {
+				contatto.setEmail(contattoNuovo.getEmail());
+			}
+			if(!contattoNuovo.getNote().equals("")) {
+				contatto.setNote(contattoNuovo.getNote());
+			}
+			
+			session.save(contatto);
+
+			transaction.commit();
+		} catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			session.close();
+		}
+	}
 	
 	public static void main(String[] args) {
 		
