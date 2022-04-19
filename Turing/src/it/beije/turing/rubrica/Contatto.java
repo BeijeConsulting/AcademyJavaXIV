@@ -35,6 +35,7 @@ public class Contatto {
 	
 	public Contatto()
 	{
+		this.id = -1;
 		this.nome = "";
 		this.cognome = "";
 		this.telefono = "";
@@ -44,6 +45,16 @@ public class Contatto {
 	
 	public Contatto(String nome, String cognome, String telefono, String email, String note)
 	{
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+		this.note = note;
+	}
+	
+	public Contatto(int id, String nome, String cognome, String telefono, String email, String note)
+	{
+		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.telefono = telefono;

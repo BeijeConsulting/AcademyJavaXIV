@@ -282,10 +282,10 @@ public class Rubrica
 	{
 		Scanner kb = null;
 		boolean riprova = false;
-		
+		JDBChandler jdbcHandler = new JDBChandler();
 		do
 		{
-			if (contatti.size() == 0) System.out.println("Rubrica non caricata. Solo creazione nuovi contatti disponibile.");
+			if (s == 2 && contatti.size() == 0) System.out.println("Rubrica non caricata. Solo creazione nuovi contatti disponibile.");
 			
 			menuContatti();
 			
@@ -293,7 +293,7 @@ public class Rubrica
 			
 			kb = new Scanner(System.in);
 			int scelta = kb.nextInt();
-			if (contatti.size() == 0 && scelta != 3 && scelta != 8) scelta = -1;
+			if (s == 2 && contatti.size() == 0 && scelta != 3 && scelta != 8) scelta = -1;
 			
 			
 			switch(scelta)
@@ -301,7 +301,29 @@ public class Rubrica
 				case 1:			//VISUALIZZA CONTATTI
 					if (s == 1)
 					{
+						System.out.print("Vuoi riordinare la rubrica? ");
+						String riordina = kb.next().toLowerCase();
+						String filtro = null;
+						switch(riordina)
+						{
+							case "si":
+							case "sì":
+							case "yes":
+							case "y":
+								System.out.print("Criterio di ordinamento (nome, cognome, telefono, email, note): ");
+								filtro = kb.next().toLowerCase();
+								System.out.println();
+								break;
+								
+							default:
+								filtro = "";
+								break;
+						}
 						
+						for(Contatto c : jdbcHandler.getRubrica(filtro))
+						{
+							System.out.println(c);
+						}						
 					}
 					else
 					{
@@ -333,95 +355,128 @@ public class Rubrica
 					break;
 					
 				case 2:				//CERCA CONTATTO
+					System.out.print("Valore di ricerca: ");
+					String filtro = kb.next();
+					System.out.println();
+					List<Contatto> contacts = new ArrayList<>();
+					
 					if (s == 1)
 					{
-						
+						contacts = jdbcHandler.findContatto(filtro);
 					}
 					else
 					{
-						System.out.print("Valore di ricerca: ");
-						String filtro = kb.next();
-						System.out.println();
-						List<Contatto> contacts = cercaContatto(filtro);
-						
-						if (contacts.isEmpty()) System.out.println("Nessuno contatto corrisponde ai criteri di ricerca.");
-						else
+						contacts = cercaContatto(filtro);						
+					}
+					
+					if (contacts.isEmpty()) System.out.println("Nessuno contatto corrisponde ai criteri di ricerca.");
+					else
+					{
+						for(Contatto contatto : contacts)
 						{
-							for(Contatto contatto : contacts)
-							{
-								System.out.println(contatto.toString());
-							}
+							System.out.println(contatto.toString());
 						}
 					}
 					break;
 					
 				case 3:			//CREA CONTATTO
+					
+					kb.nextLine();
+					
+					System.out.print("Nome: ");
+					String nome = kb.nextLine();
+					System.out.println();
+					
+					System.out.print("Cognome: ");
+					String cognome = kb.nextLine();
+					System.out.println();
+					
+					System.out.print("Telefono: ");
+					String telefono = kb.nextLine();
+					System.out.println();
+					
+					System.out.print("Email: ");
+					String email = kb.nextLine();
+					System.out.println();
+					
+					System.out.print("Note: ");
+					String note = kb.nextLine();
+					System.out.println();
+					
 					if (s == 1)
 					{
-						
+						System.out.println(jdbcHandler.addContatto(new Contatto(nome, cognome, telefono, email, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					}
 					else
 					{
-						kb.nextLine();
-						
-						System.out.print("Nome: ");
-						String nome = kb.nextLine();
-						System.out.println();
-						
-						System.out.print("Cognome: ");
-						String cognome = kb.nextLine();
-						System.out.println();
-						
-						System.out.print("Telefono: ");
-						String telefono = kb.nextLine();
-						System.out.println();
-						
-						System.out.print("Email: ");
-						String email = kb.nextLine();
-						System.out.println();
-						
-						System.out.print("Note: ");
-						String note = kb.nextLine();
-						System.out.println();
-						
 						System.out.println(contatti.add(new Contatto(nome, cognome, telefono, email, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					}
 					break;
 					
 				case 4:			//MODIFICA CONTATTO
+					System.out.println("Posizione in rubrica del contatto da modificare: ");
+					int pos = kb.nextInt();
+					
 					if (s == 1)
 					{
+						kb.nextLine();
 						
+						System.out.print("Nome: ");
+						String n = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Cognome: ");
+						String c = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Telefono: ");
+						String t = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Email: ");
+						String e = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Note: ");
+						String no = kb.nextLine();
+						System.out.println();
+						
+						Contatto cont = new Contatto(n, c, t, e, no);
+						jdbcHandler.modifyContatto(pos, cont);
 					}
 					else
 					{
-						System.out.println("Posizione in rubrica del contatto da modificare: ");
-						int pos = kb.nextInt();
 						modificaContatto(pos);
 					}
 					break;
 					
 				case 5:			//CANCELLA CONTATTO
+					System.out.println("Posizione in rubrica del contatto da eliminare: ");
+					int posizione = kb.nextInt();
+					
 					if (s == 1)
 					{
-						
+						jdbcHandler.deleteContatto(posizione);
 					}
 					else
 					{
-						System.out.println("Posizione in rubrica del contatto da eliminare: ");
-						int posizione = kb.nextInt();
 						cancellaContatto(posizione);
 					}
 					break;
 					
 				case 6:			//TROVA DUPLICATI
+					List<Contatto> duplicati = new ArrayList<>();
 					if (s == 1)
 					{
-						
+						duplicati = jdbcHandler.findDuplicates();
+						for(Contatto c : duplicati)
+						{
+							System.out.println(c + ", found");
+						}
 					}
 					else
 					{
-						List<Contatto> duplicati = cercaDuplicati(false);
+						duplicati = cercaDuplicati(false);
 						
 						String[] indici = duplicati.get(0).getNome().split(",");
 						int counter = indici.length-1;
@@ -445,13 +500,21 @@ public class Rubrica
 					break;
 					
 				case 7:			//UNISCI DUPLICATI
+					List<Contatto> duplicatiUniti = new ArrayList<>();
+					
 					if (s == 1)
 					{
+						jdbcHandler.uniteDuplicates();
+						
+						for(Contatto c : jdbcHandler.getRubrica(""))
+						{
+							System.out.println(c);
+						}
 						
 					}
 					else
 					{
-						List<Contatto> duplicatiUniti = cercaDuplicati(true);
+						duplicatiUniti = cercaDuplicati(true);
 						contatti = duplicatiUniti;
 						visualizzaContatti("");
 					}
