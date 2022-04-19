@@ -15,9 +15,52 @@ import java.util.Scanner;
  *
  */
 
-public class XMLParser6
-{
-	public static void main(String[] args) throws FileNotFoundException, IllegalArgumentException
+public class XMLParser6 {
+	
+//	public static void printElements(List<Node> elements, String tabs) {
+//		for (Node element : elements) {
+////			System.out.println(tabs + "element : " + element);
+//			System.out.println(tabs + "element.getTagName() : " + element.getTagName());
+////			System.out.println(tabs + "element.getTextContent() : " + element.getTextContent());
+//			System.out.println(tabs + "element.getChildNodes() : " + element.getChildNodes());
+//			List<Node> innerElements = element.getChildElements();
+//			System.out.println(tabs + "element.getChildElements() : " + innerElements);
+//			System.out.println(tabs + "element.getElementsByTagName(\"contatto\") : " + element.getElementsByTagName("contatto"));
+//			System.out.println(tabs + "element.getElementsByTagName(\"altro\") : " + element.getElementsByTagName("altro"));
+//			System.out.println(tabs + "element.getAttributes() : " + element.getAttributes());
+//			System.out.println(tabs + "element.getAttribute(\"name\") : " + element.getAttribute("name"));
+//			
+//			if (innerElements != null && !innerElements.isEmpty()) {
+//				printElements(innerElements, tabs + '\t');
+//			}
+//		}
+//	}
+	
+	public static void testChallenge(String path) throws FileNotFoundException {
+		XMLDocument document = parse(readFile(path));
+
+		Elemento root = document.getRootElement();
+//		System.out.println("root : " + root);
+		System.out.println("root.getTagName() : " + root.getTagName());
+		System.out.println("root.getTextContent() : " + root.getTextContent());
+		System.out.println("root.getChildNodes() : " + root.getChildNodes());
+		List<Elemento> elements = document.getListElement();
+		System.out.println("root.getChildElements() : " + elements);
+		System.out.println("root.getElementsByTagName(\"contatto\") : " + root.getElementsByTagName("contatto"));
+		System.out.println("root.getElementsByTagName(\"altro\") : " + root.getElementsByTagName("altro"));
+		System.out.println("root.getAttributes() : " + root.getAttributes());
+		System.out.println("root.getAttribute(\"question\") : " + root.getAttribute("question"));
+		
+		//printElements(elements, "\t");
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		//testChallenge("/tmp/test_parser1.xml");
+		originalMain(args);
+	}
+
+	
+	public static void originalMain(String[] args) throws FileNotFoundException, IllegalArgumentException
 	{
 		Scanner kb = new Scanner(System.in);								//creo tastiera
 		System.out.print("Inserire path: ");
