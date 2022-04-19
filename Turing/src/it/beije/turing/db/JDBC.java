@@ -6,17 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-public class JDBCmanager {
+public class JDBC {
 	
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		
+	
 		return DriverManager.getConnection("jdbc:mysql://localhost:3306/turing?serverTimezone=CET", "root", "provezza");
 	}
 
 	public static void main(String[] args) {
 		
+
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet rs = null;
@@ -25,10 +25,10 @@ public class JDBCmanager {
 			statement = connection.createStatement();
 			
 			//INSERT
-			//statement.executeUpdate("INSERT INTO rubrica VALUES (null, 'mario', 'rossi', 'm.rossi@beije.it', '5355223532', null)");
+			//statement.executeUpdate("INSERT INTO rubrica VALUES (null, 'Piero', 'Verde', 'l.verde@beije.it', '5355223532', null)");
 			
 			//UPDATE
-			//statement.executeUpdate("UPDATE rubrica SET telefono = '12345' where id = 2");
+			//statement.executeUpdate("UPDATE rubrica SET telefono = '123452' where id = 2");
 
 			//DELETE
 			//statement.executeUpdate("DELETE FROM rubrica where id = 4");
