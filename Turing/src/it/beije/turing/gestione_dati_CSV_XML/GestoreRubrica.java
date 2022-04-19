@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.directory.ModificationItem;
+
+import it.beije.turing.db.HibernateManager;
 import it.beije.turing.file.Writer;
 import it.beije.turing.file.csv.CSVReader2;
 import it.beije.turing.rubrica.Contatto;
@@ -13,15 +16,25 @@ import it.beije.turing.rubrica.RubricaInterpreteXML;
 public class GestoreRubrica {
 private static final String BASE_RUBRIC="tmp/Test.txt";
 private List<Contatto> list;
+private List<Contatto> newEntries;
+private List<Contatto> modifiedEntries;
 private static GestoreRubrica self;
+private HibernateManager db;
 
 private GestoreRubrica()
 {
+	db=new HibernateManager();
 	list = new ArrayList<Contatto>();
-	File file = new File(BASE_RUBRIC);
+	newEntries=new ArrayList<Contatto>();
+	modifiedEntries=new ArrayList<>();
+	/*File file = new File(BASE_RUBRIC);
 	if(file.exists()&&file.isFile())
 	{
 		RubricImportCSV(BASE_RUBRIC,true);
+	}*/
+	for(Contatto c : db.DbGetContatti())
+	{
+		list.add(c);
 	}
 }
 
@@ -40,25 +53,49 @@ public void RubricImportCSV(String fileName, boolean apici) {
  List<Contatto> tmp = CSVReader2.readCSV(fileName, apici);
  for(Contatto c : tmp)
  {
-	 list.add(c);
+	 newEntries.add(c);
  }
 	}
 
 public List<Contatto> getList()
 {
-	return list;
+	List<Contatto> tmp = new ArrayList<>();
+	for(Contatto c:list)
+	{
+		tmp.add(c);
+	}
+	for(Contatto c:newEntries)
+	{
+		tmp.add(c);
+	}
+	for(Contatto c:modifiedEntries)
+	{
+		tmp.add(c);
+	}
+	return tmp;
 }
 
 
 public void save() {
-	StringBuilder builder = new StringBuilder();
+	/*StringBuilder builder = new StringBuilder();
 	RubricaInterpreteCSV interprete = new RubricaInterpreteCSV();
 	builder.append(interprete.getHeader()+"\n");
 	for(Contatto c : list)
 	{
 		builder.append(interprete.toCSV(c)+"\n");
 	}
-	save(builder.toString());
+	save(builder.toString());*/
+	db.SaveContattiToDB(newEntries);
+	for(Contatto c: newEntries)
+	{
+		list.add(c);
+	}
+	newEntries = new ArrayList<>();
+	for(Contatto c : modifiedEntries)
+	{
+		db.update(c);
+	}
+	modifiedEntries=new ArrayList<>(); 
 }
 
 
@@ -129,7 +166,7 @@ private void printOrdinaPerNome() {
 public void print()
 {
 	int count=0;
-	for(Contatto c: list)
+	for(Contatto c: getList())
 	{
 		System.out.println(++count+")  "+c);
 	}
@@ -158,13 +195,6 @@ public void search(String nome, String cognome, String telefono, String email) {
 public void add(String nome, String cognome, String telefono, String email,String note)
 {
 	Contatto c = new Contatto();
-	list.add(c);
-	modify(list.size()-1,nome,cognome,telefono,email,note);
-}
-
-
-public void modify(int x,String nome, String cognome, String telefono, String email,String note) {
-	Contatto c = list.get(x);
 	if(!nome.equalsIgnoreCase("X"))
 	{
 		c.setNome(nome);
@@ -186,6 +216,52 @@ public void modify(int x,String nome, String cognome, String telefono, String em
 		c.setNote(note);
 	}
 	
+	newEntries.add(c);
+}
+//new Fiora White 546813287 x x   modify 7 x  x x fio@white.it x
+
+public void modify(int x,String nome, String cognome, String telefono, String email,String note) {
+	Contatto c = null;
+	boolean wasExisting=true;
+	if (x>=list.size())
+	{
+		int y = x-list.size();
+		if(x>=list.size()+newEntries.size())
+		{
+			c=modifiedEntries.get(y-newEntries.size());
+		}
+		else {
+		c = newEntries.get(x-list.size());
+		}
+			wasExisting=false;
+	}
+	else {
+	c = list.get(x);
+	}
+	if(!nome.equalsIgnoreCase("X"))
+	{
+		c.setNome(nome);
+	}
+	if(!cognome.equalsIgnoreCase("X"))
+	{
+		c.setCognome(cognome);
+	}
+	if(!telefono.equalsIgnoreCase("X"))
+	{
+		c.setTelefono(telefono);
+	}
+	if(!email.equalsIgnoreCase("X"))
+	{
+		c.setEmail(email);
+	}
+	if(!note.equalsIgnoreCase("X"))
+	{
+		c.setNote(note);
+	}
+	if(wasExisting) {
+	modifiedEntries.add(c);
+	list.remove(c);
+	}
 }
 
 
@@ -205,7 +281,7 @@ public void ImportXML(String fileName)
 	tmp= new RubricaInterpreteXML().importXML(fileName);
 	for(Contatto c : tmp)
 	{
-		list.add(c);
+		newEntries.add(c);
 	}
 }
 
