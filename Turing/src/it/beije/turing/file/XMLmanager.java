@@ -19,24 +19,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class XMLmanager {
-/*
-<?xml version="1.0" encoding="UTF-8"?>
-<rubrica>
-    <contatto eta="30">
-		<nome>Mario</nome>
-		<cognome>Rossi</cognome>
-		<telefono>3337658390</telefono>
-		<email>mario.rossi@tim.it</email>
-		<note>compagno di squadra</note>
-	</contatto>
-	<contatto eta="35">
-		<nome>Claudio</nome>
-		<cognome>Bianchi</cognome>
-		<telefono>3352672537</telefono>
-		<email>claudio.white@virgilio.it</email>
-	</contatto>
-</rubrica>
- */
+
 	
 	public static List<Element> getChildElements(Element element) {
 		List<Element> childElements = new ArrayList<Element>();

@@ -27,6 +27,8 @@ public class HBManager {
 			session = sessionFactory.openSession();
 			
 			System.out.println("session is open ? " + session.isOpen());
+
+
 			
 			
 			//INSERT
