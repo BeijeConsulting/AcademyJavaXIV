@@ -175,8 +175,24 @@ public class SQLManager implements OpRubrica{
     }
 
     @Override
-    public void deleteContatto(Contatto c) {
-        //TODO
+    public boolean deleteContatto(Contatto c) {
+        Connection connection=null;
+        Statement statement= null;
+        boolean b=false;
+        StringBuilder sql= new StringBuilder("DELETE From Rubrica ");
+        sql.append(" where id=\'"+c.getId()+"\'");
+
+        System.out.println(sql);
+        try {
+            connection=getConnection();
+            statement=connection.createStatement();
+            b= statement.executeUpdate(sql.toString()) >= 1;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return b;
 
     }
 

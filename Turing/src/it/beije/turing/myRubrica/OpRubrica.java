@@ -14,7 +14,7 @@ public interface OpRubrica {
     public List<Contatto> search(String s);
     public boolean insert(Contatto c);
     public boolean modificaContatto(Contatto c);
-    public void deleteContatto(Contatto c);
+    public boolean deleteContatto(Contatto c);
     public List<Contatto> contattiDuplicati();
     public void unisciContatti();
     public List<Contatto> importFromCVS(String path);

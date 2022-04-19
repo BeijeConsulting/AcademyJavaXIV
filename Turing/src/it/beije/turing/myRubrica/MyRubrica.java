@@ -26,10 +26,8 @@ public class MyRubrica {
         contatto.setNote("Ciao da me");
         rubrica.insert(contatto);*/
 
-        /*Contatto c= l.get(l.size()-1);
-        c.setNome("PIPPO");
-        c.setNote("Questa è una nuova nota");
-        rubrica.modificaContatto(c);*/
+       /* Contatto c= l.get(l.size()-1);
+        rubrica.deleteContatto(c);*/
 
 
 
