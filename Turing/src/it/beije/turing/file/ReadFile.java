@@ -26,7 +26,7 @@ public class ReadFile {
 //		for (Contatto c: contatti) {
 //			System.out.println(c.toString());
 //		}
-		ReadFile f = new ReadFile(String s);
+		ReadFile f = new ReadFile();
 		System.out.println(f.i);
 		int[] s = new int[2];
 		System.out.println("java" + new StringBuilder("java"));

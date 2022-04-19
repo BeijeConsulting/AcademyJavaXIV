@@ -18,8 +18,7 @@ public class HBManager {
 		
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);			
+			Configuration configuration = new Configuration().configure().addAnnotatedClass(Contatto.class);
 			//.addAnnotatedClass(AltraClasse.class)				
 
 			SessionFactory sessionFactory = configuration.buildSessionFactory();
