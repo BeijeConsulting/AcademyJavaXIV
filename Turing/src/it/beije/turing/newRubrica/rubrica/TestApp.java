@@ -40,7 +40,7 @@ public class TestApp {
 		}
 		 
 		//System.out.println(r.getPath().toAbsolutePath().toString());
-		while (!st.equalsIgnoreCase("esci") && !st.equals("11")) {
+		while (!st.equalsIgnoreCase("esci") && !st.equals("15")) {
 			System.out.println("Selezionare programma da eseguire:\n"
 					+ "1: Mostra tutta la rubrica e ordina per nome o cognome\n"
 					+ "2: Cerca un contatto\n"
@@ -52,7 +52,11 @@ public class TestApp {
 					+ "8: Cambia File Rubrica\n"
 					+ "9: Leggi da DB e salva su file\n"
 					+ "10: Scrivi su DB\n"
-					+ "11: Esci");
+					+ "11: Stampa contenuto su DB tramite Hibernate\n"
+					+ "12: Inserisci nuovo contatto tramite Hibernate\n"
+					+ "13: Aggiorna valore contatto tramite Hibernate\n"
+					+ "14: Elimina Contatto tramite Hibernate\n"
+					+ "15: Esci");
 			st = s.nextLine();
 			switch(st) {
 				case "1":
@@ -108,6 +112,39 @@ public class TestApp {
 					db.scriviSuDB(r.getAllContact(),s);
 					break;
 				case "11":
+					List<Contatto> allContact = rm.loadRubricaFromHibernate();
+					for(Contatto co: allContact) {
+						System.out.println(co);
+					}
+					r.setAllContact(allContact);
+					break;
+				case "12":
+					rm.insertRubricaOnHibernate();
+					r.setAllContact(rm.loadRubricaFromHibernate());
+					break;
+				case "13":
+					List<Contatto> allContact2 = rm.loadRubricaFromHibernate();
+					for(Contatto co: allContact2) {
+						System.out.println(co);
+					}
+					System.out.println("Inserire id Contatto da modificare su DB(inserire un numero da 1 a "+allContact2.size()+"): ");
+					String k = s.nextLine();
+					int num = Integer.parseInt(k);
+					rm.updateRubricaOnHibernate(num);
+					r.setAllContact(rm.loadRubricaFromHibernate());
+					break;
+				case "14":
+					List<Contatto> allContact3 = rm.loadRubricaFromHibernate();
+					for(Contatto co: allContact3) {
+						System.out.println(co);
+					}
+					System.out.println("Inserire id Contatto da modificare su DB(inserire un numero da 1 a "+allContact3.size()+"): ");
+					String k2 = s.nextLine();
+					int num2 = Integer.parseInt(k2);
+					rm.deleteRubricaOnHibernate(num2);
+					r.setAllContact(rm.loadRubricaFromHibernate());
+					break;
+				case "15":
 					continue;
 				default:
 					break;

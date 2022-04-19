@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,6 +24,12 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -323,10 +330,10 @@ public class RubricaManager {
 			int i = 0;
 			for(Contatto c : contatti) {
 				i++;
-				rs = statement.executeQuery("SELECT r.nome, r.cognome, r.telefono, r.email FROM rubrica r WHERE r.nome = '"+c.getNome()+"' AND r.cognome = '"+c.getCognome()+"' AND "
+				rs = statement.executeQuery("SELECT r.nome, r.cognome, r.telefono, r.email FROM rubrica AS r WHERE r.nome = '"+c.getNome()+"' AND r.cognome = '"+c.getCognome()+"' AND "
 						+ "r.telefono = '"+c.getTelefono()+"' AND r.email = '"+c.getEmail()+"';");
 				if(rs.first()) {
-					int ris2 = statement.executeUpdate("UPDATE rubrica r SET r.nome = '"+c.getNome()+"', r.cognome = '"+c.getCognome()+"', r.telefono = '"
+					int ris2 = statement.executeUpdate("UPDATE AS rubrica r SET r.nome = '"+c.getNome()+"', r.cognome = '"+c.getCognome()+"', r.telefono = '"
 							+c.getTelefono()+"', r.email = '"+c.getEmail()+"', r.note = '"+c.getNote()+"' WHERE r.id = "+i+";");
 				}else {
 					int ris2 = statement.executeUpdate("INSERT INTO rubrica VALUES (null, '"+c.getNome()+"', '"+c.getCognome()+"', '"
@@ -350,54 +357,174 @@ public class RubricaManager {
 		}
 	}
 	
+//////////////////////////////////////////HIBERNATE////////////////////////////////////////////
 	
+	public List<Contatto> loadRubricaFromHibernate(){
+		Session session = null;
+		try {
+			Configuration configuration = new Configuration().configure()
+					.addAnnotatedClass(Contatto.class);						
+
+			SessionFactory sessionFactory = configuration.buildSessionFactory();
+
+			session = sessionFactory.openSession();
+			
+			//Select
+			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
+			List<Contatto> contatti = query.getResultList();
+			
+			return contatti;
+		} catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			session.close();
+		}
+	}
 	
-	///////////////////////////////////////Generale//////////////////////////////////////////
+	public boolean updateRubricaOnHibernate(int id) {
+		List<Contatto> allContact = loadRubricaFromHibernate();
+		Scanner s = new Scanner(System.in);
+		Contatto tmp = null;
+		for(Contatto c: allContact) {
+			if(c.getId() == id) {
+				System.out.println("Insert new name: ");
+				String nome = s.nextLine();
+				if(!nome.isEmpty() || !(nome.length() == 0)) {
+					c.setNome(nome);
+				}
+				System.out.println("Insert new surname: ");
+				String cognome = s.nextLine();
+				if(!cognome.isEmpty() || !(cognome.length() == 0)) {
+					c.setCognome(cognome);
+				}
+				System.out.println("Insert new phone number: ");
+				String telefono = s.nextLine();
+				if(!telefono.isEmpty() || !(telefono.length() == 0)) {
+					c.setTelefono(telefono);
+				}
+				System.out.println("Insert new email: ");
+				String email = s.nextLine();
+				if(!email.isEmpty() || !(email.length() == 0)) {
+					c.setEmail(email);
+				}
+				System.out.println("Insert new note: ");
+				String note = s.nextLine();
+				if(!note.isEmpty() || !(note.length() == 0)) {
+					c.setNote(note);
+				}
+				tmp = c;
+				break;
+			}
+		}
+		if(tmp == null) return false;
+		Session session = null;
+		try {
+			Configuration configuration = new Configuration().configure()
+					.addAnnotatedClass(Contatto.class);	
+			SessionFactory sessionFactory = configuration.buildSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			session.save(tmp);
+			transaction.commit();
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
+	public boolean insertRubricaOnHibernate() {
+		Scanner s = new Scanner(System.in);
+		Contatto tmp = new Contatto();
+		
+		System.out.println("Insert name: ");
+		String nome = s.nextLine();
+		if(!nome.isEmpty() || !(nome.length() == 0)) {
+			tmp.setNome(nome);
+		}
+		System.out.println("Insert surname: ");
+		String cognome = s.nextLine();
+		if(!cognome.isEmpty() || !(cognome.length() == 0)) {
+			tmp.setCognome(cognome);
+		}
+		System.out.println("Insert phone number: ");
+		String telefono = s.nextLine();
+		if(!telefono.isEmpty() || !(telefono.length() == 0)) {
+			tmp.setTelefono(telefono);
+		}
+		System.out.println("Insert email: ");
+		String email = s.nextLine();
+		if(!email.isEmpty() || !(email.length() == 0)) {
+			tmp.setEmail(email);
+		}
+		System.out.println("Insert note: ");
+		String note = s.nextLine();
+		if(!note.isEmpty() || !(note.length() == 0)) {
+			tmp.setNote(note);
+		}
+		Session session = null;
+		try {
+			Configuration configuration = new Configuration().configure()
+					.addAnnotatedClass(Contatto.class);	
+			SessionFactory sessionFactory = configuration.buildSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			session.save(tmp);
+			transaction.commit();
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
+	public boolean deleteRubricaOnHibernate(int id) {
+		List<Contatto> allContact = loadRubricaFromHibernate();
+		Contatto tmp = null;
+		for(Contatto c: allContact) {
+			if(c.getId() == id) {
+				tmp = c;
+				break;
+			}
+		}
+		if(tmp == null) return false;
+		Session session = null;
+		try {
+			Configuration configuration = new Configuration().configure()
+					.addAnnotatedClass(Contatto.class);	
+			SessionFactory sessionFactory = configuration.buildSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			session.remove(tmp);
+			transaction.commit();
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+/////////////////////////////////////////////Generale//////////////////////////////////////////
 	public static boolean eliminaVirgolette(Contatto c) {
-		/*
-		if(c.getNome().startsWith("\"")) {
-			c.setNome(c.getNome().substring(1));
-		}if(c.getNome().endsWith("\"")) {
-			c.setNome(c.getNome().substring(0,c.getNome().length()-1));
-		}
 		
-		if(c.getCognome().startsWith("\"")) {
-			c.setCognome(c.getCognome().substring(1));
-		}if(c.getCognome().endsWith("\"")) {
-			c.setCognome(c.getCognome().substring(0,c.getCognome().length()-1));
-		}
-		if(c.getTelefono().startsWith("\"")) {
-			c.setTelefono(c.getTelefono().substring(1));
-		}if(c.getTelefono().endsWith("\"")) {
-			c.setTelefono(c.getTelefono().substring(0,c.getTelefono().length()-1));
-		}
-		if(c.getEmail().startsWith("\"")) {
-			c.setEmail(c.getEmail().substring(1));
-		}if(c.getEmail().endsWith("\"")) {
-			c.setEmail(c.getEmail().substring(0,c.getEmail().length()-1));
-		}
-		
-		if(c.getNome().startsWith("'")) {
-			c.setNome(c.getNome().substring(1));
-		}if(c.getNome().endsWith("'")) {
-			c.setNome(c.getNome().substring(0,c.getNome().length()-1));
-		}
-		if(c.getCognome().startsWith("'")) {
-			c.setCognome(c.getCognome().substring(1));
-		}if(c.getCognome().endsWith("'")) {
-			c.setCognome(c.getCognome().substring(0,c.getCognome().length()-1));
-		}
-		if(c.getTelefono().startsWith("'")) {
-			c.setTelefono(c.getTelefono().substring(1));
-		}if(c.getTelefono().endsWith("'")) {
-			c.setTelefono(c.getTelefono().substring(0,c.getTelefono().length()-1));
-		}
-		if(c.getEmail().startsWith("'")) {
-			c.setEmail(c.getEmail().substring(1));
-		}if(c.getEmail().endsWith("'")) {
-			c.setEmail(c.getEmail().substring(0,c.getEmail().length()-1));
-		}
-		*/
 		for(int i = 0; i < c.getNome().length(); i++) {
 			if(c.getNome().charAt(i) == '\'' || c.getNome().charAt(i) == '"') {
 				c.setNome(c.getNome().substring(0,i).concat(c.getNome().substring(i+1)));
