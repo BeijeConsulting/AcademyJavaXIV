@@ -391,31 +391,6 @@ public class RubricaManager {
 		Contatto tmp = null;
 		for(Contatto c: allContact) {
 			if(c.getId() == id) {
-				System.out.println("Insert new name: ");
-				String nome = s.nextLine();
-				if(!nome.isEmpty() || !(nome.length() == 0)) {
-					c.setNome(nome);
-				}
-				System.out.println("Insert new surname: ");
-				String cognome = s.nextLine();
-				if(!cognome.isEmpty() || !(cognome.length() == 0)) {
-					c.setCognome(cognome);
-				}
-				System.out.println("Insert new phone number: ");
-				String telefono = s.nextLine();
-				if(!telefono.isEmpty() || !(telefono.length() == 0)) {
-					c.setTelefono(telefono);
-				}
-				System.out.println("Insert new email: ");
-				String email = s.nextLine();
-				if(!email.isEmpty() || !(email.length() == 0)) {
-					c.setEmail(email);
-				}
-				System.out.println("Insert new note: ");
-				String note = s.nextLine();
-				if(!note.isEmpty() || !(note.length() == 0)) {
-					c.setNote(note);
-				}
 				tmp = c;
 				break;
 			}
@@ -428,7 +403,34 @@ public class RubricaManager {
 			SessionFactory sessionFactory = configuration.buildSessionFactory();
 			session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			session.save(tmp);
+			
+			System.out.println("Insert new name: ");
+			String nome = s.nextLine();
+			if(!nome.isEmpty() || !(nome.length() == 0)) {
+				tmp.setNome(nome);
+			}
+			System.out.println("Insert new surname: ");
+			String cognome = s.nextLine();
+			if(!cognome.isEmpty() || !(cognome.length() == 0)) {
+				tmp.setCognome(cognome);
+			}
+			System.out.println("Insert new phone number: ");
+			String telefono = s.nextLine();
+			if(!telefono.isEmpty() || !(telefono.length() == 0)) {
+				tmp.setTelefono(telefono);
+			}
+			System.out.println("Insert new email: ");
+			String email = s.nextLine();
+			if(!email.isEmpty() || !(email.length() == 0)) {
+				tmp.setEmail(email);
+			}
+			System.out.println("Insert new note: ");
+			String note = s.nextLine();
+			if(!note.isEmpty() || !(note.length() == 0)) {
+				tmp.setNote(note);
+			}
+			
+			session.update("rubrica", tmp);
 			transaction.commit();
 		}catch (HibernateException hbmEx) {
 			hbmEx.printStackTrace();
