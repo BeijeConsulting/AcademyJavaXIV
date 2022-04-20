@@ -362,12 +362,7 @@ public class RubricaManager {
 	public List<Contatto> loadRubricaFromHibernate(){
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);						
-
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
-
-			session = sessionFactory.openSession();
+			session = SessionFactorySingleton.openSession();
 			
 			//Select
 			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
@@ -398,10 +393,7 @@ public class RubricaManager {
 		if(tmp == null) return false;
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);	
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
-			session = sessionFactory.openSession();
+			session = SessionFactorySingleton.openSession();
 			Transaction transaction = session.beginTransaction();
 			
 			System.out.println("Insert new name: ");
@@ -475,10 +467,7 @@ public class RubricaManager {
 		}
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);	
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
-			session = sessionFactory.openSession();
+			session = SessionFactorySingleton.openSession();
 			Transaction transaction = session.beginTransaction();
 			session.save(tmp);
 			transaction.commit();
@@ -528,10 +517,7 @@ public class RubricaManager {
 		List<Contatto> allContact = loadRubricaFromHibernate();
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);	
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
-			session = sessionFactory.openSession();
+			session = SessionFactorySingleton.openSession();
 			Transaction transaction = session.beginTransaction();
 			for(Contatto c: allContact) {
 				session.remove(c);
