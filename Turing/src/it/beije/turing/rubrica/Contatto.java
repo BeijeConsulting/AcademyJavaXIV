@@ -74,6 +74,8 @@ public class Contatto {
 	public void setNote(String note) {
 		this.note = note;
 	}
+
+
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()

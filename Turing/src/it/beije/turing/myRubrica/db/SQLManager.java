@@ -60,9 +60,9 @@ public class SQLManager implements OpRubrica {
             if(order==Order.NO){
 
             }else if(order==Order.COGNOME){
-                s.append(" ORDER BY nome");
+                s.append(" ORDER BY nome DESC");
             }else if(order==Order.NOME){
-                s.append(" ORDER BY cognome");
+                s.append(" ORDER BY cognome DESC");
             }
             boolean r = statement.execute(s.toString());
             if(r){

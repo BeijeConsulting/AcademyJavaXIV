@@ -5,10 +5,8 @@ import it.beije.turing.myRubrica.interfaces.OpRubrica;
 import it.beije.turing.myRubrica.interfaces.Order;
 import it.beije.turing.rubrica.Contatto;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,26 +20,24 @@ public class MyRubrica {
     public static void main(String[] args) {
         OpRubrica rubrica= new SQLManager();
         List<Contatto> l = null;
-       //print(l);
+
         Scanner scanner=new Scanner(System.in);
         boolean repeat=true;
         do{
-
             System.out.print ("GESTIONE RUBRICA");
 
             System.out.println(" (-h per la lista delle operazioni)");
             System.out.print("Inserisci OP: ");
 
             String chose= scanner.nextLine();
-            if(chose.equalsIgnoreCase("-h")||chose.equalsIgnoreCase("-help")){
-                System.out.println("  show <params> = [-N= ordinati per nome -S= ordinati per cognome] per visualizzare tutti i contatti ");
-                System.out.println("  search <parola> = [parola = parola da cercare] cerca la parola all' interno di tutti i campi nel DB");
-                System.out.println("  delete <ID> = [ID = id del contatto] id del contatto da cancellare");
-                System.out.println("  insert <params> = [-n=nome -c=cognome -e=email -t=telefono -k=nota] id del contatto da cancellare");
-                System.out.println("  mod <ID> = [ID = id del contatto] id del contatto da modificare");
-                System.out.println("  exit =Esci");
+            if(chose.equalsIgnoreCase("-h") || chose.equalsIgnoreCase("-help")){
+                System.out.println("\tshow <params> = [-N= ordinati per nome -S= ordinati per cognome] per visualizzare tutti i contatti ");
+                System.out.println("\tsearch <parola> = [parola = parola da cercare] cerca la parola all' interno di tutti i campi nel DB");
+                System.out.println("\tdelete <ID> = [ID = id del contatto] id del contatto da cancellare");
+                System.out.println("\tinsert = comando per inserire il contatto da cancellare");
+                System.out.println("\tmod <ID> = [ID = id del contatto] id del contatto da modificare");
+                System.out.println("\texit =Esci");
             }
-
             if(chose.startsWith("exit")){
                 repeat=false;
             }
@@ -121,7 +117,7 @@ public class MyRubrica {
                 if(io.length ==1){
                     Contatto c= insertContact(scanner);
                     rubrica.insert(c);
-                    System.out.println("\n\nContatto aggiunto\n\n");
+                    System.out.println("\nContatto aggiunto\n");
 
                 }
             }
@@ -158,30 +154,9 @@ public class MyRubrica {
 
             }
         }while (repeat);
+        scanner.close();
 
         System.out.println("A presto!!!");
-
-
-
-
-
-
-        //==================MODIFICA=====================
-
-    /*    contatto.setCognome(" MODIFICA Raddato");
-        contatto.setNome("MODIFICA Giuseppe");
-        contatto.setEmail("mmm@gmail.com");
-        contatto.setTelefono("3381234567");
-        contatto.setNote("Ciao da me");
-        rubrica.insert(contatto);
-        l=rubrica.showContact(Order.NO);*/
-       // print(l);
-
-
-
-
-
-
 
     }
     private static Contatto insertContact(Scanner scanner) {
@@ -191,7 +166,6 @@ public class MyRubrica {
 
 
     private static Contatto insertContact(Scanner scanner, Contatto c) {
-
         for (Method me:c.getClass().getDeclaredMethods()) {
             if(me.getName().startsWith("set")&& !me.getName().equalsIgnoreCase("setid")){
                 System.out.print("Inserisci "+me.getName().substring(3,me.getName().length())+"= ");
@@ -228,9 +202,5 @@ public class MyRubrica {
         }else {
             System.out.println("Lista Vuota");
         }
-
-
     }
-
-
 }
