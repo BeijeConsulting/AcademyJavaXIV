@@ -14,6 +14,8 @@ public class RubricaManager {
 	public static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
+		//JDBCmanager.addContatti(contatti);
+		JDBCmanager.readContatti();
 		mainMenu();
 		scanner.close();
 		try {
@@ -21,6 +23,7 @@ public class RubricaManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public static String prendiInput() {
@@ -53,7 +56,7 @@ public class RubricaManager {
 			smistaScelte(input);
 		} while (input != 0);
 	}
-	
+
 	public static void salvaFile() {
 		try {
 			RubricaXML.writeXML(contatti, path);
@@ -62,7 +65,7 @@ public class RubricaManager {
 		}
 		RubricaCSV.scriviFile(contatti);
 	}
-	
+
 	public static void aggiungiContatto() {
 		Contatto c = new Contatto();
 		c = creaContatto();
@@ -82,7 +85,7 @@ public class RubricaManager {
 			break;
 		case 3:
 			cancellaContatti();
-		case 5: 
+		case 5:
 			salvaFile();
 			break;
 		}
@@ -93,8 +96,7 @@ public class RubricaManager {
 
 		if (index == -1) {
 			System.out.println("Contatto non trovato.");
-		}
-		else {
+		} else {
 			System.out.println("Contatto rimosso");
 			contatti.remove(index);
 		}
@@ -128,7 +130,7 @@ public class RubricaManager {
 		}
 
 	}
-	
+
 	public static Contatto creaContatto() {
 		Contatto c = new Contatto();
 		System.out.println("Inserire nome: ");
@@ -148,10 +150,10 @@ public class RubricaManager {
 		System.out.println("2 - No");
 		int input = prendiInput(1, 2);
 		if (input == 1)
-			Collections.sort(contatti);
-		for (Contatto c : contatti) {
-			System.out.println(c.toString());
-		}
+			// Collections.sort(contatti);
+			for (Contatto c : contatti) {
+				System.out.println(c.toString());
+			}
 
 	}
 

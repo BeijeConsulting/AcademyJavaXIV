@@ -35,7 +35,6 @@ public class RubricaXML {
 	
 	public static void main(String[] args) {
 		readXML("C:\\Users\\Marco\\Desktop\\tmp\\rubrica.xml");
-		
 	}
 
 	public static void readXML(String path) {

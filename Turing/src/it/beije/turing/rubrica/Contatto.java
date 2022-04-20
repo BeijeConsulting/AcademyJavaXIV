@@ -11,6 +11,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "rubrica")
 public class Contatto {
+	
+	public Contatto() {}
+	public Contatto(int id, String nome, String cognome, String telefono, String email, String note) {
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+		this.note = note;
+	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
