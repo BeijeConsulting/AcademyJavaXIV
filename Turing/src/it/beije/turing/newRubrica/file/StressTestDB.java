@@ -21,12 +21,12 @@ public class StressTestDB {
 		long start = System.currentTimeMillis();
 		long end = 0L;
 		end = StressTestHibernate();
-		System.out.println(" connection in "+(end-start)+"ms");
+		System.out.println("connection in "+(end-start)+"ms");
 		
 		start = System.currentTimeMillis();
 		end = 0L;
 		end = StressTestJDBC();
-		System.out.println(" connection in "+(end-start)+"ms");
+		System.out.println("connection in "+(end-start)+"ms");
 		
 	}
 	
