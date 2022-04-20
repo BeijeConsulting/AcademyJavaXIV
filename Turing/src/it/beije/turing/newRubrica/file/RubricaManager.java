@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -332,15 +333,13 @@ public class RubricaManager {
 				i++;
 				rs = statement.executeQuery("SELECT r.nome, r.cognome, r.telefono, r.email FROM rubrica AS r WHERE r.nome = '"+c.getNome()+"' AND r.cognome = '"+c.getCognome()+"' AND "
 						+ "r.telefono = '"+c.getTelefono()+"' AND r.email = '"+c.getEmail()+"';");
-				if(rs.first()) {
-					int ris2 = statement.executeUpdate("UPDATE AS rubrica r SET r.nome = '"+c.getNome()+"', r.cognome = '"+c.getCognome()+"', r.telefono = '"
-							+c.getTelefono()+"', r.email = '"+c.getEmail()+"', r.note = '"+c.getNote()+"' WHERE r.id = "+i+";");
+				if(rs.next()) {
+					rs.close();
 				}else {
 					int ris2 = statement.executeUpdate("INSERT INTO rubrica VALUES (null, '"+c.getNome()+"', '"+c.getCognome()+"', '"
 							+c.getTelefono()+"', '"+c.getEmail()+"', '"+c.getNote()+"');");
+					rs.close();
 				}
-				
-				
 			}
 		} catch (ClassNotFoundException cnfEx) {
 			cnfEx.printStackTrace();
@@ -350,6 +349,67 @@ public class RubricaManager {
 			try {
 				rs.close();
 				statement.close();
+				connection.close();
+			} catch (SQLException sqlEx) {
+				sqlEx.printStackTrace();
+			}
+		}
+	}
+	
+	
+	public void writeRubricaOnJDBCPrepared(List<Contatto> contatti, String username, String password, String dbName) {
+		Connection connection = null;
+		PreparedStatement insertPrepStatement = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = getConnection(dbName,username,password);
+			
+			int i = 0;
+			for(Contatto c : contatti) {
+				insertPrepStatement = connection.prepareStatement("SELECT r.* FROM rubrica AS r WHERE (r.nome = ? AND r.cognome = ? AND r.telefono = ? AND r.email = ?);");
+				insertPrepStatement.setString(1, c.getNome());
+				insertPrepStatement.setString(2, c.getCognome());
+				insertPrepStatement.setString(3, c.getTelefono());
+				insertPrepStatement.setString(4, c.getEmail());
+				rs = insertPrepStatement.executeQuery();
+				if(rs.next()) {
+					insertPrepStatement.close();
+//					UPDATE(INUTILE)
+//					insertPrepStatement = connection.prepareStatement("UPDATE rubrica AS r SET (nome = ?, cognome = ?, telefono = ?, email = ?, note = ?) WHERE (r.nome = ? AND r.cognome = ? AND r.telefono = ? AND r.email = ?);");
+//					insertPrepStatement.setString(1, c.getNome());
+//					insertPrepStatement.setString(2, c.getCognome());
+//					insertPrepStatement.setString(3, c.getTelefono());
+//					insertPrepStatement.setString(4, c.getEmail());
+//					insertPrepStatement.setString(5, c.getNote());
+//					insertPrepStatement.setString(6, c.getNome());
+//					insertPrepStatement.setString(7, c.getCognome());
+//					insertPrepStatement.setString(8, c.getTelefono());
+//					insertPrepStatement.setString(9, c.getEmail());
+//					insertPrepStatement.executeUpdate();
+					rs.close();
+				}else {
+					insertPrepStatement.close();
+					insertPrepStatement = connection.prepareStatement("INSERT INTO rubrica VALUES (null, ?, ?, ?, ?, ?)");
+					insertPrepStatement.setString(1, c.getNome());
+					insertPrepStatement.setString(2, c.getCognome());
+					insertPrepStatement.setString(3, c.getTelefono());
+					insertPrepStatement.setString(4, c.getEmail());
+					insertPrepStatement.setString(5, c.getNote());
+					insertPrepStatement.executeUpdate();
+					rs.close();
+				}
+			}
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace();
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}	
+				insertPrepStatement.close();
 				connection.close();
 			} catch (SQLException sqlEx) {
 				sqlEx.printStackTrace();
