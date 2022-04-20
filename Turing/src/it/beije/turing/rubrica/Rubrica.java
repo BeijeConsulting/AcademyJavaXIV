@@ -43,15 +43,19 @@ public class Rubrica
 			
 			switch(scelta)
 			{
-				case 1:
+				case 1:					//JDBC
 					avviaMenu(scelta);
 					break;
 					
-				case 2:
+				case 2:					//HIBERNATE
 					avviaMenu(scelta);
 					break;
 					
-				case 3:
+				case 3:					//LOCALE
+					avviaMenu(scelta);
+					break;
+					
+				case 4:
 					System.exit(0);
 					break;
 					
@@ -64,7 +68,7 @@ public class Rubrica
 		} while (riprova);
 	}
 	
-	private void avviaMenu(int s) // 1 database 2 locale
+	private void avviaMenu(int s) // 1 db jdbc,  2 db hibernate,  3 locale
 	{
 		Scanner kb = null;
 		boolean riprova = false;
@@ -166,7 +170,19 @@ public class Rubrica
 						
 						jdbcHandler.loadRubricaToDB(csvHandler.loadRubricaFromCSV(pathFile, separator));
 					}
-					else
+					else if (s == 2)
+					{
+						HBhandler hbHandler = new HBhandler();
+						CSVhandler csvHandler = new CSVhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						System.out.print("Inserisci il carattere separatore: ");
+						String separator = kb.next();
+						
+						
+						hbHandler.loadRubricaToDB(csvHandler.loadRubricaFromCSV(pathFile, separator));
+					}
+					else if (s == 3)
 					{
 						CSVhandler csvHandler = new CSVhandler();
 						System.out.print("Inserisci il path: ");
@@ -187,7 +203,15 @@ public class Rubrica
 						pathFile = kb.next();
 						jdbcHandler.loadRubricaToDB(xmlHandler.loadRubricaFromXML(pathFile));
 					}
-					else
+					else if (s == 2)
+					{
+						HBhandler hbHandler = new HBhandler();
+						XMLhandler xmlHandler = new XMLhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						hbHandler.loadRubricaToDB(xmlHandler.loadRubricaFromXML(pathFile));
+					}
+					else if (s == 3)
 					{
 						XMLhandler xmlHandler = new XMLhandler();
 						System.out.print("Inserisci il path: ");
@@ -237,7 +261,17 @@ public class Rubrica
 						String separator = kb.next();
 						csvHandler.writeRubricaCSV(jdbcHandler.writeRubricaFromDB(), pathFile, separator);
 					}
-					else
+					else if (s == 2)
+					{
+						HBhandler hbHandler = new HBhandler();
+						CSVhandler csvHandler = new CSVhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						System.out.print("Inserisci il carattere separatore: ");
+						String separator = kb.next();
+						csvHandler.writeRubricaCSV(hbHandler.writeRubricaFromDB(), pathFile, separator);
+					}
+					else if (s == 3)
 					{
 						CSVhandler csvHandler = new CSVhandler();
 						System.out.print("Inserisci il path: ");
@@ -257,7 +291,15 @@ public class Rubrica
 						pathFile = kb.next();
 						xmlHandler.writeRubricaXML(jdbcHandler.writeRubricaFromDB(), pathFile);
 					}
-					else
+					else if (s == 2)
+					{
+						HBhandler hbHandler = new HBhandler();
+						XMLhandler xmlHandler = new XMLhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						xmlHandler.writeRubricaXML(hbHandler.writeRubricaFromDB(), pathFile);
+					}
+					else if (s == 3)
 					{
 						XMLhandler xmlHandler = new XMLhandler();
 						System.out.print("Inserisci il path: ");
@@ -325,7 +367,11 @@ public class Rubrica
 							System.out.println(c);
 						}						
 					}
-					else
+					else if (s == 2)
+					{
+						
+					}
+					else if (s == 3)
 					{
 						if (contatti.size() != 0)
 						{
@@ -360,11 +406,15 @@ public class Rubrica
 					System.out.println();
 					List<Contatto> contacts = new ArrayList<>();
 					
-					if (s == 1)
+					if (s == 1)						//JDBC
 					{
 						contacts = jdbcHandler.findContatto(filtro);
 					}
-					else
+					else if (s == 2)				//HIBERNATE
+					{
+						
+					}
+					else if (s == 3)				//LOCALE
 					{
 						contacts = cercaContatto(filtro);						
 					}
@@ -403,11 +453,15 @@ public class Rubrica
 					String note = kb.nextLine();
 					System.out.println();
 					
-					if (s == 1)
+					if (s == 1)					//JDBC
 					{
 						System.out.println(jdbcHandler.addContatto(new Contatto(nome, cognome, email, telefono, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					}
-					else
+					else if (s == 2)			//HIBERNATE
+					{
+						
+					}
+					else if (s == 3)			//LOCALE
 					{
 						System.out.println(contatti.add(new Contatto(nome, cognome, email, telefono, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					}
@@ -417,7 +471,7 @@ public class Rubrica
 					System.out.println("Posizione in rubrica del contatto da modificare: ");
 					int pos = kb.nextInt();
 					
-					if (s == 1)
+					if (s == 1)					//JDBC
 					{
 						kb.nextLine();
 						
@@ -444,7 +498,11 @@ public class Rubrica
 						Contatto cont = new Contatto(n, c, e, t, no);
 						jdbcHandler.modifyContatto(pos, cont);
 					}
-					else
+					else if (s == 2)			//HIBERNATE
+					{
+						
+					}
+					else if (s == 3)			//LOCALE
 					{
 						modificaContatto(pos);
 					}
@@ -454,11 +512,15 @@ public class Rubrica
 					System.out.println("Posizione in rubrica del contatto da eliminare: ");
 					int posizione = kb.nextInt();
 					
-					if (s == 1)
+					if (s == 1)					//JDBC
 					{
 						jdbcHandler.deleteContatto(posizione);
 					}
-					else
+					else if (s == 2)			//HIBERNATE
+					{
+						
+					}
+					else if (s == 3)			//LOCALE
 					{
 						cancellaContatto(posizione);
 					}
@@ -466,7 +528,7 @@ public class Rubrica
 					
 				case 6:			//TROVA DUPLICATI
 					List<Contatto> duplicati = new ArrayList<>();
-					if (s == 1)
+					if (s == 1)									//JDBC
 					{
 						duplicati = jdbcHandler.findDuplicates();
 						for(Contatto c : duplicati)
@@ -474,7 +536,11 @@ public class Rubrica
 							System.out.println(c + ", found");
 						}
 					}
-					else
+					else if (s == 2)							//HIBERNATE
+					{
+						
+					}
+					else if (s == 3)							//LOCALE
 					{
 						duplicati = cercaDuplicati(false);
 						
@@ -502,7 +568,7 @@ public class Rubrica
 				case 7:			//UNISCI DUPLICATI
 					List<Contatto> duplicatiUniti = new ArrayList<>();
 					
-					if (s == 1)
+					if (s == 1)							//JDBC
 					{
 						jdbcHandler.uniteDuplicates();
 						
@@ -512,7 +578,11 @@ public class Rubrica
 						}
 						
 					}
-					else
+					else if (s == 2)					//HIBERNATE
+					{
+						
+					}
+					else if (s == 3)					//LOCALE
 					{
 						duplicatiUniti = cercaDuplicati(true);
 						contatti = duplicatiUniti;
@@ -677,21 +747,25 @@ public class Rubrica
 	{
 		System.out.print("------------ RUBRICA ------------\n");
 		System.out.print("---------------------------------\n");
-		System.out.print("--------- Menu Database ---------\n");
+		System.out.print("------ Menu Database JDBC -------\n");
 		System.out.print("--------------- 1 ---------------\n");
 		System.out.print("---------------------------------\n");
-		System.out.print("---------- Menu Locale ----------\n");
+		System.out.print("------- Menu Database HB --------\n");
 		System.out.print("--------------- 2 ---------------\n");
 		System.out.print("---------------------------------\n");
-		System.out.print("------- Esci dal Programma ------\n");
+		System.out.print("---------- Menu Locale ----------\n");
 		System.out.print("--------------- 3 ---------------\n");
+		System.out.print("---------------------------------\n");
+		System.out.print("------- Esci dal Programma ------\n");
+		System.out.print("--------------- 4 ---------------\n");
 		System.out.print("---------------------------------\n");
 	}
 	
 	private void menuIniziale(int s)
 	{
-		if (s == 1) System.out.print("------------ DATABASE -----------\n");
-		else
+		if (s == 1) System.out.print("---------- DATABASE JDBC ---------\n");
+		else if (s == 2) System.out.print("----- DATABASE HIBERNATE -----\n");
+		else if (s == 3)
 		{
 			System.out.print("\n\n------------ LOCALE -------------\n");
 			System.out.print("---------------------------------\n");
