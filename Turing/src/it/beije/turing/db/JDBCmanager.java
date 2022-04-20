@@ -20,7 +20,6 @@ import it.beije.turing.file.CSVmanager;
 import it.beije.turing.file.XMLmanager;
 import it.beije.turing.rubrica.Contatto;
 
-import it.beije.turing.rubrica.Contatto;
 
 
 public class JDBCmanager {

@@ -18,7 +18,6 @@ public class Contatto {
 	private int id;
 	
 	@Column(name = "nome")
-
 	private String nome;
 	
 	@Column(name = "cognome")

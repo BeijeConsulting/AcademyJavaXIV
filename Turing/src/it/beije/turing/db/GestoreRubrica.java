@@ -239,12 +239,62 @@ public class GestoreRubrica {
 		} while(x == 0);
 	}
 	
-	public static void trovaContattiDuplicati(List<Contatto> contatti) {
-		System.out.println("Trova contatti duplicati");
+	public static boolean areEqual(Contatto c, Contatto c1) {
+		return c.getNome().equals(c1.getNome()) && c.getCognome().equals(c1.getCognome()) && c.getTelefono().equals(c1.getTelefono()) && c.getEmail().equals(c1.getEmail()) && c.getNote().equals(c1.getNote());
 	}
 	
-	public static void unisciContattiDuplicati(List<Contatto> contatti) {
-		System.out.println("Unisci contatti duplicati");
+	public static List<Contatto> trovaContattiDuplicati(List<Contatto> contatti) {
+
+		Contatto contattoDup = null;
+		List<Contatto> contattiDup = new ArrayList<Contatto>();
+		
+		for(Contatto c : contatti) {
+			for(Contatto c1 : contatti) {
+				if(c.getId() != c1.getId()) {
+					if(areEqual(c, c1)) {
+						contattoDup = c1;
+						if(contattiDup.size() == 0) {
+							contattiDup.add(contattoDup);
+						} else if(areEqual(contattoDup, contattiDup.get(0))) {
+							contattiDup.add(contattoDup);
+						}
+					}
+				}
+			}
+		}
+		
+		if(contattiDup.size() > 0) {
+			System.out.println("Contatti duplicati: ");
+			for(Contatto c : contattiDup) {
+				System.out.println(c);
+			}
+		} else {
+			System.out.println("Nessun contatto e' stato duplicato.");
+		}
+		
+		return contattiDup;
+	}
+	
+	public static void unisciContattiDuplicati(List<Contatto> contatti, Scanner s) {
+		List<Contatto> contattiDup = trovaContattiDuplicati(contatti);
+		
+		if(contattiDup.size() > 0) {
+			int x = 0;
+			do {
+				System.out.print("\nVuoi unire i contatti duplicati? (Si/No): ");
+				String confirm = s.next().toLowerCase();
+				
+				if(confirm.equals("si")) {
+					while(contattiDup.size() > 1) {
+						HBmanager.deleteDB(contattiDup.get(0).getId());
+						contattiDup.remove(0);
+					}
+					x++;
+				} else if(confirm.equals("no")) {
+					x++;
+				}
+			} while(x == 0);
+		}
 	}
 	
 	public static void exportDatabase(List<Contatto> contatti, Scanner s) {
@@ -417,7 +467,7 @@ public class GestoreRubrica {
 					break;
 				case "mergedup":
 					contatti = HBmanager.getRubrica();
-					unisciContattiDuplicati(contatti);
+					unisciContattiDuplicati(contatti, s);
 					break;
 				case "export":
 					contatti = HBmanager.getRubrica();
