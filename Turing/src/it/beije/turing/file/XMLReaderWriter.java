@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class XMLmanager {
+public class XMLReaderWriter {
 /*
 <?xml version="1.0" encoding="UTF-8"?>
 <rubrica>
