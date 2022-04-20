@@ -16,11 +16,11 @@
       <!-- Assume test is the database name -->
       
       <property name = "hibernate.connection.url">
-         jdbc:mysql://localhost:3306/turing
+         jdbc:mysql://localhost:3306/rubrica
       </property>
       
       <property name = "hibernate.connection.username">root</property>
-      <property name = "hibernate.connection.password">beije</property>
+      <property name = "hibernate.connection.password">123456789</property>
       
       <!-- List of XML mapping files -->
       <!-- mapping resource = "Contatto.hbm.xml"/ -->

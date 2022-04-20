@@ -18,8 +18,10 @@ public class HBManager {
 		
 		Session session = null;
 		try {
+			//configure() gestisce la configurazione hibernet.cfg.xml dove mappi la classe in questo caso
+			// Contatto, nel quale associ le proprieta di contatto con i campi della tabella 
 			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);			
+					.addAnnotatedClass(Contatto.class);		// add associoti il file cfg alla classe contatto. 	
 			//.addAnnotatedClass(AltraClasse.class)				
 
 			SessionFactory sessionFactory = configuration.buildSessionFactory();

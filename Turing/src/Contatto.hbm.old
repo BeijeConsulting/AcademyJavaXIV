@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-   <class name = "it.beije.turing.rubrica.Contatto" table = "rubrica">
+   <class name = "it.beije.turing.rubrica.Contatto" table = "contatto">
       
       <meta attribute = "class-description">
          This class contains the contatti detail.
