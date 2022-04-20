@@ -26,7 +26,7 @@ public class DBManager {
 		System.out.println("Inserire password: ");
 		String password = s.nextLine();
 		*/
-		return rm.loadRubricaFromJDBCPrepared("turing", "root", "CorraroErcole");
+		return rm.loadRubricaFromJDBC("turing", "root", "CorraroErcole");
 		
 	}
 

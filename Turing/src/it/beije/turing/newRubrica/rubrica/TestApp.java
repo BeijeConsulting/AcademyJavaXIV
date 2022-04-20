@@ -1,6 +1,8 @@
 package it.beije.turing.newRubrica.rubrica;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
@@ -14,7 +16,6 @@ import it.beije.turing.newRubrica.rubrica.Contatto;
 import it.beije.turing.newRubrica.rubrica.RubricaCSV;
 
 public class TestApp {
-	public Path p;
 	public static void main (String[] args)  {
 		
 		
@@ -154,6 +155,7 @@ public class TestApp {
 		
 		System.out.println("BYE!!");
 		s.close();
+		
 	}
 
 }
