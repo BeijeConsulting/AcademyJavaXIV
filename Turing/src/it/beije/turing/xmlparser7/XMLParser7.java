@@ -59,7 +59,7 @@ public class XMLParser7 {
 //		Documento documento = Documento.parse("/Users/simonepitossi/File/test_parser2.xml");
 //		documento.getRootElement().toString();
 		
-		testChallenge("/tmp/test_parser6.xml");
+		testChallenge("/tmp/test_parser1.xml");
 	}
 
 	/*
