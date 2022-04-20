@@ -1,5 +1,7 @@
-package it.beije.turing.myRubrica;
+package it.beije.turing.myRubrica.db;
 
+import it.beije.turing.myRubrica.interfaces.OpRubrica;
+import it.beije.turing.myRubrica.interfaces.Order;
 import it.beije.turing.rubrica.Contatto;
 
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
  * @author Giuseppe Raddato
  * Data: 19 apr 2022
  */
-public class HibernateManager implements OpRubrica{
+public class HibernateManager implements OpRubrica {
     @Override
     public List<Contatto> showContact(Order order) {
         return null;

@@ -1,5 +1,8 @@
 package it.beije.turing.myRubrica;
 
+import it.beije.turing.myRubrica.db.SQLManager;
+import it.beije.turing.myRubrica.interfaces.OpRubrica;
+import it.beije.turing.myRubrica.interfaces.Order;
 import it.beije.turing.rubrica.Contatto;
 
 
@@ -16,32 +19,41 @@ public class MyRubrica {
         OpRubrica rubrica= new SQLManager();
 
 
-        //List<Contatto> l=rubrica.showContact(Order.NO);
-       // print(rubrica.showContact(Order.NO));
+        List<Contatto> l=rubrica.showContact(Order.NO);
+       //print(l);
 
-        // print(rubrica.search("Ra"));
+        //==================RICERCA=====================
 
-        /*Contatto contatto= new Contatto();
-        contatto.setCognome("Raddato");
+         print(rubrica.search("nota"));
+
+        //==================INSERT=====================
+/*        Contatto contatto= new Contatto();
+        contatto.setCognome(" ii Raddato");
         contatto.setNome("Giuseppe");
         contatto.setEmail("mmm@gmail.com");
         contatto.setTelefono("3381234567");
         contatto.setNote("Ciao da me");
-        rubrica.insert(contatto);*/
-
-       /* Contatto c= l.get(l.size()-1);
-        rubrica.deleteContatto(c);*/
-     //   print(rubrica.showContact(Order.NO));
-      /*  System.out.println("========RUBRICA=======");
-        System.out.println("Scegli la modalità di memorizzazione");
-        System.out.println(" 1- XML");
-        System.out.println(" 2- CVS");
-        System.out.println(" 3- JDBC");
-        System.out.println(" 4- HIBERNATE");
-        System.out.println(" 5- EXIT");*/
+        rubrica.insert(contatto);
+        l=rubrica.showContact(Order.NO);
+        print(l);*/
 
 
+        //==================MODIFICA=====================
 
+    /*    contatto.setCognome(" MODIFICA Raddato");
+        contatto.setNome("MODIFICA Giuseppe");
+        contatto.setEmail("mmm@gmail.com");
+        contatto.setTelefono("3381234567");
+        contatto.setNote("Ciao da me");
+        rubrica.insert(contatto);
+        l=rubrica.showContact(Order.NO);*/
+       // print(l);
+
+
+        //==================DELETE=====================
+/*        Contatto c= l.get(l.size()-1);
+        rubrica.deleteContatto(c);
+        print(rubrica.showContact(Order.NO));*/
 
 
 

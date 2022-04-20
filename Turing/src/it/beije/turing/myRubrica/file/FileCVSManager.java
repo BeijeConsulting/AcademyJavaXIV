@@ -1,4 +1,4 @@
-package it.beije.turing.myRubrica;
+package it.beije.turing.myRubrica.file;
 
 import it.beije.turing.rubrica.Contatto;
 

@@ -1,4 +1,4 @@
-package it.beije.turing.myRubrica;
+package it.beije.turing.myRubrica.interfaces;
 
 /**
  * @author Giuseppe Raddato

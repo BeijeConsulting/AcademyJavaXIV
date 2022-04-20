@@ -1,5 +1,8 @@
-package it.beije.turing.myRubrica;
+package it.beije.turing.myRubrica.db;
 
+import it.beije.turing.myRubrica.interfaces.OpRubrica;
+import it.beije.turing.myRubrica.interfaces.Order;
+import it.beije.turing.myRubrica.interfaces.SQLStatment;
 import it.beije.turing.rubrica.Contatto;
 
 import java.sql.*;
@@ -10,7 +13,7 @@ import java.util.List;
  * @author Giuseppe Raddato
  * Data: 19 apr 2022
  */
-public class SQLManager implements OpRubrica{
+public class SQLManager implements OpRubrica {
 
 
 
@@ -32,8 +35,6 @@ public class SQLManager implements OpRubrica{
             if(connection!=null){
                 connection.close();
             }
-
-
         } catch (SQLException e) {
            e.printStackTrace();
         }
@@ -93,19 +94,24 @@ public class SQLManager implements OpRubrica{
 
     @Override
     public List<Contatto> search(String s) {
-        StringBuilder sql=new StringBuilder("Select * from rubrica WHERE nome LIKE \'"+s+"%\' OR "+
-                "cognome LIKE \'"+s+"%\' OR "+
-                "email LIKE \'"+s+"%\' OR "+
-                "telefono LIKE \'"+s+"%\' OR "+
-                "note LIKE \'"+s+"%\'");
+
+
         Connection connection=null;
-        Statement statement= null;
+        PreparedStatement statement= null;
         ResultSet resultSet=null;
         List<Contatto> result=new ArrayList<>();
+        s="%"+s+"%";
         try {
             connection=getConnection();
-            statement= connection.createStatement();
-            ResultSet rs= statement.executeQuery(sql.toString());
+            statement= connection.prepareStatement(SQLStatment.SEARCH_CONTACTS);
+            statement.setString(1,s);
+            statement.setString(2,s);
+            statement.setString(3,s);
+            statement.setString(4,s);
+            statement.setString(5,s);
+
+            statement.execute();
+            ResultSet rs= statement.getResultSet();
 
             while (rs.next()){
                 result.add(createContatto(rs));
@@ -122,23 +128,17 @@ public class SQLManager implements OpRubrica{
     @Override
     public boolean insert(Contatto c) {
         boolean result=false;
-
-        StringBuilder sql= new StringBuilder("INSERT INTO Rubrica Values( ");
-        sql.append(" null,");
-        sql.append("\'"+c.getNome()+"\',");
-        sql.append("\'"+c.getCognome()+"\',");
-        sql.append("\'"+c.getEmail()+"\',");
-        sql.append("\'"+c.getTelefono()+"\',");
-        sql.append("\'"+c.getNote()+"\'");
-        sql.append(" )");
-
-
         Connection connection=null;
-        Statement statement= null;
+        PreparedStatement statement= null;
         try {
             connection = getConnection();
-            statement= connection.createStatement();
-            result= statement.executeUpdate(sql.toString())>=1;
+            statement= connection.prepareStatement(SQLStatment.INSERT_CONTACT);
+            statement.setString(1,c.getNome());
+            statement.setString(2,c.getCognome());
+            statement.setString(3,c.getEmail());
+            statement.setString(4,c.getTelefono());
+            statement.setString(5,c.getNote());
+            result= statement.execute();
         } catch (ClassNotFoundException e) {
           e.printStackTrace();
         } catch (SQLException e) {
@@ -151,21 +151,20 @@ public class SQLManager implements OpRubrica{
     @Override
     public boolean modificaContatto(Contatto c) {
         Connection connection=null;
-        Statement statement= null;
+        PreparedStatement statement= null;
         boolean b=false;
-        StringBuilder sql= new StringBuilder("UPDATE Rubrica SET");
-        sql.append(" nome=\'"+c.getNome()+"\'");
-        sql.append(", cognome=\'"+c.getCognome()+"\'");
-        sql.append(", email=\'"+c.getEmail()+"\'");
-        sql.append(", telefono=\'"+c.getTelefono()+"\'");
-        sql.append(", note=\'"+c.getNote()+"\'");
-        sql.append(" where id=\'"+c.getId()+"\'");
 
-        System.out.println(sql);
+
         try {
             connection=getConnection();
-            statement=connection.createStatement();
-           b= statement.executeUpdate(sql.toString()) >= 1;
+            statement=connection.prepareStatement(SQLStatment.MODIFICA_CONTACT);
+            statement.setString(1,c.getNome());
+            statement.setString(2,c.getCognome());
+            statement.setString(3,c.getEmail());
+            statement.setString(4,c.getTelefono());
+            statement.setString(5,c.getNote());
+            statement.setInt(6,c.getId());
+           b= statement.execute();
         } catch (ClassNotFoundException e) {
            e.printStackTrace();
         } catch (SQLException e) {
@@ -177,16 +176,14 @@ public class SQLManager implements OpRubrica{
     @Override
     public boolean deleteContatto(Contatto c) {
         Connection connection=null;
-        Statement statement= null;
+        PreparedStatement statement= null;
         boolean b=false;
-        StringBuilder sql= new StringBuilder("DELETE From Rubrica ");
-        sql.append(" where id=\'"+c.getId()+"\'");
 
-        System.out.println(sql);
         try {
             connection=getConnection();
-            statement=connection.createStatement();
-            b= statement.executeUpdate(sql.toString()) >= 1;
+            statement=connection.prepareStatement(SQLStatment.DELETE_CONTACT);
+            statement.setInt(1,c.getId());
+            b= statement.execute();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
