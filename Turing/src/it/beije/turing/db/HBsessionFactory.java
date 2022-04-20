@@ -15,13 +15,13 @@ public class HBsessionFactory {
 	public static Session openSession() {
 		if (sessionFactory == null) {
 			System.out.println("creo SessionFactory...");
-			
+
 			Configuration configuration = new Configuration().configure()
 					.addAnnotatedClass(Contatto.class);
 
 			sessionFactory = configuration.buildSessionFactory();
 		}
-		
+
 		return sessionFactory.openSession();
 	}
 

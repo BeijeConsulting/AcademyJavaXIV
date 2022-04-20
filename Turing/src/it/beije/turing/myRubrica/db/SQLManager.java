@@ -49,7 +49,7 @@ public class SQLManager implements OpRubrica {
     @Override
     public List<Contatto> showContact(Order order) {
         List<Contatto> lista= new ArrayList<>();
-        StringBuilder s = new StringBuilder( "SELECT * FROM rubrica");
+        StringBuilder s = new StringBuilder( "SELECT c.* FROM Rubrica as c");
         Statement statement= null;
         Connection connection=null;
         ResultSet resultSet = null;

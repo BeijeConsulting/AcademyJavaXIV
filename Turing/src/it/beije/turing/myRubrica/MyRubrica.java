@@ -1,5 +1,6 @@
 package it.beije.turing.myRubrica;
 
+import it.beije.turing.myRubrica.db.HibernateManager;
 import it.beije.turing.myRubrica.db.SQLManager;
 import it.beije.turing.myRubrica.interfaces.OpRubrica;
 import it.beije.turing.myRubrica.interfaces.Order;
@@ -18,12 +19,14 @@ import java.util.Scanner;
 public class MyRubrica {
 
     public static void main(String[] args) {
-        OpRubrica rubrica= new SQLManager();
+        OpRubrica rubrica= new HibernateManager();
         List<Contatto> l = null;
 
         Scanner scanner=new Scanner(System.in);
         boolean repeat=true;
         do{
+
+
             System.out.print ("GESTIONE RUBRICA");
 
             System.out.println(" (-h per la lista delle operazioni)");
@@ -154,8 +157,8 @@ public class MyRubrica {
 
             }
         }while (repeat);
-        scanner.close();
 
+        scanner.close();
         System.out.println("A presto!!!");
 
     }

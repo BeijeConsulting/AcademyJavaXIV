@@ -42,7 +42,7 @@ public class HBManager {
 			
 //			//INSERT
 //			Contatto newContatto = new Contatto();
-//			newContatto.setId(3);
+//			newContatto.setId(3)
 //			newContatto.setCognome("Giuseppe");
 //			newContatto.setNome("Verde");
 //			newContatto.setEmail("g.verde@beije.it");
@@ -73,7 +73,7 @@ public class HBManager {
 //			System.out.println("contatto POST update : " + contatto);
 			
 //			//DELETE
-//			session.remove(contatto);
+//			sessi/*/*/*`*/*/*/on.remove(contatto);
 			
 			//transaction.commit();
 			//transaction.rollback();
