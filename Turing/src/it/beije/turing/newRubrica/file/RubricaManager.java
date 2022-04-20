@@ -381,19 +381,23 @@ public class RubricaManager {
 	}
 	
 	public boolean updateRubricaOnHibernate(int id) {
-		List<Contatto> allContact = loadRubricaFromHibernate();
+		List<Contatto> allContact = null;
 		Scanner s = new Scanner(System.in);
 		Contatto tmp = null;
-		for(Contatto c: allContact) {
-			if(c.getId() == id) {
-				tmp = c;
-				break;
-			}
-		}
-		if(tmp == null) return false;
+		
+		
 		Session session = null;
 		try {
 			session = SessionFactorySingleton.openSession();
+			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
+			allContact = query.getResultList();
+			for(Contatto c: allContact) {
+				if(c.getId() == id) {
+					tmp = c;
+					break;
+				}
+			}
+			if(tmp == null) return false;
 			Transaction transaction = session.beginTransaction();
 			
 			System.out.println("Insert new name: ");
@@ -422,7 +426,7 @@ public class RubricaManager {
 				tmp.setNote(note);
 			}
 			
-			session.update("rubrica", tmp);
+			session.save(tmp);
 			transaction.commit();
 		}catch (HibernateException hbmEx) {
 			hbmEx.printStackTrace();
@@ -495,10 +499,7 @@ public class RubricaManager {
 		if(tmp == null) return false;
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);	
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
-			session = sessionFactory.openSession();
+			session = SessionFactorySingleton.openSession();
 			Transaction transaction = session.beginTransaction();
 			session.remove(tmp);
 			transaction.commit();
