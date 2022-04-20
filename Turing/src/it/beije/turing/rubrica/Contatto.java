@@ -23,12 +23,12 @@ public class Contatto {
 	@Column(name = "cognome")
 	private String cognome;
 	
-	@Column(name = "telefono")
-	private String telefono;
-	
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "telefono")
+	private String telefono;
+		
 	@Column(name = "note")
 	private String note;
 	
@@ -38,27 +38,27 @@ public class Contatto {
 		this.id = -1;
 		this.nome = "";
 		this.cognome = "";
-		this.telefono = "";
 		this.email = "";
+		this.telefono = "";
 		this.note = "";
 	}
 	
-	public Contatto(String nome, String cognome, String telefono, String email, String note)
+	public Contatto(String nome, String cognome, String email, String telefono, String note)
 	{
 		this.nome = nome;
 		this.cognome = cognome;
-		this.telefono = telefono;
 		this.email = email;
+		this.telefono = telefono;
 		this.note = note;
 	}
 	
-	public Contatto(int id, String nome, String cognome, String telefono, String email, String note)
+	public Contatto(int id, String nome, String cognome, String email, String telefono, String note)
 	{
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
-		this.telefono = telefono;
 		this.email = email;
+		this.telefono = telefono;		
 		this.note = note;
 	}
 	
@@ -122,8 +122,8 @@ public class Contatto {
 				.append("{ id : ").append(this.id)
 				.append(", nome : ").append(this.nome)
 				.append(", cognome : ").append(this.cognome)
-				.append(", telefono : ").append(this.telefono)
 				.append(", email : ").append(this.email)
+				.append(", telefono : ").append(this.telefono)
 				.append(", note : ").append(this.note).append(" }");
 		
 		return builder.toString();
@@ -131,7 +131,7 @@ public class Contatto {
 	
 	public String toFile(String separator)
 	{
-		return nome + separator + cognome + separator + telefono + separator + email + separator + note + "\n";
+		return nome + separator + cognome + separator + email + separator + telefono + separator + note + "\n";
 	}
 	
 	 public boolean equals(Object obj)

@@ -2,6 +2,7 @@ package it.beije.turing.rubrica;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -74,7 +75,7 @@ public class JDBChandler
 			
 			while (rs.next())
 			{
-				contatti.add(new Contatto(rs.getInt("id"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("email"), rs.getString("note")));
+				contatti.add(new Contatto(rs.getInt("id"), rs.getString("nome"), rs.getString("cognome"), rs.getString("email"), rs.getString("telefono"), rs.getString("note")));
 			}
 		}
 		catch (Exception e)
@@ -112,13 +113,13 @@ public class JDBChandler
 				contatti.sort((o1, o2) -> o1.getCognome().compareTo(o2.getCognome()));
 				break;
 				
-			case "telefono":
-				contatti.sort((o1, o2) -> o1.getTelefono().compareTo(o2.getTelefono()));
-				break;
-				
 			case "email":
 				contatti.sort((o1, o2) -> o1.getEmail().compareTo(o2.getEmail()));
 				break;
+				
+			case "telefono":
+				contatti.sort((o1, o2) -> o1.getTelefono().compareTo(o2.getTelefono()));
+				break;			
 				
 			case "note":
 				contatti.sort((o1, o2) -> o1.getNote().compareTo(o2.getNote()));
@@ -170,8 +171,8 @@ public class JDBChandler
 		{
 			if (contatto.getNome().equals(filtro)) cont.add(contatto);
 			else if (contatto.getCognome().equals(filtro)) cont.add(contatto);
-			else if (contatto.getTelefono().equals(filtro)) cont.add(contatto);
 			else if (contatto.getEmail().equals(filtro)) cont.add(contatto);
+			else if (contatto.getTelefono().equals(filtro)) cont.add(contatto);
 			else if (contatto.getNote().equals(filtro)) cont.add(contatto);
 		}
 		
@@ -181,14 +182,25 @@ public class JDBChandler
 	public boolean addContatto(Contatto c)
 	{
 		Connection connection = null;
-		Statement statement = null;
+		//Statement statement = null;
+		PreparedStatement insertPrepStatement = null;
 		
 		try
 		{
 			connection = getConnection();
-			statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO rubrica VALUES (null, '" + c.getNome() + "', '"+ c.getCognome() + "', '" + c.getEmail() + 
-					"', '" + c.getTelefono() + "', '" + c.getNote() + "')");
+			//statement = connection.createStatement();
+			
+			//statement.executeUpdate("INSERT INTO rubrica VALUES (null, '" + c.getNome() + "', '"+ c.getCognome() + "', '" + c.getEmail() + 
+			//		"', '" + c.getTelefono() + "', '" + c.getNote() + "')");
+			
+			
+			insertPrepStatement = connection.prepareStatement("INSERT INTO rubrica VALUES (null, ?, ?, ?, ?, ?)");
+			insertPrepStatement.setString(1, c.getNome());
+			insertPrepStatement.setString(2, c.getCognome());
+			insertPrepStatement.setString(3, c.getEmail());
+			insertPrepStatement.setString(4, c.getTelefono());
+			insertPrepStatement.setString(5, c.getNote());
+			insertPrepStatement.executeUpdate();
 		}
 		catch (ClassNotFoundException cnfEx)
 		{
@@ -204,7 +216,8 @@ public class JDBChandler
 		{
 			try
 			{
-				statement.close();
+				//statement.close();
+				insertPrepStatement.close();
 				connection.close();				
 			}
 			catch (SQLException sqlEx)
@@ -219,15 +232,24 @@ public class JDBChandler
 	public void modifyContatto(int pos, Contatto c)
 	{
 		Connection connection = null;
-		Statement statement = null;
+		//Statement statement = null;
+		PreparedStatement updatePrepStatement = null;
 		
 		try
 		{
 			connection = getConnection();
-			statement = connection.createStatement();
-			statement.executeUpdate("UPDATE rubrica SET nome = '" + c.getNome() + "', cognome = '" + c.getCognome() + "', telefono = '"
-									+ c.getTelefono() + "', email = '" + c.getEmail()
-									+ "', note = '" + c.getNote() + "' where id = " + pos);
+			//statement = connection.createStatement();
+			//statement.executeUpdate("UPDATE rubrica SET nome = '" + c.getNome() + "', cognome = '" + c.getCognome() + "', email = '"
+			//						+ c.getEmail() + "', telefono = '" + c.getTelefono()
+			//						+ "', note = '" + c.getNote() + "' where id = " + pos);
+			
+			updatePrepStatement = connection.prepareStatement("UPDATE rubrica SET nome = ?, cognome = ?, email = ?, telefono = ?, note = ? where id = " + pos);
+			updatePrepStatement.setString(1, c.getNome());
+			updatePrepStatement.setString(2, c.getCognome());
+			updatePrepStatement.setString(3, c.getEmail());
+			updatePrepStatement.setString(4, c.getTelefono());
+			updatePrepStatement.setString(5, c.getNote());
+			updatePrepStatement.executeUpdate();
 		}
 		catch (ClassNotFoundException cnfEx)
 		{
@@ -241,7 +263,8 @@ public class JDBChandler
 		{
 			try
 			{
-				statement.close();
+				//statement.close();
+				updatePrepStatement.close();
 				connection.close();
 			}
 			catch (SQLException sqlEx)
@@ -320,16 +343,27 @@ public class JDBChandler
 	{
 		Connection connection = null;
 		Statement statement = null;
+		PreparedStatement insertPrepStatement = null;
 
 		try
 		{
 			connection = getConnection();
 			statement = connection.createStatement();
 			
+			
+			
 			for(Contatto contatto : contatti)
 			{
-				statement.executeUpdate("INSERT INTO rubrica VALUES (null, '" + contatto.getNome() + "', '"+ contatto.getCognome() + "', '" + contatto.getTelefono() + 
-						"', '" + contatto.getEmail() + "', '" + contatto.getNote() + "')");
+				//statement.executeUpdate("INSERT INTO rubrica VALUES (null, '" + contatto.getNome() + "', '"+ contatto.getCognome() + "', '" + contatto.getTelefono() + 
+				//		"', '" + contatto.getEmail() + "', '" + contatto.getNote() + "')");
+				
+				insertPrepStatement = connection.prepareStatement("INSERT INTO rubrica VALUES (null, ?, ?, ?, ?, ?)");
+				insertPrepStatement.setString(1, contatto.getNome());
+				insertPrepStatement.setString(2, contatto.getCognome());
+				insertPrepStatement.setString(3, contatto.getEmail());
+				insertPrepStatement.setString(4, contatto.getTelefono());
+				insertPrepStatement.setString(5, contatto.getNote());
+				insertPrepStatement.executeUpdate();
 			}
 		}
 		catch (ClassNotFoundException e)
@@ -344,7 +378,8 @@ public class JDBChandler
 		{
 			try
 			{
-				statement.close();
+				//statement.close();
+				insertPrepStatement.close();
 				connection.close();
 			}
 			catch (SQLException sqlEx)
@@ -370,7 +405,7 @@ public class JDBChandler
 			
 			while (rs.next())
 			{
-				contatti.add(new Contatto(rs.getInt("id"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("email"), rs.getString("note")));
+				contatti.add(new Contatto(rs.getInt("id"), rs.getString("nome"), rs.getString("cognome"), rs.getString("email"), rs.getString("telefono"), rs.getString("note")));
 			}
 		}
 		catch (ClassNotFoundException cnfEx)

@@ -310,7 +310,7 @@ public class Rubrica
 							case "sì":
 							case "yes":
 							case "y":
-								System.out.print("Criterio di ordinamento (nome, cognome, telefono, email, note): ");
+								System.out.print("Criterio di ordinamento (nome, cognome, email, telefono, note): ");
 								filtro = kb.next().toLowerCase();
 								System.out.println();
 								break;
@@ -338,7 +338,7 @@ public class Rubrica
 								case "sì":
 								case "yes":
 								case "y":
-									System.out.print("Criterio di ordinamento (nome, cognome, telefono, email, note): ");
+									System.out.print("Criterio di ordinamento (nome, cognome, email, telefono, note): ");
 									filtro = kb.next().toLowerCase();
 									System.out.println();
 									break;
@@ -391,12 +391,12 @@ public class Rubrica
 					String cognome = kb.nextLine();
 					System.out.println();
 					
-					System.out.print("Telefono: ");
-					String telefono = kb.nextLine();
-					System.out.println();
-					
 					System.out.print("Email: ");
 					String email = kb.nextLine();
+					System.out.println();
+					
+					System.out.print("Telefono: ");
+					String telefono = kb.nextLine();
 					System.out.println();
 					
 					System.out.print("Note: ");
@@ -405,11 +405,11 @@ public class Rubrica
 					
 					if (s == 1)
 					{
-						System.out.println(jdbcHandler.addContatto(new Contatto(nome, cognome, telefono, email, note)) ? "Contatto creato." : "Errore creazione contatto.");
+						System.out.println(jdbcHandler.addContatto(new Contatto(nome, cognome, email, telefono, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					}
 					else
 					{
-						System.out.println(contatti.add(new Contatto(nome, cognome, telefono, email, note)) ? "Contatto creato." : "Errore creazione contatto.");
+						System.out.println(contatti.add(new Contatto(nome, cognome, email, telefono, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					}
 					break;
 					
@@ -429,19 +429,19 @@ public class Rubrica
 						String c = kb.nextLine();
 						System.out.println();
 						
-						System.out.print("Telefono: ");
-						String t = kb.nextLine();
-						System.out.println();
-						
 						System.out.print("Email: ");
 						String e = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Telefono: ");
+						String t = kb.nextLine();
 						System.out.println();
 						
 						System.out.print("Note: ");
 						String no = kb.nextLine();
 						System.out.println();
 						
-						Contatto cont = new Contatto(n, c, t, e, no);
+						Contatto cont = new Contatto(n, c, e, t, no);
 						jdbcHandler.modifyContatto(pos, cont);
 					}
 					else
@@ -555,12 +555,12 @@ public class Rubrica
 				contatti.sort((o1, o2) -> o1.getCognome().compareTo(o2.getCognome()));
 				break;
 				
-			case "telefono":
-				contatti.sort((o1, o2) -> o1.getTelefono().compareTo(o2.getTelefono()));
-				break;
-				
 			case "email":
 				contatti.sort((o1, o2) -> o1.getEmail().compareTo(o2.getEmail()));
+				break;
+				
+			case "telefono":
+				contatti.sort((o1, o2) -> o1.getTelefono().compareTo(o2.getTelefono()));
 				break;
 				
 			case "note":
@@ -580,8 +580,8 @@ public class Rubrica
 		{
 			if (contatto.getNome().equals(filtro)) cont.add(contatto);
 			else if (contatto.getCognome().equals(filtro)) cont.add(contatto);
-			else if (contatto.getTelefono().equals(filtro)) cont.add(contatto);
 			else if (contatto.getEmail().equals(filtro)) cont.add(contatto);
+			else if (contatto.getTelefono().equals(filtro)) cont.add(contatto);
 			else if (contatto.getNote().equals(filtro)) cont.add(contatto);
 		}
 		
@@ -606,11 +606,11 @@ public class Rubrica
 		System.out.print("Cognome: ");
 		contatto.setCognome(kb.nextLine());
 		System.out.println();
-		System.out.print("Telefono: ");
-		contatto.setTelefono(kb.nextLine());
-		System.out.println();
 		System.out.print("Email: ");
 		contatto.setEmail(kb.nextLine());
+		System.out.println();
+		System.out.print("Telefono: ");
+		contatto.setTelefono(kb.nextLine());
 		System.out.println();
 		System.out.print("Note: ");
 		contatto.setNote(kb.nextLine());
