@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.naming.directory.ModificationItem;
 
+import it.beije.turing.db.ClassicDBManager;
+import it.beije.turing.db.DbInterface;
 import it.beije.turing.db.HibernateManager;
 import it.beije.turing.file.Writer;
 import it.beije.turing.file.csv.CSVReader2;
@@ -15,16 +17,14 @@ import it.beije.turing.rubrica.RubricaInterpreteXML;
 
 public class GestoreRubrica {
 private static final String BASE_RUBRIC="tmp/Test.txt";
-private List<Contatto> list;
 private List<Contatto> newEntries;
 private List<Contatto> modifiedEntries;
 private static GestoreRubrica self;
-private HibernateManager db;
+private DbInterface db;
 
 private GestoreRubrica()
 {
-	db=new HibernateManager();
-	list = new ArrayList<Contatto>();
+	db=new ClassicDBManager();
 	newEntries=new ArrayList<Contatto>();
 	modifiedEntries=new ArrayList<>();
 	/*File file = new File(BASE_RUBRIC);
@@ -32,10 +32,6 @@ private GestoreRubrica()
 	{
 		RubricImportCSV(BASE_RUBRIC,true);
 	}*/
-	for(Contatto c : db.DbGetContatti())
-	{
-		list.add(c);
-	}
 }
 
 
@@ -60,7 +56,7 @@ public void RubricImportCSV(String fileName, boolean apici) {
 public List<Contatto> getList()
 {
 	List<Contatto> tmp = new ArrayList<>();
-	for(Contatto c:list)
+	for(Contatto c:db.getContatti())
 	{
 		tmp.add(c);
 	}
@@ -76,7 +72,7 @@ public List<Contatto> getList()
 }
 
 
-public void save() {
+/*public void save() {
 	/*StringBuilder builder = new StringBuilder();
 	RubricaInterpreteCSV interprete = new RubricaInterpreteCSV();
 	builder.append(interprete.getHeader()+"\n");
@@ -84,19 +80,12 @@ public void save() {
 	{
 		builder.append(interprete.toCSV(c)+"\n");
 	}
-	save(builder.toString());*/
-	db.SaveContattiToDB(newEntries);
-	for(Contatto c: newEntries)
-	{
-		list.add(c);
-	}
-	newEntries = new ArrayList<>();
-	for(Contatto c : modifiedEntries)
-	{
-		db.update(c);
-	}
+	save(builder.toString());
+	db.insertContatti(newEntries);
+	db.updateContatti(modifiedEntries);
 	modifiedEntries=new ArrayList<>(); 
-}
+} 
+*/
 
 
 private void save(String s)
@@ -109,7 +98,7 @@ public void print(String mode) {
 	switch(mode.toLowerCase())
 	{
 	case "byname" :
-		printOrdinaPerNome();
+		//printOrdinaPerNome();
 		break;
 	case "default" :
 		print();
@@ -118,7 +107,7 @@ public void print(String mode) {
 }
 
 
-private void printOrdinaPerNome() {
+/*private void printOrdinaPerNome() {
 	List<Contatto> tmp = new ArrayList<>();
 	List<Integer> indexes = new ArrayList<>();
 	tmp.add(list.get(0));
@@ -161,19 +150,19 @@ private void printOrdinaPerNome() {
 	}
 	
 }
-
+*/
 
 public void print()
 {
-	int count=0;
+	;
 	for(Contatto c: getList())
 	{
-		System.out.println(++count+")  "+c);
+		System.out.println(c.getId()+")  "+c);
 	}
 }
 
 
-public void search(String nome, String cognome, String telefono, String email) {
+/*public void search(String nome, String cognome, String telefono, String email) {
 	List<Contatto> tmp = new ArrayList<>();
 	List<Integer> indexes  = new ArrayList<>();
 	for(Contatto c : list)
@@ -191,7 +180,7 @@ public void search(String nome, String cognome, String telefono, String email) {
 	
 }
 
-
+*/
 public void add(String nome, String cognome, String telefono, String email,String note)
 {
 	Contatto c = new Contatto();
@@ -216,28 +205,13 @@ public void add(String nome, String cognome, String telefono, String email,Strin
 		c.setNote(note);
 	}
 	
-	newEntries.add(c);
+	db.insertContatti(c);
+	
 }
-//new Fiora White 546813287 x x   modify 7 x  x x fio@white.it x
 
 public void modify(int x,String nome, String cognome, String telefono, String email,String note) {
-	Contatto c = null;
-	boolean wasExisting=true;
-	if (x>=list.size())
-	{
-		int y = x-list.size();
-		if(x>=list.size()+newEntries.size())
-		{
-			c=modifiedEntries.get(y-newEntries.size());
-		}
-		else {
-		c = newEntries.get(x-list.size());
-		}
-			wasExisting=false;
-	}
-	else {
-	c = list.get(x);
-	}
+	Contatto c = db.getContatto(x);
+	if(c!=null) {
 	if(!nome.equalsIgnoreCase("X"))
 	{
 		c.setNome(nome);
@@ -258,20 +232,18 @@ public void modify(int x,String nome, String cognome, String telefono, String em
 	{
 		c.setNote(note);
 	}
-	if(wasExisting) {
-	modifiedEntries.add(c);
-	list.remove(c);
+	db.updateContatti(c);
 	}
 }
 
 
-public void delete(int i) {
+/*public void delete(int i) {
 	list.remove(i);
-}
+}*/
 
 public void ExportXML(String fileName)
 {
-	new RubricaInterpreteXML().ExportXML(list, fileName);
+	new RubricaInterpreteXML().ExportXML(db.getContatti(), fileName);
 }
 
 

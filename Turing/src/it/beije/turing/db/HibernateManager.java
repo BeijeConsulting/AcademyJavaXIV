@@ -10,55 +10,48 @@ import org.hibernate.cfg.Configuration;
 
 import it.beije.turing.rubrica.Contatto;
 
-public class HibernateManager {
+public class HibernateManager implements DbInterface {
 
 	
 	
-public List<Contatto> DbGetContatti()
+public List<Contatto> getContatti()
 {
 	Session session = null;
-	Configuration config = new Configuration().configure().addAnnotatedClass(Contatto.class);
-	
-	SessionFactory factory = config.buildSessionFactory();
-	
-	session=factory.openSession();
+	session=HBsessionFactory.openSession();
 	
 	Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
 	return query.getResultList();
 }
 
-public void SaveContattiToDB(List<Contatto> list)
+public void insertContatti(Contatto c)
 {
-	Session session = null;
-	Configuration config = new Configuration().configure().addAnnotatedClass(Contatto.class);
-	
-	SessionFactory factory = config.buildSessionFactory();
-	
-	session=factory.openSession();
+	Session session=null;
+	session=HBsessionFactory.openSession();
 	Transaction transaction = session.beginTransaction();
-	
-	for(Contatto c : list)
-	{
-		session.save(c);
-	}
+	session.save(c);
 	transaction.commit();
 	session.close();
 	
 }
-public void update(Contatto c)
+public void updateContatti(Contatto c)
 {
-	Session session = null;
-	Configuration config = new Configuration().configure().addAnnotatedClass(Contatto.class);
 	
-	SessionFactory factory = config.buildSessionFactory();
-	
-	session=factory.openSession();
+	Session session=HBsessionFactory.openSession();
 	Transaction transaction = session.beginTransaction();
-	
-	
-		session.update(c);
+	session.merge(c);
 	transaction.commit();
+	
+	
 	session.close();
 	
+}
+public Contatto getContatto(int id)
+{
+	for(Contatto c:getContatti())
+	{
+		if(c.getId()==id)
+			return c;
+	}
+	return null;
 }
 }

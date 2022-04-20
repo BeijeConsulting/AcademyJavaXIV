@@ -33,18 +33,18 @@ public class main {
 		 
 		 case "print":
 		
-				manager.print(scanner.next());
+				manager.print("default");
 				break;
 		 
 		 
 		 case "save":
-			 manager.save();
+			// manager.save();
 			 break;
 		 
 		 
 		 case "search":
 			 System.out.println("nome cognome telefono email. X per non includere il campo nella ricerca");
-			manager.search(scanner.next(),scanner.next(),scanner.next(),scanner.next());
+			//manager.search(scanner.next(),scanner.next(),scanner.next(),scanner.next());
 		 
 		 
 		 case "new":
@@ -53,12 +53,12 @@ public class main {
 		 
 		 
 		 case "modify":
-			 manager.modify(Integer.parseInt(scanner.next())-1, scanner.next(), scanner.next(), scanner.next(), scanner.next(),scanner.next());
+			 manager.modify(Integer.parseInt(scanner.next()), scanner.next(), scanner.next(), scanner.next(), scanner.next(),scanner.next());
 			 break;
 		 
 		 
 		 case "del":
-			 manager.delete(Integer.parseInt(scanner.next())-1);
+			 //manager.delete(Integer.parseInt(scanner.next())-1);
 			 break;
 		
 		 case "export":
