@@ -1,4 +1,4 @@
-package it.beije.turing.gestione_dati_CSV_XML;
+package it.beije.turing.gestione_rubrica_commandline;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import it.beije.turing.rubrica.Contatto;
 import it.beije.turing.rubrica.RubricaInterpreteCSV;
 import it.beije.turing.rubrica.RubricaInterpreteXML;
 
-public class GestoreRubrica {
+public class GestoreRubrica implements CommandLineInterface {
 private static final String BASE_RUBRIC="tmp/Test.txt";
 private List<Contatto> newEntries;
 private List<Contatto> modifiedEntries;
@@ -45,7 +45,7 @@ public static GestoreRubrica getInstance()
 }
 
 
-public void RubricImportCSV(String fileName, boolean apici) {
+public void importCSV(String fileName, boolean apici) {
  List<Contatto> tmp = CSVReader2.readCSV(fileName, apici);
  for(Contatto c : tmp)
  {
@@ -154,8 +154,7 @@ public void print(String mode) {
 
 public void print()
 {
-	;
-	for(Contatto c: getList())
+	for(Contatto c : db.getContatti())
 	{
 		System.out.println(c.getId()+")  "+c);
 	}
@@ -247,7 +246,7 @@ public void ExportXML(String fileName)
 }
 
 
-public void ImportXML(String fileName)
+public void importXML(String fileName)
 {
 	List<Contatto> tmp = new ArrayList<>();
 	tmp= new RubricaInterpreteXML().importXML(fileName);
@@ -255,6 +254,36 @@ public void ImportXML(String fileName)
 	{
 		newEntries.add(c);
 	}
+}
+
+
+@Override
+public void search(String[] command) {
+	StringBuilder query = new StringBuilder();
+	for(int i=1;i<command.length;i+=2)
+	{
+		query.append(command[i]+"='"+command[i+1]+"' ");
+		if(i!=1)
+		{
+			query.insert(0, ",");
+		}
+	}
+	int counter=0;
+	for(Contatto c: db.search(query.toString()))
+			{
+				System.out.println(++counter+") "+c);
+			}
+}
+
+
+@Override
+public void printOrdered(String string) {
+	int lineCounter=0;
+	for(Contatto c : db.getOrdered(string))
+	{
+		System.out.println(++lineCounter+") "+c);
+	}
+	
 }
 
 }

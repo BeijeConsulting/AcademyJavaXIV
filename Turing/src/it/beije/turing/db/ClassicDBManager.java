@@ -2,6 +2,7 @@ package it.beije.turing.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,20 +29,51 @@ public class ClassicDBManager implements DbInterface{
 
 	@Override
 	public void insertContatti(Contatto c) {
-		// TODO Auto-generated method stub
+		Connection conn = getConnection();
+		try {
+			PreparedStatement prep = conn.prepareStatement("INSERT INTO rubrica VALUES(null,?,?,?,?,?)");
+			prep.setString(1, c.getNome());
+			prep.setString(2, c.getCognome());
+			prep.setString(3, c.getTelefono());
+			prep.setString(4, c.getEmail());
+			prep.setString(5, c.getNote());
+			prep.execute();
+		} catch (SQLException e) {
+			System.out.println("Error while inserting contact"+c.getNome());
+		}
 		
 	}
 
 	@Override
 	public void updateContatti(Contatto c) {
-		// TODO Auto-generated method stub
+		Connection conn = getConnection();
+		try {
+			PreparedStatement prep = conn.prepareStatement("UPDATE rubrica SET nome=?, cognome=?, telefono=?,email=?,note=? WHERE id=?");
+			prep.setString(1, c.getNome());
+			prep.setString(2, c.getCognome());
+			prep.setString(3, c.getTelefono());
+			prep.setString(4, c.getEmail());
+			prep.setString(5, c.getNote());
+			prep.setInt(6, c.getId());;
+			prep.execute();
+		} catch (SQLException e) {
+			System.out.println("Error while updating "+c.getNome());
+		}
 		
 	}
 
 	@Override
 	public Contatto getContatto(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection=getConnection();
+		ResultSet rs = null;
+		try {
+			Statement query = connection.createStatement();
+			rs=query.executeQuery("SELECT * FROM rubrica WHERE id="+id);
+			return readRS(rs).get(0);
+		} catch (SQLException e) {
+			System.out.println("errror while fetchign from DB");
+			return null;
+		}
 	}
 	private Connection getConnection()
 	{
@@ -76,6 +108,36 @@ public class ClassicDBManager implements DbInterface{
 				tmp.add(c);
 			}
 			return tmp;
+		}
+		return null;
+	}
+
+	@Override
+	public List<Contatto> search(String string) {
+		Connection connection =getConnection();
+		try {
+			Statement query = connection.createStatement();
+			ResultSet rs = query.executeQuery("SELECT * FROM rubrica WHERE "+string + " ORDER BY nome");
+			return readRS(rs);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Contatto> getOrdered(String string) {
+		Connection connection =getConnection();
+		try {
+			Statement query = connection.createStatement();
+			ResultSet rs = query.executeQuery("SELECT * FROM rubrica ORDER BY "+string);
+			return readRS(rs);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
 		}
 		return null;
 	}
