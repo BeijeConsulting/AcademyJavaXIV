@@ -131,6 +131,35 @@ public class HBmanager {
 		}
 	}
 
+	public static void deleteDB(int id) {
+		Session session = null;
+		try {
+			session = HBsessionFactory.openSession();
+			
+			Transaction transaction = session.beginTransaction();
+			
+			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
+			List<Contatto> contatti = query.getResultList();
+			
+			Contatto contatto = null;
+			for (Contatto c : contatti) {
+				if (c.getId() == id) contatto = c;
+			}
+			
+			session.remove(contatto);
+			
+			transaction.commit();
+		} catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			session.close();
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		Session session = null;

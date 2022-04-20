@@ -64,7 +64,7 @@ public class GestoreRubrica {
 		int x = 0;
 		
 		do {
-			System.out.print("\nVuoi ordinarli per nome o per cognome? (no, nome, cognome) :");
+			System.out.print("\nVuoi ordinarli per nome o per cognome? (no, nome, cognome) : ");
 			String str = s.next();
 			if(str.equalsIgnoreCase("no")) {	
 				x++;
@@ -98,7 +98,7 @@ public class GestoreRubrica {
 				contattiSupport = new ArrayList<Contatto>();
 				for(String cognome : array) {
 					for(Contatto contatto : contatti) {
-						if(cognome.equals(contatto.getNome())) contattiSupport.add(contatto);
+						if(cognome.equals(contatto.getCognome())) contattiSupport.add(contatto);
 					}
 				}
 				contatti = contattiSupport;
@@ -208,8 +208,35 @@ public class GestoreRubrica {
 		return s;
 	}
 	
-	public static void eliminaContatto(List<Contatto> contatti) {
-		System.out.println("Elimina Contatto");
+	public static void eliminaContatto(List<Contatto> contatti, Scanner s) {
+		System.out.println();
+		
+		for(Contatto c : contatti) {
+			System.out.println(c);
+		}
+		
+		System.out.print("\nInserisci l'id del contatto che vuoi eliminare: ");
+		String str = s.next();
+		
+		Contatto contatto = null;
+		for(Contatto c : contatti) {
+			if(c.getId() == Integer.parseInt(str)) {
+				contatto = c;
+			}
+		}
+		
+		int x = 0;
+		do {
+			System.out.print("\nSei sicuro di voler eliminare il contatto? (Si/No): ");
+			String confirm = s.next().toLowerCase();
+			
+			if(confirm.equals("si")) {
+				HBmanager.deleteDB(contatto.getId());
+				x++;
+			} else if(confirm.equals("no")) {
+				x++;
+			}
+		} while(x == 0);
 	}
 	
 	public static void trovaContattiDuplicati(List<Contatto> contatti) {
@@ -382,7 +409,7 @@ public class GestoreRubrica {
 					break;
 				case "delete":
 					contatti = HBmanager.getRubrica();
-					eliminaContatto(contatti);
+					eliminaContatto(contatti, s);
 					break;
 				case "finddup":
 					contatti = HBmanager.getRubrica();
