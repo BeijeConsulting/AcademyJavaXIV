@@ -13,19 +13,23 @@ import it.beije.turing.rubrica.Contatto;
 
 
 public class HBManager {
+	
+//	public static Session openHBSession() {
+//		Configuration configuration = new Configuration().configure()
+//				.addAnnotatedClass(Contatto.class);			
+//		//.addAnnotatedClass(AltraClasse.class)				
+//
+//		SessionFactory sessionFactory = configuration.buildSessionFactory();
+//
+//		return sessionFactory.openSession();
+//	}
 
 	public static void main(String[] args) {
 		
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);			
-			//.addAnnotatedClass(AltraClasse.class)				
-
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
-
-			session = sessionFactory.openSession();
 			
+			session = HBsessionFactory.openSession();
 			System.out.println("session is open ? " + session.isOpen());
 			
 			
