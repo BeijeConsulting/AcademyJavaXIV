@@ -259,7 +259,7 @@ public class Rubrica
 						pathFile = kb.next();
 						System.out.print("Inserisci il carattere separatore: ");
 						String separator = kb.next();
-						csvHandler.writeRubricaCSV(jdbcHandler.writeRubricaFromDB(), pathFile, separator);
+						csvHandler.writeRubricaCSV(jdbcHandler.getRubrica(""), pathFile, separator);
 					}
 					else if (s == 2)
 					{
@@ -269,7 +269,7 @@ public class Rubrica
 						pathFile = kb.next();
 						System.out.print("Inserisci il carattere separatore: ");
 						String separator = kb.next();
-						csvHandler.writeRubricaCSV(hbHandler.writeRubricaFromDB(), pathFile, separator);
+						csvHandler.writeRubricaCSV(hbHandler.getRubrica(""), pathFile, separator);
 					}
 					else if (s == 3)
 					{
@@ -289,7 +289,7 @@ public class Rubrica
 						XMLhandler xmlHandler = new XMLhandler();
 						System.out.print("Inserisci il path: ");
 						pathFile = kb.next();
-						xmlHandler.writeRubricaXML(jdbcHandler.writeRubricaFromDB(), pathFile);
+						xmlHandler.writeRubricaXML(jdbcHandler.getRubrica(""), pathFile);
 					}
 					else if (s == 2)
 					{
@@ -297,7 +297,7 @@ public class Rubrica
 						XMLhandler xmlHandler = new XMLhandler();
 						System.out.print("Inserisci il path: ");
 						pathFile = kb.next();
-						xmlHandler.writeRubricaXML(hbHandler.writeRubricaFromDB(), pathFile);
+						xmlHandler.writeRubricaXML(hbHandler.getRubrica(""), pathFile);
 					}
 					else if (s == 3)
 					{
@@ -325,9 +325,10 @@ public class Rubrica
 		Scanner kb = null;
 		boolean riprova = false;
 		JDBChandler jdbcHandler = new JDBChandler();
+		HBhandler hbHandler = new HBhandler();
 		do
 		{
-			if (s == 2 && contatti.size() == 0) System.out.println("Rubrica non caricata. Solo creazione nuovi contatti disponibile.");
+			if (s == 3 && contatti.size() == 0) System.out.println("Rubrica non caricata. Solo creazione nuovi contatti disponibile.");
 			
 			menuContatti();
 			
@@ -335,33 +336,33 @@ public class Rubrica
 			
 			kb = new Scanner(System.in);
 			int scelta = kb.nextInt();
-			if (s == 2 && contatti.size() == 0 && scelta != 3 && scelta != 8) scelta = -1;
-			
+			if (s == 3 && contatti.size() == 0 && scelta != 3 && scelta != 8) scelta = -1;
 			
 			switch(scelta)
 			{
 				case 1:			//VISUALIZZA CONTATTI
+					System.out.print("Vuoi riordinare la rubrica? ");
+					String riordina = kb.next().toLowerCase();
+					String filtro = null;
+					switch(riordina)
+					{
+						case "si":
+						case "sì":
+						case "yes":
+						case "y":
+							System.out.print("Criterio di ordinamento (nome, cognome, email, telefono, note): ");
+							filtro = kb.next().toLowerCase();
+							System.out.println();
+							break;
+							
+						default:
+							filtro = "";
+							break;
+					}
+					
+					
 					if (s == 1)
 					{
-						System.out.print("Vuoi riordinare la rubrica? ");
-						String riordina = kb.next().toLowerCase();
-						String filtro = null;
-						switch(riordina)
-						{
-							case "si":
-							case "sì":
-							case "yes":
-							case "y":
-								System.out.print("Criterio di ordinamento (nome, cognome, email, telefono, note): ");
-								filtro = kb.next().toLowerCase();
-								System.out.println();
-								break;
-								
-							default:
-								filtro = "";
-								break;
-						}
-						
 						for(Contatto c : jdbcHandler.getRubrica(filtro))
 						{
 							System.out.println(c);
@@ -369,54 +370,34 @@ public class Rubrica
 					}
 					else if (s == 2)
 					{
-						
+						for(Contatto c : hbHandler.getRubrica(filtro))
+						{
+							System.out.println(c);
+						}	
 					}
 					else if (s == 3)
 					{
-						if (contatti.size() != 0)
-						{
-							System.out.print("Vuoi riordinare la rubrica? ");
-							String riordina = kb.next().toLowerCase();
-							String filtro = null;
-							switch(riordina)
-							{
-								case "si":
-								case "sì":
-								case "yes":
-								case "y":
-									System.out.print("Criterio di ordinamento (nome, cognome, email, telefono, note): ");
-									filtro = kb.next().toLowerCase();
-									System.out.println();
-									break;
-									
-								default:
-									filtro = "";
-									break;
-							}
-							
-							visualizzaContatti(filtro);
-						}
-						else System.out.println("Rubrica vuota.");
+						visualizzaContatti(filtro);
 					}
 					break;
 					
 				case 2:				//CERCA CONTATTO
 					System.out.print("Valore di ricerca: ");
-					String filtro = kb.next();
+					String filtroRicerca = kb.next();
 					System.out.println();
 					List<Contatto> contacts = new ArrayList<>();
 					
 					if (s == 1)						//JDBC
 					{
-						contacts = jdbcHandler.findContatto(filtro);
+						contacts = jdbcHandler.findContatto(filtroRicerca);
 					}
 					else if (s == 2)				//HIBERNATE
 					{
-						
+						contacts = hbHandler.findContatto(filtroRicerca);
 					}
 					else if (s == 3)				//LOCALE
 					{
-						contacts = cercaContatto(filtro);						
+						contacts = cercaContatto(filtroRicerca);						
 					}
 					
 					if (contacts.isEmpty()) System.out.println("Nessuno contatto corrisponde ai criteri di ricerca.");
@@ -459,7 +440,7 @@ public class Rubrica
 					}
 					else if (s == 2)			//HIBERNATE
 					{
-						
+						System.out.println(hbHandler.addContatto(new Contatto(nome, cognome, email, telefono, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					}
 					else if (s == 3)			//LOCALE
 					{
@@ -500,7 +481,30 @@ public class Rubrica
 					}
 					else if (s == 2)			//HIBERNATE
 					{
+						kb.nextLine();
 						
+						System.out.print("Nome: ");
+						String n = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Cognome: ");
+						String c = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Email: ");
+						String e = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Telefono: ");
+						String t = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Note: ");
+						String no = kb.nextLine();
+						System.out.println();
+						
+						Contatto cont = new Contatto(n, c, e, t, no);
+						hbHandler.modifyContatto(pos, cont);
 					}
 					else if (s == 3)			//LOCALE
 					{
@@ -518,7 +522,7 @@ public class Rubrica
 					}
 					else if (s == 2)			//HIBERNATE
 					{
-						
+						hbHandler.deleteContatto(posizione);
 					}
 					else if (s == 3)			//LOCALE
 					{
@@ -538,7 +542,11 @@ public class Rubrica
 					}
 					else if (s == 2)							//HIBERNATE
 					{
-						
+						duplicati = hbHandler.findDuplicates();
+						for(Contatto c : duplicati)
+						{
+							System.out.println(c + ", found");
+						}
 					}
 					else if (s == 3)							//LOCALE
 					{
@@ -580,7 +588,12 @@ public class Rubrica
 					}
 					else if (s == 2)					//HIBERNATE
 					{
+						hbHandler.uniteDuplicates();
 						
+						for(Contatto c : hbHandler.getRubrica(""))
+						{
+							System.out.println(c);
+						}
 					}
 					else if (s == 3)					//LOCALE
 					{

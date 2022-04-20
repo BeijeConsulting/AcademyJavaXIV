@@ -388,49 +388,4 @@ public class JDBChandler
 			}
 		}
 	}
-	
-	public List<Contatto> writeRubricaFromDB()
-	{
-		List<Contatto> contatti = new ArrayList<>();
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet rs = null;
-		
-		try
-		{
-			connection = getConnection();
-			statement = connection.createStatement();
-			
-			rs = statement.executeQuery("SELECT * FROM rubrica");
-			
-			while (rs.next())
-			{
-				contatti.add(new Contatto(rs.getInt("id"), rs.getString("nome"), rs.getString("cognome"), rs.getString("email"), rs.getString("telefono"), rs.getString("note")));
-			}
-		}
-		catch (ClassNotFoundException cnfEx)
-		{
-			cnfEx.printStackTrace();
-		}
-		catch (SQLException sqlEx)
-		{
-			sqlEx.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				rs.close();
-				statement.close();
-				connection.close();
-				
-			}
-			catch (SQLException sqlEx)
-			{
-				sqlEx.printStackTrace();
-			}
-		}
-		
-		return contatti;
-	}
 }
