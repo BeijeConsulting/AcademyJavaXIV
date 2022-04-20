@@ -30,18 +30,19 @@ public class JDBCmanager {
 
 			//INSERT
 			//statement.executeUpdate("INSERT INTO rubrica VALUES (null, 'Piero', 'Verde', 'l.verde@beije.it', '5355223532', null)");
-			Contatto contatto = new Contatto();
-			contatto.setCognome("Leopardi");
-			contatto.setNome("Giacomo");
-			contatto.setEmail("g.leopardi@poeti.it");
-			statement.executeUpdate("INSERT INTO rubrica VALUES (null, '" + contatto.getNome() + "', '" + contatto.getCognome() + "', '" + contatto.getEmail() + "', '" + contatto.getTelefono() + "', " + contatto.getNote() + ")");
-			insertPrepStatement = connection.prepareStatement("INSERT INTO rubrica VALUES (null, ?, ?, ?, ?, ?)");
-			insertPrepStatement.setString(1, contatto.getNome());
-			insertPrepStatement.setString(2, contatto.getCognome());
-			insertPrepStatement.setString(3, contatto.getEmail());
-			insertPrepStatement.setString(4, contatto.getTelefono());
-			insertPrepStatement.setString(5, contatto.getNote());
-			insertPrepStatement.executeUpdate();
+//			Contatto contatto = new Contatto();
+//			contatto.setCognome("Leopardi");
+//			contatto.setNome("Giacomo");
+//			contatto.setEmail("g.leopardi@poeti.it");
+//			statement.executeUpdate("INSERT INTO rubrica VALUES (null, '" + contatto.getNome() + "', '" + contatto.getCognome() + "', '" + contatto.getEmail() + "', '" + contatto.getTelefono() + "', " + contatto.getNote() + ")");
+//			insertPrepStatement = connection.prepareStatement("INSERT INTO rubrica VALUES (null, ?, ?, ?, ?, ?)");
+//			insertPrepStatement.setString(1, contatto.getNome());
+//			insertPrepStatement.setString(2, contatto.getCognome());
+//			insertPrepStatement.setString(3, contatto.getEmail());
+//			insertPrepStatement.setString(4, contatto.getTelefono());
+//			insertPrepStatement.setString(5, contatto.getNote());
+//			insertPrepStatement.executeUpdate();
+//			
 
 			//UPDATE
 			//statement.executeUpdate("UPDATE rubrica SET telefono = '12345' where id = 2");

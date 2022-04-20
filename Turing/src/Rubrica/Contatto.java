@@ -8,6 +8,7 @@ public class Contatto {
 	private String telefono;
 	private String email;
 	private String note;
+	private int id;
 	
 	public String getNome() {
 		return nome;
@@ -54,5 +55,6 @@ public class Contatto {
 		
 		return builder.toString();
 	}
+
 
 }
