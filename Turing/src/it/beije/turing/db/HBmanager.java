@@ -26,11 +26,7 @@ public class HBmanager {
 		
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure().addAnnotatedClass(Contatto.class);							
-
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
-
-			session = sessionFactory.openSession();
+			session = HBsessionFactory.openSession();
 			
 			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
 			contatti = query.getResultList();
@@ -62,11 +58,7 @@ public class HBmanager {
 	public static void saveIntoDB(List<Contatto> contatti) {
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure().addAnnotatedClass(Contatto.class);							
-
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
-
-			session = sessionFactory.openSession();
+			session = HBsessionFactory.openSession();
 			
 			//INSERT
 			//Transaction transaction = session.beginTransaction();
@@ -93,12 +85,7 @@ public class HBmanager {
 	public static void updateDB(Contatto contattoNuovo, int id) {
 		Session session = null;
 		try {
-			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);							
-
-			SessionFactory sessionFactory = configuration.buildSessionFactory();
-
-			session = sessionFactory.openSession();
+			session = HBsessionFactory.openSession();
 			
 			Transaction transaction = session.beginTransaction();
 			
@@ -143,74 +130,68 @@ public class HBmanager {
 			session.close();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		
-//		Session session = null;
-//		try {
-//			Configuration configuration = new Configuration().configure()
-//					.addAnnotatedClass(Contatto.class);			
-//			.addAnnotatedClass(AltraClasse.class)				
-//
-//			SessionFactory sessionFactory = configuration.buildSessionFactory();
-//
-//			session = sessionFactory.openSession();
-//			
-//			System.out.println("session is open ? " + session.isOpen());
-//			
-//			
+		Session session = null;
+		try {
+			
+			session = HBsessionFactory.openSession();
+			System.out.println("session is open ? " + session.isOpen());
+			
+			
+			//INSERT
+			//Transaction transaction = session.beginTransaction();
+//			Transaction transaction = session.getTransaction();
+//			transaction.begin();
+			
 //			//INSERT
-//			//Transaction transaction = session.beginTransaction();
-////			Transaction transaction = session.getTransaction();
-////			transaction.begin();
+//			Contatto newContatto = new Contatto();
+//			newContatto.setId(3);
+//			newContatto.setCognome("Giuseppe");
+//			newContatto.setNome("Verde");
+//			newContatto.setEmail("g.verde@beije.it");
+//			System.out.println("contatto PRE : " + newContatto);
 //			
-////			//INSERT
-////			Contatto newContatto = new Contatto();
-////			newContatto.setId(3);
-////			newContatto.setCognome("Giuseppe");
-////			newContatto.setNome("Verde");
-////			newContatto.setEmail("g.verde@beije.it");
-////			System.out.println("contatto PRE : " + newContatto);
-////			
-////			session.save(newContatto);
-////			
-////			System.out.println("contatto POST : " + newContatto);
-//
+//			session.save(newContatto);
 //			
-//			//SELECT HQL
-//			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
-//			List<Contatto> contatti = query.getResultList();
-//			
-//			Contatto contatto = null;
-//			for (Contatto c : contatti) {
-//				System.out.println(c);
-//				if (c.getId() == 12) contatto = c;
-//			}
-//
-//			
-////			//UPDATE
-////			System.out.println("modifico : " + contatto);
-////			//contatto.setId(20);
-////			contatto.setNote("queste sono le note");
-////			contatto.setNome("Piero");
-////			session.save(contatto);
-////			System.out.println("contatto POST update : " + contatto);
-//			
-////			//DELETE
-////			session.remove(contatto);
-//			
-//			//transaction.commit();
-//			//transaction.rollback();
-//
-//		} catch (HibernateException hbmEx) {
-//			hbmEx.printStackTrace();
-//			throw hbmEx;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			throw e;
-//		} finally {
-//			session.close();
-//		}
+//			System.out.println("contatto POST : " + newContatto);
+
+			
+			//SELECT HQL
+			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
+			List<Contatto> contatti = query.getResultList();
+			
+			Contatto contatto = null;
+			for (Contatto c : contatti) {
+				System.out.println(c);
+				if (c.getId() == 12) contatto = c;
+			}
+
+			
+//			//UPDATE
+//			System.out.println("modifico : " + contatto);
+//			//contatto.setId(20);
+//			contatto.setNote("queste sono le note");
+//			contatto.setNome("Piero");
+//			session.save(contatto);
+//			System.out.println("contatto POST update : " + contatto);
+			
+//			//DELETE
+//			session.remove(contatto);
+			
+			//transaction.commit();
+			//transaction.rollback();
+
+		} catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			session.close();
+		}
 		
 	}
 
