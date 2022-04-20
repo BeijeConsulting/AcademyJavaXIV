@@ -524,6 +524,31 @@ public class RubricaManager {
 		}
 		return true;
 	}
+	public boolean deleteAllRubricaOnHibernate() {
+		List<Contatto> allContact = loadRubricaFromHibernate();
+		Session session = null;
+		try {
+			Configuration configuration = new Configuration().configure()
+					.addAnnotatedClass(Contatto.class);	
+			SessionFactory sessionFactory = configuration.buildSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			for(Contatto c: allContact) {
+				session.remove(c);
+			}
+			
+			transaction.commit();
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
 /////////////////////////////////////////////Generale//////////////////////////////////////////
 	public static boolean eliminaVirgolette(Contatto c) {
 		
