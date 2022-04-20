@@ -12,7 +12,7 @@ public class SessionFactorySingleton {
 	private SessionFactorySingleton() {
 	};
 
-	public Session getInstance() {
+	public static Session getInstance() {
 		if (singleton == null) {
 			Configuration configuration = new Configuration().configure().addAnnotatedClass(Contatto.class);
 			singleton = configuration.buildSessionFactory();
