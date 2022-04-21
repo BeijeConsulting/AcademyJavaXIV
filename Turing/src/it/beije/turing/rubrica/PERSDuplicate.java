@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
-public class HibDuplicate {
-	
-	public static List<Contatto> findDuplicates(Session session) {
-		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+
+
+public class PERSDuplicate {
+	public static List<Contatto> findDuplicates(EntityManager entityManager) {
+		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
 		List<Contatto> contatti = query.getResultList();
 		String s1;
 		String s2;
@@ -35,10 +36,11 @@ public class HibDuplicate {
 		return duplicates;
 	}
 	
-	public static void mergeDuplicates(Session session) {
-		List<Contatto> duplicates = findDuplicates(session);
+	public static void mergeDuplicates(EntityManager entityManager) {
+		List<Contatto> duplicates = findDuplicates(entityManager);
 		Scanner s = new Scanner(System.in);
 		while (duplicates.size()>0) {
+
 			System.out.println("Here are the duplicate contacts:");
 			System.out.println(duplicates);
 			System.out.println("Enter the id of the contact to merge (type exit to leave):");
@@ -55,10 +57,11 @@ public class HibDuplicate {
 				System.out.println("Invalid id");
 				continue;
 			}
-			HibDelete.delete(session, dup);
+			PERSDelete.delete(entityManager, dup);
 			
-			duplicates = findDuplicates(session);
+			duplicates = findDuplicates(entityManager);
 		}
 		s.close();
+		
 	}
 }

@@ -15,19 +15,19 @@ public class HibUpdate {
 	System.out.println("Enter return to leave field unedited");
 	
 	System.out.println("Please insert new Contact Surname: ");
-	st= s.nextLine().trim();;
+	st= s.nextLine().trim();
 	if (!st.equals("")) {contatto.setCognome(st);}
 	System.out.println("Please insert new Contact Name: ");
-	st=s.next();
+	st= s.nextLine().trim();
 	if (!st.equals("")) {contatto.setNome(st);}
 	System.out.println("Please insert new Contact Email: ");
-	st=s.next();
+	st= s.nextLine().trim();
 	if (!st.equals("")) {contatto.setEmail(st);}
 	System.out.println("Please insert new Contact Phone: ");
-	st=s.next();
+	st= s.nextLine().trim();
 	if (!st.equals("")) {contatto.setTelefono(st);}
 	System.out.println("Please insert new Contact Notes: ");
-	st=s.next();
+	st= s.nextLine().trim();
 	if (!st.equals("")) {contatto.setNote(st);}
 	s.close();
 
