@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MyCSVManager {
 
-    public List<Contatto> loadRubricaFromCSV(String pathFile, String separator) {
+    public static List<Contatto> loadRubricaFromCSV(String pathFile, String separator) {
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         List<Contatto> contacts = null;
@@ -96,7 +96,7 @@ public class MyCSVManager {
 
     }
 
-    public void writeRubricaCSV(List<Contatto> contacts, String pathFile, String separator) {
+    public static void writeRubricaCSV(List<Contatto> contacts, String pathFile) {
         File file = new File(pathFile);
         FileWriter fileWriter = null;
 

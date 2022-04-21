@@ -12,7 +12,7 @@ import java.util.List;
  * salvare il contenuto della cartella
  * ciclare il contenuto della cartella
  * stampare il contenuto
- * se il contenuto é una cartella, stampare il contenuto
+ * se il contenuto ï¿½ una cartella, stampare il contenuto
  * ricorsivamente.
  */
 
@@ -45,7 +45,6 @@ public class OpenDir {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		readDir("/temp");
 

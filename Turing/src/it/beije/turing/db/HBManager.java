@@ -29,7 +29,7 @@ public class HBManager {
 		Session session = null;
 		try {
 			
-			session = HBsessionFactory.openSession();
+			session = HBsessionFactory.openH8Session();
 			System.out.println("session is open ? " + session.isOpen());
 			
 			

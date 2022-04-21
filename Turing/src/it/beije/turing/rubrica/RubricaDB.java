@@ -12,7 +12,6 @@ import it.beije.turing.file.JDBCUtil;
 public class RubricaDB {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		Connection connection = null;
 		Statement statement = null;

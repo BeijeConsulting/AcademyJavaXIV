@@ -19,7 +19,7 @@ import java.util.List;
 
 public class MyXMLManager {
 
-    public List<Contatto> loadRubricaFromXML(String pathFile) {
+    public static List<Contatto> loadRubricaFromXML(String pathFile) {
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
@@ -81,7 +81,7 @@ public class MyXMLManager {
         return contacts;
     }
 
-    public void writeRubricaXML(List<Contatto> contacts, String pathFile) {
+    public static void writeRubricaXML(List<Contatto> contacts, String pathFile) {
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;

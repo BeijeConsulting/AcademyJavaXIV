@@ -12,7 +12,7 @@ public class HBsessionFactory {
 	
 	private static SessionFactory sessionFactory;
 	
-	public static Session openSession() {
+	public static Session openH8Session() {
 		if (sessionFactory == null) {
 			System.out.println("creo SessionFactory...");
 			
