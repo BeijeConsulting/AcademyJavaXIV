@@ -3,12 +3,14 @@ package it.beije.turing.gestione_rubrica_commandline;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.naming.directory.ModificationItem;
 
 import it.beije.turing.db.ClassicDBManager;
 import it.beije.turing.db.DbInterface;
 import it.beije.turing.db.HibernateManager;
+import it.beije.turing.db.JPA_Manager;
 import it.beije.turing.file.Writer;
 import it.beije.turing.file.csv.CSVReader2;
 import it.beije.turing.rubrica.Contatto;
@@ -24,7 +26,7 @@ private DbInterface db;
 
 private GestoreRubrica()
 {
-	db=new ClassicDBManager();
+	db=new JPA_Manager();
 	newEntries=new ArrayList<Contatto>();
 	modifiedEntries=new ArrayList<>();
 	/*File file = new File(BASE_RUBRIC);
@@ -258,7 +260,7 @@ public void importXML(String fileName)
 
 
 @Override
-public void search(String[] command) {
+public List<Contatto> search(String... command) {
 	StringBuilder query = new StringBuilder();
 	for(int i=1;i<command.length;i+=2)
 	{
@@ -268,11 +270,7 @@ public void search(String[] command) {
 			query.insert(0, ",");
 		}
 	}
-	int counter=0;
-	for(Contatto c: db.search(query.toString()))
-			{
-				System.out.println(++counter+") "+c);
-			}
+	return db.search(query.toString());
 }
 
 
@@ -285,5 +283,125 @@ public void printOrdered(String string) {
 	}
 	
 }
+
+
+@Override
+public void delete(String string) {
+	db.delete(Integer.parseInt(string));
+	
+}
+
+
+@Override
+public void findDuplicates() {
+	List<Contatto> dupes = new ArrayList<>();
+	List<Contatto> list = db.getContatti();
+	for(Contatto c : list)
+	{
+		int index=list.indexOf(c)+1;
+		for(;index<list.size();index++)
+		{
+			Contatto dupe = list.get(index);
+			if(c.equals(dupe))
+			{
+				if(!dupes.contains(dupe))
+				dupes.add(dupe);
+				if(!dupes.contains(c))
+					dupes.add(c);
+			}
+		}
+		
+	}
+	
+	if(dupes.isEmpty())
+	{
+		System.out.println("no duplicates found.");
+	}
+	else
+		for(Contatto d : dupes)
+	 {
+		 System.out.println(d);
+	 }
+}
+
+
+@Override
+public void mergeContacts(String... ids) {
+	List<Contatto> dupes = new ArrayList<Contatto>();
+	for(String i : ids)
+	{
+		if(i.equalsIgnoreCase("merge"))
+		{
+			continue;
+		}
+		dupes.add(search("x","id",i).get(0));
+	}
+	Contatto c=dupes.get(0);
+	if(c.getNome()==null)
+	{
+		for(Contatto d : dupes)
+		{
+			if(d.getNome()!=null)
+			{
+				c.setNome(d.getNome());
+			}
+		}
+	}
+	
+	if(c.getCognome()==null)
+	{
+		for(Contatto d : dupes)
+		{
+			if(d.getCognome()!=null)
+			{
+				c.setCognome(d.getCognome());
+			}
+		}
+	}
+	
+	if(c.getTelefono()==null)
+	{
+		for(Contatto d : dupes)
+		{
+			if(d.getTelefono()!=null)
+			{
+				c.setTelefono(d.getTelefono());
+			}
+		}
+	}
+	
+	if(c.getEmail()==null)
+	{
+		for(Contatto d : dupes)
+		{
+			if(d.getEmail()!=null)
+			{
+				c.setEmail(d.getEmail());
+			}
+		}
+	}
+	
+	if(c.getNote()==null)
+	{
+		for(Contatto d : dupes)
+		{
+			if(d.getNote()!=null)
+			{
+				c.setNote(d.getNote());
+			}
+		}
+	}
+	
+	db.updateContatti(c);
+	dupes.remove(c);
+	for(Contatto d:dupes)
+	{
+		db.delete(d.getId());
+	}
+}
+
+
+
+
 
 }

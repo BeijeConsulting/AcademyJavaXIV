@@ -68,7 +68,10 @@ public class main {
 		 
 		 
 		 case "search":
-			 clInterface.search(command);
+			 for(Contatto c : clInterface.search(command))
+			 {
+				 System.out.println(c);
+			 }
 			 break;
 		 
 		 case "new":
@@ -76,6 +79,12 @@ public class main {
 			 {
 				 System.out.println("syntax: nome cognome telefono email note  insert x to ignore field");
 				 command=("x "+scanner.nextLine()).split(" ");
+			 }
+			 if(command.length>6) {
+				 for(int i = 6;i<command.length;i++)
+				 {
+					 command[5]+=" "+command[i];
+				 }
 			 }
 			 try {
 			 clInterface.add(command[1],command[2],command[3],command[4],command[5]);
@@ -94,6 +103,12 @@ public class main {
 				 System.out.println("syntax: id nome cognome telefono email note  insert x to ignore field id is the id of the entry you want to update");
 				 command=("x "+scanner.nextLine()).split(" ");
 			 }
+			 if(command.length>7) {
+				 for(int i = 7;i<command.length;i++)
+				 {
+					 command[6]+=" "+command[i];
+				 }
+			 }
 			 try {
 			 clInterface.modify(Integer.parseInt(command[1]),command[2],command[3],command[4],command[5],command[6]);
 			 break;
@@ -105,7 +120,12 @@ public class main {
 		 
 		 
 		 case "del":
-			 //manager.delete(Integer.parseInt(scanner.next())-1);
+			Contatto c = (clInterface.search("x","id",command[1])).get(0);
+			System.out.println("are you sure to delete " + c +" ? y/n");
+			String answer = scanner.next();
+			if(answer.equalsIgnoreCase("y"))
+			clInterface.delete(command[1]);
+			else
 			 break;
 		
 		 case "export":
@@ -115,6 +135,13 @@ public class main {
 		 default: 
 			System.out.println(INPUT_ERROR);
 			break;
+		
+		 case "duplicates":
+			 clInterface.findDuplicates();
+			 break;
+		 case "merge":
+			 clInterface.mergeContacts(command);
+			 break;
 		 case "exit":
 			 shouldBeRunning=false;
 		 }	 

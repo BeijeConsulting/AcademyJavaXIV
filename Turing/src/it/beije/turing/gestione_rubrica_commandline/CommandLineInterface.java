@@ -18,9 +18,17 @@ public interface CommandLineInterface {
 
 	public void ExportXML(String fileName);
 
-	public void search(String[] command);
+	public List<Contatto> search(String... command);
 
 	public void printOrdered(String string);
+
+	public void delete(String string);
+
+	public void findDuplicates();
+
+	public void mergeContacts(String...indexes);
+
+	
 	
 	
 

@@ -11,4 +11,5 @@ public void updateContatti(Contatto c);
 public Contatto getContatto(int id);
 public List<Contatto> search(String string);
 public List<Contatto> getOrdered(String string);
+public void delete(int parseInt);
 }

@@ -141,4 +141,17 @@ public class ClassicDBManager implements DbInterface{
 		}
 		return null;
 	}
+
+	@Override
+	public void delete(int id) {
+		Connection conn = getConnection();
+		try {
+			PreparedStatement prep = conn.prepareStatement("DELETE FROM rubrica WHERE id=?");
+			prep.setInt(1,id);
+			prep.execute();
+		} catch (SQLException e) {
+			System.out.println("Error while deleting");
+		}
+		
+	}
 }

@@ -47,11 +47,34 @@ public void updateContatti(Contatto c)
 }
 public Contatto getContatto(int id)
 {
-	for(Contatto c:getContatti())
-	{
-		if(c.getId()==id)
-			return c;
-	}
-	return null;
+	return search("id="+id).get(0);
+}
+
+@Override
+public List<Contatto> search(String string) {
+	Session session = null;
+	session=HBsessionFactory.openSession();
+	
+	Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE "+string);
+	return query.getResultList();
+}
+
+@Override
+public List<Contatto> getOrdered(String string) {
+	Session session = null;
+	session=HBsessionFactory.openSession();
+	
+	Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c ORDER BY "+string);
+	return query.getResultList();
+}
+
+@Override
+public void delete(int id) {
+	Session session = null;
+	session=HBsessionFactory.openSession();
+	Transaction transaction = session.beginTransaction();
+	session.remove(getContatto(id));
+	transaction.commit();
+	session.close();
 }
 }
