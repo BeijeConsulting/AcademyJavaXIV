@@ -35,7 +35,6 @@ public class Contatto {
 	
 	public Contatto()
 	{
-		this.id = -1;
 		this.nome = "";
 		this.cognome = "";
 		this.email = "";

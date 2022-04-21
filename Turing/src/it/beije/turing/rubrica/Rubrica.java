@@ -51,11 +51,15 @@ public class Rubrica
 					avviaMenu(scelta);
 					break;
 					
-				case 3:					//LOCALE
+				case 3:					//JPA
 					avviaMenu(scelta);
 					break;
 					
-				case 4:
+				case 4:					//LOCALE
+					avviaMenu(scelta);
+					break;
+					
+				case 5:
 					System.exit(0);
 					break;
 					
@@ -68,7 +72,7 @@ public class Rubrica
 		} while (riprova);
 	}
 	
-	private void avviaMenu(int s) // 1 db jdbc,  2 db hibernate,  3 locale
+	private void avviaMenu(int s) // 1 db jdbc,  2 db hibernate, 3 JPA, 4 locale
 	{
 		Scanner kb = null;
 		boolean riprova = false;
@@ -184,6 +188,18 @@ public class Rubrica
 					}
 					else if (s == 3)
 					{
+						JPAhandler jpaHandler = new JPAhandler();
+						CSVhandler csvHandler = new CSVhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						System.out.print("Inserisci il carattere separatore: ");
+						String separator = kb.next();
+						
+						
+						jpaHandler.loadRubricaToDB(csvHandler.loadRubricaFromCSV(pathFile, separator));
+					}
+					else if (s == 4)
+					{
 						CSVhandler csvHandler = new CSVhandler();
 						System.out.print("Inserisci il path: ");
 						pathFile = kb.next();
@@ -212,6 +228,14 @@ public class Rubrica
 						hbHandler.loadRubricaToDB(xmlHandler.loadRubricaFromXML(pathFile));
 					}
 					else if (s == 3)
+					{
+						JPAhandler jpaHandler = new JPAhandler();
+						XMLhandler xmlHandler = new XMLhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						jpaHandler.loadRubricaToDB(xmlHandler.loadRubricaFromXML(pathFile));
+					}
+					else if (s == 4)
 					{
 						XMLhandler xmlHandler = new XMLhandler();
 						System.out.print("Inserisci il path: ");
@@ -273,6 +297,16 @@ public class Rubrica
 					}
 					else if (s == 3)
 					{
+						JPAhandler jpaHandler = new JPAhandler();
+						CSVhandler csvHandler = new CSVhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						System.out.print("Inserisci il carattere separatore: ");
+						String separator = kb.next();
+						csvHandler.writeRubricaCSV(jpaHandler.getRubrica(""), pathFile, separator);
+					}
+					else if (s == 4)
+					{
 						CSVhandler csvHandler = new CSVhandler();
 						System.out.print("Inserisci il path: ");
 						pathFile = kb.next();
@@ -301,6 +335,14 @@ public class Rubrica
 					}
 					else if (s == 3)
 					{
+						JPAhandler jpaHandler = new JPAhandler();
+						XMLhandler xmlHandler = new XMLhandler();
+						System.out.print("Inserisci il path: ");
+						pathFile = kb.next();
+						xmlHandler.writeRubricaXML(jpaHandler.getRubrica(""), pathFile);
+					}
+					else if (s == 4)
+					{
 						XMLhandler xmlHandler = new XMLhandler();
 						System.out.print("Inserisci il path: ");
 						pathFile = kb.next();
@@ -326,9 +368,10 @@ public class Rubrica
 		boolean riprova = false;
 		JDBChandler jdbcHandler = new JDBChandler();
 		HBhandler hbHandler = new HBhandler();
+		JPAhandler jpaHandler = new JPAhandler();
 		do
 		{
-			if (s == 3 && contatti.size() == 0) System.out.println("Rubrica non caricata. Solo creazione nuovi contatti disponibile.");
+			if (s == 4 && contatti.size() == 0) System.out.println("Rubrica non caricata. Solo creazione nuovi contatti disponibile.");
 			
 			menuContatti();
 			
@@ -336,7 +379,7 @@ public class Rubrica
 			
 			kb = new Scanner(System.in);
 			int scelta = kb.nextInt();
-			if (s == 3 && contatti.size() == 0 && scelta != 3 && scelta != 8) scelta = -1;
+			if (s == 4 && contatti.size() == 0 && scelta != 3 && scelta != 8) scelta = -1;
 			
 			switch(scelta)
 			{
@@ -377,6 +420,13 @@ public class Rubrica
 					}
 					else if (s == 3)
 					{
+						for(Contatto c : jpaHandler.getRubrica(filtro))
+						{
+							System.out.println(c);
+						}	
+					}
+					else if (s == 4)
+					{
 						visualizzaContatti(filtro);
 					}
 					break;
@@ -395,7 +445,11 @@ public class Rubrica
 					{
 						contacts = hbHandler.findContatto(filtroRicerca);
 					}
-					else if (s == 3)				//LOCALE
+					else if (s == 3)				//JPA
+					{
+						contacts = jpaHandler.findContatto(filtroRicerca);
+					}
+					else if (s == 4)				//LOCALE
 					{
 						contacts = cercaContatto(filtroRicerca);						
 					}
@@ -442,7 +496,11 @@ public class Rubrica
 					{
 						System.out.println(hbHandler.addContatto(new Contatto(nome, cognome, email, telefono, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					}
-					else if (s == 3)			//LOCALE
+					else if (s == 3)			//JPA
+					{
+						System.out.println(jpaHandler.addContatto(new Contatto(nome, cognome, email, telefono, note)) ? "Contatto creato." : "Errore creazione contatto.");
+					}
+					else if (s == 4)			//LOCALE
 					{
 						System.out.println(contatti.add(new Contatto(nome, cognome, email, telefono, note)) ? "Contatto creato." : "Errore creazione contatto.");
 					}
@@ -506,7 +564,34 @@ public class Rubrica
 						Contatto cont = new Contatto(n, c, e, t, no);
 						hbHandler.modifyContatto(pos, cont);
 					}
-					else if (s == 3)			//LOCALE
+					else if (s == 3)			//JPA
+					{
+						kb.nextLine();
+						
+						System.out.print("Nome: ");
+						String n = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Cognome: ");
+						String c = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Email: ");
+						String e = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Telefono: ");
+						String t = kb.nextLine();
+						System.out.println();
+						
+						System.out.print("Note: ");
+						String no = kb.nextLine();
+						System.out.println();
+						
+						Contatto cont = new Contatto(n, c, e, t, no);
+						jpaHandler.modifyContatto(pos, cont);
+					}
+					else if (s == 4)			//LOCALE
 					{
 						modificaContatto(pos);
 					}
@@ -524,7 +609,11 @@ public class Rubrica
 					{
 						hbHandler.deleteContatto(posizione);
 					}
-					else if (s == 3)			//LOCALE
+					else if (s == 3)			//JPA
+					{
+						jpaHandler.deleteContatto(posizione);
+					}
+					else if (s == 4)			//LOCALE
 					{
 						cancellaContatto(posizione);
 					}
@@ -548,7 +637,15 @@ public class Rubrica
 							System.out.println(c + ", found");
 						}
 					}
-					else if (s == 3)							//LOCALE
+					else if (s == 3)							//JPA
+					{
+						duplicati = jpaHandler.findDuplicates();
+						for(Contatto c : duplicati)
+						{
+							System.out.println(c + ", found");
+						}
+					}
+					else if (s == 4)							//LOCALE
 					{
 						duplicati = cercaDuplicati(false);
 						
@@ -595,7 +692,16 @@ public class Rubrica
 							System.out.println(c);
 						}
 					}
-					else if (s == 3)					//LOCALE
+					else if (s == 3)					//JPA
+					{
+						jpaHandler.uniteDuplicates();
+						
+						for(Contatto c : jpaHandler.getRubrica(""))
+						{
+							System.out.println(c);
+						}
+					}
+					else if (s == 4)					//LOCALE
 					{
 						duplicatiUniti = cercaDuplicati(true);
 						contatti = duplicatiUniti;
@@ -766,19 +872,23 @@ public class Rubrica
 		System.out.print("------- Menu Database HB --------\n");
 		System.out.print("--------------- 2 ---------------\n");
 		System.out.print("---------------------------------\n");
-		System.out.print("---------- Menu Locale ----------\n");
+		System.out.print("------- Menu Database JPA -------\n");
 		System.out.print("--------------- 3 ---------------\n");
 		System.out.print("---------------------------------\n");
-		System.out.print("------- Esci dal Programma ------\n");
+		System.out.print("---------- Menu Locale ----------\n");
 		System.out.print("--------------- 4 ---------------\n");
+		System.out.print("---------------------------------\n");
+		System.out.print("------- Esci dal Programma ------\n");
+		System.out.print("--------------- 5 ---------------\n");
 		System.out.print("---------------------------------\n");
 	}
 	
 	private void menuIniziale(int s)
 	{
-		if (s == 1) System.out.print("---------- DATABASE JDBC ---------\n");
-		else if (s == 2) System.out.print("----- DATABASE HIBERNATE -----\n");
-		else if (s == 3)
+		if (s == 1) System.out.print("--------- DATABASE JDBC ---------\n");
+		else if (s == 2) System.out.print("------ DATABASE HIBERNATE -------\n");
+		else if (s == 3) System.out.print("--------- DATABASE JPA ----------\n");
+		else if (s == 4)
 		{
 			System.out.print("\n\n------------ LOCALE -------------\n");
 			System.out.print("---------------------------------\n");
