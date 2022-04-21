@@ -33,7 +33,6 @@ public class HBManager {
 			System.out.println("session is open ? " + session.isOpen());
 			
 			
-			//INSERT
 			//Transaction transaction = session.beginTransaction();
 //			Transaction transaction = session.getTransaction();
 //			transaction.begin();
