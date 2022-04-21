@@ -6,6 +6,8 @@ import it.beije.turing.myRubrica.interfaces.OpRubrica;
 import it.beije.turing.myRubrica.interfaces.Order;
 import it.beije.turing.rubrica.Contatto;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -156,6 +158,7 @@ public class MyRubrica {
 
 
             }
+
         }while (repeat);
 
         scanner.close();

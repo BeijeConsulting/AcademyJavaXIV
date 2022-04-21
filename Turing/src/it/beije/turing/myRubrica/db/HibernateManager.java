@@ -1,9 +1,8 @@
 package it.beije.turing.myRubrica.db;
 
-import com.mysql.cj.protocol.ServerSessionStateController;
+
 import it.beije.turing.myRubrica.interfaces.OpRubrica;
 import it.beije.turing.myRubrica.interfaces.Order;
-import it.beije.turing.myRubrica.interfaces.SQLStatment;
 import it.beije.turing.rubrica.Contatto;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -69,8 +68,8 @@ public class HibernateManager implements OpRubrica {
 
         Session session=HibernateSessionFactory.opSession();
         session.save(c);
-
         session.close();
+
         return session.getTransaction().getStatus() == TransactionStatus.COMMITTED;
     }
 

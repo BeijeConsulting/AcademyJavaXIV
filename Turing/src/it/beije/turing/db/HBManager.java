@@ -32,10 +32,7 @@ public class HBManager {
 			session = HBsessionFactory.openSession();
 			System.out.println("session is open ? " + session.isOpen());
 
-
-			
-			
-			//Transaction transaction = session.beginTransaction();
+//			Transaction transaction = session.beginTransaction();
 //			Transaction transaction = session.getTransaction();
 //			transaction.begin();
 			

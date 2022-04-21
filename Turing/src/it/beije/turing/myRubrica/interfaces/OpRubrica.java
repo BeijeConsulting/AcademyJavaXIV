@@ -17,8 +17,26 @@ public interface OpRubrica {
     public boolean deleteContatto(Contatto c);
     public List<Contatto> contattiDuplicati();
     public void unisciContatti();
+
+
     public List<Contatto> importFromCVS(String path);
     public List<Contatto> importFromXML(String path);
     public void exportFromCVS(String path,List<Contatto> contatti);
     public void exportFromXML(String path,List<Contatto> contatti);
+
+    public static void exportFileXML(String path,List<Contatto> contats){
+
+    }
+
+    public static void exportFileCVS(String path,List<Contatto> contats){
+
+    }
+
+    public static List<Contatto> impotFileXML(){
+        return null;
+    }
+
+    public static List<Contatto> importFileCVS(){
+        return null;
+    }
 }
