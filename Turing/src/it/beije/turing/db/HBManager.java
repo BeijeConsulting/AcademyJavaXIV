@@ -35,7 +35,6 @@ public class HBManager {
 
 			
 			
-			//INSERT
 			//Transaction transaction = session.beginTransaction();
 //			Transaction transaction = session.getTransaction();
 //			transaction.begin();
