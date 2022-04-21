@@ -1,4 +1,4 @@
-package it.beije.turing.file;
+package it.beije.turing.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,7 +29,6 @@ public class JDBCmanager {
 				sb.append(")");
 			else
 				sb.append(" , ");
-
 		}
 		return sb.toString();
 	}

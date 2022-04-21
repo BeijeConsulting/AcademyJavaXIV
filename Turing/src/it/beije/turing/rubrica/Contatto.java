@@ -13,8 +13,7 @@ import javax.persistence.Table;
 public class Contatto {
 	
 	public Contatto() {}
-	public Contatto(int id, String nome, String cognome, String telefono, String email, String note) {
-		this.id = id;
+	public Contatto(String nome, String cognome, String telefono, String email, String note) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.telefono = telefono;

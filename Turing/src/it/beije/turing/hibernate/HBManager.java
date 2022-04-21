@@ -1,4 +1,4 @@
-package it.beije.turing.file;
+package it.beije.turing.hibernate;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class HBManager {
 			Transaction transaction = session.beginTransaction();
 			
 
-			Contatto newContatto = new Contatto(3, "Ciao", "Sono", "Marco", "39843323",
+			Contatto newContatto = new Contatto( "Ciao", "Sono", "Marco", "39843323",
 					"Quello non è il mio vero numero");
 			session.save(newContatto);
 

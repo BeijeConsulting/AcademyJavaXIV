@@ -1,10 +1,13 @@
-package it.beije.turing.file;
+package it.beije.turing.rubrica;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-import it.beije.turing.rubrica.Contatto;
+import it.beije.turing.file.RubricaCSV;
+import it.beije.turing.file.RubricaXML;
+import it.beije.turing.jdbc.JDBCmanager;
+import it.beije.turing.jpa.JpaManager;
 
 //import it.beije.turing.file.*;
 
@@ -14,15 +17,19 @@ public class RubricaManager {
 	public static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		//JDBCmanager.addContatti(contatti);
-		JDBCmanager.readContatti();
-		mainMenu();
-		scanner.close();
-		try {
-			RubricaXML.writeXML(contatti, path);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//JpaManager.addContatti(contatti);
+		
+		JpaManager.updateJpa();
+		JpaManager.readContatti();
+//		JDBCmanager.addContatti(contatti);
+//		JDBCmanager.readContatti();
+//		mainMenu();
+//		scanner.close();
+//		try {
+//			RubricaXML.writeXML(contatti, path);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 	}
 

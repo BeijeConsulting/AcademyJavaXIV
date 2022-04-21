@@ -1,4 +1,4 @@
-package it.beije.turing.file;
+package it.beije.turing.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
