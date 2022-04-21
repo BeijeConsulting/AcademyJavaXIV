@@ -81,6 +81,63 @@ public class MyXMLManager {
         return contacts;
     }
 
+    public static void addContactXML(Contatto c, String filePath) {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = null;
+        Document doc = null;
+        try {
+
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            doc = documentBuilder.parse(filePath);
+
+            Element root = doc.getDocumentElement();
+
+            Element el = doc.createElement("contatto");
+
+            if (c.getCognome() != null) {
+                Element cognome = doc.createElement("cognome");
+                cognome.setTextContent(c.getCognome());
+                el.appendChild(cognome);
+            }
+            if (c.getNome() != null) {
+                Element nome = doc.createElement("nome");
+                nome.setTextContent(c.getNome());
+                el.appendChild(nome);
+            }
+            if (c.getEmail() != null) {
+                Element email = doc.createElement("email");
+                email.setTextContent(c.getEmail());
+                el.appendChild(email);
+            }
+            if (c.getTelefono() != null) {
+                Element telefono = doc.createElement("telefono");
+                telefono.setTextContent(c.getTelefono());
+                el.appendChild(telefono);
+            }
+            if (c.getNote() != null) {
+                Element note = doc.createElement("note");
+                note.setTextContent(c.getNote());
+                el.appendChild(note);
+            }
+
+            root.appendChild(el);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+
+            StreamResult result = new StreamResult(new File(filePath));
+
+            StreamResult syso = new StreamResult(System.out);
+
+            transformer.transform(source, result);
+            transformer.transform(source, syso);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void writeRubricaXML(List<Contatto> contacts, String pathFile) {
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();

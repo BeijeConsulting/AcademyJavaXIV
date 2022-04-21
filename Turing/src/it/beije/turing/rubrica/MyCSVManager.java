@@ -96,6 +96,49 @@ public class MyCSVManager {
 
     }
 
+    public static void addContactCSV(Contatto c, String filePath) {
+        File file = new File(filePath);
+        FileWriter fileWriter = null;
+
+        if (file.exists()) {
+
+            try {
+                fileWriter = new FileWriter(file, true);
+
+                if (c.getCognome() != null) {
+                    fileWriter.write(c.getCognome());
+                }
+                fileWriter.write(';');
+                if (c.getNome() != null) {
+                    fileWriter.write(c.getNome());
+                }
+                fileWriter.write(';');
+                if (c.getEmail() != null) {
+                    fileWriter.write(c.getEmail());
+                }
+                fileWriter.write(';');
+                if (c.getTelefono() != null) {
+                    fileWriter.write(c.getTelefono());
+                }
+                fileWriter.write('\n');
+
+            } catch (IOException ioE) {
+                ioE.printStackTrace();
+            } finally {
+                try {
+                    fileWriter.flush();
+                    fileWriter.close();
+                } catch (IOException fEx) {
+                    fEx.printStackTrace();
+                }
+
+                System.out.println("Contact added");
+            }
+        } else {
+            System.out.println("Path not exist");
+        }
+    }
+
     public static void writeRubricaCSV(List<Contatto> contacts, String pathFile) {
         File file = new File(pathFile);
         FileWriter fileWriter = null;
