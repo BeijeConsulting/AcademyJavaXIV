@@ -6,7 +6,6 @@ public class Test extends SuperTest{
 		Test test2 = (Test)new SuperTest();
 		SuperTest test3 = new Test();
 		SuperTest test4 = new SuperTest();
-		
 		test1 = (Test)test3;
 	}
 }
