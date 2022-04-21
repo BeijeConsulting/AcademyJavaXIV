@@ -71,7 +71,7 @@ public class XMLParser2 {
 
 	public static void main(String[] args) throws IOException, SAXException {
 		
-		testChallenge("/tmp/test_parser6.xml");
+		testChallenge("/tmp/test_parser1.xml");
 	}
 
 	public static void main2(String[] args) throws IOException, SAXException {
