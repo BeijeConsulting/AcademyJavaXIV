@@ -53,7 +53,7 @@ public class XMLParser3 {
 //	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Documento d = Documento.getIstance().parse("/tmp/test_parser2.xml");//"Turing/res/test_parser6.xml");
+		Documento d = Documento.getIstance().parse("/tmp/test_parser1.xml");//"Turing/res/test_parser6.xml");
 
 		Elemento contatti = d.getRootElement();
 
