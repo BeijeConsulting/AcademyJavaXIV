@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -593,6 +595,171 @@ public class RubricaManager {
 			throw e;
 		} finally {
 			session.close();
+		}
+		return true;
+	}
+	
+//////////////////////////////////////////JPA////////////////////////////////////////////
+	
+	public List<Contatto> loadRubricaFromJPA(){
+		EntityManager entityManager = null;
+		try {
+			entityManager = EntityManagerFactorySingleton.createEntityManager();
+			javax.persistence.Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
+			List<Contatto> contatti = query.getResultList();
+			return contatti;
+		} catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
+		}
+	}
+
+	public boolean updateRubricaOnJPA(int id) {
+		Scanner s = new Scanner(System.in);
+		Contatto tmp = null;
+		EntityManager entityManager = null;
+		try {
+			entityManager = EntityManagerFactorySingleton.createEntityManager();
+			tmp = entityManager.find(Contatto.class, id);
+			if(tmp == null) return false;
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+
+			System.out.println("Insert new name: ");
+			String nome = s.nextLine();
+			if(!nome.isEmpty() || !(nome.length() == 0)) {
+				tmp.setNome(nome);
+			}
+			System.out.println("Insert new surname: ");
+			String cognome = s.nextLine();
+			if(!cognome.isEmpty() || !(cognome.length() == 0)) {
+				tmp.setCognome(cognome);
+			}
+			System.out.println("Insert new phone number: ");
+			String telefono = s.nextLine();
+			if(!telefono.isEmpty() || !(telefono.length() == 0)) {
+				tmp.setTelefono(telefono);
+			}
+			System.out.println("Insert new email: ");
+			String email = s.nextLine();
+			if(!email.isEmpty() || !(email.length() == 0)) {
+				tmp.setEmail(email);
+			}
+			System.out.println("Insert new note: ");
+			String note = s.nextLine();
+			if(!note.isEmpty() || !(note.length() == 0)) {
+				tmp.setNote(note);
+			}
+			entityManager.persist(tmp);
+			entityTransaction.commit();
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
+		}
+		return true;
+	}
+
+	public boolean insertRubricaOnJPA() {
+		Scanner s = new Scanner(System.in);
+		Contatto tmp = new Contatto();
+
+		System.out.println("Insert name: ");
+		String nome = s.nextLine();
+		if(!nome.isEmpty() || !(nome.length() == 0)) {
+			tmp.setNome(nome);
+		}
+		System.out.println("Insert surname: ");
+		String cognome = s.nextLine();
+		if(!cognome.isEmpty() || !(cognome.length() == 0)) {
+			tmp.setCognome(cognome);
+		}
+		System.out.println("Insert phone number: ");
+		String telefono = s.nextLine();
+		if(!telefono.isEmpty() || !(telefono.length() == 0)) {
+			tmp.setTelefono(telefono);
+		}
+		System.out.println("Insert email: ");
+		String email = s.nextLine();
+		if(!email.isEmpty() || !(email.length() == 0)) {
+			tmp.setEmail(email);
+		}
+		System.out.println("Insert note: ");
+		String note = s.nextLine();
+		if(!note.isEmpty() || !(note.length() == 0)) {
+			tmp.setNote(note);
+		}
+		EntityManager entityManager = null;
+		try {
+			entityManager = EntityManagerFactorySingleton.createEntityManager();
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			entityManager.persist(tmp);
+			entityTransaction.commit();
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
+		}
+		return true;
+	}
+
+	public boolean deleteRubricaOnJPA(int id) {
+		Contatto tmp = null;
+		EntityManager entityManager = null;
+		try {
+			entityManager = EntityManagerFactorySingleton.createEntityManager();
+			tmp = entityManager.find(Contatto.class, id);
+			if(tmp == null) return false;
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			entityManager.remove(tmp);
+			entityTransaction.commit();
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
+		}
+		return true;
+	}
+	public boolean deleteAllRubricaOnJPA() {
+		List<Contatto> allContact = null;
+		EntityManager entityManager = null;
+		try {
+			entityManager = EntityManagerFactorySingleton.createEntityManager();
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			javax.persistence.Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
+			allContact = query.getResultList();
+			for(Contatto c: allContact) {
+				entityManager.remove(c);
+			}
+			entityTransaction.commit();
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
 		}
 		return true;
 	}

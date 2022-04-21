@@ -18,7 +18,7 @@ import it.beije.turing.newRubrica.rubrica.RubricaCSV;
 public class TestApp {
 	public static void main (String[] args)  {
 		
-		
+		List<Contatto> allContact = null;
 		RubricaManager rm = new RubricaManager();
 		DBManager db = new DBManager(rm);
 		
@@ -41,7 +41,7 @@ public class TestApp {
 		}
 		 
 		//System.out.println(r.getPath().toAbsolutePath().toString());
-		while (!st.equalsIgnoreCase("esci") && !st.equals("15")) {
+		while (!st.equalsIgnoreCase("esci") && !st.equals("20")) {
 			System.out.println("Selezionare programma da eseguire:\n"
 					+ "1: Mostra tutta la rubrica e ordina per nome o cognome\n"
 					+ "2: Cerca un contatto\n"
@@ -57,7 +57,12 @@ public class TestApp {
 					+ "12: Inserisci nuovo contatto tramite Hibernate\n"
 					+ "13: Aggiorna valore contatto tramite Hibernate\n"
 					+ "14: Elimina Contatto tramite Hibernate\n"
-					+ "15: Esci");
+					+ "15: Stampa contenuto su DB tramite JPA\n"
+					+ "16: Inserisci nuovo contatto tramite JPA\n"
+					+ "17: Aggiorna valore contatto tramite JPA\n"
+					+ "18: Elimina Contatto tramite JPA\n"
+					+ "19: Elimina tutti i Contatti tramite JPA\n"
+					+ "20: Esci");
 			st = s.nextLine();
 			switch(st) {
 				case "1":
@@ -113,7 +118,7 @@ public class TestApp {
 					db.scriviSuDB(r.getAllContact(),s);
 					break;
 				case "11":
-					List<Contatto> allContact = rm.loadRubricaFromHibernate();
+					allContact = rm.loadRubricaFromHibernate();
 					for(Contatto co: allContact) {
 						System.out.println(co);
 					}
@@ -124,28 +129,68 @@ public class TestApp {
 					r.setAllContact(rm.loadRubricaFromHibernate());
 					break;
 				case "13":
-					List<Contatto> allContact2 = rm.loadRubricaFromHibernate();
-					for(Contatto co: allContact2) {
+					allContact = rm.loadRubricaFromHibernate();
+					for(Contatto co: allContact) {
 						System.out.println(co);
 					}
-					System.out.println("Inserire id Contatto da modificare su DB(inserire un numero da 1 a "+allContact2.size()+"): ");
+					System.out.println("Inserire id Contatto da modificare su DB: ");
 					String k = s.nextLine();
 					int num = Integer.parseInt(k);
 					rm.updateRubricaOnHibernate(num);
 					r.setAllContact(rm.loadRubricaFromHibernate());
 					break;
 				case "14":
-					List<Contatto> allContact3 = rm.loadRubricaFromHibernate();
-					for(Contatto co: allContact3) {
+					allContact = rm.loadRubricaFromHibernate();
+					for(Contatto co: allContact) {
 						System.out.println(co);
 					}
-					System.out.println("Inserire id Contatto da modificare su DB(inserire un numero da 1 a "+allContact3.size()+"): ");
+					System.out.println("Inserire id Contatto da modificare su DB: ");
 					String k2 = s.nextLine();
 					int num2 = Integer.parseInt(k2);
 					rm.deleteRubricaOnHibernate(num2);
 					r.setAllContact(rm.loadRubricaFromHibernate());
 					break;
 				case "15":
+					allContact = rm.loadRubricaFromJPA();
+					for(Contatto co: allContact) {
+						System.out.println(co);
+					}
+					r.setAllContact(allContact);
+					break;
+				case "16":
+					rm.insertRubricaOnJPA();
+					r.setAllContact(rm.loadRubricaFromJPA());
+					break;
+				case "17":
+					allContact = rm.loadRubricaFromJPA();
+					for(Contatto co: allContact) {
+						System.out.println(co);
+					}
+					System.out.println("Inserire id Contatto da modificare su DB: ");
+					String k3 = s.nextLine();
+					int num3 = Integer.parseInt(k3);
+					rm.updateRubricaOnJPA(num3);
+					r.setAllContact(rm.loadRubricaFromJPA());
+					break;
+				case "18":
+					allContact = rm.loadRubricaFromJPA();
+					for(Contatto co: allContact) {
+						System.out.println(co);
+					}
+					System.out.println("Inserire id Contatto da modificare su DB: ");
+					String k4 = s.nextLine();
+					int num4 = Integer.parseInt(k4);
+					rm.deleteRubricaOnJPA(num4);
+					r.setAllContact(rm.loadRubricaFromJPA());
+					break;
+				case "19":
+					rm.deleteAllRubricaOnJPA();
+					allContact = rm.loadRubricaFromJPA();
+					for(Contatto co: allContact) {
+						System.out.println(co);
+					}
+					break;
+				case "20":
 					continue;
 				default:
 					break;
