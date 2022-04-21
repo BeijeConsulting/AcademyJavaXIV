@@ -3,62 +3,112 @@ package it.beije.turing.db;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
+
 
 import it.beije.turing.rubrica.Contatto;
 
 public class JPAmanager {
-
-	public static void main(String[] args) {
-
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
+	
+	public static List<Contatto> getRubrica() {
+		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
 		
-		Contatto contatto = entityManager.find(Contatto.class, 1);//SELECT c FROM Contatto as c WHERE id = 1
-		System.out.println("contatto : " + contatto);
+		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
+		List<Contatto> contatti = query.getResultList();
 		
+		entityManager.close();
+		return contatti;
+	}
+	
+	public static void insertToRubrica(Contatto contatto) {
+		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		
+		if(contatto.getId() == 0) {
+			entityManager.persist(contatto);
+		} else {
+			System.out.println("Contatto invalido per questa operazione.");
+		}
+		
+		entityTransaction.commit();
+		entityManager.close();
+	}
+	
+	public static void updateContattoRubrica(Contatto newContatto, int id) {
+		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+		
+		Contatto contatto = entityManager.find(Contatto.class, id);
+		System.out.println("modifico : " + contatto);
+		
+		if(contatto != null) {
+			if(newContatto.getNome() != null) {
+				contatto.setNome(newContatto.getNome());
+			}
+			if(newContatto.getCognome() != null) {
+				contatto.setCognome(newContatto.getCognome());
+			}
+			if(newContatto.getEmail() != null) {
+				contatto.setEmail(newContatto.getEmail());
+			}
+			if(newContatto.getTelefono() != null) {
+				contatto.setTelefono(newContatto.getTelefono());
+			}
+			if(newContatto.getNote() != null) {
+				contatto.setNote(newContatto.getNote());
+			}
+			entityManager.persist(contatto);
+		}
+		
+		entityTransaction.commit();
+		entityManager.close();
+	}
+	
+	public static void deleteContattoRubrica(int id) {
+		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+		
+		Contatto contatto = entityManager.find(Contatto.class, id);
+		System.out.println("cancello : " + contatto);
+		
+		entityManager.remove(contatto);
+		
+		entityTransaction.commit();
+		entityManager.close();
+	}
+
+	public static void main(String[] args) {
+		
 		//INSERT
-//		Contatto newContatto = new Contatto();
-//		//newContatto.setId(3);
-//		newContatto.setCognome("Corraro");
-//		newContatto.setNome("Mattia");
-//		newContatto.setEmail("m.corraro@beije.it");
-//		System.out.println("contatto PRE : " + newContatto);
-//		
-//		entityManager.persist(newContatto);
-//		
-//		System.out.println("contatto POST : " + newContatto);
+		Contatto newContatto = new Contatto();
+		//newContatto.setId(3);
+		newContatto.setCognome("Melis");
+		newContatto.setNome("Mattia");
+		newContatto.setEmail("m.melis@beije.it");
+		newContatto.setTelefono("3782563490");
+		newContatto.setNote("Collega");
+		//insertToRubrica(newContatto);
+
 		
 		//UPDATE
-//		System.out.println("modifico : " + contatto);
-//		//contatto.setId(20);
-//		contatto.setNote("queste sono le note");
-//		contatto.setNome("Piero");
-//		entityManager.persist(contatto);
-//		System.out.println("contatto POST update : " + contatto);
+		Contatto contatto = new Contatto();
+		contatto.setId(20);
+		contatto.setNote("Collega");
+		contatto.setTelefono("33890761287");
+		//updateContattoRubrica(contatto, 23);
 		
-//		//DELETE
-//		entityManager.remove(contatto);
-
-		entityTransaction.commit();
-		//entityTransaction.rollback();
+		//DELETE
+		//deleteContattoRubrica(25);
 		
-		//SELECT JPQL
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
-		List<Contatto> contatti = query.getResultList();
+		List<Contatto> contatti = getRubrica();
 
 		for (Contatto c : contatti) {
 			System.out.println(c);
 		}
 		
-		entityManager.close();
-
 	}
-
 }
