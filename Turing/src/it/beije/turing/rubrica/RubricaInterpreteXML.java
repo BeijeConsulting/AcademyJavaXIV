@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
+import it.beije.turing.db.ListStringConverter;
 import it.beije.turing.file.xml.XmlTool;
 
 public class RubricaInterpreteXML {
@@ -18,7 +19,9 @@ public class RubricaInterpreteXML {
 	private final String PHONE = "telefono";
 	private final String MAIL = "email";
 	private final String NOTES = "notes";
-	
+	private final String BIRTHDAY = "birthday";
+	private final String ADDRESS = "indirizzo";
+	private ListStringConverter conv= new ListStringConverter();
 	
 private XmlTool tool;
 
@@ -42,9 +45,11 @@ private Contatto read(Element e)
 	Contatto c = new Contatto();
 	c.setNome(e.getAttribute(NAME));
 	c.setCognome(e.getAttribute(SURNAME));
-	c.setTelefono(e.getAttribute(PHONE));
-	c.setEmail(e.getAttribute(MAIL));
+	c.setTelefono(conv.convertToEntityAttribute(e.getAttribute(PHONE)));
+	c.setEmail(conv.convertToEntityAttribute(e.getAttribute(MAIL)));
 	c.setNote(e.getAttribute(NOTES));
+	c.setBirthday(e.getAttribute(BIRTHDAY));
+	c.setAddress(e.getAttribute(ADDRESS));
 	return c;	
 }
 
@@ -66,9 +71,11 @@ private Element convert(Contatto c)
 	Element e = tool.createElements(ELEMENT);
 	e.setAttribute(NAME, c.getNome());
 	e.setAttribute(SURNAME,c.getCognome());
-	e.setAttribute(PHONE, c.getTelefono());
-	e.setAttribute(MAIL, c.getEmail());
+	e.setAttribute(PHONE, conv.convertToDatabaseColumn(c.getTelefono()));
+	e.setAttribute(MAIL, conv.convertToDatabaseColumn(c.getEmail()));
 	e.setAttribute(NOTES, c.getNote());
+	e.setAttribute(BIRTHDAY, c.getBirthday());
+	e.setAttribute(ADDRESS, c.getAddress());
 	return e;
 }
 

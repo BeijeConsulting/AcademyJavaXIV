@@ -10,6 +10,7 @@ import javax.naming.directory.ModificationItem;
 
 import it.beije.turing.db.DbInterface;
 import it.beije.turing.db.JPA_Manager_Criteria;
+import it.beije.turing.db.ListStringConverter;
 import it.beije.turing.file.Writer;
 import it.beije.turing.file.csv.CSVReader;
 import it.beije.turing.gestione_rubrica_commandline.CommandLineInterface;
@@ -18,10 +19,11 @@ public class GestoreRubrica implements CommandLineInterface {
 private static final String BASE_RUBRIC="tmp/Test.txt";
 private static GestoreRubrica self;
 private DbInterface db;
-
+private ListStringConverter conv;
 private GestoreRubrica()
 {
 	db=new JPA_Manager_Criteria();
+	conv=new ListStringConverter();
 	
 }
 
@@ -74,8 +76,8 @@ public void print()
 }
 
 
-
-public void add(String nome, String cognome, String telefono, String email,String note)
+@Override
+public void add(String nome, String cognome, String telefono, String email,String note, String birthday, String address)
 {
 	Contatto c = new Contatto();
 	if(!nome.equalsIgnoreCase("X"))
@@ -88,22 +90,29 @@ public void add(String nome, String cognome, String telefono, String email,Strin
 	}
 	if(!telefono.equalsIgnoreCase("X"))
 	{
-		c.setTelefono(telefono);
+		c.setTelefono(conv.convertToEntityAttribute(telefono));
 	}
 	if(!email.equalsIgnoreCase("X"))
 	{
-		c.setEmail(email);
+		c.setEmail(conv.convertToEntityAttribute(email));
 	}
 	if(!note.equalsIgnoreCase("X"))
 	{
 		c.setNote(note);
 	}
-	
+	if(!birthday.equalsIgnoreCase("X"))
+	{
+		c.setBirthday(birthday);
+	}
+	if(!address.equalsIgnoreCase("X"))
+	{
+		c.setAddress(address);
+	}
 	db.insertContatti(c);
 	
 }
 
-public void modify(int x,String nome, String cognome, String telefono, String email,String note) {
+public void modify(int x,String nome, String cognome, String telefono, String email,String note, String birthday, String address) {
 	Contatto c = db.getContatto(x);
 	if(c!=null) {
 	if(!nome.equalsIgnoreCase("X"))
@@ -116,15 +125,46 @@ public void modify(int x,String nome, String cognome, String telefono, String em
 	}
 	if(!telefono.equalsIgnoreCase("X"))
 	{
-		c.setTelefono(telefono);
+		if(telefono.contains("\\add"))
+		{
+			for(String s:conv.convertToEntityAttribute(telefono))
+			{
+				if(!s.equalsIgnoreCase("\\add"))
+				{
+					c.getTelefono().add(s);	
+				}
+			}
+		}
+		else
+		c.setTelefono(conv.convertToEntityAttribute(telefono));
 	}
 	if(!email.equalsIgnoreCase("X"))
 	{
-		c.setEmail(email);
+		if(email.contains("\\add"))
+		{
+			for(String s:conv.convertToEntityAttribute(email))
+			{
+				if(!s.equalsIgnoreCase("\\add"))
+				{
+					c.getEmail().add(s);	
+				}
+			}
+			c.setEmail(c.getEmail());
+		}
+		else
+		c.setEmail(conv.convertToEntityAttribute(email));
 	}
 	if(!note.equalsIgnoreCase("X"))
 	{
 		c.setNote(note);
+	}
+	if(!birthday.equalsIgnoreCase("X"))
+	{
+		c.setBirthday(birthday);
+	}
+	if(!address.equalsIgnoreCase("X"))
+	{
+		c.setAddress(address);
 	}
 	db.updateContatti(c);
 	}
@@ -165,6 +205,7 @@ public List<Contatto> search(String... command) {
 	}
 	catch(IllegalArgumentException e){
 		System.out.println("si è verificato un errore nei parametri, verifica che siano inseriti correttamente.");
+		e.printStackTrace();
 		return new ArrayList<Contatto>();
 	}
 }

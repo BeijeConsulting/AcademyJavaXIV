@@ -1,11 +1,16 @@
 package it.beije.turing.rubrica;
 
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import it.beije.turing.db.ListStringConverter;
 
 
 @Entity
@@ -24,14 +29,23 @@ public class Contatto {
 	private String cognome;
 	
 	@Column(name = "telefono")
-	private String telefono;
+	//@ElementCollection
+	@Convert(converter = ListStringConverter.class)
+	private List<String> telefono;
 	
 	@Column(name = "email")
-	private String email;
+	@Convert(converter = ListStringConverter.class)
+	//@ElementCollection
+	private List<String> email;
 	
 	@Column(name = "note")
 	private String note;
 	
+	@Column(name = "nascita")
+	private String Birthday;
+	
+	@Column(name = "indirizzo")
+	private String Address;
 	
 	public int getId() {
 		return id;
@@ -54,25 +68,42 @@ public class Contatto {
 		this.cognome = cognome;
 	}
 	
-	public String getTelefono() {
+	public List<String> getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(String telefono) {
+	public void setTelefono(List<String> telefono) {
 		this.telefono = telefono;
 	}
 	
-	public String getEmail() {
+	public List<String> getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
+	public void setEmail(List<String> email) {
 		this.email = email;
 	}
+	
+	
 	
 	public String getNote() {
 		return note;
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	public String getBirthday() {
+		return Birthday;
+	}
+	public void setBirthday(String birthday) {
+		Birthday = birthday;
+	}
+	
+	
+	public String getAddress() {
+		return Address;
+	}
+	public void setAddress(String address) {
+		Address = address;
 	}
 	
 	public String toString() {
@@ -82,6 +113,8 @@ public class Contatto {
 				.append(", nome : ").append(this.nome)
 				.append(", telefono : ").append(this.telefono)
 				.append(", email : ").append(this.email)
+				.append(", data di nascita :").append(this.Birthday)
+				.append(",indirizzo :").append(this.Address)
 				.append(", note : ").append(this.note).append(" }");
 		
 		return builder.toString();
@@ -96,19 +129,20 @@ public class Contatto {
 		{
 			return false;
 		}
-		if(this.getTelefono()!=null&&c.getTelefono()!=null&&!this.getTelefono().equalsIgnoreCase(c.getTelefono()))
-			{
-				return false;
-			}
-		if(this.getEmail()!=null&&c.getEmail()!=null&&!this.getEmail().equalsIgnoreCase(c.getEmail()))
+		if(this.getNote()!=null&&c.getNote()!=null&&!this.getNote().equalsIgnoreCase(c.getNote()))
 		{
 			return false;
 		}
-		if(this.getNote()!=null&&c.getNote()!=null&&!this.getNote().equalsIgnoreCase(c.getNote()))
+		if(this.getBirthday()!=null&&c.getBirthday()!=null&&!this.getBirthday().equalsIgnoreCase(c.getBirthday()))
+		{
+			return false;
+		}
+		if(this.getAddress()!=null&&c.getAddress()!=null&&!this.getAddress().equalsIgnoreCase(c.getAddress()))
 		{
 			return false;
 		}
 		return true;
 	}
+	
 
 }

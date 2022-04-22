@@ -1,5 +1,6 @@
 package it.beije.turing.db;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -48,8 +49,8 @@ public class JPA_Manager_Criteria implements DbInterface {
 		Root<Contatto> rt =cu.from(Contatto.class);
 		cu.set("nome",c.getNome());
 		cu.set("cognome",c.getCognome());
-		cu.set("telefono",c.getTelefono());
-		cu.set("email",c.getEmail());
+		cu.set("telefono",Arrays.asList(c.getTelefono()));
+		cu.set("email",Arrays.asList(c.getEmail()));
 		cu.set("note",c.getNote());
 		cu.where(cb.equal(rt.get("id"),c.getId()));
 		Query query = em.createQuery(cu);
@@ -75,8 +76,9 @@ public class JPA_Manager_Criteria implements DbInterface {
 		cq.select(rt);
 		for(String s : string.split(","))
 		{
+			boolean ShouldBeAList=false;
 			String[] parts = s.split("='");
-			cq.where(cb.equal(rt.get(parts[0].substring(1)),parts[1].substring(0,parts[1].length()-2)));
+			cq.where(cb.like(rt.get(parts[0].substring(1)),"%"+parts[1].substring(0,parts[1].length()-2)+"%"));
 		}
 		TypedQuery<Contatto> query = em.createQuery(cq);
 		return query.getResultList();

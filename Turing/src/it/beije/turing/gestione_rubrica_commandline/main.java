@@ -83,6 +83,7 @@ public class main {
 		 
 		 case "search":
 			 System.out.println("scrivi i parametri come segue(senza quadre): [Nome colonna] [valore] [altra colonna] [altro valore]");
+			 System.out.println("colonne disponibili: id,nome,cognome,note,indirizzo,nascita");
 			 String filters = scanner.nextLine();
 			 for(Contatto c : clInterface.search(filters.split(" ")))
 			 {
@@ -92,15 +93,15 @@ public class main {
 		 
 		 case "new":
 			 System.out.println("x per indicare un campo null");
-			 String data[]= new String[5];
-			 String colonne[] = {"nome","cognome","telefono","email","note"};
+			 String data[]= new String[7];
+			 String colonne[] = {"nome","cognome","telefono, usa ; per separare più numeri","email usa ; per separare più indirizzi","note","data di nascita","indirizzo"};
 			 for(int i = 0;i<data.length;i++)
 			 {
 				 System.out.println(colonne[i]);
 				data[i]=scanner.nextLine();
 			 }
 			 try {
-			 clInterface.add(data[0],data[1],data[2],data[3],data[4]);
+			 clInterface.add(data[0],data[1],data[2],data[3],data[4], data[5], data[6]);
 			 break;
 			 }
 			 catch(IndexOutOfBoundsException e)
@@ -112,15 +113,15 @@ public class main {
 		 
 		 case "modify":
 			 System.out.println("x per indicare un campo null");
-			 String data2[]= new String[6];
-			 String colonne2[] = {"id","nome","cognome","telefono","email","note"};
+			 String data2[]= new String[8];
+			 String colonne2[] = {"id","nome","cognome","telefono aggiungi \\add come primo numero per aggiungere un altro numero","email usa \\add come primo indirizzo per aggiungere un nuovo indirizzo","note","data di nascita","indirizzo"};
 			 for(int i = 0;i<data2.length;i++)
 			 {
 				 System.out.println(colonne2[i]);
 				data2[i]=scanner.nextLine();
 			 }
 			 try {
-			 clInterface.modify(Integer.parseInt(data2[0]),data2[1],data2[2],data2[3],data2[4],data2[5]);
+			 clInterface.modify(Integer.parseInt(data2[0]),data2[1],data2[2],data2[3],data2[4],data2[5], data2[6], data2[7]);
 			 break;
 			 }
 			 catch(IndexOutOfBoundsException e)

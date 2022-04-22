@@ -12,9 +12,9 @@ public interface CommandLineInterface {
 	
 	public void print();
 
-	public void add(String nome, String cognome, String telefono, String email,String note);
+	public void add(String nome, String cognome, String telefono, String email,String note,String birthday,String address);
 
-	public void modify(int id, String nome, String cognome, String telefono, String email,String note);
+	public void modify(int id, String nome, String cognome, String telefono, String email,String note,String birthday,String address);
 
 	public void ExportXML(String fileName);
 

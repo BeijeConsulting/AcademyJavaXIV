@@ -1,9 +1,12 @@
 package it.beije.turing.rubrica;
 
+import it.beije.turing.db.ListStringConverter;
+
 public class RubricaInterpreteCSV {
-	int[] ordine = {-1,-1,-1,-1,-1};
+	int[] ordine = {-1,-1,-1,-1,-1,-1,-1};
 	boolean apici,prepared = false;
-	private static final String DEFAULT_HEADER="\"NOME\";\"COGNOME\";\"TELEFONO\";\"EMAIL\";\"NOTE\"";
+	private static final String DEFAULT_HEADER="\"NOME\";\"COGNOME\";\"TELEFONO\";\"EMAIL\";\"NOTE\";\"DATA DI NASCITA\";\"INDIRIZZO\"";
+	ListStringConverter conv = new ListStringConverter();
 	public  RubricaInterpreteCSV(String s, boolean b)
 	{
 		apici = b;
@@ -19,6 +22,8 @@ public class RubricaInterpreteCSV {
 			case "TELEFONO":ordine[2]=position;break;
 			case "EMAIL":ordine[3]=position;break;
 			case "NOTE" :ordine[4]=position;break;
+			case "DATA DI NASCITA":ordine[5]=position;break;
+			case "INDIRIZZO" :ordine[6]=position;break;
 			}
 			position++;
 		}
@@ -40,14 +45,20 @@ public class RubricaInterpreteCSV {
 		contatto.setCognome(toRead[ordine[1]]);
 		}
 		if(ordine[2]!=-1){
-		contatto.setTelefono(toRead[ordine[2]]);
+		contatto.setTelefono(conv.convertToEntityAttribute(toRead[ordine[2]]));
 		}
 		if(ordine[3]!=-1){
-		contatto.setEmail(toRead[ordine[3]]);
+		contatto.setEmail(conv.convertToEntityAttribute(toRead[ordine[3]]));
 		}
 		if(ordine[4]!=-1){
 		contatto.setNote(toRead[ordine[4]]);
 		}
+		if(ordine[5]!=-1){
+			contatto.setBirthday(toRead[ordine[5]]);
+			}
+		if(ordine[6]!=-1){
+			contatto.setAddress(toRead[ordine[6]]);
+			}
 		return contatto;
 		}
 		else
@@ -69,16 +80,19 @@ public class RubricaInterpreteCSV {
 			 reg = ";";
 		}
 		String[] intest=s.split(reg);
-		if(intest.length!=5)
+		if(intest.length!=7)
 		{
-			String[] newArray= new String[5];
+			String[] newArray= new String[7];
 			int c=0;
 			for(String i : intest)
 			{
 				newArray[c]=i;
 				c++;
 			}
+			while(c<7) {
 			newArray[c] = "";
+			c++;
+			}
 			intest = newArray;
 		}
 		return intest;
@@ -100,10 +114,11 @@ public class RubricaInterpreteCSV {
 			tmp[ordine[i]] = i;
 			
 		}
-		String[] data = {c.getNome(),c.getCognome(),c.getTelefono(),c.getEmail(),c.getNote()};
+		
+		String[] data = {c.getNome(),c.getCognome(),conv.convertToDatabaseColumn(c.getTelefono()),conv.convertToDatabaseColumn(c.getEmail()),c.getNote(),c.getBirthday(),c.getAddress()};
 		String estremi = apici ? "\"" : "";
 		String separatore = estremi+separator+estremi;
-		return estremi+data[tmp[0]]+separatore+data[tmp[1]]+separatore+data[tmp[2]]+separatore+data[tmp[3]]+separatore+data[tmp[4]]+estremi;
+		return estremi+data[tmp[0]]+separatore+data[tmp[1]]+separatore+data[tmp[2]]+separatore+data[tmp[3]]+separatore+data[tmp[4]]+separatore+data[tmp[5]]+separatore+data[tmp[6]]+estremi;
 	}
 
 }
