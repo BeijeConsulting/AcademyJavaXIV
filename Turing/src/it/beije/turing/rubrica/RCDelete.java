@@ -21,11 +21,9 @@ public class RCDelete {
 			entityTransaction.begin();
 			entityManager.remove(contatto);
 			entityTransaction.commit();
-			s.close();
-		System.out.println("Contact removed.");
+			System.out.println("Contact removed.");
 		} else { 
 			System.out.println("Contact not removed.");
-			s.close();
 		}
 	}
 }

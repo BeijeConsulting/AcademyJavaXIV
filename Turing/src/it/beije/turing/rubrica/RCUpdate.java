@@ -31,7 +31,7 @@ public class RCUpdate {
 		System.out.println("Please insert new Contact Notes: ");
 		st= s.nextLine().trim();
 		if (!st.equals("")) {contatto.setNote(st);}
-		s.close();
+		
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		entityManager.persist(contatto);

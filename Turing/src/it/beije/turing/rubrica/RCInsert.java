@@ -36,7 +36,7 @@ public class RCInsert {
 		System.out.println("Please insert Contact Notes: ");
 		st = s.nextLine().trim();
 		if (!st.equals("")) {newContatto.setNote(st);}
-		s.close();
+		
 
 		entityManager.persist(newContatto);
 		entityTransaction.commit();

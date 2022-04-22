@@ -116,7 +116,7 @@ public class RCimportCSV {
 					if (lines.get(i)[bins.get(j)].equals("")) {
 						c.setNote(null);
 					} else {
-					c.setTelefono(lines.get(i)[bins.get(j)]);
+					c.setNote(lines.get(i)[bins.get(j)]);
 					}
 					break;
 				default:

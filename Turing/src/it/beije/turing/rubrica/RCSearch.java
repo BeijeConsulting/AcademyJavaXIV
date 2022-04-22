@@ -42,7 +42,6 @@ public class RCSearch {
 		String st = s.next();
 		while(true) {
 			if (st.equals("exit")) {
-				s.close();
 				return results;
 			}
 			switch (st) {
@@ -87,7 +86,6 @@ public class RCSearch {
 				continue;
 			}
 			System.out.println("Found "+results.size()+" matches.");
-			s.close();
 			return results;
 		}
 

@@ -24,7 +24,6 @@ public class RCViewer {
 			System.out.println("Invalid input, enter n or s:");
 			st = s.next();
 		}
-		s.close();
 		if (st.equals("n")) {
 			q.orderBy(cb.asc(con.get("nome")));
 			query = entityManager.createQuery(q);

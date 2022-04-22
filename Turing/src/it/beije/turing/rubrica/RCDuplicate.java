@@ -49,7 +49,8 @@ public class RCDuplicate {
 		while (duplicates.size()>0) {
 
 			System.out.println("Here are the duplicate contacts:");
-			System.out.println(duplicates);
+			for (Contatto c:duplicates) System.out.println(c);
+			
 			System.out.println("Enter the id of the contact to merge (type exit to leave):");
 			String st = s.next();
 			if (st.equals("exit")) { break;}
@@ -68,7 +69,7 @@ public class RCDuplicate {
 
 			duplicates = findDuplicates(entityManager);
 		}
-		s.close();
+		
 
 	}
 }

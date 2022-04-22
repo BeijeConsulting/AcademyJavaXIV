@@ -35,17 +35,8 @@ public class RCimportXML {
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			document = documentBuilder.parse(xmlPath);
 
-			Element root = document.getDocumentElement();
-			System.out.println("root : " + root.getTagName());
-			
-//			NodeList contatti = root.getElementsByTagName("contatto");
-//			System.out.println("contatti num : " + contatti.getLength());
-
-			NodeList nodes = root.getChildNodes();
-			System.out.println("nodes num : " + nodes.getLength());
-			
+			Element root = document.getDocumentElement();			
 			List<Element> children = getChildElements(root);
-			System.out.println("children num : " + children.size());
 
 			for (Element el : children) {
 				if (el.getTagName().equalsIgnoreCase("contatto")) {
