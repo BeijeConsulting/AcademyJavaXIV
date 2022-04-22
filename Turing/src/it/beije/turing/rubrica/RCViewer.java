@@ -1,9 +1,5 @@
 package it.beije.turing.rubrica;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,8 +8,6 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
-import org.hibernate.Session;
 
 public class RCViewer {
 	public static void view (EntityManager entityManager) {
@@ -30,12 +24,13 @@ public class RCViewer {
 			System.out.println("Invalid input, enter n or s:");
 			st = s.next();
 		}
+		s.close();
 		if (st.equals("n")) {
 			q.orderBy(cb.asc(con.get("nome")));
 			query = entityManager.createQuery(q);
 		} else {
 			q.orderBy(cb.asc(con.get("cognome")));
-			query = entityManager.createQuery("cognome");
+			query = entityManager.createQuery(q);
 		}
 
 		List<Contatto> contatti = query.getResultList();
@@ -43,6 +38,7 @@ public class RCViewer {
 		for (Contatto c: contatti) {
 			System.out.println(c);
 		}
+		
 	}
 
 }

@@ -78,11 +78,11 @@ public class Contatto {
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 				.append("{ id : ").append(this.id)
-				.append(", cognome : ").append(this.cognome)
-				.append(", nome : ").append(this.nome)
-				.append(", telefono : ").append(this.telefono)
-				.append(", email : ").append(this.email)
-				.append(", note : ").append(this.note).append(" }");
+				.append(",\tcognome : ").append(this.cognome)
+				.append(",\tnome : ").append(this.nome)
+				.append(",\ttelefono : ").append(this.telefono)
+				.append(",\temail : ").append(this.email)
+				.append(",\tnote : ").append(this.note).append(" }");
 		
 		return builder.toString();
 	}

@@ -12,6 +12,16 @@ import javax.persistence.criteria.Root;
 
 
 public class RCSearch {
+	public static Contatto search(EntityManager entityManager, String id) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();		//SELECT * FROM contatti
+		CriteriaQuery<Contatto> q = cb.createQuery(Contatto.class);
+		Root<Contatto> con = q.from(Contatto.class);
+		q.select(con).where(cb.equal(con.get("id"),id));
+		Query query = entityManager.createQuery(q);
+		List<Contatto> contatti = query.getResultList();
+		return contatti.get(0);
+	}
+	
 	public static List<Contatto> search(EntityManager entityManager) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();		//SELECT * FROM contatti
 		CriteriaQuery<Contatto> q = cb.createQuery(Contatto.class);

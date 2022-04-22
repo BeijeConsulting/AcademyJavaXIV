@@ -38,7 +38,7 @@ public class RCDuplicate {
 			System.out.println("No duplicate contacts!");
 		} else {
 			System.out.println("Found "+duplicates.size()+" duplicate contacts.");
-			System.out.println(duplicates);
+			//System.out.println(duplicates);
 		}
 		return duplicates;
 	}
