@@ -159,10 +159,14 @@ public class RubricaManager {
 	}
 	
 	public void cercaContatto(Scanner s) {
-		System.out.println("Inserire tipo ricerca ((N)ome,(C)ognome,(T)elefono,(E)mail o (A)ll[Ricerca per Nome,Cognome,Telefono e Email]):");
+		System.out.println("Inserire tipo ricerca ((N)ome,(C)ognome,(T)elefono,(E)mail o (A)ll[Ricerca per Nome,Cognome,Telefono e Email][exit per uscire]):");
 		String type = null;
 		while(type == null || type.isEmpty()) {
 			type = s.nextLine();
+		}
+		if(type.equalsIgnoreCase("exit")) {
+			System.out.println("Quitting...");
+			return;
 		}
 		String search = "";
 		if(!type.equalsIgnoreCase("A")) {
