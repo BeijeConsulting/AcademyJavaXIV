@@ -8,7 +8,7 @@ import it.beije.turing.file.Reader;
 import it.beije.turing.rubrica.Contatto;
 import it.beije.turing.rubrica.RubricaInterpreteCSV;
 
-public class CSVReader2 {
+public class CSVReader {
 public static List<Contatto> readCSV(String fileName, boolean b)
 {
 	List<Contatto> list = new ArrayList<>();
