@@ -31,7 +31,7 @@ public class main {
 		 //System.out.println(PAPPARDELLA_INIZIALE);
 		 System.out.print("-");
 		 String input = scanner.nextLine();
-		 String command[] = input.split(" ");
+		 String command[] = input.split("? ?|\"");
 		 if(command.length<1)
 			 throw new CommandException();
 		 switch(command[0].toLowerCase())
