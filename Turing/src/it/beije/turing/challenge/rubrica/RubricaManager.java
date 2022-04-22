@@ -144,7 +144,10 @@ public class RubricaManager {
 		sort(s);
 		for(int i = 0; i < allContatti.size(); i++) {
 			for(int j = i+1; j < allContatti.size();j++) {
-				if(allContatti.get(i).equals(allContatti.get(j))) {
+				if(allContatti.get(i).getNome().equals(allContatti.get(j).getNome())
+						&& allContatti.get(i).getCognome().equals(allContatti.get(j).getCognome())
+						&& allContatti.get(i).getTelefono().equals(allContatti.get(j).getTelefono())
+						&& allContatti.get(i).getEmail().equals(allContatti.get(j).getEmail())) {
 					continue;
 				}
 				ris.add(allContatti.get(i));
