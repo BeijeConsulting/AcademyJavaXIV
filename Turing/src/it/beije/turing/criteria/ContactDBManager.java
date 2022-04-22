@@ -7,7 +7,9 @@ import it.beije.turing.rubrica.Contatto;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,10 +89,7 @@ public class ContactDBManager {
         }
     }
 
-    public static void addNewContact(boolean createContact, Contatto contatto) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction entityTransaction = entityManager.getTransaction();
+    public static void addNewContact(boolean createContact, Contatto contatto, EntityManager entityManager, EntityTransaction entityTransaction) {
 
         if (createContact) {
             contatto = Contatto.inputCreaContatto();
@@ -98,16 +97,15 @@ public class ContactDBManager {
 
 
         entityTransaction.begin();
+        System.out.println(contatto.getTelefono());
         entityManager.persist(contatto);
         entityTransaction.commit();
-        entityManager.close();
 
         System.out.println("The contact has been added.");
     }
 
-    public static void editContacts(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan, CriteriaBuilder criteriaBuilder) {
-        CriteriaUpdate<Contatto> contattoCriteriaUpdate = criteriaBuilder.createCriteriaUpdate(Contatto.class);
-        Root<Contatto> contattoRoot = contattoCriteriaUpdate.from(Contatto.class);
+    public static void updateContacts(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan, CriteriaBuilder criteriaBuilder) {
+
         int id = chooseId(criteriaQuery, root, session, scan);
 
         if (id != 0) {
@@ -119,62 +117,43 @@ public class ContactDBManager {
 
             switch (ScannerSwitch.scanner(scan)) {
                 case 1: {
-                    System.out.println("Enter the new name for the contact: ");
-                    contattoCriteriaUpdate.set("nome", scan.next());
-                    contattoCriteriaUpdate.where(criteriaBuilder.equal(contattoRoot.get("id"), id));
-
-                    Transaction transaction = session.beginTransaction();
-                    session.createQuery(contattoCriteriaUpdate).executeUpdate();
-                    transaction.commit();
+                    updateContactsCriteria(session, scan, criteriaBuilder, "Enter the new name for the contact: ", "nome", id);
                     break;
                 }
                 case 2: {
-                    System.out.println("Enter the new surname for the contact: ");
-                    contattoCriteriaUpdate.set("cognome", scan.next());
-                    contattoCriteriaUpdate.where(criteriaBuilder.equal(contattoRoot.get("id"), id));
-
-                    Transaction transaction = session.beginTransaction();
-                    session.createQuery(contattoCriteriaUpdate).executeUpdate();
-                    transaction.commit();
+                    updateContactsCriteria(session, scan, criteriaBuilder, "Enter the new surname for the contact: ", "cognome", id);
                     break;
                 }
                 case 3: {
-                    System.out.println("Enter the new email for the contact: ");
-                    contattoCriteriaUpdate.set("email", scan.next());
-                    contattoCriteriaUpdate.where(criteriaBuilder.equal(contattoRoot.get("id"), id));
-
-                    Transaction transaction = session.beginTransaction();
-                    session.createQuery(contattoCriteriaUpdate).executeUpdate();
-                    transaction.commit();
-
+                    updateContactsCriteria(session, scan, criteriaBuilder, "Enter the new email for the contact: ", "email", id);
                     break;
                 }
                 case 4: {
-                    System.out.println("Enter the new telephone number for the contact: ");
-                    contattoCriteriaUpdate.set("telefono", scan.next());
-                    contattoCriteriaUpdate.where(criteriaBuilder.equal(contattoRoot.get("id"), id));
-
-                    Transaction transaction = session.beginTransaction();
-                    session.createQuery(contattoCriteriaUpdate).executeUpdate();
-                    transaction.commit();
+                    updateContactsCriteria(session, scan, criteriaBuilder, "Enter the new telephone number for the contact: ", "telefono", id);
                     break;
                 }
                 case 5: {
-                    System.out.println("Enter the new note for the contact: ");
-                    contattoCriteriaUpdate.set("note", scan.next());
-                    contattoCriteriaUpdate.where(criteriaBuilder.equal(contattoRoot.get("id"), id));
-
-                    Transaction transaction = session.beginTransaction();
-                    session.createQuery(contattoCriteriaUpdate).executeUpdate();
-                    transaction.commit();
+                    updateContactsCriteria(session, scan, criteriaBuilder, "Enter the new note for the contact: ", "note", id);
                     break;
                 }
                 default:
                     System.out.println("Invalid Number, You'll return to the main menu. ");
                     break;
-
             }
         }
+    }
+
+    public static void updateContactsCriteria(Session session, Scanner scan, CriteriaBuilder criteriaBuilder, String print, String contactsVariable, int id) {
+        CriteriaUpdate<Contatto> contattoCriteriaUpdate = criteriaBuilder.createCriteriaUpdate(Contatto.class);
+        Root<Contatto> contattoRoot = contattoCriteriaUpdate.from(Contatto.class);
+
+        System.out.println(print);
+        contattoCriteriaUpdate.set(contactsVariable, scan.next());
+        contattoCriteriaUpdate.where(criteriaBuilder.equal(contattoRoot.get("id"), id));
+
+        Transaction transaction = session.beginTransaction();
+        session.createQuery(contattoCriteriaUpdate).executeUpdate();
+        transaction.commit();
     }
 
     public static int chooseId(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan) {
@@ -189,14 +168,11 @@ public class ContactDBManager {
         contattoTypedQuery = session.createQuery(criteriaQuery);
         results = contattoTypedQuery.getResultList();
 
-        for (Contatto contatto : results) {
-            id.add(contatto.getId());
-        }
+        results.forEach(c -> id.add(c.getId()));
 
         if (id.size() != 1) {
-            for (Contatto contatto : results) {
-                System.out.println(contatto.toString());
-            }
+
+            results.forEach(c -> System.out.println(c.toString()));
 
             do {
                 System.out.println("Enter the id of the contact you want to modify/delete (Enter 0 to return to the main menu): ");
@@ -249,9 +225,8 @@ public class ContactDBManager {
         contattoTypedQuery = session.createQuery(criteriaQuery);
         results = contattoTypedQuery.getResultList();
 
-        for (Contatto contatto : results) {
-            contactList.add(contatto);
-        }
+
+        results.forEach(c -> contactList.add(c));
 
         for (Contatto contatto : contactList) {
             for (Contatto contatto1 : contactList) {
@@ -270,7 +245,7 @@ public class ContactDBManager {
             for (Contatto contatto : contactList) {
                 for (int id : duplicateId) {
                     if (contatto.getId() == id) {
-                        System.out.println(contatto.toString());
+                        System.out.println(contatto);
                     }
                 }
             }
@@ -281,15 +256,13 @@ public class ContactDBManager {
         return duplicateId;
     }
 
-    public static void addContact(boolean duplicateContact, ArrayList<Integer> duplicateId, Contatto contatto) {
+    public static void addContact(boolean duplicateContact, List<Integer> duplicateId, Contatto contatto) {
         boolean idAlreadyVerified = false;
 
         if (duplicateContact) {
-            for (int id : duplicateId) {
-                if (id == contatto.getId()) {
-                    idAlreadyVerified = true;
-                }
-            }
+            idAlreadyVerified = duplicateId
+                    .stream()
+                    .anyMatch(id -> id == contatto.getId());
 
             if (!idAlreadyVerified) {
                 duplicateId.add(contatto.getId());
@@ -339,37 +312,37 @@ public class ContactDBManager {
 
     }
 
-    public static void importXMLorCSV(Scanner scan) {
+    public static void importXMLorCSV(Scanner scan, EntityManager entityManager, EntityTransaction entityTransaction) {
         System.out.println("Enter 1 for importing Contacts from XML ");
         System.out.println("Enter 2 for importing Contacts from CSV ");
         System.out.println("Enter any other number to return to the main menu. ");
         switch (ScannerSwitch.scanner(scan)) {
             case 1:
-                importXML(scan);
+                importXML(scan, entityManager, entityTransaction);
                 break;
             case 2:
-                importCSV(scan);
+                importCSV(scan, entityManager, entityTransaction);
                 break;
             default:
                 return;
         }
     }
 
-    public static void importCSV(Scanner scan) {
+    public static void importCSV(Scanner scan, EntityManager entityManager, EntityTransaction entityTransaction) {
         System.out.println("Enter the path to the CSV file: ");
         List<Contatto> contattoList = ReadFile.loadRubricaFromCSV(scan.next(), ";");
 
         for (Contatto contatto : contattoList) {
-            addNewContact(false, contatto);
+            addNewContact(false, contatto, entityManager, entityTransaction);
         }
     }
 
-    public static void importXML(Scanner scan) {
+    public static void importXML(Scanner scan, EntityManager entityManager, EntityTransaction entityTransaction) {
         System.out.println("Enter the path to the XML file: ");
         List<Contatto> contattoList = ReadFile.loadRubricaFromXML(scan.next());
 
         for (Contatto contatto : contattoList) {
-            addNewContact(false, contatto);
+            addNewContact(false, contatto, entityManager, entityTransaction);
         }
     }
 

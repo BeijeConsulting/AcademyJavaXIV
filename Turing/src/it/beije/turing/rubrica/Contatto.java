@@ -117,20 +117,39 @@ public class Contatto {
         for (String stringa : individuaCampi) {
             switch (s.get(i).toLowerCase()) {
                 case "nome":
-                    contatto.setNome(stringa);
-                    ;
+                    if (stringa != null) {
+                        contatto.setNome(stringa);
+                    } else {
+                        contatto.setNome("");
+                    }
                     break;
                 case "cognome":
-                    contatto.setCognome(stringa);
+                    if (stringa != null) {
+                        contatto.setCognome(stringa);
+                    }else {
+                        contatto.setCognome("");
+                    }
                     break;
                 case "telefono":
-                    contatto.setTelefono(stringa);
+                    if (stringa != null) {
+                        contatto.setTelefono(stringa);
+                    }else {
+                        contatto.setTelefono("");
+                    }
                     break;
                 case "email":
-                    contatto.setEmail(stringa);
+                    if (stringa != null) {
+                        contatto.setEmail(stringa);
+                    }else {
+                        contatto.setEmail("");
+                    }
                     break;
                 case "note":
-                    contatto.setNote(stringa);
+                    if (stringa != null) {
+                        contatto.setNote(stringa);
+                    }else {
+                        contatto.setNote("");
+                    }
                     break;
                 default:
                     break;

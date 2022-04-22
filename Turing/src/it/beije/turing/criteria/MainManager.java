@@ -5,6 +5,10 @@ import it.beije.turing.db.HBsessionFactory;
 import it.beije.turing.rubrica.Contatto;
 import org.hibernate.Session;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -22,6 +26,9 @@ public class MainManager {
         CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
         Root<Contatto> root = criteriaQuery.from(Contatto.class);
 
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
 
         while (!endProgram) {
             mainInterface();
@@ -34,10 +41,10 @@ public class MainManager {
                     ContactDBManager.searchContact(criteriaQuery, root, session, scan, criteriaBuilder);
                     break;
                 case 3:
-                    ContactDBManager.addNewContact(true, null);
+                    ContactDBManager.addNewContact(true, null, entityManager, entityTransaction);
                     break;
                 case 4:
-                    ContactDBManager.editContacts(criteriaQuery, root, session, scan, criteriaBuilder);
+                    ContactDBManager.updateContacts(criteriaQuery, root, session, scan, criteriaBuilder);
                     break;
                 case 5:
                     ContactDBManager.deleteContact(criteriaQuery, root, session, scan, criteriaBuilder, true, 0);
@@ -49,7 +56,7 @@ public class MainManager {
                     ContactDBManager.combineDuplicateContacts(criteriaQuery, root, session, scan, criteriaBuilder);
                     break;
                 case 8:
-                    ContactDBManager.importXMLorCSV(scan);
+                    ContactDBManager.importXMLorCSV(scan, entityManager, entityTransaction);
                     break;
                 case 9:
                     ContactDBManager.exportXMLorCSV(criteriaQuery, root, session, scan);

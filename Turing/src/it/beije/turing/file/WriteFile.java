@@ -12,7 +12,7 @@ public class WriteFile {
 
     public static void main(String[] args) {
         List<Contatto> contatti = new ArrayList<>();
-        //writeRubricaCSV(contatti, " ", ";");
+        //writeRubricaCSV(contatti, "/Users/simonepitossi/File/newContatti.csv", ";");
         writeRubricaXML(contatti, "/Users/simonepitossi/File/newXML.xml", true);
     }
 
@@ -109,8 +109,8 @@ public class WriteFile {
             for (Contatto c : contatti) {
                 fileWriter.write(c.getNome() + separator);
                 fileWriter.write(c.getCognome() + separator);
-                fileWriter.write(c.getEmail() + separator);
                 fileWriter.write(c.getTelefono() + separator);
+                fileWriter.write(c.getEmail() + separator);
                 fileWriter.write(c.getNote() + "\n");
             }
 
