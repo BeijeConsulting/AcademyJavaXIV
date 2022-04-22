@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;Hibernate.java&apos; to &apos;Turing/src/it.beije.turing.db&apos;&#x0A;- Original project: &apos;Turing&apos;&#x0A;- Destination element: &apos;Turing/src/it.beije.turing.db&apos;&#x0A;- Original element: &apos;it.beije.turing.Hibernate.java&apos;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src=/optional=/true=/=/maven.pomderived=/true=/&lt;it.beije.turing.db" element1="/src=/optional=/true=/=/maven.pomderived=/true=/&lt;it.beije.turing{Hibernate.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1650546409623" units="1" version="1.0"/>
+</session>

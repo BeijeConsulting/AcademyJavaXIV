@@ -1,0 +1,20 @@
+package it.beije.turing.db;
+
+import org.hibernate.Session;
+
+public class Hibernate {
+	public static void main(String[] args) {
+		Session session = null;
+		
+		try {
+			session = HBsessionFactory.openSession();
+			System.out.println("is session open: "+ session.isOpen());
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+	
+
+}

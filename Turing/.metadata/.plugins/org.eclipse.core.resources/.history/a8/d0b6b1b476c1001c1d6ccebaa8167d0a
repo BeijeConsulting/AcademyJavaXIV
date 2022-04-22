@@ -1,0 +1,34 @@
+package it.beije.turing.db;
+
+import org.hibernate.Session;
+
+import it.beije.turing.rubrica.Contatto;
+
+public class Hibernate {
+	public static void main(String[] args) {
+		Session session = null;
+		
+		try {
+			session = HBsessionFactory.openSession();
+			System.out.println("is session open: "+ session.isOpen());
+			
+			//INSERT
+			Contatto contatto = new Contatto();
+			contatto.setNome("federico");
+			contatto.setCognome("R");
+			contatto.setEmail("fede.r@gmail.com");
+			contatto.setTelefono("0682829");
+			contatto.setNote("amico");
+			
+			session.save(contatto);
+			
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+	
+
+}

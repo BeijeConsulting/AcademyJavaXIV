@@ -1,0 +1,80 @@
+package it.beije.turing.db;
+
+
+import org.hibernate.query.Query;
+
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import it.beije.turing.rubrica.Contatto;
+
+public class Hibernate {
+	public static void main(String[] args) {
+		Session session = null;
+		
+		try {
+			session = HBsessionFactory.openSession();
+			System.out.println("is session open: "+ session.isOpen());
+			
+			//Transaction transaction = session.beginTransaction();
+			Transaction transaction = session.getTransaction();
+			transaction.begin();
+			
+			//INSERT
+			Contatto contatto = new Contatto();
+//			contatto.setNome("federico");
+//			contatto.setCognome("R");
+//			contatto.setEmail("fede.r@gmail.com");
+//			contatto.setTelefono("0682829");
+//			contatto.setNote("amico");
+//			
+//			session.save(contatto);
+//			
+//			//SELECT
+			Query <Contatto> query = session.createQuery("SELECT c FROM Contatto AS c"); //SELECT * FROM contatti
+//			
+			List<Contatto> contatti = query.getResultList();
+			
+			contatto = null;
+			for (Contatto c : contatti) {
+				System.out.println(c);
+				if(c.getId() == 22) contatto = c;
+				
+			}
+			
+			//UPDATE
+//			System.out.println("modifico contatto "+ contatto);
+//			
+//			contatto.setCognome("N");
+//			contatto.setNome("Daniele");
+//			contatto.setEmail("dn@gmail.com");
+//			contatto.setTelefono("0484585"); 
+//			contatto.setNote("amico");
+//			
+//			session.save(contatto);
+			
+			//DELETE
+			session.remove(contatto);
+			
+			
+			
+			
+			
+		transaction.commit();		
+		} catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			session.close();
+		}
+		
+	}
+	
+
+}
