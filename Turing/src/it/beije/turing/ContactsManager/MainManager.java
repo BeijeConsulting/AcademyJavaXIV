@@ -34,6 +34,9 @@ public class MainManager {
                     case 4:
                         ContactDBManager.editContacts(statement, scan);
                         break;
+                    case 5:
+                        ContactDBManager.deleteContact(statement, scan);
+                        break;
                     default:
                         System.out.println("Program ended. ");
                         endProgram = true;
@@ -60,6 +63,7 @@ public class MainManager {
         System.out.println("Case 2: Search Contact/s");
         System.out.println("Case 3: Create new Contact");
         System.out.println("Case 4: Modify a Contact");
+        System.out.println("Case 5: Delete a Contact");
         System.out.println("Press any other number to close the program.");
     }
 

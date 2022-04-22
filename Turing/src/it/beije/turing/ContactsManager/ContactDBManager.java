@@ -1,6 +1,5 @@
 package it.beije.turing.ContactsManager;
 
-import it.beije.turing.db.HBManager;
 import it.beije.turing.rubrica.Contatto;
 
 import java.sql.*;
@@ -100,66 +99,84 @@ public class ContactDBManager {
     public static void editContacts(Statement statement, Scanner scan) throws SQLException {
         int id = chooseId(statement, scan);
 
-        System.out.println("Enter 1 for editing a contact's name. ");
-        System.out.println("Enter 2 for editing a contact's surname. ");
-        System.out.println("Enter 3 for editing a contact's email. ");
-        System.out.println("Enter 4 for editing a contact's telephone number. ");
-        System.out.println("Enter 5 for editing a contact's note");
+        if (id != 0) {
+            System.out.println("Enter 1 for editing a contact's name. ");
+            System.out.println("Enter 2 for editing a contact's surname. ");
+            System.out.println("Enter 3 for editing a contact's email. ");
+            System.out.println("Enter 4 for editing a contact's telephone number. ");
+            System.out.println("Enter 5 for editing a contact's note");
 
-        switch (ScannerSwitch.scanner(scan)) {
-            case 1:
-                System.out.println("Enter the new name for the contact: ");
-                statement.executeUpdate("UPDATE rubrica SET nome = " + "'" + scan.next() + "'" + "WHERE id = " + id);
-                break;
-            case 2:
-                System.out.println("Enter the new surname for the contact: ");
-                statement.executeUpdate("UPDATE rubrica SET cognome = " + "'" + scan.next() + "'" + "WHERE id = " + id);
-                break;
-            case 3:
-                System.out.println("Enter the new email for the contact: ");
-                statement.executeUpdate("UPDATE rubrica SET email = " + "'" + scan.next() + "'" + "WHERE id = " + id);
-                break;
-            case 4:
-                System.out.println("Enter the new telephone number for the contact: ");
-                statement.executeUpdate("UPDATE rubrica SET telefono = " + "'" + scan.next() + "'" + "WHERE id = " + id);
-                break;
-            case 5:
-                System.out.println("Enter the new note for the contact: ");
-                statement.executeUpdate("UPDATE rubrica SET note = " + "'" + scan.next() + "'" + "WHERE id = " + id);
-                break;
-            default:
-                break;
+            switch (ScannerSwitch.scanner(scan)) {
+                case 1:
+                    System.out.println("Enter the new name for the contact: ");
+                    statement.executeUpdate("UPDATE rubrica SET nome = " + "'" + scan.next() + "'" + "WHERE id = " + id);
+                    break;
+                case 2:
+                    System.out.println("Enter the new surname for the contact: ");
+                    statement.executeUpdate("UPDATE rubrica SET cognome = " + "'" + scan.next() + "'" + "WHERE id = " + id);
+                    break;
+                case 3:
+                    System.out.println("Enter the new email for the contact: ");
+                    statement.executeUpdate("UPDATE rubrica SET email = " + "'" + scan.next() + "'" + "WHERE id = " + id);
+                    break;
+                case 4:
+                    System.out.println("Enter the new telephone number for the contact: ");
+                    statement.executeUpdate("UPDATE rubrica SET telefono = " + "'" + scan.next() + "'" + "WHERE id = " + id);
+                    break;
+                case 5:
+                    System.out.println("Enter the new note for the contact: ");
+                    statement.executeUpdate("UPDATE rubrica SET note = " + "'" + scan.next() + "'" + "WHERE id = " + id);
+                    break;
+                default:
+                    break;
 
+            }
         }
     }
 
     public static int chooseId(Statement statement, Scanner scan) throws SQLException {
         ArrayList<Integer> id = new ArrayList<>();
+        id.add(0);
         boolean validId = false;
         int chooseId = 0;
         ResultSet resultSet = statement.executeQuery("SELECT id FROM rubrica");
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             id.add(Integer.valueOf(resultSet.getString("id")));
         }
+        if (id.size() != 1) {
+            resultSet = statement.executeQuery("SELECT * FROM rubrica");
+            printContact(resultSet);
 
-        resultSet = statement.executeQuery("SELECT * FROM rubrica");
-        printContact(resultSet);
-
-        do{
-            System.out.println("Enter the id of the contact you want to modify: ");
-            if(scan.hasNextInt()) {
-                chooseId = scan.nextInt();
-                for(Integer i: id) {
-                    if(chooseId == i) {
-                        validId = true;
+            do {
+                System.out.println("Enter the id of the contact you want to modify/delete (Enter 0 to return to the main menu): ");
+                if (scan.hasNextInt()) {
+                    chooseId = scan.nextInt();
+                    for (Integer i : id) {
+                        if (chooseId == i) {
+                            validId = true;
+                        }
                     }
+                } else {
+                    System.out.println("Invalid input. ");
                 }
-            } else {
-                System.out.println("Invalid input. ");
-            }
-        } while(!validId);
+            } while (!validId);
+        } else {
+            System.out.println("The database is empty, add a contact before you can delete it.");
+        }
 
         return chooseId;
+    }
+
+    public static void deleteContact(Statement statement, Scanner scan) throws SQLException {
+        int id = chooseId(statement, scan);
+        if (id != 0) {
+            statement.executeUpdate("DELETE FROM rubrica WHERE id = " + id);
+            System.out.println("Contact deleted. ");
+        }
+    }
+
+    public static void findDuplicateContact() {
+
     }
 
 }
