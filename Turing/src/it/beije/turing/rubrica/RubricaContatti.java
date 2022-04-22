@@ -2,6 +2,8 @@ package it.beije.turing.rubrica;
 
 import it.beije.turing.db.JPAcriteria;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,13 +11,13 @@ import java.util.Scanner;
 public class RubricaContatti {
 
     private ArrayList<Contatto> listaContatti = new ArrayList<Contatto>();
-
+    private JPAcriteria jpAcriteria;
 
     public RubricaContatti(){
+        jpAcriteria = new JPAcriteria();
     }
 
     public void leggiContatti(){
-        JPAcriteria jpAcriteria = new JPAcriteria();
 
         List<Contatto> contattos = jpAcriteria.JPACriteriaLeggiContatti();
         listaContatti = (ArrayList<Contatto>) contattos;
@@ -95,7 +97,7 @@ public class RubricaContatti {
         }
     }
 
-/////////////////////////////////////////		FILTRA PER  EMAIL 			///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////		FILTRA PER  EMAIL
 
         private ArrayList<Contatto> filtraPerEmail(String elemento) {
 
@@ -112,7 +114,7 @@ public class RubricaContatti {
         }
 
 
-//////////////////////////////////////		FILTRA PER TELEFONO	 ///////////////////////////////////////
+//////////////////////////////////////		FILTRA PER TELEFONO
 
         private ArrayList<Contatto> filtraPerTelefono(String elemento) {
 
@@ -129,8 +131,7 @@ public class RubricaContatti {
         }
 
 
-////////////////////////////////////// FILTRA PER NOME //////////////////////////////////////////////////////////////////////////
-
+//////////////////////////////////////     FILTRA PER NOME
         private ArrayList<Contatto> filtraPerNome(String elemento) {
 
             ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
@@ -164,6 +165,47 @@ public class RubricaContatti {
     public void aggiungiContatto() {
 
 
+
+        Scanner in = new Scanner(System.in);
+        Contatto contattoNuovo = new Contatto();
+
+        System.out.println("Inserisci Nome : ");
+        String nome = in.nextLine();
+        if(nome.equals("")) {
+            System.out.print("Nome non valido ");
+        }
+        System.out.println("Inserisci Cognome : ");
+        String cognome = in.nextLine();
+        if(cognome.equals("")) {
+            System.out.print("Cognome non valido ");
+        }
+        System.out.println("Inserisci email : ");
+        String email = in.nextLine();
+        if(email.equals("")) {
+            System.out.print("Email non valida");
+        }
+        System.out.println("Inserisci telefono : ");
+        String telefono = in.nextLine();
+        if(telefono.equals("")) {
+            System.out.print("Telefono non valido");
+        }
+
+        System.out.println("Inserisci note : ");
+        String note = in.nextLine();
+        if(note.equals("")) {
+            System.out.print("Note non valide");
+        }
+
+        contattoNuovo.setNome(nome);
+        contattoNuovo.setCognome(cognome);
+        contattoNuovo.setEmail(email);
+        contattoNuovo.setTelefono(telefono);
+        contattoNuovo.setNote(nome);
+
+        jpAcriteria.JPAaggiungiContatto(contattoNuovo);
+
+        }
+
+
     }
-}
 

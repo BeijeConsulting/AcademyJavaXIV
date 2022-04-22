@@ -21,7 +21,7 @@ public class Applicazione {
             System.out.println("2. Aggiungi Contatto");
             System.out.println("3. Cerca Contatto");
             System.out.println("4. Elimina Contatto");
-            System.out.println("5. Cancella Contatto");
+            System.out.println("5. Importa / Esporta");
             System.out.println("6. Modifica contatto ");
             System.out.println("7. Trova Contatti Duplicati");
             System.out.println("8. Unisci Contatti Duplicati");
@@ -39,10 +39,7 @@ public class Applicazione {
                 case "1" :
                     System.out.println("	                     			");
                     System.out.println("			CONTATTI PRESENTI				");
-
-
                     rubrica.leggiContatti();
-
                     esci = false;
                     break;
 
@@ -65,12 +62,15 @@ public class Applicazione {
                     break;
 
                 case "4":
-                    System.out.println("Elimina Contatto");
+                    System.out.println("	                     			");
+                    System.out.println("        Elimina Contatto              ");
+
+                    //rubrica.eliminaContatto(String)
                     esci = false;
                     break;
 
                 case "5":
-                    System.out.println("Cancella Contatto");
+                    System.out.println("Importa");
                     esci = false;
                     break;
 
