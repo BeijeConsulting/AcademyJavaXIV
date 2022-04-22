@@ -18,46 +18,6 @@ public class JDBChandler
 		return DriverManager.getConnection("jdbc:mysql://localhost:3306/turing?serverTimezone=CET", "root", "MattiaPagani");
 	}
 	
-	public void test()
-	{
-		Connection connection = null;
-		Statement statement = null;
-		
-		try
-		{
-			connection = getConnection();
-			statement = connection.createStatement();
-			
-			statement.executeUpdate("DELETE FROM rubrica where id = 7");
-			statement.executeUpdate("DELETE FROM rubrica where id = 6");
-			statement.executeUpdate("DELETE FROM rubrica where id = 5");
-			statement.executeUpdate("DELETE FROM rubrica where id = 3");
-			statement.executeUpdate("DELETE FROM rubrica where id = 2");
-			statement.executeUpdate("DELETE FROM rubrica where id = 1");
-			//statement.executeUpdate("INSERT INTO rubrica VALUES (null, 'Gianni', 'Blu', 'g.blu@beije.it', '5355223532', 'Una Bella Nota')");
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				statement.close();
-				connection.close();
-			}
-			catch (SQLException sqlEx)
-			{
-				sqlEx.printStackTrace();
-			}
-		}
-	}
-	
 	public List<Contatto> getRubrica(String filtro)
 	{
 		Connection connection = null;
@@ -183,18 +143,11 @@ public class JDBChandler
 	public boolean addContatto(Contatto c)
 	{
 		Connection connection = null;
-		//Statement statement = null;
 		PreparedStatement insertPrepStatement = null;
 		
 		try
 		{
 			connection = getConnection();
-			//statement = connection.createStatement();
-			
-			//statement.executeUpdate("INSERT INTO rubrica VALUES (null, '" + c.getNome() + "', '"+ c.getCognome() + "', '" + c.getEmail() + 
-			//		"', '" + c.getTelefono() + "', '" + c.getNote() + "')");
-			
-			
 			insertPrepStatement = connection.prepareStatement("INSERT INTO rubrica VALUES (null, ?, ?, ?, ?, ?)");
 			insertPrepStatement.setString(1, c.getNome());
 			insertPrepStatement.setString(2, c.getCognome());
@@ -217,7 +170,6 @@ public class JDBChandler
 		{
 			try
 			{
-				//statement.close();
 				insertPrepStatement.close();
 				connection.close();				
 			}
@@ -233,17 +185,11 @@ public class JDBChandler
 	public void modifyContatto(int pos, Contatto c)
 	{
 		Connection connection = null;
-		//Statement statement = null;
 		PreparedStatement updatePrepStatement = null;
 		
 		try
 		{
 			connection = getConnection();
-			//statement = connection.createStatement();
-			//statement.executeUpdate("UPDATE rubrica SET nome = '" + c.getNome() + "', cognome = '" + c.getCognome() + "', email = '"
-			//						+ c.getEmail() + "', telefono = '" + c.getTelefono()
-			//						+ "', note = '" + c.getNote() + "' where id = " + pos);
-			
 			updatePrepStatement = connection.prepareStatement("UPDATE rubrica SET nome = ?, cognome = ?, email = ?, telefono = ?, note = ? where id = " + pos);
 			updatePrepStatement.setString(1, c.getNome());
 			updatePrepStatement.setString(2, c.getCognome());
@@ -264,7 +210,6 @@ public class JDBChandler
 		{
 			try
 			{
-				//statement.close();
 				updatePrepStatement.close();
 				connection.close();
 			}
@@ -355,9 +300,6 @@ public class JDBChandler
 			
 			for(Contatto contatto : contatti)
 			{
-				//statement.executeUpdate("INSERT INTO rubrica VALUES (null, '" + contatto.getNome() + "', '"+ contatto.getCognome() + "', '" + contatto.getTelefono() + 
-				//		"', '" + contatto.getEmail() + "', '" + contatto.getNote() + "')");
-				
 				insertPrepStatement = connection.prepareStatement("INSERT INTO rubrica VALUES (null, ?, ?, ?, ?, ?)");
 				insertPrepStatement.setString(1, contatto.getNome());
 				insertPrepStatement.setString(2, contatto.getCognome());
@@ -379,7 +321,6 @@ public class JDBChandler
 		{
 			try
 			{
-				//statement.close();
 				insertPrepStatement.close();
 				connection.close();
 			}

@@ -12,7 +12,6 @@ import it.beije.turing.db.HBsessionFactory;
 
 public class HBhandler
 {
-
 	public void loadRubricaToDB(List<Contatto> contatti)
 	{
 		Session session = null;
@@ -80,7 +79,6 @@ public class HBhandler
 	private void riordinaRubrica(String filtro)
 	{
 		List<Contatto> contatti = getRubrica("");
-		
 		
 		switch(filtro)
 		{

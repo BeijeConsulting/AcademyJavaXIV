@@ -5,14 +5,15 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import it.beije.turing.db.JPAentityManager;
 
 public class JPAhandler
 {
-	
-	
 	public void loadRubricaToDB(List<Contatto> contatti)
 	{
 		EntityManager entityManager = JPAentityManager.createEntityManager();
@@ -31,13 +32,18 @@ public class JPAhandler
 	
 	public List<Contatto> getRubrica(String filtro)
 	{
-		EntityManager entityManager = JPAentityManager.createEntityManager();
+		EntityManager entityManager = JPAentityManager.createEntityManager();		
 		
 		if (filtro != "") riordinaRubrica(filtro);
 		
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
-		List<Contatto> contatti = query.getResultList();
-
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+		Root<Contatto> from = criteriaQuery.from(Contatto.class);
+		
+		CriteriaQuery<Contatto> select = criteriaQuery.select(from);
+		TypedQuery<Contatto> typedQuery = entityManager.createQuery(select);
+		List<Contatto> contatti = typedQuery.getResultList();
+		
 		entityManager.close();
 		
 		return contatti;
@@ -47,8 +53,13 @@ public class JPAhandler
 	{
 		EntityManager entityManager = JPAentityManager.createEntityManager();
 		
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
-		List<Contatto> contatti = query.getResultList();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+		Root<Contatto> from = criteriaQuery.from(Contatto.class);
+		
+		CriteriaQuery<Contatto> select = criteriaQuery.select(from);
+		TypedQuery<Contatto> typedQuery = entityManager.createQuery(select);
+		List<Contatto> contatti = typedQuery.getResultList();
 		
 		switch(filtro)
 		{
@@ -89,8 +100,6 @@ public class JPAhandler
 		}
 		
 		entityTransaction.commit();
-		
-		System.out.println("ESCO LOADRUBRICA");
 	}
 	
 	private void clearDB()
@@ -100,8 +109,13 @@ public class JPAhandler
 		
 		entityTransaction.begin();
 		
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
-		List<Contatto> contatti = query.getResultList();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+		Root<Contatto> from = criteriaQuery.from(Contatto.class);
+		
+		CriteriaQuery<Contatto> select = criteriaQuery.select(from);
+		TypedQuery<Contatto> typedQuery = entityManager.createQuery(select);
+		List<Contatto> contatti = typedQuery.getResultList();
 		
 		for(Contatto c : contatti)
 		{

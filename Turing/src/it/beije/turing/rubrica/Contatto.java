@@ -10,7 +10,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "rubrica")
-public class Contatto {
+public class Contatto
+{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -33,7 +34,7 @@ public class Contatto {
 	private String note;
 	
 	
-	public Contatto()
+	public Contatto()																							//NUOVI CONTATTI
 	{
 		this.nome = "";
 		this.cognome = "";
@@ -42,7 +43,7 @@ public class Contatto {
 		this.note = "";
 	}
 	
-	public Contatto(String nome, String cognome, String email, String telefono, String note)
+	public Contatto(String nome, String cognome, String email, String telefono, String note)					//INIZIALIZZAZIONI IN RIGA
 	{
 		this.nome = nome;
 		this.cognome = cognome;
@@ -51,7 +52,7 @@ public class Contatto {
 		this.note = note;
 	}
 	
-	public Contatto(int id, String nome, String cognome, String email, String telefono, String note)
+	public Contatto(int id, String nome, String cognome, String email, String telefono, String note)			//USATO IN LOCALE
 	{
 		this.id = id;
 		this.nome = nome;
@@ -61,18 +62,21 @@ public class Contatto {
 		this.note = note;
 	}
 	
-	public int getId() {
+	public int getId()
+	{
 		return id;
 	}
-	public void setId(int id) {
+	
+	public void setId(int id)
+	{
 		this.id = id;
 	}
-	
 	
 	public String getNome()
 	{
 		return nome;
 	}
+	
 	public void setNome(String nome)
 	{
 		this.nome = nome;
@@ -91,6 +95,7 @@ public class Contatto {
 	{
 		return telefono;
 	}
+	
 	public void setTelefono(String telefono)
 	{
 		this.telefono = telefono;
@@ -109,6 +114,7 @@ public class Contatto {
 	{
 		return note;
 	}
+	
 	public void setNote(String note)
 	{
 		this.note = note;
@@ -128,13 +134,13 @@ public class Contatto {
 		return builder.toString();
 	}
 	
-	public String toFile(String separator)
+	public String toFile(String separator)				//Utility per scrittura a file
 	{
 		return nome + separator + cognome + separator + email + separator + telefono + separator + note + "\n";
 	}
 	
-	 public boolean equals(Object obj)
-	 {
+	public boolean equals(Object obj)					//Equals per contatti
+	{
 		if (obj == this)
 		{
 			return true;
