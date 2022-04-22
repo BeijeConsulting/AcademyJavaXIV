@@ -160,7 +160,13 @@ public List<Contatto> search(String... command) {
 			query.insert(end, ",");
 		}
 	}
+	try {
 	return db.search(query.toString());
+	}
+	catch(IllegalArgumentException e){
+		System.out.println("si è verificato un errore nei parametri, verifica che siano inseriti correttamente.");
+		return new ArrayList<Contatto>();
+	}
 }
 
 
