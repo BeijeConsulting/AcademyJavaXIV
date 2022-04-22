@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import it.beije.turing.criteria.JPACriteria;
-import it.beije.turing.file.RubricaCSV;
-import it.beije.turing.file.RubricaXML;
 import it.beije.turing.jpa.EntityManagerSingleton;
 import it.beije.turing.jpa.JpaManager;
 

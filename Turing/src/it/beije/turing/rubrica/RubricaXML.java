@@ -1,4 +1,4 @@
-package it.beije.turing.file;
+package it.beije.turing.rubrica;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,8 +18,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import it.beije.turing.rubrica.Contatto;
-
 public class RubricaXML {
 
 	public static List<Element> getChildElements(Element element) {
@@ -31,11 +29,6 @@ public class RubricaXML {
 		}
 
 		return childElements;
-	}
-	
-	public static void main(String[] args) {
-//		readXML("C:\\Users\\Marco\\Desktop\\tmp\\rubrica.xml");
-//		writeXML(readXML("C:\\Users\\Marco\\Desktop\\tmp\\rubrica.xml"),"C:\\Users\\Marco\\Desktop\\rubrica.xml");
 	}
 
 	public static List <Contatto> readXML(String path) {
@@ -50,9 +43,6 @@ public class RubricaXML {
 
 			Element root = document.getDocumentElement();
 			System.out.println("root : " + root.getTagName());
-
-//			NodeList contatti = root.getElementsByTagName("contatto");
-//			System.out.println("contatti num : " + contatti.getLength());
 
 			NodeList nodes = root.getChildNodes();
 			System.out.println("nodes num : " + nodes.getLength());
@@ -153,8 +143,6 @@ public class RubricaXML {
 				transformer.transform(source, result);
 				transformer.transform(source, syso);
 		
-		
-
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

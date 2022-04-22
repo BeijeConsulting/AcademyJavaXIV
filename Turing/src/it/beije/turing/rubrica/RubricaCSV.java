@@ -1,4 +1,4 @@
-package it.beije.turing.file;
+package it.beije.turing.rubrica;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -6,24 +6,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import it.beije.turing.rubrica.*;
 public class RubricaCSV {
 	public static String[] ordine;
-	
-	public static void main(String args[]) {
-		leggiRubrica("C:\\Users\\Marco\\Desktop\\rubrica.csv");
-	}
-	
 	public static String[] stabilisciOrdine(BufferedReader br) throws IOException {
 		String s = br.readLine();
 		String[] columns = splitString(s);
 		String[] ordine = new String[s.length()];
 		int count = 0;
 		System.out.println("LENGTH: " + columns.length);
-//		for(String str : columns) {
-//			System.out.println(str);
-//		}
+
 		for(int i = 0; i < columns.length && !(count == 5); i++) {
 			columns[i] = columns[i].toLowerCase();
 			if(columns[i].equals("nome"))
@@ -47,9 +38,6 @@ public class RubricaCSV {
 	
 	public static String[] splitString(String s) {
 		s.substring(1, s.length() - 1);
-		
-//		for(String sr : s.split(";"))
-////			System.out.print(sr);
 		return s.split(";");
 	}
 	
@@ -67,16 +55,16 @@ public class RubricaCSV {
 			for (Contatto contatto : contatti) {
 				fileWriter.write(avoidNull(contatto.getCognome()));
 				fileWriter.write(';');
-				//fileWriter.write('\t');
+				
 				fileWriter.write(avoidNull(contatto.getNome()));
 				fileWriter.write(';');
-				//fileWriter.write('\t');
+				
 				fileWriter.write(avoidNull(contatto.getEmail()));
 				fileWriter.write(';');
-				//fileWriter.write('\t');
+				
 				fileWriter.write(avoidNull(contatto.getTelefono()));
 				fileWriter.write(';');
-				//fileWriter.write('\t');
+				
 				fileWriter.write(avoidNull(contatto.getNote()));
 				fileWriter.write('\n');
 			}

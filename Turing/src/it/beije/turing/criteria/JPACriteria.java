@@ -36,14 +36,6 @@ public class JPACriteria {
 		return query.getResultList();
 	}
 	
-	
-	public static void main(String[] args) {
-//		List<Contatto> list = findContatto(11418, EntityManagerSingleton.createEntityManager());
-//		System.out.print("sono qui");
-//		for(Contatto c : list)
-//			System.out.println(c);
-	}
-	
 	public static List<Contatto> findContatto(int idContatto, EntityManager em) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contatto> cr = cb.createQuery(Contatto.class);
