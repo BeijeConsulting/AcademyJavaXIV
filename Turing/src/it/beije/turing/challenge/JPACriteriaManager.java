@@ -14,6 +14,7 @@ import it.beije.turing.rubrica.Contatto;
 import org.hibernate.HibernateException;
 import org.xml.sax.SAXException;
 
+
 public class JPACriteriaManager {
     public static List<Contatto> getRubrica() {
         List<Contatto> contatti = new ArrayList<>();
