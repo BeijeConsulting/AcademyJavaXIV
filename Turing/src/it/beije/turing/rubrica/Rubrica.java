@@ -227,6 +227,8 @@ public class Rubrica {
 				}
 				if (!duplicates.isEmpty()) {
 					duplicateOperation(scanner, duplicates);
+				} else {
+					System.out.println("No duplicate found");
 				}
 				break;
 			}

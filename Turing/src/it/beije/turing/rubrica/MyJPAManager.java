@@ -219,10 +219,10 @@ public class MyJPAManager {
             e.printStackTrace();
         } finally {
             entityManager.close();
-            System.out.println("DUPLICATE SEARCHED");
+
         }
 
-
+        System.out.println("DUPLICATE SEARCHED");
         /*if ((contacts.size() > 1) && !collectDuplicates(contacts).isEmpty()) {
             duplicates = collectDuplicates(contacts);
         } else {
