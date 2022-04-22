@@ -3,18 +3,6 @@ package it.beije.turing.challenge.rubrica;
 import java.util.Scanner;
 
 public class TestApp {
-	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
 	public static void main(String[] args) {
 		RubricaManager rubricaManager = new RubricaManager();
 		Scanner s = new Scanner(System.in);
