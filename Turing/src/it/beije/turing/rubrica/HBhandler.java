@@ -44,6 +44,7 @@ public class HBhandler
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Contatto> getRubrica(String filtro)
 	{
 		List<Contatto> contatti = new ArrayList<>();

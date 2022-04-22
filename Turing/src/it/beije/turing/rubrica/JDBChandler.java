@@ -288,15 +288,11 @@ public class JDBChandler
 	public void loadRubricaToDB(List<Contatto> contatti)
 	{
 		Connection connection = null;
-		Statement statement = null;
 		PreparedStatement insertPrepStatement = null;
 
 		try
 		{
 			connection = getConnection();
-			statement = connection.createStatement();
-			
-			
 			
 			for(Contatto contatto : contatti)
 			{

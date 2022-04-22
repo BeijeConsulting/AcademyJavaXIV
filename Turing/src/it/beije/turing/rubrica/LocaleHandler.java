@@ -63,6 +63,7 @@ public class LocaleHandler
 		return cont;
 	}
 	
+	@SuppressWarnings("resource")
 	public void modificaContatto(int posizione, List<Contatto> contatti)
 	{
 		if (posizione >= contatti.size())

@@ -28,7 +28,6 @@ public class Rubrica
 		}
 	}
 
-	
 	@SuppressWarnings("resource")
 	private void avviaMenu()
 	{
