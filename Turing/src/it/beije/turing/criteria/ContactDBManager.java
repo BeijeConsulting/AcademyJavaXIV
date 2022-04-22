@@ -4,10 +4,9 @@ import it.beije.turing.ContactsManager.ScannerSwitch;
 import it.beije.turing.file.ReadFile;
 import it.beije.turing.file.WriteFile;
 import it.beije.turing.rubrica.Contatto;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
@@ -17,7 +16,10 @@ import java.util.Scanner;
 
 public class ContactDBManager {
 
-    public static void showContactList(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan, CriteriaBuilder criteriaBuilder) {
+    public static void showContactList(EntityManagerFactory entityManagerFactory, Scanner scan, CriteriaBuilder criteriaBuilder) {
+        CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+        Root<Contatto> root = criteriaQuery.from(Contatto.class);
+        EntityManager session = entityManagerFactory.createEntityManager();
         TypedQuery<Contatto> contattoTypedQuery = null;
         List<Contatto> results = null;
 
@@ -44,9 +46,14 @@ public class ContactDBManager {
         for (Contatto contatto : results) {
             System.out.println(contatto.toString());
         }
+
+        session.close();
     }
 
-    public static void searchContact(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan, CriteriaBuilder criteriaBuilder) {
+    public static void searchContact(EntityManagerFactory entityManagerFactory, Scanner scan, CriteriaBuilder criteriaBuilder) {
+        CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+        Root<Contatto> root = criteriaQuery.from(Contatto.class);
+        EntityManager session = entityManagerFactory.createEntityManager();
         TypedQuery<Contatto> contattoTypedQuery = null;
         List<Contatto> results = null;
 
@@ -87,25 +94,29 @@ public class ContactDBManager {
         for (Contatto contatto : results) {
             System.out.println(contatto.toString());
         }
+
+        session.close();
     }
 
-    public static void addNewContact(boolean createContact, Contatto contatto, EntityManager entityManager, EntityTransaction entityTransaction) {
-
+    public static void addNewContact(boolean createContact, Contatto contatto, EntityManagerFactory entityManagerFactory) {
+        EntityManager session = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = session.getTransaction();
         if (createContact) {
             contatto = Contatto.inputCreaContatto();
         }
 
-
         entityTransaction.begin();
-        System.out.println(contatto.getTelefono());
-        entityManager.persist(contatto);
+        session.persist(contatto);
         entityTransaction.commit();
 
         System.out.println("The contact has been added.");
+        session.close();
     }
 
-    public static void updateContacts(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan, CriteriaBuilder criteriaBuilder) {
-
+    public static void updateContacts(EntityManagerFactory entityManagerFactory, Scanner scan, CriteriaBuilder criteriaBuilder) {
+        CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+        Root<Contatto> root = criteriaQuery.from(Contatto.class);
+        EntityManager session = entityManagerFactory.createEntityManager();
         int id = chooseId(criteriaQuery, root, session, scan);
 
         if (id != 0) {
@@ -141,9 +152,11 @@ public class ContactDBManager {
                     break;
             }
         }
+
+        session.close();
     }
 
-    public static void updateContactsCriteria(Session session, Scanner scan, CriteriaBuilder criteriaBuilder, String print, String contactsVariable, int id) {
+    public static void updateContactsCriteria(EntityManager entityManager, Scanner scan, CriteriaBuilder criteriaBuilder, String print, String contactsVariable, int id) {
         CriteriaUpdate<Contatto> contattoCriteriaUpdate = criteriaBuilder.createCriteriaUpdate(Contatto.class);
         Root<Contatto> contattoRoot = contattoCriteriaUpdate.from(Contatto.class);
 
@@ -151,12 +164,13 @@ public class ContactDBManager {
         contattoCriteriaUpdate.set(contactsVariable, scan.next());
         contattoCriteriaUpdate.where(criteriaBuilder.equal(contattoRoot.get("id"), id));
 
-        Transaction transaction = session.beginTransaction();
-        session.createQuery(contattoCriteriaUpdate).executeUpdate();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.createQuery(contattoCriteriaUpdate).executeUpdate();
         transaction.commit();
     }
 
-    public static int chooseId(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan) {
+    public static int chooseId(CriteriaQuery criteriaQuery, Root root, EntityManager session, Scanner scan) {
         ArrayList<Integer> id = new ArrayList<>();
         id.add(0);
         boolean validId = false;
@@ -194,7 +208,10 @@ public class ContactDBManager {
         return chooseId;
     }
 
-    public static void deleteContact(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan, CriteriaBuilder criteriaBuilder, boolean chooseId, int deleteId) {
+    public static void deleteContact(EntityManagerFactory entityManagerFactory, Scanner scan, CriteriaBuilder criteriaBuilder, boolean chooseId, int deleteId) {
+        CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+        Root<Contatto> root = criteriaQuery.from(Contatto.class);
+        EntityManager session = entityManagerFactory.createEntityManager();
         CriteriaDelete<Contatto> contattoCriteriaDelete = criteriaBuilder.createCriteriaDelete(Contatto.class);
         Root<Contatto> contattoRoot = contattoCriteriaDelete.from(Contatto.class);
         int id = 0;
@@ -207,14 +224,20 @@ public class ContactDBManager {
         if (id != 0) {
             contattoCriteriaDelete.where(contattoRoot.get("id").in(id));
 
-            Transaction transaction = session.beginTransaction();
+            EntityTransaction transaction = session.getTransaction();
+            transaction.begin();
             session.createQuery(contattoCriteriaDelete).executeUpdate();
             transaction.commit();
             System.out.println("Contact deleted. ");
         }
+
+        session.close();
     }
 
-    public static ArrayList<Integer> findDuplicateContact(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan, CriteriaBuilder criteriaBuilder) {
+    public static ArrayList<Integer> findDuplicateContact(EntityManagerFactory entityManagerFactory, Scanner scan, CriteriaBuilder criteriaBuilder) {
+        CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+        Root<Contatto> root = criteriaQuery.from(Contatto.class);
+        EntityManager session = entityManagerFactory.createEntityManager();
         TypedQuery<Contatto> contattoTypedQuery = null;
         List<Contatto> results = null;
         boolean duplicateContact = false;
@@ -248,7 +271,7 @@ public class ContactDBManager {
         } else {
             System.out.println("There aren't any duplicate Contact.");
         }
-
+        session.close();
         return duplicateId;
     }
 
@@ -266,7 +289,10 @@ public class ContactDBManager {
         }
     }
 
-    public static void combineDuplicateContacts(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan, CriteriaBuilder criteriaBuilder) {
+    public static void combineDuplicateContacts(EntityManagerFactory entityManagerFactory, Scanner scan, CriteriaBuilder criteriaBuilder) {
+        CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+        Root<Contatto> root = criteriaQuery.from(Contatto.class);
+        EntityManager session = entityManagerFactory.createEntityManager();
         TypedQuery<Contatto> contattoTypedQuery = null;
         List<Contatto> results = null;
         boolean duplicateContact = false;
@@ -298,67 +324,70 @@ public class ContactDBManager {
                     if (!alreadyDeleteId) {
                         idDeleted.add(contatto.getId());
                         idDeleted.add(contatto1.getId());
-                        deleteContact(criteriaQuery, root, session, scan, criteriaBuilder, false, contatto1.getId());
+                        deleteContact(entityManagerFactory, scan, criteriaBuilder, false, contatto1.getId());
                     } else {
                         alreadyDeleteId = false;
                     }
                 }
             }
         }
-
+        session.close();
     }
 
-    public static void importXMLorCSV(Scanner scan, EntityManager entityManager, EntityTransaction entityTransaction) {
+    public static void importXMLorCSV(Scanner scan, EntityManagerFactory entityManagerFactory) {
         System.out.println("Enter 1 for importing Contacts from XML ");
         System.out.println("Enter 2 for importing Contacts from CSV ");
         System.out.println("Enter any other number to return to the main menu. ");
         switch (ScannerSwitch.scanner(scan)) {
             case 1:
-                importXML(scan, entityManager, entityTransaction);
+                importXML(scan, entityManagerFactory);
                 break;
             case 2:
-                importCSV(scan, entityManager, entityTransaction);
+                importCSV(scan, entityManagerFactory);
                 break;
             default:
                 return;
         }
     }
 
-    public static void importCSV(Scanner scan, EntityManager entityManager, EntityTransaction entityTransaction) {
+    public static void importCSV(Scanner scan, EntityManagerFactory entityManagerFactory) {
         System.out.println("Enter the path to the CSV file: ");
         List<Contatto> contattoList = ReadFile.loadRubricaFromCSV(scan.next(), ";");
 
         for (Contatto contatto : contattoList) {
-            addNewContact(false, contatto, entityManager, entityTransaction);
+            addNewContact(false, contatto, entityManagerFactory);
         }
     }
 
-    public static void importXML(Scanner scan, EntityManager entityManager, EntityTransaction entityTransaction) {
+    public static void importXML(Scanner scan, EntityManagerFactory entityManagerFactory) {
         System.out.println("Enter the path to the XML file: ");
         List<Contatto> contattoList = ReadFile.loadRubricaFromXML(scan.next());
 
         for (Contatto contatto : contattoList) {
-            addNewContact(false, contatto, entityManager, entityTransaction);
+            addNewContact(false, contatto, entityManagerFactory);
         }
     }
 
-    public static void exportXMLorCSV(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan) {
+    public static void exportXMLorCSV(EntityManagerFactory entityManagerFactory, Scanner scan, CriteriaBuilder criteriaBuilder) {
+        CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+        Root<Contatto> root = criteriaQuery.from(Contatto.class);
         System.out.println("Enter 1 for exporting Contacts into a XML file");
         System.out.println("Enter 2 for exporting Contacts into a CSV file");
         System.out.println("Enter any other number to return to the main menu. ");
         switch (ScannerSwitch.scanner(scan)) {
             case 1:
-                exportXML(criteriaQuery, root, session, scan);
+                exportXML(criteriaQuery, root, entityManagerFactory, scan);
                 break;
             case 2:
-                exportCSV(criteriaQuery, root, session, scan);
+                exportCSV(criteriaQuery, root, entityManagerFactory, scan);
                 break;
             default:
                 return;
         }
     }
 
-    public static void exportCSV(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan) {
+    public static void exportCSV(CriteriaQuery criteriaQuery, Root root, EntityManagerFactory entityManagerFactory, Scanner scan) {
+        EntityManager session = entityManagerFactory.createEntityManager();
         TypedQuery<Contatto> contattoTypedQuery = null;
         List<Contatto> results = null;
 
@@ -368,9 +397,11 @@ public class ContactDBManager {
 
         System.out.println("Enter a path that indicates where to save the CSV file (If the file already exists the contacts will be added): ");
         WriteFile.writeRubricaCSV(results, scan.next(), ";", false);
+        session.close();
     }
 
-    public static void exportXML(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan) {
+    public static void exportXML(CriteriaQuery criteriaQuery, Root root, EntityManagerFactory entityManagerFactory, Scanner scan) {
+        EntityManager session = entityManagerFactory.createEntityManager();
         TypedQuery<Contatto> contattoTypedQuery = null;
         List<Contatto> results = null;
 
@@ -380,6 +411,7 @@ public class ContactDBManager {
 
         System.out.println("Enter a path that indicates where to save the XML file (If the file already exists the contacts will be added): ");
         WriteFile.writeRubricaXML(results, scan.next(), false);
+        session.close();
     }
 
 //    public static ArrayList<Integer> findDuplicateContact(CriteriaQuery criteriaQuery, Root root, Session session, Scanner scan, CriteriaBuilder criteriaBuilder) {

@@ -188,23 +188,18 @@ public class ReadFile {
             switch (e.getTagName().toLowerCase()) {
 
                 case "nome":
-                    System.out.println("Nome : " + e.getTextContent());
                     contatto.setNome(e.getTextContent());
                     break;
                 case "cognome":
-                    System.out.println("Cognome : " + e.getTextContent());
                     contatto.setCognome(e.getTextContent());
                     break;
                 case "telefono":
-                    System.out.println("Telefono : " + e.getTextContent());
                     contatto.setTelefono(e.getTextContent());
                     break;
                 case "email":
-                    System.out.println("Email : " + e.getTextContent());
                     contatto.setEmail(e.getTextContent());
                     break;
                 case "note":
-                    System.out.println("Note : " + e.getTextContent());
                     contatto.setNote(e.getTextContent());
                     break;
                 case "contatto":
