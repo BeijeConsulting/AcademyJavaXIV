@@ -12,11 +12,7 @@ public class Rubrica {
 	
 	ArrayList<Contatto> contatti = new ArrayList<Contatto>(); 
 
-	
-	
-	
-	
-	
+
 /////////////////////////////////////////		FILE SORGENTE 			///////////////////////////////////////////////////////////////////	
 	
 	public static String fileSorgente() {

@@ -62,35 +62,47 @@ public class Applicazione {
                     break;
 
                 case "4":
-                    System.out.println("	                     			");
-                    System.out.println("        Elimina Contatto              ");
+                    System.out.println("	                     		    	");
+                    System.out.println("        ELIMINA CONTATTO                ");
 
                     rubrica.eliminaContatto();
                     esci = false;
                     break;
 
                 case "5":
-                    System.out.println("Importa");
+                    System.out.println("	                     		         	");
+                    System.out.println("            IMPORTA  o ESPORTA              ");
+                    rubrica.importaEsporta();
                     esci = false;
                     break;
 
                 case "6":
-                    System.out.println("Modifica contatto");
+                    System.out.println("	                     		         	");
+                    System.out.println("            MODIFICA CONTATTO              ");
+                    rubrica.modificaContatto();
+
+
                     esci = false;
                     break;
 
                 case "7":
-                    System.out.println("Trova duplicati");
+                    System.out.println("	                     		    	");
+                    System.out.println("             TROVA DUPLICATI            ");
+                    rubrica.trovaDuplicati();
+
                     esci = false;
                     break;
 
                 case "8":
-                    System.out.println("Unisci duplicati");
+                    System.out.println("	                     		    	");
+                    System.out.println("            UNISCI DUPLICATI             ");
+                    rubrica.gestisciDuplicati();
                     esci = false;
                     break;
 
                 case "9":
-                    System.out.println("		Arrivederci				");
+                    System.out.println("	                     		    	");
+                    System.out.println("	        ARRIVEDERCI    				");
                     esci = true;
                     System.exit(0);
 
