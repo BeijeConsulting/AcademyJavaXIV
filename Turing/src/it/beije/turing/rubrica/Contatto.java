@@ -29,6 +29,19 @@ public class Contatto {
     @Column(name = "note")
     private String note;
 
+    public boolean isDuplicateContact(Contatto contatto) {
+        if (this.nome != null && contatto.nome != null && !this.nome.equalsIgnoreCase(contatto.nome)) {
+            return false;
+        } else if (this.cognome != null && contatto.cognome != null && !this.cognome.equalsIgnoreCase(contatto.cognome)) {
+            return false;
+        } else if (this.telefono != null && contatto.telefono != null && !this.telefono.equalsIgnoreCase(contatto.telefono)) {
+            return false;
+        } else if (this.email != null && contatto.email != null && !this.email.equalsIgnoreCase(contatto.email)) {
+            return false;
+        }
+
+        return true;
+    }
 
     public int getId() {
         return id;

@@ -12,8 +12,8 @@ public class WriteFile {
 
     public static void main(String[] args) {
         List<Contatto> contatti = new ArrayList<>();
-        //writeRubricaCSV(contatti, "/Users/simonepitossi/File/newContatti.csv", ";");
-        writeRubricaXML(contatti, "/Users/simonepitossi/File/newXML.xml");
+        //writeRubricaCSV(contatti, " ", ";");
+        writeRubricaXML(contatti, "/Users/simonepitossi/File/newXML.xml", true);
     }
 
     private static void createFileWriteExercise() {
@@ -89,7 +89,7 @@ public class WriteFile {
         return count;
     }
 
-    public static void writeRubricaCSV(List<Contatto> contatti, String pathFile, String separator) {
+    public static void writeRubricaCSV(List<Contatto> contatti, String pathFile, String separator, boolean writeNewContacts) {
         final File file = new File(pathFile);
         FileWriter fileWriter = null;
 
@@ -102,7 +102,9 @@ public class WriteFile {
                 System.out.println("Il file esiste già, ogni contatto verrà aggiunto. ");
             }
 
-            contatti = Contatto.writeContatti();
+            if (writeNewContacts) {
+                contatti = Contatto.writeContatti();
+            }
 
             for (Contatto c : contatti) {
                 fileWriter.write(c.getNome() + separator);
@@ -118,23 +120,26 @@ public class WriteFile {
         }
     }
 
-    public static void writeRubricaXML(List<Contatto> contatti, String pathFile) {
+    public static void writeRubricaXML(List<Contatto> contatti, String pathFile, boolean writeNewContacts) {
         File file = new File(pathFile);
 
-            if (!file.exists()) {
-                writeNewXML(file, contatti);
-            } else {
-            	System.out.println("Il file esiste già, ogni contatto verrà aggiunto. ");
-                addNewContactsXML(file, contatti);
-            }
+        if (!file.exists()) {
+            writeNewXML(file, contatti, writeNewContacts);
+        } else {
+            System.out.println("Il file esiste già, ogni contatto verrà aggiunto. ");
+            addNewContactsXML(file, contatti, writeNewContacts);
+        }
     }
 
-    public static void writeNewXML(File file, List<Contatto> contatti) {
+    public static void writeNewXML(File file, List<Contatto> contatti, boolean writeNewContacts) {
         FileWriter fileWriter;
 
         try {
             fileWriter = new FileWriter(file);
-            contatti = Contatto.writeContatti();
+
+            if (writeNewContacts) {
+                contatti = Contatto.writeContatti();
+            }
 
             fileWriter.write("<Contatti>" + "\n");
             for (Contatto c : contatti) {
@@ -155,7 +160,7 @@ public class WriteFile {
         }
     }
 
-    public static void addNewContactsXML(File file, List<Contatto> contatti) {
+    public static void addNewContactsXML(File file, List<Contatto> contatti, boolean writeNewContacts) {
         FileWriter fileWriter;
         FileReader fileReader;
         BufferedReader bufferedReader;
@@ -166,20 +171,23 @@ public class WriteFile {
             fileReader = new FileReader(file);
             bufferedReader = new BufferedReader(fileReader);
 
-            while(bufferedReader.ready()) {
+            while (bufferedReader.ready()) {
                 String s = bufferedReader.readLine();
 
-                if(s.equalsIgnoreCase("</Contatti>")) {
+                if (s.equalsIgnoreCase("</Contatti>")) {
                     trovatoFineRoot = true;
-                } else if(!trovatoFineRoot){
+                } else if (!trovatoFineRoot) {
                     oldFile.add(s + "\n");
                 }
             }
 
             fileWriter = new FileWriter(file);
-            contatti = Contatto.writeContatti();
 
-            for(String s: oldFile) {
+            if (writeNewContacts) {
+                contatti = Contatto.writeContatti();
+            }
+
+            for (String s : oldFile) {
                 fileWriter.write(s);
             }
 

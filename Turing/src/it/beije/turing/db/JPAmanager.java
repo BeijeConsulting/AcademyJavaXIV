@@ -19,16 +19,16 @@ public class JPAmanager {
         entityTransaction.begin();
 
         //INSERT
-//		Contatto newContatto = new Contatto();
-//		//newContatto.setId(3);
-//		newContatto.setCognome("Corraro");
-//		newContatto.setNome("Mattia");
-//		newContatto.setEmail("m.corraro@beije.it");
-//		System.out.println("contatto PRE : " + newContatto);
-//		
-//		entityManager.persist(newContatto);
-//		
-//		System.out.println("contatto POST : " + newContatto);
+		Contatto newContatto = new Contatto();
+		//newContatto.setId(3);
+		newContatto.setCognome("Corraro");
+		newContatto.setNome("Mattia");
+		newContatto.setEmail("m.corraro@beije.it");
+		System.out.println("contatto PRE : " + newContatto);
+
+		entityManager.persist(newContatto);
+
+		System.out.println("contatto POST : " + newContatto);
 
         //UPDATE
 //		System.out.println("modifico : " + contatto);

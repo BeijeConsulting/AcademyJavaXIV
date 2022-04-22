@@ -71,7 +71,7 @@ public class HBManager {
 			
 //			//DELETE
 //			session.remove(contatto);
-			
+
 			//transaction.commit();
 			//transaction.rollback();
 

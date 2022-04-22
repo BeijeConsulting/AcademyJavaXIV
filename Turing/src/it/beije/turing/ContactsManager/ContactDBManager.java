@@ -161,7 +161,7 @@ public class ContactDBManager {
                 }
             } while (!validId);
         } else {
-            System.out.println("The database is empty, add a contact before you can delete it.");
+            System.out.println("The database is empty, add a contact before you can modify/delete it.");
         }
 
         return chooseId;
