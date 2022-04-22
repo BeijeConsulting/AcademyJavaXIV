@@ -3,11 +3,14 @@ package it.beije.turing.rubrica;
 import it.beije.turing.db.JPAcriteria;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -413,7 +416,7 @@ public class RubricaContatti {
 
     public void importaEsporta() {
         Scanner in = new Scanner(System.in);
-        System.out.println("1.Importa CSV \n2.Importa XML \n3.Esporta CSV \n4.Esporta CSV");
+        System.out.println("1.Importa CSV \n2.Importa XML \n3.Esporta CSV \n4.Esporta XML");
 
         String scelta = in.next();
 
@@ -429,7 +432,7 @@ public class RubricaContatti {
             case "2":
                 System.out.println("	                       		        	");
                 System.out.println("	        	Importa XML		        	");
-
+                importaXML();
 
                 break;
             case "3":
@@ -460,15 +463,14 @@ public class RubricaContatti {
         if(dir.equals("")) {
             System.out.print("directory non valida");
         }else if(checkForPath(dir)){
-            System.out.print("directory già utilizzata");
+            System.out.print("\ndirectory già utilizzata\n");
         }else{
-
 
             file = new File(dir);
             try
             {
                 fileWriter = new FileWriter(file, true);
-                fileWriter.append("NOME;COGNOME;EMAIL;TELEFONO;NOTE");
+                fileWriter.append("NOME;COGNOME;EMAIL;TELEFONO;NOTE\n");
 
                 for(Contatto c : listaContatti) {
                     fileWriter.append(""+c.getNome()+";" +c.getCognome()+";" +c.getEmail()+";"+ c.getTelefono()+ ";"+c.getNote()+"\n");
@@ -492,16 +494,23 @@ public class RubricaContatti {
     private boolean checkForPath(String path){
 
         File file = new File(path);
-        if(!file.exists()) {
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
             try {
-                    file.createNewFile();
+                //file.createNewFile();
+                fileReader = new FileReader(path);
+                bufferedReader = new BufferedReader(fileReader);
+                String riga = bufferedReader.readLine();
+
+                if(riga == null){
+                    return false;
+                }
 
             } catch (IOException ioEx) {
                 ioEx.printStackTrace();
                 System.out.println("Non va;");
             }
-        }
-        return false;
+        return true;
     }
 
     private void importaCSV() {
@@ -581,28 +590,80 @@ public class RubricaContatti {
         return c;
     }
 
-//    private void importaXML() {
-//
-//        Scanner in = new Scanner(System.in);
-//
-//        System.out.println("Inserisci la directory del file da importare (File Compreso) : ");
-//        String dir = in.nextLine();
-//        if (dir.equals("")) {
-//            System.out.print("directory non valida");
-//        }
-//
-//        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder documentBuilder = null;
-//        Document document = null;
-//
-//        try {
-//            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-//            document = documentBuilder.parse();
-//
-//            Element root = document.getDocumentElement();
-//            System.out.println("root : " + root.getTagName());
-//
-//
-//
-//    }
-}
+    private void importaXML() {
+
+        Scanner in = new Scanner(System.in);
+        System.out.println("Inserisci la directory del file da importare (File Compreso) : ");
+        String dir = in.nextLine();
+        if (dir.equals("")) {
+            System.out.print("directory non valida");
+        }
+
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = null;
+        Document document = null;
+
+            try {
+                    documentBuilder = documentBuilderFactory.newDocumentBuilder();
+                    document = documentBuilder.parse(dir);
+
+                    Element root = document.getDocumentElement();
+                    NodeList nodes = root.getChildNodes();
+                    List<Element> children = getChildElements(root);
+
+			for (Element el : children) {
+        if (el.getTagName().equalsIgnoreCase("contatto")) {
+            List<Element> contatto = getChildElements(el);
+            for (Element value : contatto) {
+                Contatto newContatto = new Contatto();
+                switch (value.getTagName().toLowerCase()) {
+                    case "nome":
+                       // System.out.println("nome : " + value.getTextContent());
+                        newContatto.setNome(value.getTextContent());
+                       break;
+                    case "cognome":
+                        //System.out.println("cognome : " + value.getTextContent());
+                        newContatto.setCognome(value.getTextContent());
+                       break;
+                    case "email":
+                        //System.out.println("email : " + value.getTextContent());
+                        newContatto.setEmail(value.getTextContent());
+                       break;
+                    case "telefono":
+                        //System.out.println("telefono : " + value.getTextContent());
+                        newContatto.setTelefono(value.getTextContent());
+                        break;
+                    case "note":
+                        //System.out.println("note : " + value.getTextContent());
+                        newContatto.setNote(value.getTextContent());
+                        break;
+
+                    default:
+                        break;
+                }
+                jpAcriteria.JPAaggiungiContatto(newContatto);
+            }
+        }
+    }
+
+        } catch (ParserConfigurationException pcEx) {
+            pcEx.printStackTrace();
+            } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+                 } catch (SAXException saxEx) {
+                saxEx.printStackTrace();
+        }
+
+        }
+    public static List<Element> getChildElements(Element element) {
+        List<Element> childElements = new ArrayList<Element>();
+        NodeList nodeList = element.getChildNodes();
+        for (int n = 0; n < nodeList.getLength(); n++) {
+            if (nodeList.item(n) instanceof Element) childElements.add((Element)nodeList.item(n));
+        }
+
+        return childElements;
+    }
+
+    }
+
