@@ -9,8 +9,10 @@ import it.beije.turing.rubrica.Contatto;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,11 +35,16 @@ public class MyRubrica {
 
             String chose= scanner.nextLine();
             if(chose.equalsIgnoreCase("-h") || chose.equalsIgnoreCase("-help")){
-                System.out.println("\tshow <params> = [-N= ordinati per nome -S= ordinati per cognome] per visualizzare tutti i contatti ");
+                System.out.println("\tshow <params> = [(Opzionale) -N= ordinati per nome -S= ordinati per cognome] per visualizzare tutti i contatti ");
                 System.out.println("\tsearch <parola> = [parola = parola da cercare] cerca la parola all' interno di tutti i campi nel DB");
                 System.out.println("\tdelete <ID> = [ID = id del contatto] id del contatto da cancellare");
                 System.out.println("\tinsert = comando per inserire il contatto da cancellare");
                 System.out.println("\tmod <ID> = [ID = id del contatto] id del contatto da modificare");
+                System.out.println("\tduplicate <PARAMS>= [(Opzionale) PARAMS= -U per unirli -UA per unirli automaticamente] id del contatto da modificare");
+                System.out.println("\timport <TYPEFILE> <PATH> =  [TYPEFILE = CSV per il formato .csv XML per il  formato .xml] formato file da importare " +
+                        "\n\t\t\t\t\t\t\t\t[PATH=indirizzo del file da importare] ");
+                System.out.println("\texport <TYPEFILE> <PATH> =  [TYPEFILE = CSV per il formato .csv XML per il  formato .xml] formato file da salvare " +
+                        "\n\t\t\t\t\t\t\t\t[PATH=indirizzo del file da salvare] ");
                 System.out.println("\texit =Esci");
             }
             if(chose.startsWith("exit")){
@@ -68,7 +75,7 @@ public class MyRubrica {
                 String[] io=chose.split(" ");
                 if(io.length>=2){
                     StringBuilder stringBuilder= new StringBuilder(chose.substring(chose.indexOf("search")+"search".length(),chose.length()).trim());
-                    System.out.println(stringBuilder);
+
                     print(rubrica.search(stringBuilder.toString()));
                 }else{
                     errore();
@@ -118,6 +125,7 @@ public class MyRubrica {
                 String[] io=chose.split(" ");
                 if(io.length ==1){
                     Contatto c= insertContact(scanner);
+
                     rubrica.insert(c);
                     System.out.println("\nContatto aggiunto\n");
 
@@ -137,7 +145,8 @@ public class MyRubrica {
                         for (Contatto temp:l) {
                             if(temp.getId()==id){
                                 f=true;
-                               Contatto c= insertContact(scanner,temp);
+                                Contatto c= insertContact(scanner,temp);
+
                                 rubrica.modificaContatto(c);
                                 break;
                             }
@@ -155,7 +164,40 @@ public class MyRubrica {
 
 
             }
+            ///Users/giusepperaddato/Codici/Java/SpringExample/Getting Started Guides/AcademyJavaXIV/Turing/src/main/resources/file/xml/test_parser1.xml
+            ///Users/giusepperaddato/Codici/Java/SpringExample/Getting Started Guides/AcademyJavaXIV/Turing/src/main/resources/file/csv/rubrica.csv
 
+            if(chose.startsWith("import")){
+                String[] io=chose.split(" ");
+                    if(io.length==2){
+
+
+                        if((!io[1].equalsIgnoreCase("xml")) && (!io[1].equalsIgnoreCase("csv"))){
+
+                            System.err.println("Estesione non supportata");
+                        }else{
+                            System.out.print("Inserisci path: ");
+                            String path=scanner.nextLine();
+                            File f=new File(path);
+                            if(f.isFile() && f.exists()){
+                                if(io[1].equalsIgnoreCase("xml")){
+                                    List<Contatto> p = rubrica.importFromXML(path);
+                                    System.out.println("\nSono stati aggiunti: "+p.size()+" contatti\n");
+                                }else if(io[1].equalsIgnoreCase("csv")){
+                                    System.out.print("Inserisci il carattere di  separazione :");
+                                    String separator=scanner.next();
+                                    List<Contatto> p = rubrica.importFromCVS(path, separator);
+                                    System.out.println("\nSono stati aggiunti: "+p.size()+" contatti\n");
+                                }
+                            }else {
+                                System.err.println("File non trovato");
+                            }
+                        }
+
+                    }else {
+                        System.err.println("Comando non vavlido");
+                    }
+            }
         }while (repeat);
 
         scanner.close();
