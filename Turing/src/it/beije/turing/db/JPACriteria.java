@@ -150,6 +150,7 @@ public class JPACriteria {
         if (contatto != null) {
             em.remove(contatto);
             System.out.println("contatto eliminato");
+
         } else {
             System.out.println("Contatto non esistente");
         }
