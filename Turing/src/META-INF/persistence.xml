@@ -3,6 +3,7 @@
 	<persistence-unit name="turing">
 
 		<class>it.beije.turing.rubrica.Contatto</class>
+		<class>it.beije.turing.rubrica.Telefono</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
