@@ -31,9 +31,7 @@ public class JpaManager {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		entityManager.persist(c);
-		entityTransaction.commit();
-		System.out.print("CONTATTO INSERITO JPA");
-		
+		entityTransaction.commit();	
 	}
 	
 	public static void addContatti(List<Contatto> contatti) {
@@ -51,7 +49,6 @@ public class JpaManager {
 		em.getTransaction().begin();
 		em.remove(em.contains(contatto) ? contatto : em.merge(contatto));
 		em.getTransaction().commit();
-		System.out.println("Contatto " + contatto + " eliminato");
 	}
 	
 	public static void modifyContatto(Contatto contatto, EntityManager em) {

@@ -53,8 +53,7 @@ public class RubricaManager {
 			smistaScelte(input);
 		} while (input != 0);
 	}
-	
-	
+
 	public static void aggiungiContatto() {
 		Contatto c = new Contatto();
 		c = creaContatto();
@@ -63,7 +62,6 @@ public class RubricaManager {
 		mainMenu();
 	}
 
-	
 	public static void smistaScelte(int input) {
 		switch (input) {
 		case 0:
@@ -171,7 +169,7 @@ public class RubricaManager {
 		System.out.println("Inserisci id contatto: ");
 		int id = Integer.parseInt(scanner.nextLine());
 		List<Contatto> list = JPACriteria.findContatto(id, EntityManagerSingleton.createEntityManager());
-		
+
 		if (!list.isEmpty()) {
 			Contatto contatto = creaContatto();
 			list.get(0).setCognome(contatto.getCognome());
@@ -186,7 +184,6 @@ public class RubricaManager {
 		}
 	}
 
-	
 	public static List<Contatto> trovaContatti() {
 		System.out.println("0 - Cerca per id");
 		System.out.println("1 - Cerca per cognome");
@@ -276,10 +273,15 @@ public class RubricaManager {
 			System.out.println(c);
 		if (doppi.isEmpty())
 			System.out.println("Nessun doppio trovato.");
-		else
-			for (Contatto contatto : doppi)
-				JpaManager.deleteContatto(contatto, EntityManagerSingleton.createEntityManager());
-
+		else {
+			System.out.println("Cancellar i contatti duplicati?");
+			System.out.println("0 - Cancella");
+			System.out.println("1 - Non cancellare");
+			int in = prendiInput(0, 1);
+			if (in == 0)
+				for (Contatto contatto : doppi)
+					JpaManager.deleteContatto(contatto, EntityManagerSingleton.createEntityManager());
+		}
 	}
 
 	public static boolean isDoppio(Contatto contatto, List<Contatto> cerca) {
