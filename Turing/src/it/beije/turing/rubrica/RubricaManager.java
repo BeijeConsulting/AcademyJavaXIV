@@ -55,7 +55,8 @@ public class RubricaManager {
 			smistaScelte(input);
 		} while (input != 0);
 	}
-
+	
+	
 	public static void aggiungiContatto() {
 		Contatto c = new Contatto();
 		c = creaContatto();
@@ -64,6 +65,7 @@ public class RubricaManager {
 		mainMenu();
 	}
 
+	
 	public static void smistaScelte(int input) {
 		switch (input) {
 		case 0:
@@ -186,6 +188,7 @@ public class RubricaManager {
 		}
 	}
 
+	
 	public static List<Contatto> trovaContatti() {
 		System.out.println("0 - Cerca per id");
 		System.out.println("1 - Cerca per cognome");
