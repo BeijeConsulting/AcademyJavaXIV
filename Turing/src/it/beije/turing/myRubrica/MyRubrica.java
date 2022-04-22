@@ -1,6 +1,7 @@
 package it.beije.turing.myRubrica;
 
 import it.beije.turing.myRubrica.db.HibernateManager;
+import it.beije.turing.myRubrica.db.JPAManager;
 import it.beije.turing.myRubrica.db.SQLManager;
 import it.beije.turing.myRubrica.interfaces.OpRubrica;
 import it.beije.turing.myRubrica.interfaces.Order;
@@ -13,7 +14,6 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Scanner;
 
-
 /**
  * @author Giuseppe Raddato
  * Data: 19 apr 2022
@@ -21,16 +21,13 @@ import java.util.Scanner;
 public class MyRubrica {
 
     public static void main(String[] args) {
-        OpRubrica rubrica= new HibernateManager();
+        OpRubrica rubrica= new SQLManager();
         List<Contatto> l = null;
 
         Scanner scanner=new Scanner(System.in);
         boolean repeat=true;
         do{
-
-
             System.out.print ("GESTIONE RUBRICA");
-
             System.out.println(" (-h per la lista delle operazioni)");
             System.out.print("Inserisci OP: ");
 
@@ -196,7 +193,7 @@ public class MyRubrica {
         System.err.println("Errore ripeti");
     }
 
-    private static void print(List<Contatto> listContact) {
+    public static void print(List<Contatto> listContact) {
         if(!listContact.isEmpty()) {
             System.out.println("=============================================================================================================================================================================");
             System.out.printf("| %10s | %30s | %30s | %35s | %15s | %30s |\n", "ID", "NOME", "COGNOME", "EMAIL", "TELEFONO", "NOTE");
