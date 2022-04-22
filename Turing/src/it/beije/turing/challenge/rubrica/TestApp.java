@@ -88,6 +88,7 @@ public class TestApp {
 						System.out.println("Impossibile fare la Print se non si fa prima almeno una Import!");
 						continue;
 					}
+					System.out.println("----------------------------------------------------------------------------");
 					if(!rubricaManager.sort(s)) {
 						break;
 					}
@@ -146,6 +147,7 @@ public class TestApp {
 /**********************************************************************************************************************************************/
 				case "0":
 					System.out.println("Quitting Program...");
+					System.out.print("----------------------------------------------------------------------------");
 					break LOOP;
 				default:
 					System.out.println("Inserire comando valido! "+command+" non riconosciuto come comando!");
