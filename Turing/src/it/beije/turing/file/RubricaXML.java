@@ -34,11 +34,12 @@ public class RubricaXML {
 	}
 	
 	public static void main(String[] args) {
-		readXML("C:\\Users\\Marco\\Desktop\\tmp\\rubrica.xml");
+//		readXML("C:\\Users\\Marco\\Desktop\\tmp\\rubrica.xml");
+//		writeXML(readXML("C:\\Users\\Marco\\Desktop\\tmp\\rubrica.xml"),"C:\\Users\\Marco\\Desktop\\rubrica.xml");
 	}
 
-	public static void readXML(String path) {
-
+	public static List <Contatto> readXML(String path) {
+		List<Contatto> contatti = new ArrayList<>();
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = null;
 		Document document = null;
@@ -58,38 +59,41 @@ public class RubricaXML {
 
 			List<Element> children = getChildElements(root);
 			System.out.println("children num : " + children.size());
-
 			for (Element el : children) {
-				if (el.getTagName().equalsIgnoreCase("contatto")) {
+				Contatto c = new Contatto();
+				if (el.getTagName().equalsIgnoreCase("id")) {
 					List<Element> contatto = getChildElements(el);
+					
 					for (Element value : contatto) {
+						
 						switch (value.getTagName().toLowerCase()) {
 						case "nome":
+							c.setNome( value.getTextContent());
 							System.out.println("nome : " + value.getTextContent());
 							break;
 						case "cognome":
+							c.setCognome( value.getTextContent());
 							System.out.println("cognome : " + value.getTextContent());
 							break;
 						case "telefono":
+							c.setTelefono( value.getTextContent());
 							System.out.println("telefono : " + value.getTextContent());
 							break;
 						case "email":
+							c.setEmail( value.getTextContent());
 							System.out.println("email : " + value.getTextContent());
 							break;
 						case "note":
+							c.setNote( value.getTextContent());
 							System.out.println("note : " + value.getTextContent());
 							break;
-
 						default:
 							break;
 						}
-
 					}
-
-					System.out.println("eta' : " + el.getAttribute("eta"));
+					contatti.add(c);
 				}
 			}
-
 		} catch (ParserConfigurationException pcEx) {
 			pcEx.printStackTrace();
 		} catch (IOException ioEx) {
@@ -97,10 +101,10 @@ public class RubricaXML {
 		} catch (SAXException saxEx) {
 			saxEx.printStackTrace();
 		}
-
+		return contatti;
 	}
 
-	public static void writeXML(ArrayList<Contatto> contatti, String path) {
+	public static void writeXML(List<Contatto> contatti, String path) {
 		try {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -116,7 +120,7 @@ public class RubricaXML {
 				el.appendChild(id);
 				
 				Element cognome = doc.createElement("cognome");
-				cognome.setAttribute("cognome", "" + c.getCognome());
+				cognome.setTextContent("" + c.getCognome());
 				id.appendChild(cognome);
 
 				Element nome = doc.createElement("nome");
@@ -136,18 +140,19 @@ public class RubricaXML {
 				id.appendChild(note);
 
 				el.appendChild(id);
+			}
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
 				Transformer transformer = transformerFactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
 
-				StreamResult result = new StreamResult(new File(path.replace(".csv", ".xml")));
+				StreamResult result = new StreamResult(new File(path));
 
-				// Output to console for testing
-				//StreamResult syso = new StreamResult(System.out);
+				 //Output to console for testing
+				StreamResult syso = new StreamResult(System.out);
 
-				//transformer.transform(source, result);
-				//transformer.transform(source, syso);
-		}
+				transformer.transform(source, result);
+				transformer.transform(source, syso);
+		
 		
 
 		}catch(Exception e) {

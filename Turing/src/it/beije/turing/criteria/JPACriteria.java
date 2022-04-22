@@ -54,5 +54,21 @@ public class JPACriteria {
 		
 		return query.getResultList();
 	}
+	
+	public static List<Contatto> findContatto(String input, EntityManager em, int mode) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Contatto> cr = cb.createQuery(Contatto.class);
+		Root<Contatto> root = cr.from(Contatto.class);
+		if(mode == 1)
+			cr.select(root).where(cb.equal(root.get("cognome"), input));
+		else if(mode == 2)
+			cr.select(root).where(cb.equal(root.get("nome"), input));
+		else
+			cr.select(root).where(cb.equal(root.get("email"), input));
+		
+		Query query = em.createQuery(cr);
+		
+		return query.getResultList();
+	}
 
 }

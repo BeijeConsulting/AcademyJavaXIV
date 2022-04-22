@@ -26,7 +26,7 @@ public class JpaManager {
 		for (Contatto c : contatti) {
 			System.out.println(c);
 		}
-		entityManager.close();
+//		entityManager.close();
 	}
 	
 
@@ -36,14 +36,14 @@ public class JpaManager {
 		entityTransaction.begin();
 		entityManager.persist(c);
 		entityTransaction.commit();
-		entityManager.close();
+//		entityManager.close();
 		System.out.print("CONTATTO INSERITO JPA");
 		
 	}
 	
 	
 
-	public static void addContatti(ArrayList<Contatto> contatti) {
+	public static void addContatti(List<Contatto> contatti) {
 		EntityManager entityManager = EntityManagerSingleton.createEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
@@ -52,7 +52,7 @@ public class JpaManager {
 			entityManager.persist(c);
 		}
 		entityTransaction.commit();
-		entityManager.close();
+//		entityManager.close();
 	}
 	
 //	public static void deleteContatto(List<Contatto> contatti, EntityManager em) {
@@ -66,7 +66,7 @@ public class JpaManager {
 		em.getTransaction().begin();
 		em.remove(em.contains(contatto) ? contatto : em.merge(contatto));
 		em.getTransaction().commit();
-		em.close();
+//		em.close();
 		System.out.println("Contatto " + contatto + " eliminato");
 	}
 	
@@ -74,7 +74,7 @@ public class JpaManager {
 		em.getTransaction().begin();
 		em.persist(contatto);
 		em.getTransaction().commit();
-		em.close();
+//		em.close();
 	}
 
 	public static void updateJpa() {
@@ -86,7 +86,7 @@ public class JpaManager {
 		contatto.setNote("HO MODIFICATO QUESTO CAMPO");
 		entityManager.persist(contatto);
 		entityTransaction.commit();
-		entityManager.close();
+//		entityManager.close();
 	}
 
 	public static void main(String[] args) {

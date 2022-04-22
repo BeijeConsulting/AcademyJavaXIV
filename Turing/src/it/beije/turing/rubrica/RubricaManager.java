@@ -1,40 +1,19 @@
 package it.beije.turing.rubrica;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-
 import it.beije.turing.criteria.JPACriteria;
 import it.beije.turing.file.RubricaCSV;
 import it.beije.turing.file.RubricaXML;
-import it.beije.turing.jdbc.JDBCmanager;
 import it.beije.turing.jpa.EntityManagerSingleton;
 import it.beije.turing.jpa.JpaManager;
 
-//import it.beije.turing.file.*;
-
 public class RubricaManager {
-	public static String path = "C:\\Users\\Marco\\Desktop\\tmp\\rubrica.csv";
-	public static ArrayList<Contatto> contatti = RubricaCSV.leggiRubrica(path);
 	public static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
-
 		mainMenu();
-		// JpaManager.addContatti(contatti);
-
-//		JpaManager.updateJpa();
-//		JpaManager.readContatti();
-//		JDBCmanager.addContatti(contatti);
-//		JDBCmanager.readContatti();
-//		scanner.close();
-//		try {
-//			RubricaXML.writeXML(contatti, path);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-
 	}
 
 	// Prende un qualsiasi input dell'utente
@@ -60,38 +39,28 @@ public class RubricaManager {
 	public static void mainMenu() {
 		int input;
 		do {
+			System.out.println("______________________________");
 			System.out.println("0 - Aggiungi contatto");
 			System.out.println("1 - Mostra contatti");
 			System.out.println("2 - Modifica contatti");
 			System.out.println("3 - Cancella contatti");
 			System.out.println("4 - Cerca contatto");
-			System.out.println("5 - Salva modifiche");
-			System.out.println("6 - Trova duplicati");
-			input = prendiInput(0, 6);
+			System.out.println("5 - Elimina contatti doppi");
+			System.out.println("6 - Import da file .xml");
+			System.out.println("7 - Export in file .xml");
+			System.out.println("8 - Import da file .csv");
+			System.out.println("9 - Export in file .csv");
+			System.out.println("______________________________");
+			input = prendiInput(0, 10);
 			smistaScelte(input);
 		} while (input != 0);
-	}
-
-	public static void salvaFile() {
-		// Salvo il file XML
-		try {
-			RubricaXML.writeXML(contatti, path);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// Salvo il file csv
-		RubricaCSV.scriviFile(contatti);
-
 	}
 
 	public static void aggiungiContatto() {
 		Contatto c = new Contatto();
 		c = creaContatto();
-		contatti.add(c);
-		salvaFile();
 		JpaManager.addContatti(c);
-		System.out.println("CONTATTO INSERITO !!!");
+		System.out.println("Contatto inserito.");
 		mainMenu();
 	}
 
@@ -107,33 +76,102 @@ public class RubricaManager {
 			break;
 		case 3:
 			cancellaContatti();
+			break;
 		case 4:
 			List<Contatto> list = trovaContatti();
-			for (Contatto c : list)
-				System.out.println(c);
-		case 5:
-			salvaFile();
+			if (list.isEmpty())
+				System.out.println("Contatto non trovato");
+			else {
+				System.out.println("[RISULTATI]");
+				for (Contatto c : list)
+					System.out.println(c);
+			}
 			break;
-		case 6:
+		case 5:
 			trovaDuplicati();
 			break;
+		case 6:
+			importFromXml();
+			break;
+		case 7:
+			exportInXml(JPACriteria.findAll(EntityManagerSingleton.createEntityManager(), 0));
+			break;
+		case 8:
+			importFromCsv();
+			break;
+		case 9:
+			exportInCsv(JPACriteria.findAll(EntityManagerSingleton.createEntityManager(), 0));
+			break;
 		}
+	}
+
+	public static void exportInXml(List<Contatto> c) {
+		String path;
+
+		do {
+			System.out.println("Inserire percorso in cui salvare il file: ");
+			path = prendiInput();
+		} while (!path.endsWith(".xml"));
+
+		RubricaXML.writeXML(c, path);
+	}
+
+	public static void exportInCsv(List<Contatto> c) {
+		String path;
+
+		do {
+			System.out.println("Inserire percorso in cui salvare il file: ");
+			path = prendiInput();
+		} while (!path.endsWith(".csv"));
+
+		RubricaCSV.scriviFile(c, path);
+	}
+
+	public static void importFromXml() {
+		String path;
+
+		do {
+			System.out.println("Inserire il percorso del file da importare: ");
+			path = prendiInput();
+		} while (!path.endsWith(".xml"));
+
+		List<Contatto> xmlContatti = RubricaXML.readXML(path);
+		JpaManager.addContatti(xmlContatti);
+		System.out.println("Finito");
+
+	}
+
+	public static void importFromCsv() {
+		String path;
+
+		do {
+			System.out.println("Inserire il percorso del file da importare: ");
+			path = prendiInput();
+		} while (!path.endsWith(".csv"));
+
+		List<Contatto> csvContatti = RubricaCSV.leggiRubrica(path);
+		JpaManager.addContatti(csvContatti);
+		System.out.println("Finito");
+
 	}
 
 	public static void cancellaContatti() {
 		List<Contatto> list = trovaContatti();
 
 		if (!list.isEmpty()) {
-			JpaManager.deleteContatto(list.get(0), EntityManagerSingleton.createEntityManager());
-			System.out.println("Contatto eliminato con successo.");
+			for (Contatto contatto : list)
+				JpaManager.deleteContatto(contatto, EntityManagerSingleton.createEntityManager());
+			System.out.println("Contatti eliminati con successo.");
 		} else {
 			System.out.println("Contatto inesistente.");
 		}
 	}
 
 	public static void modificaContatto() {
-		List<Contatto> list = trovaContatti();
-
+		System.out.println("Inserisci id contatto: ");
+		int id = Integer.parseInt(scanner.nextLine());
+		List<Contatto> list = JPACriteria.findContatto(id, EntityManagerSingleton.createEntityManager());
+		
 		if (!list.isEmpty()) {
 			Contatto contatto = creaContatto();
 			list.get(0).setCognome(contatto.getCognome());
@@ -149,25 +187,40 @@ public class RubricaManager {
 	}
 
 	public static List<Contatto> trovaContatti() {
-		System.out.println("Inserisci id contatto: ");
-		String input = scanner.nextLine();
-		int id = Integer.parseInt(input);
-		List<Contatto> list = JPACriteria.findContatto(id, EntityManagerSingleton.createEntityManager());
+		System.out.println("0 - Cerca per id");
+		System.out.println("1 - Cerca per cognome");
+		System.out.println("2 - Cerca per nome");
+		System.out.println("3 - Cerca per email");
+		int x = prendiInput(0, 3);
+		String input;
+		List<Contatto> list = null;
+		switch (x) {
+		case 0:
+			System.out.println("Inserisci id contatto: ");
+			input = scanner.nextLine();
+			int id = Integer.parseInt(input);
+			list = JPACriteria.findContatto(id, EntityManagerSingleton.createEntityManager());
+			break;
+		case 1:
+			System.out.println("Inserisci cognome contatto: ");
+			input = scanner.nextLine();
+			System.out.println(input);
+			list = JPACriteria.findContatto(input, EntityManagerSingleton.createEntityManager(), x);
+			break;
+		case 2:
+			System.out.println("Inserisci nome contatto: ");
+			input = scanner.nextLine();
+			list = JPACriteria.findContatto(input, EntityManagerSingleton.createEntityManager(), x);
+			break;
+		case 3:
+			System.out.println("Inserisci email contatto: ");
+			input = scanner.nextLine();
+			list = JPACriteria.findContatto(input, EntityManagerSingleton.createEntityManager(), x);
+			break;
+
+		}
+
 		return list;
-	}
-
-	public static void modificaContatti() {
-
-//		Contatto c = new Contatto();
-//		int index = trovaContatti();
-//
-//		if (index == -1) {
-//			System.out.println("Contatto non trovato.");
-//		} else {
-//			c = creaContatto();
-//			contatti.set(index, c);
-//		}
-
 	}
 
 	public static Contatto creaContatto() {
@@ -223,7 +276,7 @@ public class RubricaManager {
 		if (doppi.isEmpty())
 			System.out.println("Nessun doppio trovato.");
 		else
-			for(Contatto contatto : doppi)
+			for (Contatto contatto : doppi)
 				JpaManager.deleteContatto(contatto, EntityManagerSingleton.createEntityManager());
 
 	}
