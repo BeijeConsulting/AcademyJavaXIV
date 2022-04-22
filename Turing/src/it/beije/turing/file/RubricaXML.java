@@ -100,52 +100,61 @@ public class RubricaXML {
 
 	}
 
-	public static void writeXML(ArrayList<Contatto> contatti, String path) throws Exception {
+	public static void writeXML(ArrayList<Contatto> contatti, String path) {
+		try {
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			Document doc = documentBuilder.newDocument();
+			Element el = doc.createElement("contatto");
+			doc.appendChild(el);
 
-		Document doc = documentBuilder.newDocument();
-		Element el = doc.createElement("contatto");
-		doc.appendChild(el);
+			for (Contatto c : contatti) {
 
-		for (Contatto c : contatti) {
+				Element id = doc.createElement("id");
+				id.setAttribute("id", "" + c.getId());
+				el.appendChild(id);
+				
+				Element cognome = doc.createElement("cognome");
+				cognome.setAttribute("cognome", "" + c.getCognome());
+				id.appendChild(cognome);
 
-			Element cognome = doc.createElement("cognome");
-			cognome.setAttribute("cognome", c.getCognome());
-			el.appendChild(cognome);
+				Element nome = doc.createElement("nome");
+				nome.setTextContent("" + c.getNome());
+				id.appendChild(nome);
 
-			Element nome = doc.createElement("nome");
-			nome.setTextContent(c.getNome());
-			cognome.appendChild(nome);
+				Element telefono = doc.createElement("telefono");
+				telefono.setTextContent("" + c.getTelefono());
+				id.appendChild(telefono);
 
-			Element telefono = doc.createElement("telefono");
-			telefono.setTextContent(c.getTelefono());
-			cognome.appendChild(telefono);
+				Element email = doc.createElement("email");
+				email.setTextContent("" + c.getEmail());
+				id.appendChild(email);
 
-			Element email = doc.createElement("email");
-			email.setTextContent(c.getEmail());
-			cognome.appendChild(email);
+				Element note = doc.createElement("note");
+				note.setTextContent("" + c.getNote());
+				id.appendChild(note);
 
-			Element note = doc.createElement("note");
-			note.setTextContent(c.getNote());
-			cognome.appendChild(note);
+				el.appendChild(id);
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
 
-			el.appendChild(cognome);
+				StreamResult result = new StreamResult(new File(path.replace(".csv", ".xml")));
 
+				// Output to console for testing
+				//StreamResult syso = new StreamResult(System.out);
+
+				//transformer.transform(source, result);
+				//transformer.transform(source, syso);
+		}
+		
+
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = transformerFactory.newTransformer();
-		DOMSource source = new DOMSource(doc);
-
-		StreamResult result = new StreamResult(new File(path.replace(".csv", ".xml")));
-
-		// Output to console for testing
-		StreamResult syso = new StreamResult(System.out);
-
-		transformer.transform(source, result);
-		transformer.transform(source, syso);
+		
 
 	}
 
