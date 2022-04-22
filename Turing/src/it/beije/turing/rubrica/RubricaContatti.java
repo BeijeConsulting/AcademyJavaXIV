@@ -1,12 +1,14 @@
 package it.beije.turing.rubrica;
 
 import it.beije.turing.db.JPAcriteria;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -362,6 +364,7 @@ public class RubricaContatti {
 
         List<Contatto> contattos = jpAcriteria.JPACriteriaLeggiContatti();
         listaContatti = contattos;
+        jpAcriteria = new JPAcriteria();
 
         boolean ciSonoDuplicati = false;
         System.out.println(" Ricerca dei duplicati in corso....");
@@ -377,7 +380,7 @@ public class RubricaContatti {
                 if (c.getEmail().equalsIgnoreCase(c1.getEmail()) && (c.getId() != c1.getId()) && !(c1.getEmail().equals("null")) && !(c1.getEmail().equals(""))) {
                     System.out.println("Duplicato tolto per l'email : ");
                     System.out.println(c1.toString());
-                    //jpAcriteria = new JPAcriteria();
+                   // jpAcriteria = new JPAcriteria();
                     jpAcriteria.delete(c1);
                 }
                 j++;
@@ -432,7 +435,7 @@ public class RubricaContatti {
             case "3":
                 System.out.println("	                          		    	");
                 System.out.println("			    Esporta CSV				    ");
-
+                esportaCSV();
 
                 break;
 
@@ -445,6 +448,60 @@ public class RubricaContatti {
         }
 
 
+    }
+
+    private void esportaCSV() {
+        Scanner in = new Scanner(System.in);
+        File file = null;
+        FileWriter fileWriter = null;
+
+        System.out.println("Inserisci la directory del file da importare (File Compreso) : ");
+        String dir = in.nextLine();
+        if(dir.equals("")) {
+            System.out.print("directory non valida");
+        }else if(checkForPath(dir)){
+            System.out.print("directory già utilizzata");
+        }else{
+
+
+            file = new File(dir);
+            try
+            {
+                fileWriter = new FileWriter(file, true);
+                fileWriter.append("NOME;COGNOME;EMAIL;TELEFONO;NOTE");
+
+                for(Contatto c : listaContatti) {
+                    fileWriter.append(""+c.getNome()+";" +c.getCognome()+";" +c.getEmail()+";"+ c.getTelefono()+ ";"+c.getNote()+"\n");
+                }
+
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    fileWriter.flush();
+                    fileWriter.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private boolean checkForPath(String path){
+
+        File file = new File(path);
+        if(!file.exists()) {
+            try {
+                    file.createNewFile();
+
+            } catch (IOException ioEx) {
+                ioEx.printStackTrace();
+                System.out.println("Non va;");
+            }
+        }
+        return false;
     }
 
     private void importaCSV() {
@@ -524,4 +581,28 @@ public class RubricaContatti {
         return c;
     }
 
-    }
+//    private void importaXML() {
+//
+//        Scanner in = new Scanner(System.in);
+//
+//        System.out.println("Inserisci la directory del file da importare (File Compreso) : ");
+//        String dir = in.nextLine();
+//        if (dir.equals("")) {
+//            System.out.print("directory non valida");
+//        }
+//
+//        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder documentBuilder = null;
+//        Document document = null;
+//
+//        try {
+//            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+//            document = documentBuilder.parse();
+//
+//            Element root = document.getDocumentElement();
+//            System.out.println("root : " + root.getTagName());
+//
+//
+//
+//    }
+}
