@@ -1,0 +1,8 @@
+package it.beije.turing.rubrica.criteria;
+
+public class Rubrica {
+	public static void main(String[] args) {
+		
+	}
+
+}

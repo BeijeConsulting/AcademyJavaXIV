@@ -1,0 +1,47 @@
+package it.beije.turing.rubrica.criteria;
+
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.Query;
+
+
+
+import it.beije.turing.rubrica.Contatto;
+
+public class Rubrica {
+	public static void main(String[] args) {
+	
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		
+		CriteriaQuery<Contatto> cq = criteriaBuilder.createQuery(Contatto.class);
+		
+		Root<Contatto> cont = cq.from(Contatto.class);
+		
+		CriteriaQuery<Contatto> select = cq.select(cont);
+		
+		 Query q = entityManager.createQuery(select);
+		 List<Contatto> contatti =q.getResultList();
+		 
+		 for(Contatto c : contatti)
+			 System.out.println(c);
+		
+		
+		
+		
+		
+		
+		
+	}
+
+}

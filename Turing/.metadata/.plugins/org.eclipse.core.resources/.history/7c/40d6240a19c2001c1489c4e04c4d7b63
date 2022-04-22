@@ -1,0 +1,22 @@
+package it.beije.turing.rubrica.criteria;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+
+public class Rubrica {
+	public static void main(String[] args) {
+	
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		
+		
+		
+		
+		
+	}
+
+}

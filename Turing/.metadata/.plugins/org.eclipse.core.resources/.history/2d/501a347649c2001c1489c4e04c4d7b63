@@ -1,0 +1,245 @@
+package it.beije.turing.rubrica.criteria;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+
+import javax.persistence.Query;
+
+import it.beije.turing.db.HBsessionFactory;
+import it.beije.turing.rubrica.Contatto;
+
+public class Util {
+	
+	public static void insert(Contatto contatto) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		
+		
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
+		
+		entityTransaction.begin();
+
+		entityManager.persist(contatto);
+
+		entityTransaction.commit();
+
+		entityManager.close();
+
+	}
+		
+	//SELECT c FROM Contatto ORDERED BY ...
+	public static void selectOrdered(String order, String ad) { 
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+	
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> query = criteriaBuilder.createQuery(Contatto.class);
+		Root<Contatto> routeRoot = query.from(Contatto.class);
+		query.select(routeRoot);
+
+		List<Order> orderList = new ArrayList();
+		CriteriaQuery<Contatto> select = query.select(routeRoot);
+		
+		if(ad.equalsIgnoreCase("asc"))
+		orderList.add(criteriaBuilder.asc(routeRoot.get(order)));
+		
+		if(ad.equalsIgnoreCase("desc"))
+			orderList.add(criteriaBuilder.desc(routeRoot.get(order)));
+
+		select = query.orderBy(orderList);
+
+		 Query q = entityManager.createQuery(select);
+		 List<Contatto> contatti =q.getResultList();
+		 for(Contatto c : contatti) {
+			 System.out.println(c);
+		 }
+		 
+		 
+		}
+	
+	
+	//SELECT c FROM Contatto
+	public static void select() { 
+		
+		Session session = null;
+		try{
+			session = HBsessionFactory.openSession();
+			System.out.println("is session open: "+ session.isOpen());
+			
+			
+			
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			
+			//SELECT
+			
+			CriteriaQuery<Contatto> cq = criteriaBuilder.createQuery(Contatto.class);
+			
+			Root<Contatto> cont = cq.from(Contatto.class);
+			
+			CriteriaQuery<Contatto> select = cq.select(cont);
+			
+			 Query q = entityManager.createQuery(select);
+			 List<Contatto> contatti =q.getResultList();
+			 
+			 for(Contatto c : contatti)
+				 System.out.println(c);
+			
+		}finally {
+			session.close();
+			
+			
+		}
+	}
+	
+	 //SELECT c From contatto WHERE el = val
+	public static void select(String el, String val) {
+		Session session = null;
+		try{
+			session = HBsessionFactory.openSession();
+			System.out.println("is session open: "+ session.isOpen());
+			
+			
+			
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			
+			//SELECT
+			
+			CriteriaQuery<Contatto> cq = criteriaBuilder.createQuery(Contatto.class);
+			
+			Root<Contatto> e = cq.from(Contatto.class);
+			
+			CriteriaQuery<Contatto> select = cq.select(e);
+			
+			
+	        select.from(Contatto.class);
+	        select.where(criteriaBuilder.equal(e.get(el), val));
+			
+			Query q = entityManager.createQuery(select);
+			 
+			List<Contatto> contatti = q.getResultList();
+			
+		 
+		 for(Contatto c : contatti)
+			 System.out.println(c);
+		 
+		}finally {
+			session.close();
+			
+			
+		}
+		
+	}
+	
+	//UPDATE Contatti SET column1 = value1 WHERE condition; implementare con lista SET
+	public static void update(String el, String oldVal, String newVal) {
+
+	Session session = null;
+		
+		try{
+			session = HBsessionFactory.openSession();
+			System.out.println("is session open: "+ session.isOpen());
+			
+			
+			
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+
+ 
+	        // create update
+	        CriteriaUpdate<Contatto> update = criteriaBuilder.createCriteriaUpdate(Contatto.class);
+	 
+	        // set the root class
+	        Root e = update.from(Contatto.class);
+	        
+	 
+	 
+	        // set update and where clause
+	        update.set(e.get(el), newVal);
+	        update.where(criteriaBuilder.equal(e.get(el), oldVal));
+	 
+	        // perform update
+	        entityManager.createQuery(update).executeUpdate();
+	        
+	   	 	entityTransaction.commit();
+        
+	}finally {
+		session.close();
+	}
+	}
+	
+	//DELETE ELETE FROM Contatti WHERE condition;
+	public static void delete(String el, String val) {
+Session session = null;
+		
+		try{
+			session = HBsessionFactory.openSession();
+			System.out.println("is session open: "+ session.isOpen());
+			
+			
+			
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			//DELETE
+			 
+			 CriteriaDelete<Contatto> delete = criteriaBuilder.createCriteriaDelete(Contatto.class);
+			 Root e = delete.from(Contatto.class);
+			 
+			 delete.where(criteriaBuilder.equal(e.get(el), val));
+			 entityManager.createQuery(delete).executeUpdate();
+			 
+			 entityTransaction.commit();
+						
+		}finally {
+			session.close();
+			
+			
+		}
+		
+	}
+	
+	public static void cercaDuplicati(){
+		
+	}
+
+	public static void inserisciDuplicati() {
+		
+	}
+
+	
+	
+}

@@ -1,0 +1,93 @@
+package it.beije.turing.rubrica.criteria;
+
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+
+import javax.persistence.Query;
+
+import it.beije.turing.db.HBsessionFactory;
+import it.beije.turing.rubrica.Contatto;
+
+public class Util {
+	public static void main(String[] args) {
+		Session session = null;
+		
+		try{
+			session = HBsessionFactory.openSession();
+			System.out.println("is session open: "+ session.isOpen());
+			
+			
+			
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			
+//			//SELECT
+//			CriteriaQuery<Contatto> cq = criteriaBuilder.createQuery(Contatto.class);
+//			
+//			Root<Contatto> cont = cq.from(Contatto.class);
+//			
+//			CriteriaQuery<Contatto> select = cq.select(cont);
+//			
+//			 Query q = entityManager.createQuery(select);
+//			 List<Contatto> contatti =q.getResultList();
+//			 
+//			 for(Contatto c : contatti)
+//				 System.out.println(c);
+			
+			//UPDATE
+//			CriteriaUpdate<Contatto> update =criteriaBuilder.createCriteriaUpdate(Contatto.class);
+//			Root e = update.from(Contatto.class);
+//			
+//			update.set(e.get("telefono"), "11111");
+//	        update.where(criteriaBuilder.equal(e.get("id"), 25));
+//	        
+//	        entityManager.createQuery(update).executeUpdate();
+//	        
+//			 entityTransaction.commit();
+			 
+			 //DELETE
+			 
+//			 CriteriaDelete<Contatto> delete = criteriaBuilder.createCriteriaDelete(Contatto.class);
+//			 Root e = delete.from(Contatto.class);
+//			 
+//			 delete.where(criteriaBuilder.equal(e.get("nome"), "p"));
+//			 entityManager.createQuery(delete).executeUpdate();
+//			 
+//			 entityTransaction.commit();
+//			 
+//			 for(Contatto c : contatti)
+//				 System.out.println(c);
+//			
+		}finally {
+			session.close();
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+
+}

@@ -1,0 +1,339 @@
+package it.beije.turing.rubrica.criteria;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import it.beije.turing.file.CSVreader;
+import it.beije.turing.rubrica.Contatto;
+
+
+
+
+/*Implementare un gestore di rubrica a linea di comando, con le seguenti fu
+ * nzionalità:
+vedi lista contatti (con possibilità di ordinare per nome e cognome a scelta)
+
+cerca contatto
+inserisci nuovo contatto
+modifica contatto
+cancella contatto
+trova contatti duplicati
+unisci contatti duplicati
+
+La rubrica deve essere memorizzata su DB e deve esserci la possibilità di importare ed
+esportare contatti da/in file XML e CSV*/
+
+
+public class Rubrica {
+
+	private static List<Element> getChildElements(Element element) {
+		List<Element> childElements = new ArrayList<Element>();
+		NodeList nodeList = element.getChildNodes();
+		for (int n = 0; n < nodeList.getLength(); n++) {
+			if (nodeList.item(n) instanceof Element) childElements.add((Element)nodeList.item(n));
+		}
+		
+		return childElements;
+	}
+	
+	public static void importCSV(String csvPath, String sep) {
+		
+		
+		FileReader fileReader = null;
+		BufferedReader bufferedReader = null;
+		List<Contatto> contatti = null;
+		
+		try {
+			fileReader = new FileReader(csvPath);
+			
+			bufferedReader = new BufferedReader(fileReader);
+			
+			int c = 0;
+			contatti = new ArrayList<Contatto>();
+			Contatto contatto = null;
+			
+			while (bufferedReader.ready()) {
+				String row = bufferedReader.readLine();
+				
+				System.out.println(++c + " " + row);
+				
+				row = row.substring(1, row.length());
+				String[] columns = row.split(sep);
+				
+				
+				contatto = new Contatto();
+				if(columns[0].equals("")) contatto.setCognome("null");
+				else contatto.setCognome(columns[0]);
+				contatto.setNome(columns[1]);
+				contatto.setEmail(columns[2]);
+				contatto.setTelefono(columns[3]);
+//				contatto.setNote(columns[4]);
+				
+				System.out.println(contatto);
+		
+				contatti.add(contatto);
+				//UtilDB.insert(contatto);
+				
+			}
+		} catch (IOException ioEx) {
+			ioEx.printStackTrace();
+		} finally {
+			try {
+				bufferedReader.close();
+				fileReader.close();
+			} catch (IOException fEx) {
+				fEx.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	public static void exportCSV(String path) {
+		File file = new File(path);
+		System.out.println("file exists? " + file.exists());
+		
+		List<Contatto> cont= UtilDB.selectList();
+		
+		if (file.exists()) {
+			System.out.println("FILE GIA' ESISTENTE!!!");
+//			return;
+		}
+		
+		FileWriter fileWriter = null;
+		try {
+			fileWriter = new FileWriter(file);
+			
+//			 "NOME","COGNOME","TELEFONO","EMAIL","NOTE"
+			fileWriter.write("\"NOME\",\"COGNOME\",\"TELEFONO\",\"EMAIL\",\"NOTE\"");
+			fileWriter.write('\n');
+//			"Mario";"Rossi";"3432532555";"mario.rossi@gmail.com";"vicino di casa"
+//			fileWriter.write("\"Mario\";\"Rossi\";\"00000000\";\"mario.rossi@gmail.com\";\"vicino di casa\"");
+			
+			for (Contatto contatto : cont) {
+//				fileWriter.write(row);
+				if(!contatto.getCognome().equals(null)) fileWriter.write(contatto.getCognome());
+				else fileWriter.write("");
+				
+				fileWriter.write('\t');
+				 
+				if(!contatto.getNome().equals(null)) fileWriter.write(contatto.getNome());
+				else fileWriter.write("");
+				
+				fileWriter.write('\t');
+				
+				if(!contatto.getEmail().equals(null)) fileWriter.write(contatto.getEmail());
+				else fileWriter.write("");
+				
+				fileWriter.write('\t');
+				
+				
+				if(!contatto.getTelefono().equals(null)) fileWriter.write(contatto.getTelefono());
+				else fileWriter.write("");
+				
+				fileWriter.write('\t');
+				
+				if(!contatto.getNote().equals(null)) fileWriter.write(contatto.getNote());
+				else fileWriter.write("");
+				
+				fileWriter.write('\n');
+			}
+			
+			System.out.println("file creato");
+		} catch (IOException ioEx) {
+			ioEx.printStackTrace();
+		} finally {
+			try {
+				fileWriter.flush();
+				fileWriter.close();
+			} catch (IOException fEx) {
+				fEx.printStackTrace();
+			}
+			
+			System.out.println("done");
+		}
+		
+	}
+	
+	public static void importXML(String xmlPath) {
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = null;
+		Document document = null;
+		
+		try {
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			document = documentBuilder.parse(xmlPath);
+			
+			Element root = document.getDocumentElement();
+			System.out.println("root : " + root.getTagName());
+			
+//			NodeList contatti = root.getElementsByTagName("contatto");
+//			System.out.println("contatti num : " + contatti.getLength());
+
+			NodeList nodes = root.getChildNodes();
+			System.out.println("nodes num : " + nodes.getLength());
+			
+			List<Element> children = getChildElements(root);
+			System.out.println("children num : " + children.size());
+			
+			for (Element el : children) {
+				if (el.getTagName().equalsIgnoreCase("contatto")) {
+					List<Element> contatto = getChildElements(el);
+					Contatto c = new Contatto();
+					for (Element value : contatto) {
+						
+					
+						
+						switch (value.getTagName().toLowerCase()) {
+						case "nome":
+							c.setNome(value.getTextContent());  
+							break;
+						case "cognome":
+							c.setCognome(value.getTextContent());  					
+							break;
+						case "telefono":
+							c.setTelefono(value.getTextContent());  					
+							break;
+						case "email":
+							c.setEmail(value.getTextContent());  						
+							break;
+						case "note":
+							c.setNote(value.getTextContent());  					
+							break;
+
+						default:
+							break;
+						}
+						
+					}
+					UtilDB.insert(c);
+					
+					System.out.println("eta' : " + el.getAttribute("eta"));
+				}
+			}
+			
+		} catch (ParserConfigurationException pcEx) {
+			pcEx.printStackTrace();
+		} catch (IOException ioEx) {
+			ioEx.printStackTrace();
+		} catch (SAXException saxEx) {
+			saxEx.printStackTrace();
+		}
+		
+	}
+	
+	public static void exportXML(String path)  {
+		
+		List<Contatto> c =  UtilDB.selectList();
+		
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder;
+		try {
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		
+		
+		Document doc = documentBuilder.newDocument();
+
+		Element contatti = doc.createElement("contatti");
+		doc.appendChild(contatti); //root element
+		{
+			for(Contatto contact : c) {
+				Element contatto = doc.createElement("contatto");
+				
+				Element cognome = doc.createElement("cognome");
+				cognome.setTextContent(contact.getCognome());//<cognome>Marrone</cognome>
+				contatto.appendChild(cognome);
+		
+				Element nome = doc.createElement("nome");
+				nome.setTextContent(contact.getNome());//<nome>Emma</nome>
+				contatto.appendChild(nome);
+		
+				Element telefono = doc.createElement("telefono");
+				telefono.setTextContent(contact.getTelefono());
+				contatto.appendChild(telefono);
+		
+				Element email = doc.createElement("email");
+				email.setTextContent(contact.getEmail());
+				contatto.appendChild(email);
+		
+				Element note = doc.createElement("note");
+				note.setTextContent(contact.getNote());
+				contatto.appendChild(note);
+				
+				contatti.appendChild(contatto);
+				}
+			
+			}
+		
+		
+		// write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(doc);
+		
+		StreamResult result = new StreamResult(new File(path));
+
+		// Output to console for testing
+		StreamResult syso = new StreamResult(System.out);
+		System.out.println("File creato");
+		
+
+		transformer.transform(source, result);
+		transformer.transform(source, syso);
+
+		} catch (ParserConfigurationException pcEx) {
+			// TODO Auto-generated catch block
+			pcEx.printStackTrace();
+		} catch (TransformerConfigurationException tcEx) {
+			// TODO Auto-generated catch block
+			tcEx.printStackTrace();
+		} catch (TransformerException tEx) {
+			// TODO Auto-generated catch block
+			tEx.printStackTrace();
+		}
+
+	}
+
+	
+	public static void main(String[] args) throws Exception {
+		
+//		importCSV("/Users/matteoprovezza/Desktop/xml/rubrica_tel.csv", ";");
+		
+		exportCSV("/Users/matteoprovezza/Desktop/xml/rubrica4.csv");
+		
+//		importXML("/Users/matteoprovezza/Desktop/xml/rubrica1.xml");
+		
+//		exportXML("/Users/matteoprovezza/Desktop/xml/rubrica3.xml");
+		
+//		UtilDB.select("nome", "luigi");
+//		UtilDB.update("telefono", "033429394","0");
+//		UtilDB.delete("id", "40");
+//		UtilDB.selectOrdered("id", "asc"); //elemento, asc/desc
+		
+		
+		
+
+	}
+
+}
