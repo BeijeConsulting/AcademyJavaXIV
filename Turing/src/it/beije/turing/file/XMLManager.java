@@ -129,16 +129,13 @@ public class XMLManager {
                 elementContatti.appendChild(elmContatto);
             }
 
-            // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
 
             StreamResult result = new StreamResult(new File(path));
 
-            // Output to console for testing
             transformer.transform(source, result);
-            //transformer.transform(source, syso);
         } catch(TransformerConfigurationException tcEx) {
             tcEx.printStackTrace();
             throw tcEx;

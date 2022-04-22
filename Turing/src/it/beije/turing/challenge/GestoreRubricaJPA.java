@@ -15,6 +15,11 @@ import it.beije.turing.rubrica.Contatto;
 
 public class GestoreRubricaJPA {
 
+    public static void main(String[] args) {
+        gestioneRubrica();
+
+    }
+
     public static void printMenu() {
         System.out.println("Per stampare tutti i contatti digitare: \"stampa\"");
         System.out.println("Per cercare uno specifico contatto digitare: \"cerca\"");
@@ -28,75 +33,18 @@ public class GestoreRubricaJPA {
         System.out.println("Per uscire dal gestore di rubrica digitare: \"esci\"");
     }
 
-    public static void printRubrica(List<Contatto> contatti, Scanner s) {
-        //Scanner s = new Scanner(System.in);
-        List<Contatto> contatti2 = null;
-        int x=0;
-
-        do {
-            System.out.print("\nVuoi ordinarli per nome o per cognome? A seconda della decisione digitare: \"no\", \"nome\", \"cognome\") : ");
-            String str = s.next();
-            switch (str){
-                case "no":
-                    x++;
-                    break;
-                case "nome":
-                    String[] array = new String[contatti.size()];
-                    int i = 0;
-
-                    for(Contatto contatto : contatti) {
-                        array[i] = contatto.getNome();
-                        i++;
-                    }
-                    Arrays.sort(array);
-                    contatti2 = new ArrayList<Contatto>();
-                    for(String nome : array) {
-                        for(Contatto contatto : contatti) {
-                            if(nome.equals(contatto.getNome())) contatti2.add(contatto);
-                        }
-                    }
-                    contatti = contatti2;
-                    x++;
-                    System.out.println("Filtro: nome ->");
-                    break;
-                case "cognome":
-                    String[] array1 = new String[contatti.size()];
-                    int j = 0;
-
-                    for(Contatto contatto : contatti) {
-                        array1[j] = contatto.getCognome();
-                        j++;
-                    }
-                    Arrays.sort(array1);
-                    contatti2 = new ArrayList<Contatto>();
-                    for(String cognome : array1) {
-                        for(Contatto contatto : contatti) {
-                            if(cognome.equals(contatto.getCognome())) contatti2.add(contatto);
-                        }
-                    }
-                    contatti = contatti2;
-                    System.out.println("Filtro: cognome ->");
-                    x++;
-                    break;
-                default:
-                    System.out.println("Inserisci un input valido. ");
-                    break;
-            }
-        } while(x==0);
+    public static void printRubrica(List<Contatto> contatti) {
         for(Contatto c : contatti) {
             System.out.println(c);
         }
     }
 
     public static void findContatto(List<Contatto> contatti, Scanner s) {
-        String nome = "";
-        String cognome = "";
-        List<Contatto> contattiMatch = new ArrayList<Contatto>();
-
+        List<Contatto> contattiMatch = new ArrayList<>();
         System.out.print("\nInserisci il nome del contatto desiderato: ");
-        nome = s.next();
+        String nome = s.next();
         System.out.print("\nInserisci il cognome del contatto desiderato: ");
-        cognome = s.next();
+        String cognome = s.next();
 
         for(Contatto contatto : contatti) {
             if(nome.equals(contatto.getNome()) && cognome.equals(contatto.getCognome())) {
@@ -108,11 +56,11 @@ public class GestoreRubricaJPA {
                 System.out.println(c);
             }
         } else {
-            System.out.print(nome +" "+ cognome +" non è presente in rubrica.");
+            System.out.print(nome +" "+ cognome +" non esiste in rubrica.");
         }
     }
 
-    public static Scanner insertContatto(Scanner s) {
+    public static void insertContatto(Scanner s) {
         Contatto contatto = new Contatto();
         List<Contatto> contatti = new ArrayList<>();
         s = new Scanner(System.in);
@@ -129,11 +77,12 @@ public class GestoreRubricaJPA {
         contatto.setNote(s.nextLine());
         contatti.add(contatto);
 
-        JPACriteriaManager.insertContatto(contatti);
-        return s;
+        for (Contatto c: contatti) {
+            JPACriteriaManager.insertContatto(c);
+        }
     }
 
-    public static Scanner updateContatto(List<Contatto> contatti, Scanner s) {
+    public static void updateContatto(List<Contatto> contatti, Scanner s) {
         String str = "";
         //Per mostrare i contatti così da scegliere successivamente quale modificare
         for(Contatto c : contatti) {
@@ -142,14 +91,12 @@ public class GestoreRubricaJPA {
 
         System.out.println("Inserisci l'id del contatto che vuoi modificare: ");
         str = s.next();
-
         Contatto contatto = null;
         for(Contatto c : contatti) {
             if(c.getId() == Integer.parseInt(str)) {
                 contatto = c;
             }
         }
-
         s = new Scanner(System.in);
         System.out.print("\nInserisci il nome : ");
         contatto.setNome(s.nextLine());
@@ -163,7 +110,6 @@ public class GestoreRubricaJPA {
         contatto.setNote(s.nextLine());
 
         JPACriteriaManager.updateDB(contatto, contatto.getId());
-        return s;
     }
 
     public static void deleteContatto(List<Contatto> contatti, Scanner s) {
@@ -183,28 +129,30 @@ public class GestoreRubricaJPA {
             }
         }
 
-        int x = 0;
-        do {
+        while(true){
             System.out.print("\nSei sicuro di voler eliminare il contatto? (Si/No): ");
-            String confirm = s.next().toLowerCase();
+            String confirm = s.next();
 
-            if(confirm.equals("si")) {
+            if(confirm.equalsIgnoreCase("si")) {
                 JPACriteriaManager.deleteDB(contatto.getId());
-                x++;
-            } else if(confirm.equals("no")) {
-                x++;
+                break;
+            } else if(confirm.equalsIgnoreCase("no")) {
+                break;
             }
-        } while(x == 0);
+        }
     }
 
-    public static boolean areEqual(Contatto c, Contatto c1) {
-        return c.getNome().equals(c1.getNome()) && c.getCognome().equals(c1.getCognome()) && c.getTelefono().equals(c1.getTelefono()) && c.getEmail().equals(c1.getEmail()) && c.getNote().equals(c1.getNote());
+    public static boolean areEqual(Contatto cont1, Contatto cont2) {
+        boolean res = cont1.getNome().equals(cont2.getNome()) && cont1.getCognome().equals(cont2.getCognome()) &&
+                      cont1.getTelefono().equals(cont2.getTelefono()) && cont1.getEmail().equals(cont2.getEmail()) &&
+                      cont1.getNote().equals(cont2.getNote());
+        return res;
     }
 
     public static List<Contatto> findDuplicati(List<Contatto> contatti) {
 
         Contatto contattoDup = null;
-        List<Contatto> contattiDup = new ArrayList<Contatto>();
+        List<Contatto> contattiDup = new ArrayList<>();
 
         for(Contatto c : contatti){
             for(Contatto c1 : contatti) {
@@ -236,7 +184,7 @@ public class GestoreRubricaJPA {
         List<Contatto> contattiDup = findDuplicati(contatti);
 
         if(contattiDup.size() > 0) {
-            do {
+            while(true) {
                 System.out.print("\nVuoi unire i contatti duplicati? Digitare \"si\" o \"no\": ");
                 String confirm = s.next();
 
@@ -250,34 +198,31 @@ public class GestoreRubricaJPA {
                     System.out.println("\nContatti duplicati non uniti");
                     break;
                 }
-            } while(true);
+            }
         }
     }
 
-    public static void exportDatabase(List<Contatto> contatti, Scanner s) {
-        String str = null;
-        String typeFile = sceltaFile(s);
-
-        int j = 0;
-        do {
+    public static void exportDB(List<Contatto> contatti, Scanner s) {
+        String extension = extensionFile(s);
+        while(true){
             System.out.print("\nInserisci il path del file dove vuoi esportare il database: ");
-            str = s.next();
-            if(typeFile.equals("csv")) {
+            String str = s.next();
+            if(extension.equals("csv")) {
                 String separator = null;
                 System.out.print("\nInserisci il separatore: ");
                 separator = s.next();
                 try {
                     CSVManager.writeRubricaCSV(contatti, str, separator);
-                    j++;
-                    System.out.println("<<Export avvenuto con successo>>");
+                    System.out.println("Operazione conclusa");
+                    break;
                 } catch (IOException ioEx) {
                     System.out.println("Inserisci un path valido.");
                 }
-            } else if(typeFile.equals("xml")) {
+            } else if(extension.equals("xml")) {
                 try {
                     XMLManager.writeRubricaXML(contatti, str);
-                    j++;
-                    System.out.println("<<Export avvenuto con successo>>");
+                    System.out.println("Operazione conclusa");
+                    break;
                 } catch(TransformerConfigurationException tcEx) {
                     System.out.println("Inserisci un path valido.");
                 } catch(ParserConfigurationException pcEx) {
@@ -286,69 +231,43 @@ public class GestoreRubricaJPA {
                     System.out.println("Inserisci un path valido.");
                 }
             }
-        } while(j == 0);
+        }
 
     }
 
-    public static String sceltaFile(Scanner s) {
-        String str = null;
-
-        int x = 0;
-        do {
-            System.out.print("\nVuoi effettuare l'export su un file csv o xml? ");
-            str = s.next();
-
-            if(str.equalsIgnoreCase("csv")) {
-                str = "csv";
-                x++;
-            } else if(str.equalsIgnoreCase("xml")) {
-                str = "xml";
-                x++;
-            } else {
-                System.out.print("Inserisci un tipo di file corretto.");
-            }
-        } while(x == 0);
-
-        return str;
-    }
-
-    public static void importDatabase(Scanner s) {
-        String typeFile = sceltaFile(s);
-        String str = null;
-
-        int j = 0;
-        do {
+    public static void importDB(Scanner s) {
+        String typeFile = extensionFile(s);
+        while(true){
             System.out.print("\nInserisci il path del file da dove vuoi importare i dati per il database: ");
-            str = s.next();
+            String str = s.next();
             if(typeFile.equals("csv")) {
                 System.out.print("\nInserisci il separatore: ");
                 String separator = s.next();
-                int y = 0;
                 boolean virgolette = false;
-                do {
+                while(true){
                     System.out.print("\nIl file usa le virgolette? (Si/No) ");
                     String r = s.next();
                     if(r.equalsIgnoreCase("si")) {
                         virgolette = true;
-                        y++;
+                        break;
                     } else if(r.equalsIgnoreCase("no")) {
-                        y++;
+                        break;
                     } else {
                         System.out.print("Inserisci un input valido.");
                     }
-                } while(y == 0);
+                }
                 try {
                     JPACriteriaManager.importFromCSV(str, separator, virgolette);
-                    j++;
-                    System.out.println("<<Import avvenuto con successo>>");
+                    System.out.println("Operazione conclusa");
+                    break;
                 } catch (IOException ioEx) {
                     System.out.println("Inserisci un path valido.");
                 }
             } else if(typeFile.equals("xml")) {
                 try {
                     JPACriteriaManager.importFromXML(str);
-                    j++;
-                    System.out.println("<<Import avvenuto con successo>>");
+                    System.out.println("Operazione conclusa");
+                    break;
                 } catch(IOException ioEx) {
                     System.out.println("Inserisci un path valido.");
                 } catch(ParserConfigurationException pcEx) {
@@ -357,29 +276,63 @@ public class GestoreRubricaJPA {
                     System.out.println("Inserisci un path valido.");
                 }
             }
-        } while(j == 0);
+        }
+    }
+
+    public static String extensionFile(Scanner s) {
+        String str = null;
+
+        while(true){
+            System.out.print("\nImport/export su file csv o xml? Digitare \"csv\" o \"xml\" a seconda della scelta ");
+            str = s.next();
+            if(str.equalsIgnoreCase("csv")) {
+                str = "csv";
+                break;
+            } else if(str.equalsIgnoreCase("xml")) {
+                str = "xml";
+                break;
+            } else {
+                System.out.print("Inserisci un tipo di file corretto.");
+            }
+        }
+        return str;
     }
 
     public static void gestioneRubrica() {
         Scanner s = new Scanner(System.in);
         List<Contatto> contatti = null;
-
-        GestoreRubricaJPA.printMenu();
-
+        printMenu();
         String st = s.next();
         while (!st.equalsIgnoreCase("esci")) {
             st = st.toLowerCase();
             switch(st) {
                 case "stampa":
-                    contatti = JPACriteriaManager.getRubrica();
-                    printRubrica(contatti, s);
+                    System.out.print("\nVuoi ordinarli per nome o per cognome? A seconda della decisione digitare: \"no\", \"nome\", \"cognome\" : ");
+                    String str = s.next();
+                    switch (str){
+                        case "no":
+                            contatti = JPACriteriaManager.getRubrica();
+                            printRubrica(contatti);
+                            break;
+                        case "nome":
+                            contatti = JPACriteriaManager.getOrderedRubrica("nome");
+                            printRubrica(contatti);
+                            break;
+                        case "cognome":
+                            contatti = JPACriteriaManager.getOrderedRubrica("cognome");
+                            printRubrica(contatti);
+                            break;
+                        default:
+                            System.out.println("Inserisci un input valido. ");
+                            break;
+                    }
                     break;
                 case "cerca":
                     contatti = JPACriteriaManager.getRubrica();
                     findContatto(contatti, s);
                     break;
                 case "inserisci":
-                    s = insertContatto(s);
+                    insertContatto(s);
                     break;
                 case "modifica":
                     contatti = JPACriteriaManager.getRubrica();
@@ -399,23 +352,20 @@ public class GestoreRubricaJPA {
                     break;
                 case "esporta":
                     contatti = JPACriteriaManager.getRubrica();
-                    exportDatabase(contatti, s);
+                    exportDB(contatti, s);
                     break;
                 case "importa":
-                    importDatabase(s);
+                    importDB(s);
                     break;
                 default:
-                    System.out.println("\n<<Scrivi un input valido.>>");
+                    System.out.println("\n Scrivi un input valido.");
             }
             System.out.println("\n");
-            GestoreRubricaJPA.printMenu();
+            printMenu();
             st = s.next();
         }
         s.close();
     }
 
-    public static void main(String[] args) {
-        gestioneRubrica();
 
-    }
 }

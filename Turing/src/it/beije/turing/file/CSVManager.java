@@ -14,30 +14,28 @@ public class CSVManager {
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         List<Contatto> contatti = null;
-
         try {
-
             fileReader = new FileReader(path);
             bufferedReader = new BufferedReader(fileReader);
             contatti = new ArrayList<Contatto>();
             Contatto contatto = null;
-            int c = 0;
+            int a = 0;
             int id = -1, nome = -1, cognome = -1, telefono = -1, email = -1, note = -1;
 
             while (bufferedReader.ready()) {
-                String row = bufferedReader.readLine();
+                String line = bufferedReader.readLine();
 
-                String[] columns = null;
+                String[] colonne = null;
                 if(virgolette) {
-                    row = row.substring(1, row.length()-1);
-                    columns = row.split("\"" +separatore+ "\"");
+                    line = line.substring(1, line.length()-1);
+                    colonne = line.split("\"" +separatore+ "\"");
                 } else {
-                    columns = row.split(separatore);
+                    colonne = line.split(separatore);
                 }
 
-                if (c == 0) {
+                if (a == 0) {
                     int i = 0;
-                    for(String s : columns) {
+                    for(String s : colonne) {
                         switch(s) {
                             case "ID":
                                 id = i;
@@ -61,29 +59,29 @@ public class CSVManager {
                     }
                 } else {
                     contatto = new Contatto();
-                    if(columns.length > 0) {
+                    if(colonne.length > 0) {
                         if(nome != -1) {
-                            contatto.setId(Integer.parseInt(columns[id]));
+                            contatto.setId(Integer.parseInt(colonne[id]));
                         }
                         if(nome != -1) {
-                            contatto.setNome(columns[nome]);
+                            contatto.setNome(colonne[nome]);
                         }
                         if(cognome != -1) {
-                            contatto.setCognome(columns[cognome]);
+                            contatto.setCognome(colonne[cognome]);
                         }
                         if(telefono != -1) {
-                            contatto.setTelefono(columns[telefono]);
+                            contatto.setTelefono(colonne[telefono]);
                         }
                         if(email != -1) {
-                            contatto.setEmail(columns[email]);
+                            contatto.setEmail(colonne[email]);
                         }
                         if(note != -1) {
-                            contatto.setNote(columns[note]);
+                            contatto.setNote(colonne[note]);
                         }
                     }
                     contatti.add(contatto);
                 }
-                c++;
+                a++;
             }
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
@@ -100,9 +98,7 @@ public class CSVManager {
     }
 
     public static void writeRubricaCSV(List<Contatto> contatti, String path, String separatore) throws IOException {
-
         File file = new File(path);
-
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(file);
