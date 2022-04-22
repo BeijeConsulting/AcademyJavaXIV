@@ -206,7 +206,7 @@ public class SQLManager implements OpRubrica {
     }
 
     @Override
-    public List<Contatto> importFromCVS(String path) {
+    public List<Contatto> importFromCVS(String path,String separator) {
         //TODO
         return null;
     }
@@ -218,7 +218,7 @@ public class SQLManager implements OpRubrica {
     }
 
     @Override
-    public void exportFromCVS(String path, List<Contatto> contatti) {
+    public void exportFromCVS(String path, List<Contatto> contatti,String separator) {
         //TODO
     }
 

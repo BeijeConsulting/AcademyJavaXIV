@@ -10,7 +10,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
@@ -34,12 +33,12 @@ public interface OpRubrica {
     public boolean deleteContatto(Contatto c);
     public List<Contatto> contattiDuplicati();
     public void unisciContatti();
-
-
-    public List<Contatto> importFromCVS(String path);
+    public List<Contatto> importFromCVS(String path, String separator);
     public List<Contatto> importFromXML(String path);
-    public void exportFromCVS(String path,List<Contatto> contatti);
+    public void exportFromCVS(String path,List<Contatto> contats, String separator);
     public void exportFromXML(String path,List<Contatto> contatti);
+
+
 
     public static void exportFileXML(String path,List<Contatto> contats){
         DocumentBuilderFactory documentBuilderFactory= DocumentBuilderFactory.newInstance();
@@ -152,7 +151,41 @@ public interface OpRubrica {
         return contattos;
     }
     public static void exportFileCVS(String path,List<Contatto> contats, String separator){
-        //TODO
+        if(separator.length()!=1) throw new RuntimeException("Separator not valid: max length 1");
+
+
+        File file = new File(path);
+        FileWriter fileWriter=null;
+
+
+        try {
+            fileWriter= new FileWriter(file);
+
+            fileWriter.write("NOME"+separator+"COGNOME"+separator+"EMAIL"+separator+"TELEFONO"+separator+"NOTE\n");
+
+            for (Contatto c:contats ){
+                fileWriter.write(c.getNome());
+                fileWriter.write(separator);
+                fileWriter.write(c.getCognome());
+                fileWriter.write(separator);
+                fileWriter.write(c.getEmail());
+                fileWriter.write(separator);
+                fileWriter.write(c.getTelefono());
+                fileWriter.write(separator);
+                fileWriter.write(c.getNote());
+                fileWriter.write("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public static List<Contatto> importFileCVS(String path, String separator){
@@ -209,6 +242,13 @@ public interface OpRubrica {
             e.printStackTrace();
         }catch (PatternSyntaxException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                bReader.close();
+                fReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return list;
     }

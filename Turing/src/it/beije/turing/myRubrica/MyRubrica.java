@@ -21,7 +21,7 @@ import java.util.Scanner;
 public class MyRubrica {
 
     public static void main(String[] args) {
-        OpRubrica rubrica= new SQLManager();
+        OpRubrica rubrica= new JPAManager();
         List<Contatto> l = null;
 
         Scanner scanner=new Scanner(System.in);

@@ -4,6 +4,13 @@ import it.beije.turing.myRubrica.interfaces.OpRubrica;
 import it.beije.turing.myRubrica.interfaces.Order;
 import it.beije.turing.rubrica.Contatto;
 
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -11,9 +18,27 @@ import java.util.List;
  * Data: 21 apr 2022
  */
 public class JPAManager implements OpRubrica {
+
+
     @Override
     public List<Contatto> showContact(Order order) {
-        return null;
+        EntityManager entityManager = SingletonJPA.getIstance();
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+        Root<Contatto> itemRoot = criteriaQuery.from(Contatto.class);
+        criteriaQuery.select(itemRoot);
+        if(order==Order.COGNOME){
+            criteriaQuery.orderBy(criteriaBuilder.asc(itemRoot.get("cognome")));
+        }
+        if(order==Order.NOME){
+            criteriaQuery.orderBy(criteriaBuilder.asc(itemRoot.get("nome")));
+        }
+
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
+
+
     }
 
     @Override
@@ -47,7 +72,7 @@ public class JPAManager implements OpRubrica {
     }
 
     @Override
-    public List<Contatto> importFromCVS(String path) {
+    public List<Contatto> importFromCVS(String path,String separator) {
         return null;
     }
 
@@ -57,12 +82,26 @@ public class JPAManager implements OpRubrica {
     }
 
     @Override
-    public void exportFromCVS(String path, List<Contatto> contatti) {
+    public void exportFromCVS(String path, List<Contatto> contatti,String separator) {
 
     }
 
     @Override
     public void exportFromXML(String path, List<Contatto> contatti) {
 
+    }
+
+     static class SingletonJPA{
+        private SingletonJPA(){}
+
+        private static EntityManager entityManager=null;
+        public static EntityManager getIstance(){
+
+            if(entityManager==null){
+                EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+                 entityManager = entityManagerFactory.createEntityManager();
+            }
+            return entityManager;
+        }
     }
 }

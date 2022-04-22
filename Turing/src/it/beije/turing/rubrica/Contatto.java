@@ -75,7 +75,6 @@ public class Contatto {
 		this.note = note;
 	}
 
-
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
