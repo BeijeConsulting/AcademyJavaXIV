@@ -4,6 +4,9 @@ import it.beije.turing.db.JPAcriteria;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,15 +16,15 @@ public class RubricaContatti {
     private List<Contatto> listaContatti = new ArrayList<Contatto>();
     private JPAcriteria jpAcriteria;
 
-    public RubricaContatti(){
+    public RubricaContatti() {
         jpAcriteria = new JPAcriteria();
     }
 
-    public void leggiContatti(){
+    public void leggiContatti() {
 
         List<Contatto> contattos = jpAcriteria.JPACriteriaLeggiContatti();
         listaContatti = (ArrayList<Contatto>) contattos;
-        for (Contatto c: contattos ) {
+        for (Contatto c : contattos) {
             System.out.println(c.toString());
         }
     }
@@ -29,141 +32,135 @@ public class RubricaContatti {
     public void cercaContatto() {
 
 
-            Scanner in = new Scanner(System.in);
-            ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
+        Scanner in = new Scanner(System.in);
+        ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
 
-            System.out.println("Inserisci elemento da cercare: ");
-            String elemento = in.nextLine();
-
-
-            System.out.println("Inserisci tipo di elemento da cercare: ");
-            System.out.println("1. Nome ");
-            System.out.println("2. Cognome ");
-            System.out.println("3. Numero ");
-            System.out.println("4. Email  ");
-
-            String scelta = in.nextLine();
-            if(scelta.equals("")) {
-                System.out.print("Scelta non valida");
-            }
-
-            System.out.println("Bene");
-
-            switch(scelta) {
-
-                case "1" :
-                    System.out.println(" I Risutati sono: ");
-                    contattiTrovati = filtraPerNome(elemento);
-                    stampa(contattiTrovati);
-                    break;
-
-                case "2" :
-
-                    System.out.println(" I Risutati sono: ");
-                    contattiTrovati = filtraPerCognome(elemento);
-                    stampa(contattiTrovati);
-                    break;
-
-                case "3" :
-                    System.out.println(" I Risutati sono: ");
-                    contattiTrovati = filtraPerTelefono(elemento);
-                    stampa(contattiTrovati);
-                    break;
-
-                case "4" :
-
-                    System.out.println(" I Risutati sono: ");
-                    contattiTrovati = filtraPerEmail(elemento);
-                    stampa(contattiTrovati);
-                    break;
-                default :
-
-                    System.out.println("Indice sbagliato");
-
-            }
+        System.out.println("Inserisci elemento da cercare: ");
+        String elemento = in.nextLine();
 
 
+        System.out.println("Inserisci tipo di elemento da cercare: ");
+        System.out.println("1. Nome ");
+        System.out.println("2. Cognome ");
+        System.out.println("3. Numero ");
+        System.out.println("4. Email  ");
 
+        String scelta = in.nextLine();
+        if (scelta.equals("")) {
+            System.out.print("Scelta non valida");
+        }
 
+        System.out.println("Bene");
 
+        switch (scelta) {
 
+            case "1":
+                System.out.println(" I Risutati sono: ");
+                contattiTrovati = filtraPerNome(elemento);
+                stampa(contattiTrovati);
+                break;
+
+            case "2":
+
+                System.out.println(" I Risutati sono: ");
+                contattiTrovati = filtraPerCognome(elemento);
+                stampa(contattiTrovati);
+                break;
+
+            case "3":
+                System.out.println(" I Risutati sono: ");
+                contattiTrovati = filtraPerTelefono(elemento);
+                stampa(contattiTrovati);
+                break;
+
+            case "4":
+
+                System.out.println(" I Risutati sono: ");
+                contattiTrovati = filtraPerEmail(elemento);
+                stampa(contattiTrovati);
+                break;
+            default:
+
+                System.out.println("Indice sbagliato");
 
         }
 
+
+    }
+
     private void stampa(ArrayList<Contatto> contattiTrovati) {
 
-        for (Contatto c: contattiTrovati ) {
+        for (Contatto c : contattiTrovati) {
             System.out.println(c.toString());
         }
     }
 
 /////////////////////////////////////////		FILTRA PER  EMAIL
 
-        private ArrayList<Contatto> filtraPerEmail(String elemento) {
+    private ArrayList<Contatto> filtraPerEmail(String elemento) {
 
-            ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
+        ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
 
-            for( Contatto c : listaContatti) {
+        for (Contatto c : listaContatti) {
 
-                if(c.getEmail().equalsIgnoreCase(elemento)) {
-                    contattiTrovati.add(c);
-                }
+            if (c.getEmail().equalsIgnoreCase(elemento)) {
+                contattiTrovati.add(c);
             }
-
-            return contattiTrovati;
         }
+
+        return contattiTrovati;
+    }
 
 
 //////////////////////////////////////		FILTRA PER TELEFONO
 
-        private ArrayList<Contatto> filtraPerTelefono(String elemento) {
+    private ArrayList<Contatto> filtraPerTelefono(String elemento) {
 
-            ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
+        ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
 
-            for( Contatto c : listaContatti) {
+        for (Contatto c : listaContatti) {
 
-                if(c.getTelefono().equalsIgnoreCase(elemento)) {
-                    contattiTrovati.add(c);
-                }
+            if (c.getTelefono().equalsIgnoreCase(elemento)) {
+                contattiTrovati.add(c);
             }
-
-            return contattiTrovati;
         }
 
+        return contattiTrovati;
+    }
 
-//////////////////////////////////////     FILTRA PER NOME
-        private ArrayList<Contatto> filtraPerNome(String elemento) {
 
-            ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
+    //////////////////////////////////////     FILTRA PER NOME
+    private ArrayList<Contatto> filtraPerNome(String elemento) {
 
-            for( Contatto c : listaContatti) {
+        ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
 
-                if(c.getNome().equalsIgnoreCase(elemento)) {
-                    contattiTrovati.add(c);
-                }
+        for (Contatto c : listaContatti) {
+
+            if (c.getNome().equalsIgnoreCase(elemento)) {
+                contattiTrovati.add(c);
             }
-
-            return contattiTrovati;
         }
+
+        return contattiTrovati;
+    }
 
 ////////////////////////////////////////	 FILTRA PER COGNOME			 ////////////////////////////////////////////////////////////////////////////////
 
-        private ArrayList<Contatto> filtraPerCognome(String elemento) {
+    private ArrayList<Contatto> filtraPerCognome(String elemento) {
 
-            ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
+        ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
 
-            for( Contatto c : listaContatti) {
+        for (Contatto c : listaContatti) {
 
-                if(c.getCognome().equalsIgnoreCase(elemento)) {
-                    contattiTrovati.add(c);
-                }
+            if (c.getCognome().equalsIgnoreCase(elemento)) {
+                contattiTrovati.add(c);
             }
-
-            return contattiTrovati;
         }
 
-    public void aggiungiContatto() {
+        return contattiTrovati;
+    }
 
+    public void aggiungiContatto() {
 
 
         Scanner in = new Scanner(System.in);
@@ -171,28 +168,28 @@ public class RubricaContatti {
 
         System.out.println("Inserisci Nome : ");
         String nome = in.nextLine();
-        if(nome.equals("")) {
+        if (nome.equals("")) {
             System.out.print("Nome inesistente \n");
         }
         System.out.println("Inserisci Cognome : ");
         String cognome = in.nextLine();
-        if(cognome.equals("")) {
+        if (cognome.equals("")) {
             System.out.print("Cognome inesistente \n");
         }
         System.out.println("Inserisci email : ");
         String email = in.nextLine();
-        if(email.equals("")) {
+        if (email.equals("")) {
             System.out.print("Email inesistente \n");
         }
         System.out.println("Inserisci telefono : ");
         String telefono = in.nextLine();
-        if(telefono.equals("")) {
+        if (telefono.equals("")) {
             System.out.print("Telefono inesistente \n");
         }
 
         System.out.println("Inserisci note : ");
         String note = in.nextLine();
-        if(note.equals("")) {
+        if (note.equals("")) {
             System.out.print("Note inesistenti \n");
         }
 
@@ -204,14 +201,14 @@ public class RubricaContatti {
 
         jpAcriteria.JPAaggiungiContatto(contattoNuovo);
 
-        }
+    }
 
 
     public void eliminaContatto() {
 
         List<Contatto> contattos = jpAcriteria.JPACriteriaLeggiContatti();
         listaContatti = (ArrayList<Contatto>) contattos;
-        for (Contatto c: contattos ) {
+        for (Contatto c : contattos) {
             System.out.println(c.toString());
 
         }
@@ -222,15 +219,15 @@ public class RubricaContatti {
 
         System.out.println(" Id dell'elemento da eliminare : ");
         String numero = in.nextLine();
-        if(numero.equals("")) {
+        if (numero.equals("")) {
             System.out.print("Nome non valido ");
         }
         int num = Integer.parseInt(numero);
 
-        for (Contatto c: contattos ) {
-           if(num == c.getId()){
-               jpAcriteria.delete(c);
-           }
+        for (Contatto c : contattos) {
+            if (num == c.getId()) {
+                jpAcriteria.delete(c);
+            }
 
         }
 
@@ -241,7 +238,7 @@ public class RubricaContatti {
 
         List<Contatto> contattos = jpAcriteria.JPACriteriaLeggiContatti();
         listaContatti = (ArrayList<Contatto>) contattos;
-        for (Contatto c: contattos ) {
+        for (Contatto c : contattos) {
             System.out.println(c.toString());
 
         }
@@ -251,14 +248,14 @@ public class RubricaContatti {
 
         System.out.println(" Id dell'elemento da modificare : ");
         String numero = in.nextLine();
-        if(numero.equals("")) {
+        if (numero.equals("")) {
             System.out.print("Nome non valido ");
         }
         int num = Integer.parseInt(numero);
 
 
-        for (Contatto c: contattos ) {
-            if(num == c.getId()){
+        for (Contatto c : contattos) {
+            if (num == c.getId()) {
                 System.out.println("Andiamo a modificare i campi! (premi 'NO' per non modificare)  : ");
                 System.out.println("Aggiorna Nome : ");
                 String nome = in.nextLine();
@@ -271,7 +268,7 @@ public class RubricaContatti {
                 System.out.println("Aggiorna Note : ");
                 String note = in.nextLine();
 
-                jpAcriteria.modifica(c , nome, cognome, email, telefono, note);
+                jpAcriteria.modifica(c, nome, cognome, email, telefono, note);
 
 
             }
@@ -290,16 +287,17 @@ public class RubricaContatti {
 
 
         int i = 0;
-        while(i < contattos.size()){
+        while (i < contattos.size()) {
             Contatto c = contattos.get(i);
 
             int j = i + 1;
-            while(j < contattos.size()){
+            while (j < contattos.size()) {
                 Contatto c1 = contattos.get(j);
-                if(c.getEmail().equalsIgnoreCase(c1.getEmail())  && (c.getId()!=c1.getId()) ){
-                    System.out.println("Duplicato trovato in email : ");
-                    System.out.println(" Contatto 1 " +c.toString());
-                    System.out.println(" Contatto 2 " +c1.toString());
+
+                if (c.getEmail().equalsIgnoreCase(c1.getEmail()) && (c.getId() != c1.getId()) && !(c1.getEmail().equals("null")) && !(c1.getEmail().equals(""))) {
+                    System.out.println("Duplicato con mail uguale : ");
+                    System.out.println(" Contatto 1 " + c.toString());
+                    System.out.println(" Contatto 2 " + c1.toString());
                     ciSonoDuplicati = true;
                 }
                 j++;
@@ -309,16 +307,16 @@ public class RubricaContatti {
         }
 
         i = 0;
-        while(i < contattos.size()){
+        while (i < contattos.size()) {
             Contatto c = contattos.get(i);
 
             int j = i + 1;
-            while(j < contattos.size()){
+            while (j < contattos.size()) {
                 Contatto c1 = contattos.get(j);
-                if(c.getTelefono().equalsIgnoreCase(c1.getTelefono())  && (c.getId()!=c1.getId()) ){
-                    System.out.println("Duplicato trovato in email : ");
-                    System.out.println(" Contatto 1 " +c.toString());
-                    System.out.println(" Contatto 2 " +c1.toString());
+                if (c.getTelefono().equalsIgnoreCase(c1.getTelefono()) && (c.getId() != c1.getId()) && !(c1.getTelefono().equals("null")) && !(c1.getTelefono().equals(""))) {
+                    System.out.println("Duplicato con stesso numero di telefono : ");
+                    System.out.println(" Contatto 1 " + c.toString());
+                    System.out.println(" Contatto 2 " + c1.toString());
                     ciSonoDuplicati = true;
                 }
                 j++;
@@ -355,7 +353,7 @@ public class RubricaContatti {
 //            }
 //        }
 
-        if(ciSonoDuplicati==false){
+        if (ciSonoDuplicati == false) {
             System.out.println("Non ci sono duplicati");
         }
     }
@@ -370,16 +368,15 @@ public class RubricaContatti {
 
 
         int i = 0;
-        while(i < contattos.size()){
+        while (i < contattos.size()) {
             Contatto c = contattos.get(i);
 
             int j = i + 1;
-            while(j < contattos.size()){
+            while (j < contattos.size()) {
                 Contatto c1 = contattos.get(j);
-                if(c.getEmail().equalsIgnoreCase(c1.getEmail())  && (c.getId()!=c1.getId()) ){
-                    System.out.println("Duplicato trovato in email : ");
-                    System.out.println(" Contatto 1 " +c.toString());
-                    System.out.println(" Contatto 2 " +c1.toString());
+                if (c.getEmail().equalsIgnoreCase(c1.getEmail()) && (c.getId() != c1.getId()) && !(c1.getEmail().equals("null")) && !(c1.getEmail().equals(""))) {
+                    System.out.println("Duplicato tolto per l'email : ");
+                    System.out.println(c1.toString());
                     //jpAcriteria = new JPAcriteria();
                     jpAcriteria.delete(c1);
                 }
@@ -390,16 +387,15 @@ public class RubricaContatti {
         }
 
         i = 0;
-        while(i < contattos.size()){
+        while (i < contattos.size()) {
             Contatto c = contattos.get(i);
 
             int j = i + 1;
-            while(j < contattos.size()){
+            while (j < contattos.size()) {
                 Contatto c1 = contattos.get(j);
-                if(c.getTelefono().equalsIgnoreCase(c1.getTelefono())  && (c.getId()!=c1.getId()) ){
-                    System.out.println("Duplicato trovato in email : ");
-                    System.out.println(" Contatto 1 " +c.toString());
-                    System.out.println(" Contatto 2 " +c1.toString());
+                if (c.getTelefono().equalsIgnoreCase(c1.getTelefono()) && (c.getId() != c1.getId()) && !(c1.getTelefono().equals("null")) && !(c1.getTelefono().equals(""))) {
+                    System.out.println("Duplicato tolto per il numero: ");
+                    System.out.println( c1.toString());
                     //jpAcriteria = new JPAcriteria();
                     jpAcriteria.delete(c1);
                 }
@@ -418,12 +414,12 @@ public class RubricaContatti {
 
         String scelta = in.next();
 
-        switch(scelta) {
+        switch (scelta) {
 
-            case "1" :
+            case "1":
                 System.out.println("	                          			    ");
                 System.out.println("			    Importa CSV				    ");
-
+                importaCSV();
 
                 break;
 
@@ -433,7 +429,7 @@ public class RubricaContatti {
 
 
                 break;
-            case "3" :
+            case "3":
                 System.out.println("	                          		    	");
                 System.out.println("			    Esporta CSV				    ");
 
@@ -446,7 +442,86 @@ public class RubricaContatti {
 
 
                 break;
+        }
+
+
     }
-}
+
+    private void importaCSV() {
+
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Inserisci la directory del file da importare (File Compreso) : ");
+        String dir = in.nextLine();
+        if(dir.equals("")) {
+            System.out.print("directory non valida");
+        }
+
+        ArrayList<Contatto> contattiImportati = new ArrayList<Contatto>();
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+
+        try {
+
+            fileReader = new FileReader(dir);
+            bufferedReader = new BufferedReader(fileReader);
+
+            String riga = bufferedReader.readLine();
+            // System.out.println(riga);
+
+            while (bufferedReader.ready()) {
+
+                riga = bufferedReader.readLine();
+                Contatto contatto = leggiRiga(riga);
+                contattiImportati.add(contatto);
+                jpAcriteria.JPAaggiungiContatto(contatto);
+                System.out.println(" "+contatto.getNome()+ " aggiunto in rubrica");
+            }
+
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        } finally {
+            try {
+                bufferedReader.close();
+                fileReader.close();
+            } catch (IOException fEx) {
+                fEx.printStackTrace();
+            }
+        }
+
+        System.out.println("Contatti: " + contattiImportati.size());
 
 
+    }
+
+    public static Contatto leggiRiga(String riga) {
+
+        String[] columns = riga.split(";");
+        String nome, cognome, telefono, email, note;
+        Contatto c = new Contatto();
+
+        try {nome = (columns[0]);}
+        catch(ArrayIndexOutOfBoundsException e) { nome = ""; }
+        c.setNome(nome.trim());
+
+        try {cognome = (columns[1]);}
+        catch(ArrayIndexOutOfBoundsException e) { cognome = ""; }
+        c.setCognome(cognome.trim());
+
+        try {email = (columns[2]);}
+        catch(ArrayIndexOutOfBoundsException e) { email = ""; }
+        c.setEmail(email.trim());
+
+        try {telefono = (columns[3]);}
+        catch(ArrayIndexOutOfBoundsException e) { telefono = ""; }
+        c.setTelefono(telefono.trim());
+
+        try {note = (columns[4]);}
+        catch(ArrayIndexOutOfBoundsException e) { note = ""; }
+        c.setNote(note.trim());
+
+
+        return c;
+    }
+
+    }
