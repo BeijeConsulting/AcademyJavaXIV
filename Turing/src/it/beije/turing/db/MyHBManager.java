@@ -63,12 +63,9 @@ public class MyHBManager {
             //Transaction transaction = session.beginTransaction();
             Transaction transaction = session.getTransaction();
             transaction.begin();
-
-
             for(Contatto c : contatti) {
                 session.save(c);
             }
-
             transaction.commit();
         } catch (HibernateException hbmEx) {
             hbmEx.printStackTrace();

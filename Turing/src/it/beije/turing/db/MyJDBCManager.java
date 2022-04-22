@@ -191,7 +191,7 @@ public class MyJDBCManager {
         contatti.add(contatto);
 
         //insertContacts(contatti);
-        //updateContact(5, contatto);
+        updateContact(3, contatto);
         //deleteContact(17);
         List<Contatto> newContatti = getRubrica();
         for(Contatto c : newContatti) {
