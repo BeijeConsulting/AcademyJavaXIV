@@ -74,7 +74,7 @@ public class Rubrica
 	}
 	
 	@SuppressWarnings("resource")
-	private void avviaMenu(int s) // 1 db jdbc,  2 db hibernate, 3 JPA, 4 locale
+	private void avviaMenu(int s) 	// 1 db jdbc,  2 db hibernate, 3 JPA, 4 locale
 	{
 		Scanner kb = null;
 		boolean riprova = false;
