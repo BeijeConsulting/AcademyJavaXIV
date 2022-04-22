@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="it.beije.turing.db.HBsessionFactory"/>
+    <fullyQualifiedTypeName name="org.hibernate.Session"/>
+    <fullyQualifiedTypeName name="org.hibernate.Query"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="it.beije.turing.rubrica.Contatto"/>
+    <fullyQualifiedTypeName name="org.hibernate.Transaction"/>
+</qualifiedTypeNameHistroy>
