@@ -21,6 +21,7 @@ public class ScannerCheck {
 
         do {
             if (scanner.hasNext()) choose = scanner.next();
+
             repeatChose(choose);
         } while (again);
 

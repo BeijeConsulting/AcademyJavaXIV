@@ -18,6 +18,7 @@ public class Rubrica {
 
         boolean again = true;
 
+
         System.out.println("Avvio Rubrica, si prega di inserire operazione da effettuare: ");
         JPACriteria.openSession();
 

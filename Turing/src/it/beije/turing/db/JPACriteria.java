@@ -196,6 +196,7 @@ public class JPACriteria {
             else{
                 System.out.println("Duplicati trovati: ");
                 printResults(sameElement);
+
             }
         } else {
             et = em.getTransaction();
