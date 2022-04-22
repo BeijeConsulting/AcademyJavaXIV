@@ -5,6 +5,7 @@ import it.beije.turing.db.JPACriteria;
 
 public class StartRubrica {
 
+
     public static void main(String[] args) {
         Rubrica r= new Rubrica();
     }
