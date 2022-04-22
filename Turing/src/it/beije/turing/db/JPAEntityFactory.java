@@ -17,7 +17,7 @@ public class JPAEntityFactory {
         if (entityManagerFactory == null) {
             System.out.println("creating EntityManager...");
 
-            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(serverName);
+            entityManagerFactory = Persistence.createEntityManagerFactory(serverName);
         }
 
         return entityManagerFactory.createEntityManager();

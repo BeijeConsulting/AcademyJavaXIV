@@ -78,6 +78,8 @@ public class MyXMLManager {
             saxEx.printStackTrace();
         }
 
+        System.out.println("IMPORTED");
+
         return contacts;
     }
 
@@ -136,6 +138,7 @@ public class MyXMLManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("CONTACT ADDED");
     }
 
     public static void writeRubricaXML(List<Contatto> contacts, String pathFile) {
@@ -195,6 +198,8 @@ public class MyXMLManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println("EXPORTED");
 
     }
 

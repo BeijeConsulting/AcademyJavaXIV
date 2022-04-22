@@ -91,7 +91,7 @@ public class MyCSVManager {
                 fEx.printStackTrace();
             }
         }
-
+        System.out.println("IMPORTED");
         return contacts;
 
     }
@@ -132,7 +132,7 @@ public class MyCSVManager {
                     fEx.printStackTrace();
                 }
 
-                System.out.println("Contact added");
+                System.out.println("CONTACT ADDED");
             }
         } else {
             System.out.println("Path not exist");
@@ -173,12 +173,12 @@ public class MyCSVManager {
             try {
                 fileWriter.flush();
                 fileWriter.close();
+
             } catch (IOException fEx) {
                 fEx.printStackTrace();
             }
-
-            System.out.println("Done");
         }
+        System.out.println("EXPORTED");
     }
 
 
