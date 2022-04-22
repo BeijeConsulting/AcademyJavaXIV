@@ -7,12 +7,10 @@ import it.beije.turing.myRubrica.interfaces.OpRubrica;
 import it.beije.turing.myRubrica.interfaces.Order;
 import it.beije.turing.rubrica.Contatto;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,7 +27,7 @@ public class MyRubrica {
         Scanner scanner=new Scanner(System.in);
         boolean repeat=true;
         do{
-            System.out.print ("GESTIONE RUBRICA");
+            System.out.print ("\n\nGESTIONE RUBRICA");
             System.out.println(" (-h per la lista delle operazioni)");
             System.out.print("Inserisci OP: ");
 
@@ -41,10 +39,8 @@ public class MyRubrica {
                 System.out.println("\tinsert = comando per inserire il contatto da cancellare");
                 System.out.println("\tmod <ID> = [ID = id del contatto] id del contatto da modificare");
                 System.out.println("\tduplicate <PARAMS>= [(Opzionale) PARAMS= -U per unirli -UA per unirli automaticamente] id del contatto da modificare");
-                System.out.println("\timport <TYPEFILE> <PATH> =  [TYPEFILE = CSV per il formato .csv XML per il  formato .xml] formato file da importare " +
-                        "\n\t\t\t\t\t\t\t\t[PATH=indirizzo del file da importare] ");
-                System.out.println("\texport <TYPEFILE> <PATH> =  [TYPEFILE = CSV per il formato .csv XML per il  formato .xml] formato file da salvare " +
-                        "\n\t\t\t\t\t\t\t\t[PATH=indirizzo del file da salvare] ");
+                System.out.println("\timport <TYPEFILE> =  [TYPEFILE = CSV per il formato .csv XML per il  formato .xml] formato file da importare");
+                System.out.println("\texport <TYPEFILE> =  [TYPEFILE = CSV per il formato .csv XML per il  formato .xml] formato file da salvare ");
                 System.out.println("\texit =Esci");
             }
             if(chose.startsWith("exit")){
@@ -164,16 +160,68 @@ public class MyRubrica {
 
 
             }
-            ///Users/giusepperaddato/Codici/Java/SpringExample/Getting Started Guides/AcademyJavaXIV/Turing/src/main/resources/file/xml/test_parser1.xml
+            //test_/Users/giusepperaddato/Codici/Java/SpringExample/Getting Started Guides/AcademyJavaXIV/Turing/src/main/resources/file/xml/parser1.xml
             ///Users/giusepperaddato/Codici/Java/SpringExample/Getting Started Guides/AcademyJavaXIV/Turing/src/main/resources/file/csv/rubrica.csv
+            if(chose.startsWith("export")){
+                String[] io=chose.split(" ");
+                if(io.length==2){
+                    if((!io[1].equalsIgnoreCase("xml")) && (!io[1].equalsIgnoreCase("csv"))){
+                        System.err.println("Estesione non supportata");
+                    }else{
+                        System.out.print("Inserisci path dove vuoi salvare il file: ");
+                        String path=scanner.nextLine();
+                        File f=new File(path);
 
+                        if(!f.isDirectory()){
+                           System.err.println("Hai inserito il path di un file");
+                        }else {
+                            System.out.print("Inserisci nome del file: ");
+                            String nome=scanner.nextLine();
+                            String pathTemp=path+"/"+nome+"."+io[1].toLowerCase();
+                            f=new File(pathTemp);
+                            if( f.exists()){
+                                System.out.println("\nEsiste un file con il nome: "+nome+"."+io[1].toLowerCase()+" in questa catella ");
+                                System.out.print("Vuoi sovrascrivere il file? (Y/N): ");
+                                String c=scanner.nextLine();
+                                if(c.equalsIgnoreCase("N")){
+                                    pathTemp=path+"/"+nome+"(copia)."+io[1].toLowerCase();
+                                }
+                            }
+                            if(io[1].equalsIgnoreCase("xml")){
+                                OpRubrica.exportFileXML(pathTemp,rubrica.showContact(Order.NO));
+                                if(new File(pathTemp).exists()){
+                                    System.out.println("\nFile Creato\n");
+                                }else{
+                                    System.err.println("\nQualcosa è andato storto riporva\n");
+                                }
+                            }  else if(io[1].equalsIgnoreCase("csv")){
+                                System.out.print("Quale separatore vuoi utilizzare: ");
+                                String s;
+                                do{
+                                    s=scanner.nextLine();
+                                    if(s.length()!=1){
+                                        System.out.println("Il separatore può essere solo un carattere di lunghezza massima di 1");
+                                    }
+                                }while (s.length()!=1);
+                                OpRubrica.exportFileCVS(pathTemp,rubrica.showContact(Order.NO),s);
+
+                                if(new File(pathTemp).exists()){
+                                    System.out.println("\nFile Creato\n");
+                                }else{
+                                    System.err.println("\nQualcosa è andato storto riporva\n");
+                                }
+                            }else {
+                                System.err.println("Errore");
+                            }
+                        }
+
+                    }
+                }
+            }
             if(chose.startsWith("import")){
                 String[] io=chose.split(" ");
                     if(io.length==2){
-
-
                         if((!io[1].equalsIgnoreCase("xml")) && (!io[1].equalsIgnoreCase("csv"))){
-
                             System.err.println("Estesione non supportata");
                         }else{
                             System.out.print("Inserisci path: ");

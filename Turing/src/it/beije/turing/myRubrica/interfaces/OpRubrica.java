@@ -190,13 +190,9 @@ public interface OpRubrica {
 
     public static List<Contatto> importFileCVS(String path, String separator){
         if(separator.length()!=1) throw new RuntimeException("Separator not valid");
-
-
         List<Contatto> list= new ArrayList<>();
         FileReader fReader=null;
         BufferedReader bReader=null;
-
-
         try {
             fReader= new FileReader(path);
             bReader= new BufferedReader(fReader);
@@ -212,12 +208,9 @@ public interface OpRubrica {
                     if(params.length==1){
                         throw new RuntimeException("File or Separator not valid");
                     }
-
                     for (int i = 0; i < params.length; i++) {
                         index.put(i,params[i]); //salvo gli indici di ogni elemento
                     }
-
-
                 }else{
                     for (int i = 0; i < params.length; i++) {
                         if(index.get(i).equalsIgnoreCase("nome")){

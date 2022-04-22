@@ -131,18 +131,18 @@ public class JPAManager implements OpRubrica {
 
     @Override
     public List<Contatto> contattiDuplicati() {
+            //TODO
         return null;
     }
 
     @Override
     public void unisciContatti() {
-
+        //TODO
     }
 
     @Override
     public List<Contatto> importFromCVS(String path,String separator) {
         List<Contatto> list=OpRubrica.importFileCVS(path,separator);
-
         for (Contatto c:list) {
             insert(c);
         }
@@ -159,16 +159,15 @@ public class JPAManager implements OpRubrica {
         }
         return list;
     }
-    ///Users/giusepperaddato/Codici/Java/SpringExample/Getting Started Guides/AcademyJavaXIV/Turing/src/main/resources/file/xml/test_parser1.xml
 
     @Override
     public void exportFromCVS(String path, List<Contatto> contatti,String separator) {
-
+        OpRubrica.exportFileCVS(path,contatti,separator);
     }
 
     @Override
     public void exportFromXML(String path, List<Contatto> contatti) {
-
+         OpRubrica.exportFileXML(path,contatti);
     }
 
 
