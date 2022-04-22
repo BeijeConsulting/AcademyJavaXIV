@@ -9,7 +9,7 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/turing"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="beije"/>
+			<property name="javax.persistence.jdbc.password" value="luigi"/>
 		</properties>
 
 	</persistence-unit>
