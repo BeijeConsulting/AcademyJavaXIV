@@ -4,11 +4,8 @@ import it.beije.turing.myRubrica.interfaces.OpRubrica;
 import it.beije.turing.myRubrica.interfaces.Order;
 import it.beije.turing.rubrica.Contatto;
 
-
-
 import javax.persistence.*;
 import javax.persistence.criteria.*;
-import javax.transaction.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class JPAManager implements OpRubrica {
 
     @Override
     public List<Contatto> showContact(Order order) {
-        EntityManager   entityManager = entityManagerFactory.createEntityManager();
+        EntityManager  entityManager = entityManagerFactory.createEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
         Root<Contatto> itemRoot = criteriaQuery.from(Contatto.class);
@@ -43,34 +40,73 @@ public class JPAManager implements OpRubrica {
 
     @Override
     public List<Contatto> search(String s) {
-        EntityManager   entityManager = entityManagerFactory.createEntityManager();
+        /**
+         *Non è molto elegante come soluzione ma con i creteria non gira
+         */
+        /*EntityManager   entityManager = entityManagerFactory.createEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
 
         Root<Contatto> itemRoot = criteriaQuery.from(Contatto.class);
+``*/
 
-        String like="%";
-        String search= like + s + like;
-
-        //TODO da sistemare
-
-        Predicate pred1 = criteriaBuilder.like(itemRoot.get("nome"), search);
+       /* Predicate pred1 = criteriaBuilder.like(itemRoot.get("nome"), search);
         Predicate pred2 = criteriaBuilder.like(itemRoot.get("cognome"),search );
         Predicate pred3 = criteriaBuilder.like(itemRoot.get("email"),search );
         Predicate pred4 = criteriaBuilder.like(itemRoot.get("telefono"),search );
         Predicate pred5 = criteriaBuilder.like(itemRoot.get("note"),search );
 
-        criteriaQuery.select(itemRoot).where(new Predicate[]{pred1,pred2,pred3,pred4,pred5});
+        criteriaQuery.select(itemRoot).where(new Predicate[]{pred1,pred2,pred3,pred4,pred5});*/
+      // criteriaQuery.select(itemRoot).where(pred1);
+/*
 
-        List <Contatto> resultList=entityManager.createQuery(criteriaQuery).getResultList();
+
+        String q="Select c from Contatto as c where "+
+                "cognome LIKE '"+search+"' OR " +
+                "email LIKE '"+search+"' OR "+
+                "telefono LIKE '"+search+"' OR "+
+                "note LIKE '"+search+"'s";
+        q="Select c from Contatto as c";
+        Query query = entityManager.createQuery(q);
+        query.executeUpdate();
+
+
         entityManager.close();
+        List <Contatto> resultList=entityManager.createQuery(criteriaQuery).getResultList();
+        entityManager.close();*/
+
+        List<Contatto> resultList=new ArrayList<>();
+        List<Contatto> contattos= showContact(Order.NO);
+
+        for (Contatto contatto: contattos) {
+            boolean t=false;
+            if(contatto.getNome().contains(s)){
+                t=true;
+            }
+            if(contatto.getCognome().contains(s)){
+                t=true;
+            }
+            if(contatto.getEmail().contains(s)){
+                t=true;
+            }
+            if(contatto.getNote().contains(s)){
+                t=true;
+            }
+
+            if(contatto.getTelefono().contains(s)){
+                t=true;
+            }
+            if(t){
+                resultList.add(contatto);
+            }
+        }
 
         return resultList;
     }
 
     @Override
     public boolean insert(Contatto c) {
-        EntityManager   entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         entityManager.persist(c);
 
@@ -99,7 +135,6 @@ public class JPAManager implements OpRubrica {
 
         criteriaUpdate.where(criteriaBuilder.equal(itemRoot.get("id"), c.getId()));
 
-
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
@@ -124,20 +159,81 @@ public class JPAManager implements OpRubrica {
 
         Query query = entityManager.createQuery(criteriaDelete);
         query.executeUpdate();
+
         entityTransaction.commit();
         entityManager.close();
         return true;
     }
 
     @Override
-    public List<Contatto> contattiDuplicati() {
-            //TODO
-        return null;
+    public  List<List<Contatto>> contattiDuplicati() {
+        EntityManager   entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+        Root<Contatto> itemRoot = criteriaQuery.from(Contatto.class);
+        List <Contatto> resultList=entityManager.createQuery(criteriaQuery).getResultList();
+        entityManager.close();
+        List<List <Contatto>> r= new ArrayList<>();
+
+        for (int i=0;i<resultList.size()-2;i++){
+            List<Contatto> contattos= new ArrayList<>();
+            contattos.add(resultList.get(i));
+
+            for (int j = i; j <resultList.size()-1 ; j++) {
+
+                if( resultList.get(i).getId()!=resultList.get(j).getId() &&
+                (resultList.get(i).getEmail().equalsIgnoreCase(resultList.get(j).getEmail()) || resultList.get(i).getTelefono().equalsIgnoreCase(resultList.get(j).getTelefono()))
+                && (!resultList.get(i).getEmail().isEmpty() && !resultList.get(i).getTelefono().isEmpty() && resultList.get(j).getEmail().isEmpty() && !resultList.get(j).getTelefono().isEmpty())
+                ){
+                    contattos.add(resultList.get(j));
+                }
+            }
+            if(contattos.size()>1){
+                r.add(contattos);
+            }
+        }
+
+        return r;
     }
 
     @Override
-    public void unisciContatti() {
-        //TODO
+    public void unisciContatti(List<List<Contatto>> l) {
+        for (int i = 0; i < l.size(); i++) {
+            Contatto c= l.get(i).get(0);
+
+            for (int j = 1; j < l.get(i).size(); j++) {
+                Contatto temp=l.get(i).get(j);
+
+                if(c.getCognome().isEmpty()){
+                    if(!temp.getCognome().isEmpty()){
+                        c.setCognome(temp.getCognome());
+                    }
+                }
+                if(c.getNome().isEmpty()){
+                    if(!temp.getNome().isEmpty()){
+                        c.setNome(temp.getNome());
+                    }
+                }
+
+                if(c.getEmail().isEmpty()){
+                    if(!temp.getEmail().isEmpty()){
+                        c.setEmail(temp.getEmail());
+                    }
+                }
+                if(c.getTelefono().isEmpty()){
+                    if(!temp.getTelefono().isEmpty()){
+                        c.setEmail(temp.getTelefono());
+                    }
+                }
+                if(c.getNote().isEmpty()){
+                    if(!temp.getNote().isEmpty()){
+                        c.setNote(temp.getTelefono());
+                    }
+                }
+                deleteContatto(temp);
+
+            }
+        }
     }
 
     @Override
@@ -153,10 +249,9 @@ public class JPAManager implements OpRubrica {
     @Override
     public List<Contatto> importFromXML(String path) {
             List<Contatto> list=OpRubrica.impotFileXML(path);
-
-        for (Contatto c:list) {
-            insert(c);
-        }
+            for (Contatto c:list) {
+                insert(c);
+            }
         return list;
     }
 

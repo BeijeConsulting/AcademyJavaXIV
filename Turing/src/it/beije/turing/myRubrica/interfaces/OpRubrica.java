@@ -26,21 +26,21 @@ import javax.xml.transform.stream.StreamResult;
  * Data: 19 apr 2022
  */
 public interface OpRubrica {
-    public List<Contatto> showContact(Order order);
-    public List<Contatto> search(String s);
-    public boolean insert(Contatto c);
-    public boolean modificaContatto(Contatto c);
-    public boolean deleteContatto(Contatto c);
-    public List<Contatto> contattiDuplicati();
-    public void unisciContatti();
-    public List<Contatto> importFromCVS(String path, String separator);
-    public List<Contatto> importFromXML(String path);
-    public void exportFromCVS(String path,List<Contatto> contats, String separator);
-    public void exportFromXML(String path,List<Contatto> contatti);
+     List<Contatto> showContact(Order order);
+     List<Contatto> search(String s);
+     boolean insert(Contatto c);
+     boolean modificaContatto(Contatto c);
+     boolean deleteContatto(Contatto c);
+    List<List <Contatto>> contattiDuplicati();
+     void unisciContatti( List<List <Contatto>> l);
+     List<Contatto> importFromCVS(String path, String separator);
+     List<Contatto> importFromXML(String path);
+     void exportFromCVS(String path,List<Contatto> contats, String separator);
+     void exportFromXML(String path,List<Contatto> contatti);
 
 
 
-    public static void exportFileXML(String path,List<Contatto> contats){
+     static void exportFileXML(String path,List<Contatto> contats){
         DocumentBuilderFactory documentBuilderFactory= DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder;
         Document document;
@@ -90,7 +90,7 @@ public interface OpRubrica {
             e.printStackTrace();
         }
     }
-    public static List<Element> getChildElements(Element element) {
+     static List<Element> getChildElements(Element element) {
         List<Element> childElements = new ArrayList<Element>();
         NodeList nodeList = element.getChildNodes();
         for (int n = 0; n < nodeList.getLength(); n++) {
@@ -99,7 +99,7 @@ public interface OpRubrica {
 
         return childElements;
     }
-    public static List<Contatto> impotFileXML(String path){
+     static List<Contatto> impotFileXML(String path){
         List<Contatto> contattos= new ArrayList<>();
         DocumentBuilderFactory documentBuilderFactory= DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder;
@@ -150,7 +150,7 @@ public interface OpRubrica {
 
         return contattos;
     }
-    public static void exportFileCVS(String path,List<Contatto> contats, String separator){
+     static void exportFileCVS(String path,List<Contatto> contats, String separator){
         if(separator.length()!=1) throw new RuntimeException("Separator not valid: max length 1");
 
 
@@ -188,7 +188,7 @@ public interface OpRubrica {
 
     }
 
-    public static List<Contatto> importFileCVS(String path, String separator){
+     static List<Contatto> importFileCVS(String path, String separator){
         if(separator.length()!=1) throw new RuntimeException("Separator not valid");
         List<Contatto> list= new ArrayList<>();
         FileReader fReader=null;

@@ -85,12 +85,12 @@ public class HibernateManager implements OpRubrica {
     }
 
     @Override
-    public List<Contatto> contattiDuplicati() {
+    public List<List<Contatto>> contattiDuplicati() {
         return null;
     }
 
     @Override
-    public void unisciContatti() {
+    public void unisciContatti(List<List<Contatto>> l) {
 
     }
 

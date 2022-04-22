@@ -24,6 +24,8 @@ public class MyRubrica {
         OpRubrica rubrica= new JPAManager();
         List<Contatto> l = null;
 
+// /Users/giusepperaddato/Codici/Java/SpringExample/Getting Started Guides/AcademyJavaXIV/Turing/src/main/resources/file/csv/rubrica.csv
+
         Scanner scanner=new Scanner(System.in);
         boolean repeat=true;
         do{
@@ -34,13 +36,15 @@ public class MyRubrica {
             String chose= scanner.nextLine();
             if(chose.equalsIgnoreCase("-h") || chose.equalsIgnoreCase("-help")){
                 System.out.println("\tshow <params> = [(Opzionale) -N= ordinati per nome -S= ordinati per cognome] per visualizzare tutti i contatti ");
-                System.out.println("\tsearch <parola> = [parola = parola da cercare] cerca la parola all' interno di tutti i campi nel DB");
                 System.out.println("\tdelete <ID> = [ID = id del contatto] id del contatto da cancellare");
                 System.out.println("\tinsert = comando per inserire il contatto da cancellare");
                 System.out.println("\tmod <ID> = [ID = id del contatto] id del contatto da modificare");
-                System.out.println("\tduplicate <PARAMS>= [(Opzionale) PARAMS= -U per unirli -UA per unirli automaticamente] id del contatto da modificare");
+                System.out.println("\tsearch <parola> = [parola = parola da cercare] cerca la parola all' interno di tutti i campi nel DB");
+                System.out.println("\tduplicate = mostra duplicati");
+                System.out.println("\tduplicate <PARAMS>= [(Opzionale) -UA per unirli automaticamente] unisci contatti duplicati");
                 System.out.println("\timport <TYPEFILE> =  [TYPEFILE = CSV per il formato .csv XML per il  formato .xml] formato file da importare");
                 System.out.println("\texport <TYPEFILE> =  [TYPEFILE = CSV per il formato .csv XML per il  formato .xml] formato file da salvare ");
+
                 System.out.println("\texit =Esci");
             }
             if(chose.startsWith("exit")){
@@ -138,6 +142,7 @@ public class MyRubrica {
                             l=rubrica.showContact(Order.NO);
                         }
                         boolean f=false;
+                        System.out.println("Premi invio se non vuoi modificare un parametro");
                         for (Contatto temp:l) {
                             if(temp.getId()==id){
                                 f=true;
@@ -160,6 +165,7 @@ public class MyRubrica {
 
 
             }
+
             //test_/Users/giusepperaddato/Codici/Java/SpringExample/Getting Started Guides/AcademyJavaXIV/Turing/src/main/resources/file/xml/parser1.xml
             ///Users/giusepperaddato/Codici/Java/SpringExample/Getting Started Guides/AcademyJavaXIV/Turing/src/main/resources/file/csv/rubrica.csv
             if(chose.startsWith("export")){
@@ -246,6 +252,25 @@ public class MyRubrica {
                         System.err.println("Comando non vavlido");
                     }
             }
+            if(chose.startsWith("duplicate")){
+                String[] io=chose.split(" ");
+                if(io.length>=2){
+                    System.out.println(io[1]);
+                    if(io[1].equalsIgnoreCase("-UA")){
+                       rubrica.unisciContatti(rubrica.contattiDuplicati());
+                       System.out.println("Contatti uniti");
+                    }
+
+                } else if(io.length==1){
+                    List<List <Contatto>> de= rubrica.contattiDuplicati();
+                    for (int i = 0; i < de.size(); i++) {
+                        print(de.get(i));
+                    }
+                    System.out.println(de.size());
+                }
+            }
+
+
         }while (repeat);
 
         scanner.close();

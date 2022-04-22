@@ -194,13 +194,13 @@ public class SQLManager implements OpRubrica {
     }
 
     @Override
-    public List<Contatto> contattiDuplicati() {
+    public List<List<Contatto>> contattiDuplicati() {
         //TODO
         return null;
     }
 
     @Override
-    public void unisciContatti() {
+    public void unisciContatti(List<List<Contatto>> l) {
         //TODO
 
     }
