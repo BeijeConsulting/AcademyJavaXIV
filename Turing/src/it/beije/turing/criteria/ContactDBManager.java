@@ -219,17 +219,13 @@ public class ContactDBManager {
         List<Contatto> results = null;
         boolean duplicateContact = false;
         ArrayList<Integer> duplicateId = new ArrayList<>();
-        List<Contatto> contactList = new ArrayList<>();
 
         criteriaQuery.select(root);
         contattoTypedQuery = session.createQuery(criteriaQuery);
         results = contattoTypedQuery.getResultList();
 
-
-        results.forEach(c -> contactList.add(c));
-
-        for (Contatto contatto : contactList) {
-            for (Contatto contatto1 : contactList) {
+        for (Contatto contatto : results) {
+            for (Contatto contatto1 : results) {
                 if (contatto.getId() != contatto1.getId()) {
                     duplicateContact = contatto.isDuplicateContact(contatto1);
                 }
@@ -242,7 +238,7 @@ public class ContactDBManager {
         if (duplicateId.size() != 0) {
             System.out.println("The duplicate contacts are: ");
 
-            for (Contatto contatto : contactList) {
+            for (Contatto contatto : results) {
                 for (int id : duplicateId) {
                     if (contatto.getId() == id) {
                         System.out.println(contatto);
