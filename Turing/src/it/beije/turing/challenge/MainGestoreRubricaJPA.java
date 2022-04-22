@@ -13,7 +13,7 @@ import it.beije.turing.file.CSVManager;
 import it.beije.turing.file.XMLManager;
 import it.beije.turing.rubrica.Contatto;
 
-public class GestoreRubricaJPA {
+public class MainGestoreRubricaJPA {
 
     public static void main(String[] args) {
         gestioneRubrica();
