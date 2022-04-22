@@ -612,38 +612,41 @@ public class RubricaContatti {
                     List<Element> children = getChildElements(root);
 
 			for (Element el : children) {
-        if (el.getTagName().equalsIgnoreCase("contatto")) {
-            List<Element> contatto = getChildElements(el);
-            for (Element value : contatto) {
                 Contatto newContatto = new Contatto();
-                switch (value.getTagName().toLowerCase()) {
-                    case "nome":
-                       // System.out.println("nome : " + value.getTextContent());
-                        newContatto.setNome(value.getTextContent());
-                       break;
-                    case "cognome":
-                        //System.out.println("cognome : " + value.getTextContent());
-                        newContatto.setCognome(value.getTextContent());
-                       break;
-                    case "email":
-                        //System.out.println("email : " + value.getTextContent());
-                        newContatto.setEmail(value.getTextContent());
-                       break;
-                    case "telefono":
-                        //System.out.println("telefono : " + value.getTextContent());
-                        newContatto.setTelefono(value.getTextContent());
-                        break;
-                    case "note":
-                        //System.out.println("note : " + value.getTextContent());
-                        newContatto.setNote(value.getTextContent());
-                        break;
+                    if (el.getTagName().equalsIgnoreCase("contatto")) {
+                        List<Element> contatto = getChildElements(el);
 
-                    default:
-                        break;
-                }
-                jpAcriteria.JPAaggiungiContatto(newContatto);
-            }
+                    for (Element value : contatto) {
+
+                        switch (value.getTagName().toLowerCase()) {
+                            case "nome":
+                               // System.out.println("nome : " + value.getTextContent());
+                                newContatto.setNome(value.getTextContent());
+                               break;
+                            case "cognome":
+                                //System.out.println("cognome : " + value.getTextContent());
+                                newContatto.setCognome(value.getTextContent());
+                               break;
+                            case "email":
+                                //System.out.println("email : " + value.getTextContent());
+                                newContatto.setEmail(value.getTextContent());
+                               break;
+                            case "telefono":
+                                //System.out.println("telefono : " + value.getTextContent());
+                                newContatto.setTelefono(value.getTextContent());
+                                break;
+                            case "note":
+                                //System.out.println("note : " + value.getTextContent());
+                                newContatto.setNote(value.getTextContent());
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                    }
         }
+                    jpAcriteria.JPAaggiungiContatto(newContatto);
     }
 
         } catch (ParserConfigurationException pcEx) {
