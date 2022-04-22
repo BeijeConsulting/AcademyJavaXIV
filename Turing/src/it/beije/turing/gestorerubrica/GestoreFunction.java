@@ -59,6 +59,10 @@ public class GestoreFunction {
 		contatto.setTelefono(s.nextLine()); 
 		System.out.print("Inserisci l' email : ");
 		contatto.setEmail(s.nextLine()); 
+		System.out.print("Inserisci la data di nascita : ");
+		contatto.setDataDiNascita(s.nextLine()); 
+		System.out.print("Inserisci l' indirizzo : ");
+		contatto.setIndirizzo(s.nextLine()); 
 		System.out.print("Inserisci il note : ");
 		contatto.setNote(s.nextLine()); 
 		
@@ -166,7 +170,7 @@ public class GestoreFunction {
 	}
 
 	public static boolean areEqual(Contatto c, Contatto c1) {
-		return c.getNome().equals(c1.getNome()) && c.getCognome().equals(c1.getCognome()) && c.getTelefono().equals(c1.getTelefono()) && c.getEmail().equals(c1.getEmail()) && c.getNote().equals(c1.getNote());
+		return c.getNome().equals(c1.getNome()) && c.getCognome().equals(c1.getCognome()) && c.getTelefono().equals(c1.getTelefono()) && c.getEmail().equals(c1.getEmail()) && c.getNote().equals(c1.getNote()) && c.getDataDiNascita().equals(c1.getDataDiNascita()) && c.getIndirizzo().equals(c1.getIndirizzo());
 	}
 	
 	public static List<Contatto> trovaContattiDuplicati() {

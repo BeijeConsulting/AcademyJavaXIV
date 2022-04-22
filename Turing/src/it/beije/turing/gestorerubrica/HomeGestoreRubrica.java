@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 
-import it.beije.turing.db.GestoreRubrica;
 import it.beije.turing.db.JPAentityManagerFactory;
 
 public class HomeGestoreRubrica {
@@ -28,7 +27,7 @@ public class HomeGestoreRubrica {
 		Scanner s = new Scanner(System.in);
 		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
 		
-		GestoreRubrica.stampaMenu();
+		stampaMenu();
 
 		String st = s.next();
 		do {
@@ -67,13 +66,12 @@ public class HomeGestoreRubrica {
 					default:
 						System.out.println("\n<<Scrivi un input valido per il gestore.>>");
 				}
-				GestoreRubrica.stampaMenu();
+				stampaMenu();
 				st = s.next();
 			}
 		} while (!st.equalsIgnoreCase("exit"));
+		
 		entityManager.close();
 		s.close();
-
 	}
-
 }

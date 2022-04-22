@@ -13,6 +13,7 @@ import org.xml.sax.SAXException;
 import it.beije.turing.file.CSVmanager;
 import it.beije.turing.file.XMLmanager;
 import it.beije.turing.rubrica.Contatto;
+import it.beije.turing.rubrica.Telefono;
 
 public class JPAmanager {
 	
@@ -41,6 +42,22 @@ public class JPAmanager {
 		entityManager.close();
 	}
 	
+	public static void insertToTelefono(Telefono telefono) {
+		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+		
+		if(telefono.getId() == 0) {
+			entityManager.persist(telefono);
+			
+		} else {
+			System.out.println("Telefono invalido per questa operazione.");
+		}
+		
+		entityTransaction.commit();
+		entityManager.close();
+	}
+	
 	public static void updateContattoRubrica(Contatto newContatto, int id) {
 		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -61,6 +78,12 @@ public class JPAmanager {
 			}
 			if(!newContatto.getTelefono().equals("") && newContatto.getTelefono() != null) {
 				contatto.setTelefono(newContatto.getTelefono());
+			}
+			if(!newContatto.getDataDiNascita().equals("") && newContatto.getDataDiNascita() != null) {
+				contatto.setDataDiNascita(newContatto.getDataDiNascita());
+			}
+			if(!newContatto.getIndirizzo().equals("") && newContatto.getIndirizzo() != null) {
+				contatto.setIndirizzo(newContatto.getIndirizzo());
 			}
 			if(!newContatto.getNote().equals("") && newContatto.getNote() != null) {
 				contatto.setNote(newContatto.getNote());
@@ -110,16 +133,21 @@ public class JPAmanager {
 		newContatto.setCognome("Melis");
 		newContatto.setNome("Mattia");
 		newContatto.setEmail("m.melis@beije.it");
-		newContatto.setTelefono("3782563490");
+		newContatto.setDataDiNascita("13/09/2000");
+		newContatto.setIndirizzo("Via Roma 12, Milano");
 		newContatto.setNote("Collega");
 		//insertToRubrica(newContatto);
 
+		Telefono newTelefono = new Telefono();
+		newTelefono.setTelefono("3381234567");
+		newTelefono.setDescrizione("Primo numero");
+		newTelefono.setIdRubrica(27);
+		insertToTelefono(newTelefono);
 		
 		//UPDATE
 		Contatto contatto = new Contatto();
 		contatto.setId(20);
 		contatto.setNote("Collega");
-		contatto.setTelefono("33890761287");
 		//updateContattoRubrica(contatto, 23);
 		
 		//DELETE

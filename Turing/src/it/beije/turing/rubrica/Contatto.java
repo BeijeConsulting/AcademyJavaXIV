@@ -32,9 +32,11 @@ public class Contatto {
 	@Column(name = "note")
 	private String note;
 	
+	@Column(name = "dataDiNascita")
+	private String dataDiNascita;
 
-
-	
+	@Column(name = "indirizzo")
+	private String indirizzo;
 
 	public int getId() {
 		return id;
@@ -78,6 +80,20 @@ public class Contatto {
 		this.note = note;
 	}
 	
+	public String getDataDiNascita() {
+		return dataDiNascita;
+	}
+	public void setDataDiNascita(String dataDiNascita) {
+		this.dataDiNascita = dataDiNascita;
+	}
+	
+	public String getIndirizzo() {
+		return indirizzo;
+	}
+	public void setIndirizzo(String indirizzo) {
+		this.indirizzo = indirizzo;
+	}
+	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 				.append("{ id : ").append(this.id)
@@ -85,6 +101,8 @@ public class Contatto {
 				.append(", nome : ").append(this.nome)
 				.append(", telefono : ").append(this.telefono)
 				.append(", email : ").append(this.email)
+				.append(", data di nascita : ").append(this.dataDiNascita)
+				.append(", indirizzo : ").append(this.indirizzo)
 				.append(", note : ").append(this.note).append(" }");
 		
 		return builder.toString();
