@@ -31,46 +31,47 @@ public class HomeGestoreRubrica {
 		GestoreRubrica.stampaMenu();
 
 		String st = s.next();
-		while (!st.equalsIgnoreCase("exit")) {
+		do {
 			st = st.toLowerCase();
-			switch(st) {
-				case "print":
-					GestoreFunction.stampaRubrica(s);
-					break;
-				case "find":
-					GestoreFunction.trovaContatto(s);
-					break;
-				case "insert":
-					GestoreFunction.inserisciContatto(s);
-					break;
-				case "modify":
-					GestoreFunction.modificaContatto(s);
-					break;
-				case "delete":
-					GestoreFunction.eliminaContatto(s);
-					break;
-				case "finddup":
-					//trovaContattiDuplicati(contatti);
-					break;
-				case "mergedup":
-					//unisciContattiDuplicati(contatti, s);
-					break;
-				case "export":
-					//exportDatabase(contatti, s);
-					break;
-				case "import":
-					//importDatabase(s);
-					break;
-				default:
-					System.out.println("\n<<Scrivi un input valido per il gestore.>>");
-			}
-			GestoreRubrica.stampaMenu();
-			st = s.next();
 			if(st.equalsIgnoreCase("exit")) {				
-				entityManager.close();
 				System.out.println("\n\n<<Gestore rubrica chiuso.>>");
+			} else {				
+				switch(st) {
+					case "print":
+						GestoreFunction.stampaRubrica(s);
+						break;
+					case "find":
+						GestoreFunction.trovaContatto(s);
+						break;
+					case "insert":
+						GestoreFunction.inserisciContatto(s);
+						break;
+					case "modify":
+						GestoreFunction.modificaContatto(s);
+						break;
+					case "delete":
+						GestoreFunction.eliminaContatto(s);
+						break;
+					case "finddup":
+						GestoreFunction.trovaContattiDuplicati();
+						break;
+					case "mergedup":
+						GestoreFunction.unisciContattiDuplicati(s);
+						break;
+					case "export":
+						GestoreFunction.exportDatabase(s);
+						break;
+					case "import":
+						GestoreFunction.importDatabase(s);
+						break;
+					default:
+						System.out.println("\n<<Scrivi un input valido per il gestore.>>");
+				}
+				GestoreRubrica.stampaMenu();
+				st = s.next();
 			}
-		}
+		} while (!st.equalsIgnoreCase("exit"));
+		entityManager.close();
 		s.close();
 
 	}
