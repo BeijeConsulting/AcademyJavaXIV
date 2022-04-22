@@ -1,12 +1,17 @@
 package it.beije.turing.db;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.xml.parsers.ParserConfigurationException;
 
+import org.xml.sax.SAXException;
 
+import it.beije.turing.file.CSVmanager;
+import it.beije.turing.file.XMLmanager;
 import it.beije.turing.rubrica.Contatto;
 
 public class JPAmanager {
@@ -45,19 +50,19 @@ public class JPAmanager {
 		System.out.println("modifico : " + contatto);
 		
 		if(contatto != null) {
-			if(newContatto.getNome() != null) {
+			if(!newContatto.getNome().equals("") && newContatto.getNome() != null) {
 				contatto.setNome(newContatto.getNome());
 			}
-			if(newContatto.getCognome() != null) {
+			if(!newContatto.getCognome().equals("") && newContatto.getCognome() != null) {
 				contatto.setCognome(newContatto.getCognome());
 			}
-			if(newContatto.getEmail() != null) {
+			if(!newContatto.getEmail().equals("") && newContatto.getEmail() != null) {
 				contatto.setEmail(newContatto.getEmail());
 			}
-			if(newContatto.getTelefono() != null) {
+			if(!newContatto.getTelefono().equals("") && newContatto.getTelefono() != null) {
 				contatto.setTelefono(newContatto.getTelefono());
 			}
-			if(newContatto.getNote() != null) {
+			if(!newContatto.getNote().equals("") && newContatto.getNote() != null) {
 				contatto.setNote(newContatto.getNote());
 			}
 			entityManager.persist(contatto);
@@ -81,6 +86,22 @@ public class JPAmanager {
 		entityManager.close();
 	}
 
+	public static void importFromCSV(String path, String separatore, boolean virgolette) throws IOException {
+		List<Contatto> contatti = CSVmanager.loadRubricaFromCSV(path, separatore, virgolette);
+		
+		for(Contatto contatto : contatti) {
+			insertToRubrica(contatto);
+		}
+	}
+
+	public static void importFromXML(String path) throws ParserConfigurationException, IOException, SAXException {
+		List<Contatto> contatti = XMLmanager.loadRubricaFromXML(path);
+		
+		for(Contatto contatto : contatti) {
+			insertToRubrica(contatto);
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		//INSERT
