@@ -142,7 +142,7 @@ public class MainGestoreRubricaJPA {
         }
     }
 
-    public static boolean areEqual(Contatto cont1, Contatto cont2) {
+    public static boolean areDup(Contatto cont1, Contatto cont2) {
         boolean res = cont1.getNome().equals(cont2.getNome()) && cont1.getCognome().equals(cont2.getCognome()) &&
                       cont1.getTelefono().equals(cont2.getTelefono()) && cont1.getEmail().equals(cont2.getEmail()) &&
                       cont1.getNote().equals(cont2.getNote());
@@ -157,11 +157,11 @@ public class MainGestoreRubricaJPA {
         for(Contatto c : contatti){
             for(Contatto c1 : contatti) {
                 if(c.getId() != c1.getId()) {
-                    if(areEqual(c, c1)) {
+                    if(areDup(c, c1)) {
                         contattoDup = c1;
                         if(contattiDup.size() == 0) {
                             contattiDup.add(contattoDup);
-                        } else if(areEqual(contattoDup, contattiDup.get(0))) {
+                        } else if(areDup(contattoDup, contattiDup.get(0))) {
                             contattiDup.add(contattoDup);
                         }
                     }
