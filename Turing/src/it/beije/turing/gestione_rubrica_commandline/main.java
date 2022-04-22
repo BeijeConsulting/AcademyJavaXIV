@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import it.beije.turing.rubrica.Contatto;
+import it.beije.turing.rubrica.GestoreRubrica;
 
 public class main {
 	static boolean shouldBeRunning=true;
 	static final String INPUT_ERROR = "errore, comando non riconosciuto";
-	static final String PAPPARDELLA_INIZIALE ="\n\ncommands: print, new, modify, import,export and exit to close program";
+	static final String PAPPARDELLA_INIZIALE ="only one command per line: print, new, modify,search,duplicates,merge,del,import,export and exit to close program";
 	
 	public static void main(String...args)
 	{	
@@ -28,25 +29,31 @@ public class main {
 		 CommandLineInterface clInterface = GestoreRubrica.getInstance();
 		 Scanner scanner = new Scanner(System.in);
 		 //clInterface.print();
-		 //System.out.println(PAPPARDELLA_INIZIALE);
+		 System.out.println(PAPPARDELLA_INIZIALE);
 		 System.out.print("-");
 		 String input = scanner.nextLine();
-		 String command[] = input.split("? ?|\"");
-		 if(command.length<1)
+		
+		 if(input.contains(" "))
 			 throw new CommandException();
-		 switch(command[0].toLowerCase())
+		 switch(input.toLowerCase())
 		 {
 		 
 		 case "import":
 			 try {
-			 String type = command[1];
+			 System.out.println("XML or CSV?");
+			 String type = scanner.nextLine();
+			 System.out.println("nome del file?");
+			 String filename=scanner.nextLine();
 			 if(type.equalsIgnoreCase("csv"))
 			 {
-			 clInterface.importCSV(command[2], Boolean.parseBoolean(command[3]));
+			 
+			 System.out.println("ci sono gli apici? true/false");
+			 String apici = scanner.nextLine();
+			 clInterface.importCSV(filename, Boolean.parseBoolean(apici));
 			 }
 			 else if(type.equalsIgnoreCase("xml"))
 			 {
-			 clInterface.importXML(command[2]);
+			 clInterface.importXML(filename);
 			 }
 			 else
 			 {
@@ -58,9 +65,16 @@ public class main {
 			 {
 				 throw new CommandException();
 			 }
+			 
+			////////////////////////////////////////7
+			 
 		 case "order":
-			 clInterface.printOrdered(command[1]);
+			 System.out.println("secondo quale colonna?");
+			 String colonna = scanner.nextLine();
+			 clInterface.printOrdered(colonna);
 			 break;
+			 
+			 
 		 case "print":
 		
 				clInterface.print();
@@ -68,26 +82,25 @@ public class main {
 		 
 		 
 		 case "search":
-			 for(Contatto c : clInterface.search(command))
+			 System.out.println("scrivi i parametri come segue(senza quadre): [Nome colonna] [valore] [altra colonna] [altro valore]");
+			 String filters = scanner.nextLine();
+			 for(Contatto c : clInterface.search(filters.split(" ")))
 			 {
 				 System.out.println(c);
 			 }
 			 break;
 		 
 		 case "new":
-			 if(command.length==1)
+			 System.out.println("x per indicare un campo null");
+			 String data[]= new String[5];
+			 String colonne[] = {"nome","cognome","telefono","email","note"};
+			 for(int i = 0;i<data.length;i++)
 			 {
-				 System.out.println("syntax: nome cognome telefono email note  insert x to ignore field");
-				 command=("x "+scanner.nextLine()).split(" ");
-			 }
-			 if(command.length>6) {
-				 for(int i = 6;i<command.length;i++)
-				 {
-					 command[5]+=" "+command[i];
-				 }
+				 System.out.println(colonne[i]);
+				data[i]=scanner.nextLine();
 			 }
 			 try {
-			 clInterface.add(command[1],command[2],command[3],command[4],command[5]);
+			 clInterface.add(data[0],data[1],data[2],data[3],data[4]);
 			 break;
 			 }
 			 catch(IndexOutOfBoundsException e)
@@ -98,19 +111,16 @@ public class main {
 		 
 		 
 		 case "modify":
-			 if(command.length==1)
+			 System.out.println("x per indicare un campo null");
+			 String data2[]= new String[6];
+			 String colonne2[] = {"id","nome","cognome","telefono","email","note"};
+			 for(int i = 0;i<data2.length;i++)
 			 {
-				 System.out.println("syntax: id nome cognome telefono email note  insert x to ignore field id is the id of the entry you want to update");
-				 command=("x "+scanner.nextLine()).split(" ");
-			 }
-			 if(command.length>7) {
-				 for(int i = 7;i<command.length;i++)
-				 {
-					 command[6]+=" "+command[i];
-				 }
+				 System.out.println(colonne2[i]);
+				data2[i]=scanner.nextLine();
 			 }
 			 try {
-			 clInterface.modify(Integer.parseInt(command[1]),command[2],command[3],command[4],command[5],command[6]);
+			 clInterface.modify(Integer.parseInt(data2[0]),data2[1],data2[2],data2[3],data2[4],data2[5]);
 			 break;
 			 }
 			 catch(IndexOutOfBoundsException e)
@@ -120,16 +130,22 @@ public class main {
 		 
 		 
 		 case "del":
-			Contatto c = (clInterface.search("x","id",command[1])).get(0);
+			 System.out.println("inerisci l'id del contatto da eliminare");
+			String id= scanner.nextLine();
+			Contatto c = (clInterface.search("id",id)).get(0);
 			System.out.println("are you sure to delete " + c +" ? y/n");
 			String answer = scanner.next();
 			if(answer.equalsIgnoreCase("y"))
-			clInterface.delete(command[1]);
-			else
-			 break;
+			clInterface.delete(id);
+			break;
 		
 		 case "export":
+			 System.out.println("XML or CSV?");
+			 String type = scanner.nextLine();
+			 if(type.equalsIgnoreCase("xml"))
 			 clInterface.ExportXML("tmp/Rubrica.xml");
+			 else if(type.equalsIgnoreCase("csv"))
+				 clInterface.ExportCSV("tmp/Rubrica.csv");
 			 break;
 		 
 		 default: 
@@ -140,9 +156,17 @@ public class main {
 			 clInterface.findDuplicates();
 			 break;
 		 case "merge":
-			 clInterface.mergeContacts(command);
+			 System.out.println("WARNING: da eseguire solo su contatti duplicati trovali con 'duplicate'");
+			 System.out.println("continuare? y/n");
+			 String answer2=scanner.nextLine();
+			 if(!answer2.equalsIgnoreCase("y"))
+				 break;
+			 System.out.println("inerisci gli id dei contatti da fondere");
+			 String ids = scanner.nextLine();
+			 clInterface.mergeContacts(ids.split(" "));
 			 break;
 		 case "exit":
+			 scanner.close();
 			 shouldBeRunning=false;
 		 }	 
 	}

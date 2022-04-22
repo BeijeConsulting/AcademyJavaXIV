@@ -1,39 +1,28 @@
-package it.beije.turing.gestione_rubrica_commandline;
+package it.beije.turing.rubrica;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.naming.directory.ModificationItem;
 
-import it.beije.turing.db.ClassicDBManager;
 import it.beije.turing.db.DbInterface;
-import it.beije.turing.db.HibernateManager;
-import it.beije.turing.db.JPA_Manager;
+import it.beije.turing.db.JPA_Manager_Criteria;
 import it.beije.turing.file.Writer;
-import it.beije.turing.file.csv.CSVReader2;
-import it.beije.turing.rubrica.Contatto;
-import it.beije.turing.rubrica.RubricaInterpreteCSV;
-import it.beije.turing.rubrica.RubricaInterpreteXML;
+import it.beije.turing.file.csv.CSVReader;
+import it.beije.turing.gestione_rubrica_commandline.CommandLineInterface;
 
 public class GestoreRubrica implements CommandLineInterface {
 private static final String BASE_RUBRIC="tmp/Test.txt";
-private List<Contatto> newEntries;
-private List<Contatto> modifiedEntries;
 private static GestoreRubrica self;
 private DbInterface db;
 
 private GestoreRubrica()
 {
-	db=new JPA_Manager();
-	newEntries=new ArrayList<Contatto>();
-	modifiedEntries=new ArrayList<>();
-	/*File file = new File(BASE_RUBRIC);
-	if(file.exists()&&file.isFile())
-	{
-		RubricImportCSV(BASE_RUBRIC,true);
-	}*/
+	db=new JPA_Manager_Criteria();
+	
 }
 
 
@@ -48,111 +37,33 @@ public static GestoreRubrica getInstance()
 
 
 public void importCSV(String fileName, boolean apici) {
- List<Contatto> tmp = CSVReader2.readCSV(fileName, apici);
+ List<Contatto> tmp = CSVReader.readCSV(fileName, apici);
  for(Contatto c : tmp)
  {
-	 newEntries.add(c);
+	db.insertContatti(c);
  }
 	}
-
-public List<Contatto> getList()
+public void ExportCSV(String fileName)
 {
-	List<Contatto> tmp = new ArrayList<>();
-	for(Contatto c:db.getContatti())
+	File file = new File(fileName);
+	if(!file.exists())
 	{
-		tmp.add(c);
-	}
-	for(Contatto c:newEntries)
-	{
-		tmp.add(c);
-	}
-	for(Contatto c:modifiedEntries)
-	{
-		tmp.add(c);
-	}
-	return tmp;
-}
-
-
-/*public void save() {
-	/*StringBuilder builder = new StringBuilder();
-	RubricaInterpreteCSV interprete = new RubricaInterpreteCSV();
-	builder.append(interprete.getHeader()+"\n");
-	for(Contatto c : list)
-	{
-		builder.append(interprete.toCSV(c)+"\n");
-	}
-	save(builder.toString());
-	db.insertContatti(newEntries);
-	db.updateContatti(modifiedEntries);
-	modifiedEntries=new ArrayList<>(); 
-} 
-*/
-
-
-private void save(String s)
-{
-	Writer.Write(BASE_RUBRIC, s);
-}
-
-
-public void print(String mode) {
-	switch(mode.toLowerCase())
-	{
-	case "byname" :
-		//printOrdinaPerNome();
-		break;
-	case "default" :
-		print();
-	}
-	
-}
-
-
-/*private void printOrdinaPerNome() {
-	List<Contatto> tmp = new ArrayList<>();
-	List<Integer> indexes = new ArrayList<>();
-	tmp.add(list.get(0));
-	indexes.add(list.indexOf(tmp.get(0)));
-	for(int i = 1;i<list.size();i++)
-	{
-		int counter=tmp.size();
-		Contatto tested = list.get(i); 
-		for(int k=counter-1;k>=0;k--) {
-			if(tested.getNome().compareToIgnoreCase(tmp.get(k).getNome())<0) //tested viene prima dell'elemento di temp
-			{
-				counter--;
-				if(counter==0)
-				{
-					tmp.add(0,tested);
-					indexes.add(0,list.indexOf(tested));
-				}
-			}
-			else
-			{
-				if(counter==tmp.size())
-				{
-					tmp.add(tested);
-					indexes.add(list.indexOf(tested));
-				}
-				else
-				{
-					tmp.add(counter, tested);
-					indexes.add(counter,list.indexOf(tested));
-					break;
-				}
-			}
-				
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			System.out.println("error in creating file");
+			e.printStackTrace();
 		}
-		
 	}
-	for(int i=0;i<tmp.size();i++)
+	StringBuilder content= new StringBuilder();
+	RubricaInterpreteCSV CSV = new RubricaInterpreteCSV();
+	for(Contatto c: db.getContatti())
 	{
-		System.out.println(indexes.get(i)+1+")  "+tmp.get(i));
+		content.append(CSV.toCSV(c));
+		content.append("\n");
 	}
-	
+	Writer.Write(fileName, content.toString());
 }
-*/
 
 public void print()
 {
@@ -163,25 +74,7 @@ public void print()
 }
 
 
-/*public void search(String nome, String cognome, String telefono, String email) {
-	List<Contatto> tmp = new ArrayList<>();
-	List<Integer> indexes  = new ArrayList<>();
-	for(Contatto c : list)
-	{
-		if((c.getNome().equalsIgnoreCase(nome)||(nome.equalsIgnoreCase("X")))&&(c.getCognome().equalsIgnoreCase(cognome)||(cognome.equalsIgnoreCase("X")))&&(c.getTelefono().equalsIgnoreCase(telefono)||(telefono.equalsIgnoreCase("X")))&&(c.getEmail().equalsIgnoreCase(email)||(email.equalsIgnoreCase("X"))))
-		{
-			tmp.add(c);
-			indexes.add(tmp.indexOf(c));
-		}
-	}
-	for(int i = 0;i<tmp.size();i++)
-	{
-		System.out.println(indexes.get(i)+1+")  "+tmp.get(i));
-	}
-	
-}
 
-*/
 public void add(String nome, String cognome, String telefono, String email,String note)
 {
 	Contatto c = new Contatto();
@@ -238,10 +131,6 @@ public void modify(int x,String nome, String cognome, String telefono, String em
 }
 
 
-/*public void delete(int i) {
-	list.remove(i);
-}*/
-
 public void ExportXML(String fileName)
 {
 	new RubricaInterpreteXML().ExportXML(db.getContatti(), fileName);
@@ -254,20 +143,21 @@ public void importXML(String fileName)
 	tmp= new RubricaInterpreteXML().importXML(fileName);
 	for(Contatto c : tmp)
 	{
-		newEntries.add(c);
+		db.insertContatti(c);
 	}
 }
 
 
 @Override
 public List<Contatto> search(String... command) {
-	StringBuilder query = new StringBuilder();
-	for(int i=1;i<command.length;i+=2)
+	StringBuilder query = new StringBuilder(" ");
+	for(int i=0;i<command.length;i+=2)
 	{
-		query.append(command[i]+"='"+command[i+1]+"' ");
-		if(i!=1)
+		int end = query.length()-1;
+		query.append(command[i]+"='"+command[i+1]+"' ");	
+		if(i!=0)
 		{
-			query.insert(0, ",");
+			query.insert(end, ",");
 		}
 	}
 	return db.search(query.toString());
@@ -337,6 +227,14 @@ public void mergeContacts(String... ids) {
 		dupes.add(search("x","id",i).get(0));
 	}
 	Contatto c=dupes.get(0);
+	for(Contatto d: dupes)
+	{
+		if(!c.equals(d))
+		{
+			System.out.println("contatti non duplicati");
+			return;
+		}
+	}
 	if(c.getNome()==null)
 	{
 		for(Contatto d : dupes)

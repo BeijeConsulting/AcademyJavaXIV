@@ -28,6 +28,8 @@ public interface CommandLineInterface {
 
 	public void mergeContacts(String...indexes);
 
+	public void ExportCSV(String fileName);
+
 	
 	
 	
