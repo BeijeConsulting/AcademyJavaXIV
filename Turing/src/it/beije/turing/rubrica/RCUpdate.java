@@ -7,7 +7,7 @@ import javax.persistence.EntityTransaction;
 
 import org.hibernate.Session;
 
-public class PERSUpdate {
+public class RCUpdate {
 	public static void update (EntityManager entityManager, Contatto contatto) {
 		//UPDATE
 		System.out.println("Updating contact : " + contatto);

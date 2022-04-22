@@ -10,7 +10,7 @@ import javax.persistence.Query;
 
 import it.beije.turing.rubrica.*;
 
-public class PERSmanager {
+public class RCmanager {
 
 	public static void main(String[] args) {
 
@@ -49,7 +49,7 @@ public class PERSmanager {
 		entityTransaction.commit();
 		//entityTransaction.rollback();
 		//PERSInsert.insert(entityManager);
-		PERSDuplicate.mergeDuplicates(entityManager);
+		RCDuplicate.mergeDuplicates(entityManager);
 		//SELECT JPQL
 		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
 		List<Contatto> contatti = query.getResultList();

@@ -9,11 +9,19 @@ import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 
-public class PERSViewer {
+public class RCViewer {
 	public static void view (EntityManager entityManager) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();		//SELECT * FROM contatti
+		CriteriaQuery<Contatto> q = cb.createQuery(Contatto.class);
+		Root<Contatto> con = q.from(Contatto.class);
+		q.select(con);
+		
 		Query query;
 		Scanner s = new Scanner(System.in);
 		System.out.println("Ordering contacts by name (n) or by surname (s) ?");
@@ -23,9 +31,11 @@ public class PERSViewer {
 			st = s.next();
 		}
 		if (st.equals("n")) {
-			query = entityManager.createQuery("SELECT c FROM Contatto as c ORDER BY nome");
+			q.orderBy(cb.asc(con.get("nome")));
+			query = entityManager.createQuery(q);
 		} else {
-			query = entityManager.createQuery("SELECT c FROM Contatto as c ORDER BY cognome");
+			q.orderBy(cb.asc(con.get("cognome")));
+			query = entityManager.createQuery("cognome");
 		}
 
 		List<Contatto> contatti = query.getResultList();

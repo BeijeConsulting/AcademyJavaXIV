@@ -6,11 +6,18 @@ import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 
-public class PERSSearch {
+public class RCSearch {
 	public static List<Contatto> search(EntityManager entityManager) {
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();		//SELECT * FROM contatti
+		CriteriaQuery<Contatto> q = cb.createQuery(Contatto.class);
+		Root<Contatto> con = q.from(Contatto.class);
+		q.select(con);
+		Query query = entityManager.createQuery(q);
 		List<Contatto> contatti = query.getResultList();
 		List<Contatto> results = new ArrayList<>();
 		Scanner s = new Scanner(System.in);
