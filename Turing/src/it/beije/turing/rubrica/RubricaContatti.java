@@ -11,6 +11,10 @@ import javax.persistence.Persistence;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -383,7 +387,7 @@ public class RubricaContatti {
                 if (c.getEmail().equalsIgnoreCase(c1.getEmail()) && (c.getId() != c1.getId()) && !(c1.getEmail().equals("null")) && !(c1.getEmail().equals(""))) {
                     System.out.println("Duplicato tolto per l'email : ");
                     System.out.println(c1.toString());
-                   // jpAcriteria = new JPAcriteria();
+                    jpAcriteria = new JPAcriteria();
                     jpAcriteria.delete(c1);
                 }
                 j++;
@@ -414,7 +418,7 @@ public class RubricaContatti {
     }
 
 
-    public void importaEsporta() {
+    public void importaEsporta() throws Exception {
         Scanner in = new Scanner(System.in);
         System.out.println("1.Importa CSV \n2.Importa XML \n3.Esporta CSV \n4.Esporta XML");
 
@@ -445,7 +449,7 @@ public class RubricaContatti {
             case "4":
                 System.out.println("	                       		        	");
                 System.out.println("	        	Esporta XML		        	");
-
+                writeXML();
 
                 break;
         }
@@ -668,5 +672,70 @@ public class RubricaContatti {
         return childElements;
     }
 
+    public void writeXML() throws Exception {
+
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Inserisci la directory del file da importare (File Compreso) : ");
+        String dir = in.nextLine();
+        if(dir.equals("")) {
+            System.out.print("directory non valida");
+        }
+
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+
+        Document doc = documentBuilder.newDocument();
+
+        Element contatti = doc.createElement("contatti");
+        doc.appendChild(contatti);//root element
+
+        for(Contatto c : listaContatti){
+
+            {
+                Element contatto = doc.createElement("contatto");
+
+                Element cognome = doc.createElement("cognome");
+                cognome.setTextContent(c.getCognome());//<cognome>Marrone</cognome>
+                contatto.appendChild(cognome);
+
+                Element nome = doc.createElement("nome");
+                nome.setTextContent(c.getNome());//<nome>Emma</nome>
+                contatto.appendChild(nome);
+
+                Element telefono = doc.createElement("telefono");
+                telefono.setTextContent(c.getTelefono());
+                contatto.appendChild(telefono);
+
+                Element email = doc.createElement("email");
+                email.setTextContent(c.getEmail());
+                contatto.appendChild(email);
+
+                Element note = doc.createElement("note");
+                note.setTextContent(c.getNote());
+                contatto.appendChild(note);
+
+                contatti.appendChild(contatto);
+            }
+
+            // write the content into xml file
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+
+            StreamResult result = new StreamResult(new File(dir));
+
+            // Output to console for testing
+            StreamResult syso = new StreamResult(System.out);
+
+            transformer.transform(source, result);
+            transformer.transform(source, syso);
+
+            System.out.println("File saved!");
+
+        }
+
     }
+
+}
 

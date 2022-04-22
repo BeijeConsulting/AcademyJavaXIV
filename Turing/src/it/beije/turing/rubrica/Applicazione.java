@@ -5,7 +5,7 @@ import it.beije.turing.db.JPAcriteria;
 import java.util.Scanner;
 
 public class Applicazione {
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
 
         RubricaContatti rubrica = new RubricaContatti();
         Scanner in = new Scanner(System.in);
