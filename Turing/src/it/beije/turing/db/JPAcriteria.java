@@ -7,16 +7,20 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
+
+import static it.beije.turing.db.SingletonJPA.entityManager;
 
 public class JPAcriteria {
 
 
     private EntityManager session;
     private EntityManagerFactory entityManagerFactory;
+    private CriteriaBuilder cb;
     public JPAcriteria(){
 
         session = SingletonJPA.getEntityManagerInstance();
@@ -31,18 +35,6 @@ public class JPAcriteria {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-//        Contatto newContatto = new Contatto();
-//		//newContatto.setId(3);
-//		newContatto.setCognome(c.getCognome());
-//		newContatto.setNome(c.getNome());
-//		newContatto.setEmail(c.getEmail());
-//        newContatto.setTelefono(c.getTelefono());
-//        newContatto.setNote(c.getNote());
-//		System.out.println("contatto PRE : " + newContatto);
-
-//		entityManager.persist(newContatto);
-//
-//   turing.rubrica (nome, cognome, email, telefono)
 
         entityManager.createNativeQuery("INSERT INTO rubrica (nome, cognome, email, telefono, note) VALUES ( ?, ?, ?, ?, ?)")
 
@@ -59,7 +51,7 @@ public class JPAcriteria {
     }
     public  List<Contatto> JPACriteriaLeggiContatti(){
 
-        CriteriaBuilder cb = session.getCriteriaBuilder();
+        cb = session.getCriteriaBuilder();
         CriteriaQuery<Contatto> cr = cb.createQuery(Contatto.class);
         Root<Contatto> root = cr.from(Contatto.class);
         cr.select(root);
@@ -74,7 +66,7 @@ public class JPAcriteria {
 
         public void aggiungiContatto(Contatto contattoNuovo){
 
-            CriteriaBuilder cb = session.getCriteriaBuilder();
+            cb = session.getCriteriaBuilder();
             CriteriaQuery<Contatto> cr = cb.createQuery(Contatto.class);
             Root<Contatto> root = cr.from(Contatto.class);
             cr.select(root);
@@ -85,4 +77,28 @@ public class JPAcriteria {
 
 
         }
+
+    public void delete(Contatto c) {
+
+        CriteriaBuilder cb = this.session.getCriteriaBuilder();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        // create delete
+        CriteriaDelete<Contatto> delete = cb.
+                createCriteriaDelete(Contatto.class);
+
+        // set the root class
+        Root e = delete.from(Contatto.class);
+
+        // set where clause
+        delete.where(cb.equal(e.get("id"), c.getId()));
+
+        // perform update
+        this.session.createQuery(delete).executeUpdate();
+
+        entityTransaction.commit();
+
+
+    }
 }

@@ -77,12 +77,12 @@ public class Contatto {
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-				.append("{ id : ").append(this.id)
-				.append(", cognome : ").append(this.cognome)
-				.append(", nome : ").append(this.nome)
-				.append(", telefono : ").append(this.telefono)
-				.append(", email : ").append(this.email)
-				.append(", note : ").append(this.note).append(" }");
+				.append("|\tId :\t").append(this.id).append("\t")
+				.append("\t; Nome :\t").append(this.nome).append("\t")
+				.append(" ; Cognome :\t").append(this.cognome).append("\t")
+				.append(" ; Telefono : ").append(this.telefono).append("\t")
+				.append(" ; Email : ").append(this.email).append("\t")
+				.append(" ; Note :").append(this.note).append(" |");
 		
 		return builder.toString();
 	}

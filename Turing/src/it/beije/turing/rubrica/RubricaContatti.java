@@ -196,16 +196,45 @@ public class RubricaContatti {
             System.out.print("Note non valide");
         }
 
-        contattoNuovo.setNome(nome);
-        contattoNuovo.setCognome(cognome);
-        contattoNuovo.setEmail(email);
-        contattoNuovo.setTelefono(telefono);
-        contattoNuovo.setNote(nome);
+        contattoNuovo.setNome(nome.trim());
+        contattoNuovo.setCognome(cognome.trim());
+        contattoNuovo.setEmail(email.trim());
+        contattoNuovo.setTelefono(telefono.trim());
+        contattoNuovo.setNote(nome.trim());
 
         jpAcriteria.JPAaggiungiContatto(contattoNuovo);
 
         }
 
 
+    public void eliminaContatto() {
+
+        List<Contatto> contattos = jpAcriteria.JPACriteriaLeggiContatti();
+        listaContatti = (ArrayList<Contatto>) contattos;
+        for (Contatto c: contattos ) {
+            System.out.println(c.toString());
+
+        }
+
+
+        Scanner in = new Scanner(System.in);
+        Contatto contatto = new Contatto();
+
+        System.out.println(" Id dell'elemento da eliminare : ");
+        String numero = in.nextLine();
+        if(numero.equals("")) {
+            System.out.print("Nome non valido ");
+        }
+        int num = Integer.parseInt(numero);
+
+        for (Contatto c: contattos ) {
+           if(num == c.getId()){
+               jpAcriteria.delete(c);
+           }
+
+        }
+
+
     }
+}
 

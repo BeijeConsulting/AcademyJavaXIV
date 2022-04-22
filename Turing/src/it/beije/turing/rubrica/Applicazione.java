@@ -65,7 +65,7 @@ public class Applicazione {
                     System.out.println("	                     			");
                     System.out.println("        Elimina Contatto              ");
 
-                    //rubrica.eliminaContatto(String)
+                    rubrica.eliminaContatto();
                     esci = false;
                     break;
 
