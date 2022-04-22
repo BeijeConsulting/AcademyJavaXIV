@@ -9,27 +9,14 @@ import it.beije.turing.rubrica.Contatto;
 
 public class CSVwriter {
 
-	public static void main(String[] args) {
+	public static void write(List<Contatto> contatti) {
 		
-		File file = new File("/temp/prova123.txt");
-		System.out.println("file exists? " + file.exists());
-		
-		if (file.exists()) {
-			System.out.println("FILE GIA' ESISTENTE!!!");
-//			return;
-		}
-		
+		File file = new File("C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\src\\it\\beije\\turing\\rubrica\\dbTocsv.csv");
+
 		FileWriter fileWriter = null;
 		try {
 			fileWriter = new FileWriter(file);
-			
-//			// "NOME","COGNOME","TELEFONO","EMAIL","NOTE"
-//			fileWriter.write("\"NOME\",\"COGNOME\",\"TELEFONO\",\"EMAIL\",\"NOTE\"");
-//			fileWriter.write('\n');
-//			//"Mario";"Rossi";"3432532555";"mario.rossi@gmail.com";"vicino di casa"
-//			fileWriter.write("\"Mario\";\"Rossi\";\"00000000\";\"mario.rossi@gmail.com\";\"vicino di casa\"");
-			
-			List<Contatto> contatti = CSVreader.readCSV("/temp/prova.txt");
+
 			for (Contatto contatto : contatti) {
 //				fileWriter.write(row);
 				fileWriter.write(contatto.getCognome());
@@ -40,7 +27,7 @@ public class CSVwriter {
 				fileWriter.write('\t');
 				fileWriter.write(contatto.getTelefono());
 				fileWriter.write('\t');
-				fileWriter.write(contatto.getNote());
+				fileWriter.write(contatto.getNome());
 				fileWriter.write('\n');
 			}
 		} catch (IOException ioEx) {
@@ -53,7 +40,7 @@ public class CSVwriter {
 				fEx.printStackTrace();
 			}
 			
-			System.out.println("done");
+			System.out.println("File modificato");
 		}
 		
 	}

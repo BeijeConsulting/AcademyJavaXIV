@@ -1,20 +1,25 @@
 package it.beije.turing.rubrica;
 import it.beije.turing.db.JPACriteria;
+import it.beije.turing.file.CSVreader;
+import it.beije.turing.file.CSVwriter;
+import it.beije.turing.file.XMLmanager;
 
 import java.util.*;
 
 public class Rubrica {
 
-    List<Contatto> contacts = new ArrayList<>();
+    private List<Contatto> contacts = new ArrayList<>();
+    private String pathCSV;
+    private String pathXML;
 
-    public Rubrica() {
+    public Rubrica() throws Exception {
         Start();
     }
-
-    private void Start () {
+    private void Start () throws Exception {
         Scanner sc= new Scanner(System.in);
-
+        List <Contatto> contatti=null;
         String choose;
+
 
         boolean again = true;
 
@@ -30,11 +35,13 @@ public class Rubrica {
             System.out.println("5 - Elimina contatto");
             System.out.println("6 - Modifica contatto");
             System.out.println("7 - Gestisci duplicati");
-            System.out.println("8 - Importa");
-            System.out.println("9 - Esporta");
+            System.out.println("8 - Importa csv");
+            System.out.println("9 - Esporta csv");
+            System.out.println("10 - Importa xml");
+            System.out.println("11 - Esporta xml");
             System.out.println("0 - Chiudi programma");
 
-            ScannerCheck mySc=new ScannerCheck(sc, 0,8);
+            ScannerCheck mySc=new ScannerCheck(sc, 0,11);
             ScannerCheck orderChoose2 = new ScannerCheck(sc, 1,2);
             ScannerCheck orderChoose3 = new ScannerCheck(sc, 1,3);
 
@@ -84,9 +91,33 @@ public class Rubrica {
                     break;
                 }
                 case 8: {
+                    System.out.println("Import del csv...");
+                    pathCSV="C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\src\\it\\beije\\turing\\rubrica\\cont.csv";
+                    contatti= CSVreader.readCSV(pathCSV);
+                    for (Contatto  c: contatti){
+                        JPACriteria.importRubrica(c);
+                    }
                     break;
                 }
                 case 9: {
+                    System.out.println("Esportazione del db in csv...");
+                    contatti= JPACriteria.getResultList();
+                    CSVwriter.write(contatti);
+                    break;
+                }
+                case 10: {
+                    System.out.println("Importa xml");
+                    pathXML="C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\src\\it\\beije\\turing\\rubrica\\dbToXml.xml";
+                    contatti=XMLmanager.readXML(pathXML);
+                    for (Contatto  c: contatti){
+                        JPACriteria.importRubrica(c);
+                    }
+                    break;
+                }case 11: {
+                    System.out.println("Esportazione del db in xml...");
+                    contatti=JPACriteria.getResultList();
+                    XMLmanager.writeXML(contatti);
+
                     break;
                 }
             }

@@ -13,6 +13,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import it.beije.turing.rubrica.Contatto;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -48,56 +49,49 @@ public class XMLmanager {
 		return childElements;
 	}
 
-	public static void readXML(String path) {
-		
+	public static List<Contatto> readXML(String pathXML) {
+		List<Contatto> contatti= new ArrayList<>();
+		Contatto cont=null;
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = null;
 		Document document = null;
 		
 		try {
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			document = documentBuilder.parse(path);
+			document = documentBuilder.parse(pathXML);
 			
 			Element root = document.getDocumentElement();
-			System.out.println("root : " + root.getTagName());
-			
-//			NodeList contatti = root.getElementsByTagName("contatto");
-//			System.out.println("contatti num : " + contatti.getLength());
 
 			NodeList nodes = root.getChildNodes();
-			System.out.println("nodes num : " + nodes.getLength());
-			
+
 			List<Element> children = getChildElements(root);
-			System.out.println("children num : " + children.size());
-			
+
+
 			for (Element el : children) {
 				if (el.getTagName().equalsIgnoreCase("contatto")) {
 					List<Element> contatto = getChildElements(el);
+					cont= new Contatto();
 					for (Element value : contatto) {
+
 						switch (value.getTagName().toLowerCase()) {
 						case "nome":
-							System.out.println("nome : " + value.getTextContent());
+							cont.setNome(value.getTextContent());
 							break;
 						case "cognome":
-							System.out.println("cognome : " + value.getTextContent());						
+							cont.setCognome(value.getTextContent());
 							break;
 						case "telefono":
-							System.out.println("telefono : " + value.getTextContent());						
+							cont.setTelefono(value.getTextContent());
 							break;
 						case "email":
-							System.out.println("email : " + value.getTextContent());						
+							cont.setEmail(value.getTextContent());
 							break;
 						case "note":
-							System.out.println("note : " + value.getTextContent());						
-							break;
+							cont.setNote(value.getTextContent());
+							break;}
 
-						default:
-							break;
-						}
-						
 					}
-					
-					System.out.println("eta' : " + el.getAttribute("eta"));
+					contatti.add(cont);
 				}
 			}
 			
@@ -108,10 +102,11 @@ public class XMLmanager {
 		} catch (SAXException saxEx) {
 			saxEx.printStackTrace();
 		}
-		
+		return contatti;
 	}
 	
-	public static void writeXML(String path) throws Exception {
+	public static void writeXML(List<Contatto> contatList) throws Exception {
+		System.out.println("entro");
 		
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -120,66 +115,37 @@ public class XMLmanager {
 
 		Element contatti = doc.createElement("contatti");
 		doc.appendChild(contatti);//root element
-		{
+		for (Contatto c: contatList){
 			Element contatto = doc.createElement("contatto");
-			contatto.setAttribute("eta", "25");
-			
+
 			Element cognome = doc.createElement("cognome");
-			cognome.setTextContent("Marrone");//<cognome>Marrone</cognome>
+			cognome.setTextContent(c.getCognome());//<cognome>Marrone</cognome>
 			contatto.appendChild(cognome);
 	
 			Element nome = doc.createElement("nome");
-			nome.setTextContent("Emma");//<nome>Emma</nome>
+			nome.setTextContent(c.getNome());//<nome>Emma</nome>
 			contatto.appendChild(nome);
 	
 			Element telefono = doc.createElement("telefono");
-			telefono.setTextContent("432423");
+			telefono.setTextContent(c.getTelefono());
 			contatto.appendChild(telefono);
 	
 			Element email = doc.createElement("email");
-			email.setTextContent("emma@marrone.it");
+			email.setTextContent(c.getEmail());
 			contatto.appendChild(email);
 	
 			Element note = doc.createElement("note");
-			note.setTextContent("la nota cantante");
+			note.setTextContent(c.getNote());
 			contatto.appendChild(note);
 			
 			contatti.appendChild(contatto);
 		}
-		{
-			Element contatto = doc.createElement("contatto");
-			contatto.setAttribute("eta", "78");
-			
-			Element cognome = doc.createElement("cognome");
-			cognome.setTextContent("Morandi");
-			contatto.appendChild(cognome);
-	
-			Element nome = doc.createElement("nome");
-			nome.setTextContent("Gianni");
-			contatto.appendChild(nome);
-	
-			Element telefono = doc.createElement("telefono");
-			telefono.setTextContent("432425233");
-			contatto.appendChild(telefono);
-	
-			Element email = doc.createElement("email");
-			email.setTextContent("gianni@morandi.it");
-			contatto.appendChild(email);
-	
-			Element note = doc.createElement("note");
-			note.setTextContent("il noto cantante");
-			contatto.appendChild(note);
-			
-			contatti.appendChild(contatto);
-		}
-		System.out.println("contatti : " + contatti.getElementsByTagName("contatto").getLength());
-		
-		// write the content into xml file
+
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(doc);
 		
-		StreamResult result = new StreamResult(new File(path));
+		StreamResult result = new StreamResult(new File("C:\\Users\\39346\\IdeaProjects\\AcademyJavaXIV\\Turing\\src\\it\\beije\\turing\\rubrica\\dbToXml.xml"));
 
 		// Output to console for testing
 		StreamResult syso = new StreamResult(System.out);
@@ -187,13 +153,8 @@ public class XMLmanager {
 		transformer.transform(source, result);
 		transformer.transform(source, syso);
 
-		//System.out.println("File saved!");	
+		System.out.println("File salvato");
 
-	}
-
-	public static void main(String[] args) throws Exception {
-		//readXML("/temp/rubrica.xml");
-		writeXML("/temp/new_rubrica.xml");
 	}
 
 }

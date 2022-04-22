@@ -8,6 +8,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+
+
 import it.beije.turing.rubrica.Contatto;
 
 public class JPAmanager {

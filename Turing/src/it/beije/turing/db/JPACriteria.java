@@ -1,4 +1,5 @@
 package it.beije.turing.db;
+import it.beije.turing.file.CSVreader;
 import it.beije.turing.rubrica.Contatto;
 import it.beije.turing.rubrica.ScannerCheck;
 
@@ -70,7 +71,13 @@ public class JPACriteria {
         et = em.getTransaction();
         et.begin();
         Contatto c = insertModifyContact();
+        em.persist(c);
+        et.commit();
+    }
 
+    public static void importRubrica(Contatto c) {
+        et = em.getTransaction();
+        et.begin();
         em.persist(c);
         et.commit();
     }
@@ -81,8 +88,16 @@ public class JPACriteria {
         int choose = ScannerCheck.checkNumber(sc.next());
         Contatto contatto = em.find(Contatto.class, choose);
         if (contatto != null) {
-            contatto = insertModifyContact();
-            System.out.println("contatto modificato");
+            System.out.println("Inserire cognome");
+            contatto.setCognome(sc.next());
+            System.out.println("Inserire nome");
+            contatto.setNome(sc.next());
+            System.out.println("Inserire email");
+            contatto.setEmail(sc.next());
+            System.out.println("Inserire telefono");
+            contatto.setTelefono(sc.next());
+            System.out.println("Inserire Note");
+            contatto.setNote(sc.next());
             em.persist(contatto);
             et.commit();
         } else {
@@ -142,6 +157,7 @@ public class JPACriteria {
     }
 
     private static Contatto insertModifyContact() {
+
         String nome = null;
         String cognome = null;
         String telefono = null;
@@ -164,14 +180,10 @@ public class JPACriteria {
 
     private static void printResults(List<Contatto> resultlist) {
         for (Contatto cont : resultlist) {
-            System.out.println("ID : " + (cont).getId() + " Nome : " + (cont).getNome() + " Cognome : " + (cont).getCognome() + " Telefono : " + (cont).getTelefono() + " Email : " + (cont).getEmail() + " Note : " + (cont).getNote());
+            System.out.println("ID : " + cont.getId() + " Nome : " + cont.getNome() + " Cognome : " + cont.getCognome() + " Telefono : " + cont.getTelefono() + " Email : " + cont.getEmail() + " Note : " + cont.getNote());
         }
     }
 
-    public static void closeSession() {
-        em.close();
-        emf.close();
-    }
 
     public static void manageDuplicate(int choose) {
 
@@ -215,5 +227,16 @@ public class JPACriteria {
             }
         }
     }
+
+    public static void importTodbFromCsv(){
+
+
+    }
+
+    public static void closeSession() {
+        em.close();
+        emf.close();
+    }
+
 }
 
