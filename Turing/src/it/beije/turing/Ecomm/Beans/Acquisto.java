@@ -57,4 +57,14 @@ public class Acquisto {
     public void setQuantita(double quantita) {
         this.quantita = quantita;
     }
+
+    @Override
+    public String toString() {
+        return "Acquisto  [" +
+                " idAcquisto =" + idAcquisto +
+                " , idOrdine =" + idOrdine +
+                " , idProdotto =" + idProdotto +
+                " , quantita =" + quantita +
+                " ]";
+    }
 }
