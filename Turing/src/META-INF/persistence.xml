@@ -3,6 +3,10 @@
 	<persistence-unit name="turing">
 
 		<class>it.beije.turing.rubrica.Contatto</class>
+		<class>it.beije.turing.ecommerce.Users</class>
+		<class>it.beije.turing.ecommerce.Products</class>
+		<class>it.beije.turing.ecommerce.Orders</class>
+		<class>it.beije.turing.ecommerce.OrderItems</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
