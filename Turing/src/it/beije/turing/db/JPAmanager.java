@@ -1,12 +1,10 @@
 package it.beije.turing.db;
 
-import it.beije.turing.beanecommerce.Utenti;
-import it.beije.turing.manger.UtentiManager;
+import it.beije.turing.beanecommerce.Prodotto;
+import it.beije.turing.beanecommerce.Utente;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.List;
 
 
 public class JPAmanager {
@@ -16,11 +14,11 @@ public class JPAmanager {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("peppeshop");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
-		Utenti contatto = entityManager.find(Utenti.class, 1);//SELECT c FROM Contatto as c WHERE id = 1
-		System.out.println("contatto : " + contatto);
+		Utente contatto = entityManager.find(Utente.class, 1);//SELECT c FROM Contatto as c WHERE id = 1
+		System.out.println(contatto);
 		
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-		entityTransaction.begin();
+/*		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();*/
 		
 		//INSERT
 //		Contatto newContatto = new Contatto();
@@ -45,18 +43,24 @@ public class JPAmanager {
 //		//DELETE
 //		entityManager.remove(contatto);
 
-		entityTransaction.commit();
+/*		entityTransaction.commit();*/
 		//entityTransaction.rollback();
-		
-		//SELECT JPQL
-		/*Query query = entityManager.createQuery("SELECT c FROM Utenti as c");
-		List<Utenti> contatti = query.getResultList();
 
-		for (Utenti c : contatti) {
+
+		EntityManager entityManagerP = entityManagerFactory.createEntityManager();
+
+		Prodotto prodotto = entityManagerP.find(Prodotto.class, 1);//SELECT c FROM Contatto as c WHERE id = 1
+		System.out.println(prodotto);
+
+
+		Query query = entityManagerP.createQuery("SELECT p FROM Prodotto as p");
+		List<Prodotto> prodotto2 = query.getResultList();
+
+		for (Prodotto c : prodotto2) {
 			System.out.println(c);
 		}
 
-		entityManager.close();*/
+		entityManagerP.close();
 
 	}
 

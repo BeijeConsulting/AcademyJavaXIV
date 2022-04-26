@@ -1,6 +1,6 @@
 package it.beije.turing.manger;
 
-import it.beije.turing.beanecommerce.Utenti;
+import it.beije.turing.beanecommerce.Utente;
 import it.beije.turing.db.HBsessionFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -55,11 +55,11 @@ public class UtentiManager {
 
                 //SELECT HQL
 
-			Query<Utenti> query = session.createQuery("SELECT c FROM Utenti as c");//SELECT * FROM contatti
-			List<Utenti> contatti = query.getResultList();
+			Query<Utente> query = session.createQuery("SELECT c FROM Utenti as c");//SELECT * FROM contatti
+			List<Utente> contatti = query.getResultList();
 
 			UtentiManager contatto = null;
-			for (Utenti c : contatti) {
+			for (Utente c : contatti) {
 				System.out.println(c);
 			}
 

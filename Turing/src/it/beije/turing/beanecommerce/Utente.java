@@ -1,7 +1,5 @@
 package it.beije.turing.beanecommerce;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-
 import javax.persistence.*;
 
 /**
@@ -10,7 +8,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "utenti")
-public class Utenti {
+public class Utente {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
