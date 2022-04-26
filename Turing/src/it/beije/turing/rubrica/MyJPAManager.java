@@ -38,7 +38,7 @@ public class MyJPAManager {
             System.out.println("IMPORTED");
         }
 
-        return  contacts;
+        return contacts;
     }
 
     public static void exportRubrica(List<Contatto> contacts) {
