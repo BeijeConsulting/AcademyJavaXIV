@@ -1,4 +1,4 @@
-package it.beije.turing.file.xml;
+package it.beije.turing.file;
 
 import java.io.File;
 import java.io.IOException;

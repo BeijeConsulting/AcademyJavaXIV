@@ -86,29 +86,5 @@ public class Contatto {
 		
 		return builder.toString();
 	}
-	public boolean equals(Contatto c)
-	{
-		if(this.getNome()!=null&&c.getNome()!=null&&!this.getNome().equalsIgnoreCase(c.getNome()))
-		{
-			return false;
-		}
-		if(this.getCognome()!=null&&c.getCognome()!=null&&!this.getCognome().equalsIgnoreCase(c.getCognome()))
-		{
-			return false;
-		}
-		if(this.getTelefono()!=null&&c.getTelefono()!=null&&!this.getTelefono().equalsIgnoreCase(c.getTelefono()))
-			{
-				return false;
-			}
-		if(this.getEmail()!=null&&c.getEmail()!=null&&!this.getEmail().equalsIgnoreCase(c.getEmail()))
-		{
-			return false;
-		}
-		if(this.getNote()!=null&&c.getNote()!=null&&!this.getNote().equalsIgnoreCase(c.getNote()))
-		{
-			return false;
-		}
-		return true;
-	}
 
 }
