@@ -2,7 +2,8 @@ package it.beije.turing.Ecomm.Beans;
 
 import javax.persistence.*;
 
-
+@Entity
+@Table(name="acquisto")
 public class Acquisto {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -16,9 +17,11 @@ public class Acquisto {
     @Column(name = "quantita")
     private double quantita;
 
-    public Acquisto(int idAcquisto, int idOrdine, int idProdotto, double quantita) {
-        this.idAcquisto = idAcquisto;
-        this.idOrdine = idOrdine;
+    public Acquisto(){
+        this(0, 0.00);
+    }
+    public Acquisto( int idProdotto, double quantita) {
+
         this.idProdotto = idProdotto;
         this.quantita = quantita;
     }

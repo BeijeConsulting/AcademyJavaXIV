@@ -2,7 +2,8 @@ package it.beije.turing.Ecomm.Beans;
 
 import javax.persistence.*;
 
-
+@Entity
+@Table(name="ordine")
 public class Ordine {
 
     @Id
@@ -16,9 +17,12 @@ public class Ordine {
     @Column(name = "stato")
     private String stato;
 
+    public Ordine(){
+        this(0, 0.00, "");
+    }
 
-    public Ordine(int id, int idCliente, double valoreTotale, String stato) {
-        this.id = id;
+    public Ordine( int idCliente, double valoreTotale, String stato) {
+
         this.idCliente = idCliente;
         this.valoreTotale = valoreTotale;
         this.stato = stato;
@@ -54,5 +58,15 @@ public class Ordine {
 
     public void setStato(String stato) {
         this.stato = stato;
+    }
+
+    @Override
+    public String toString() {
+        return "Ordine  [" +
+                " Id = " + id +
+                " , IdCliente = " + idCliente +
+                " , ValoreTotale=" + valoreTotale +
+                " , Stato='" + stato + '\'' +
+                " ] ";
     }
 }

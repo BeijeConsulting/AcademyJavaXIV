@@ -1,7 +1,8 @@
 package it.beije.turing.Ecomm.Beans;
 
 import javax.persistence.*;
-
+@Entity
+@Table(name="prodotto")
 public class Prodotto {
 
     @Id
@@ -15,10 +16,13 @@ public class Prodotto {
     @Column(name = "quantita")
     private int quantitaP;
 
+    public Prodotto(){
+        this("", 0.00, 0);
+    }
 
 
-    public Prodotto(int id, String nome, double costo, int quantitaP) {
-        this.id = id;
+    public Prodotto( String nome, double costo, int quantitaP) {
+
         this.nome = nome;
         this.costo = costo;
         this.quantitaP = quantitaP;
@@ -59,10 +63,10 @@ public class Prodotto {
     @Override
     public String toString() {
         return "  Prodotto [ " +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", costo=" + costo +
-                ", quantita' P=" + quantitaP +
-                ']';
+                " Id=" + id +
+                " , Nome= " + nome + '\'' +
+                " , Costo= " + costo +
+                " , Quantita' = " + quantitaP +
+                " ]";
     }
 }

@@ -72,4 +72,15 @@ public class Cliente {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente [ " +
+                "Id =" + id +
+                " , Nome ='" + nome + '\'' +
+                " , Cognome ='" + cognome + '\'' +
+                " , Indirizzo ='" + indirizzo + '\'' +
+                " , Email='" + email + '\'' +
+                " ]";
+    }
 }
