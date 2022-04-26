@@ -1,6 +1,6 @@
 package it.beije.turing.ecommerce;
 
-public class Conenuto {
+public class Contenuto {
 	private int id;
 	private int id_carrello;
 	private int id_prodotto;
