@@ -3,18 +3,18 @@ package it.beije.ecommerce;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "product")
-public class Product {
+@Table(name = "shopping_cart_content")
+public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "id_user")
+    private int id_user;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "id_product")
+    private int id_product;
 
     @Column(name = "quantity")
     private int quantity;
@@ -25,27 +25,31 @@ public class Product {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+    public int getId_user() {
+        return id_user;
     }
 
-    public String getDescription() {
-        return description;
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
-    public void setDescription(String description) {
-        this.description = description;
+
+    public int getId_product() {
+        return id_product;
+    }
+
+    public void setId_product(int id_product) {
+        this.id_product = id_product;
     }
 
     public int getQuantity() {
         return quantity;
     }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
@@ -53,6 +57,7 @@ public class Product {
     public double getPrice() {
         return price;
     }
+
     public void setPrice(double price) {
         this.price = price;
     }
