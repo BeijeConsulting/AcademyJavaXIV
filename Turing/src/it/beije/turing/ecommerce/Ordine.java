@@ -36,9 +36,19 @@ public class Ordine
 		return id;
 	}
 	
+	public void setId_utente(int id_utente)
+	{
+		this.id_utente = id_utente;
+	}
+	
 	public int getId_utente()
 	{
 		return id_utente;
+	}
+	
+	public void setId_carrello(int id_carrello)
+	{
+		this.id_carrello = id_carrello;
 	}
 	
 	public int getId_carrello()

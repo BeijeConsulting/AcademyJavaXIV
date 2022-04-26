@@ -39,6 +39,11 @@ public class Indirizzo
 		return id;
 	}
 	
+	public void setId_fatturazione(int id_fatturazione)
+	{
+		this.id_fatturazione = id_fatturazione;
+	}
+	
 	public int getId_fatturazione()
 	{
 		return id_fatturazione;

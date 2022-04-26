@@ -25,7 +25,10 @@ public class Carrello {
 		return id_utente;
 	}
 	
-	
+	public void setId_utente(int id_utente)
+	{
+		this.id_utente = id_utente;
+	}
 	
 	public String getTotale() {
 		return totale;

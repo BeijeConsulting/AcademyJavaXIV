@@ -24,6 +24,11 @@ public class Fatturazione
 		return id;
 	}
 	
+	public void setId_utente(int id_utente)
+	{
+		this.id_utente = id_utente;
+	}
+	
 	public int getId_utente()
 	{
 		return id_utente;

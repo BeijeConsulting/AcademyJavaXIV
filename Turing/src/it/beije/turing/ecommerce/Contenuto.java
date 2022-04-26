@@ -24,10 +24,19 @@ public class Contenuto {
 	@Column(name = "quantita")
 	private String quantita;
 	
+	public void setId_carrello(int id_carrello)
+	{
+		this.id_carrello = id_carrello;
+	}
+	
 	public int getId_carrello() {
 		return id_carrello;
 	}
 
+	public void setId_prodotto(int id_prodotto)
+	{
+		this.id_prodotto = id_prodotto;
+	}
 	
 	public int getId_prodotto() {
 		return id_prodotto;
