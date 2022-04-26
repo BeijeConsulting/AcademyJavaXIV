@@ -9,8 +9,6 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import it.beije.turing.rubrica.Contatto;
-
 
 public class HBManager {
 	
@@ -50,6 +48,7 @@ public class HBManager {
 
 			
 			//SELECT HQL
+/*
 			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
 			List<Contatto> contatti = query.getResultList();
 			
@@ -58,6 +57,7 @@ public class HBManager {
 				System.out.println(c);
 				if (c.getId() == 12) contatto = c;
 			}
+*/
 
 			
 //			//UPDATE

@@ -1,0 +1,77 @@
+CREATE DATABASE PeppeShop;
+use PeppeShop;
+
+CREATE TABLE `Utenti` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) DEFAULT NULL,
+  `cognome` varchar(45) DEFAULT NULL,
+  `email` varchar(45) NOT NULL,
+  `psw` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ;
+CREATE TABLE `Prodotti` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `descrizione` varchar(255) DEFAULT NULL,
+  `quantità` int NOT NULL,
+  `costo` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ;
+
+CREATE TABLE `Carte` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `codice` varchar(16) NOT NULL,
+  `data_scadenza` date NOT NULL,
+  `provider` varchar(45) NOT NULL,
+  `cvv` varchar(3) NOT NULL,
+  `utente_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_carta_idx` (`utente_id`),
+  CONSTRAINT `fk_carta` FOREIGN KEY (`utente_id`) REFERENCES `Utenti` (`id`)
+) ;
+
+CREATE TABLE `Indirizzi` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `utente_id` int NOT NULL,
+  `via` varchar(45) DEFAULT NULL,
+  `civico` varchar(45) DEFAULT NULL,
+  `città` varchar(45) DEFAULT NULL,
+  `cap` varchar(45) DEFAULT NULL,
+  `nazione` varchar(45) DEFAULT NULL,
+  `telefono` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_utente_idx` (`utente_id`)
+) ;
+
+
+CREATE TABLE `Carrelli` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_prodotto` int DEFAULT NULL,
+  `quantità` int NOT NULL,
+  `id_utente` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_prodotto_idx` (`id_prodotto`),
+  KEY `fk_utente_idx` (`id_utente`),
+  CONSTRAINT `fk_prodotto` FOREIGN KEY (`id_prodotto`) REFERENCES `Prodotti` (`id`),
+  CONSTRAINT `fk_utente` FOREIGN KEY (`id_utente`) REFERENCES `Utenti` (`id`)
+) ;
+CREATE TABLE `Ordini` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `data` datetime NOT NULL,
+  `utenti_id` int NOT NULL,
+  `indirizzo_spedizione_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_utenti_idx` (`utenti_id`),
+  KEY `fk_address_idx` (`indirizzo_spedizione_id`),
+  CONSTRAINT `fk_address` FOREIGN KEY (`indirizzo_spedizione_id`) REFERENCES `Indirizzi` (`id`),
+  CONSTRAINT `fk_utenti` FOREIGN KEY (`utenti_id`) REFERENCES `Utenti` (`id`)
+) ;
+CREATE TABLE `ProdottiOrdinati` (
+  `ordini_id` int NOT NULL,
+  `prodotto_id` int NOT NULL,
+  `quantità` int NOT NULL,
+  PRIMARY KEY (`ordini_id`,`prodotto_id`),
+  KEY `prod_id_idx` (`prodotto_id`),
+  CONSTRAINT `fk_ordini` FOREIGN KEY (`ordini_id`) REFERENCES `Ordini` (`id`),
+  CONSTRAINT `fk_prod` FOREIGN KEY (`prodotto_id`) REFERENCES `Prodotti` (`id`)
+) ;
