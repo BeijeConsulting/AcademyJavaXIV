@@ -1,11 +1,33 @@
 package it.beije.turing.ecommerce;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "prodotto")
 public class Prodotto {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private int id;
+	
+	@Column(name = "nome")
 	private String nome;
+	
+	@Column(name = "codice")
 	private String codice;
+	
+	@Column(name = "immagine")
 	private String immagine;
+	
+	@Column(name = "prezzo")
 	private String prezzo;
+	
+	@Column(name = "descrizione")
 	private String descrizione;
 	
 	

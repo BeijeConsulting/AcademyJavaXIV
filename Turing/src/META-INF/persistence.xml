@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="turing">
+	<persistence-unit name="ecommerce">
 
-		<class>it.beije.turing.rubrica.Contatto</class>
+		<class>it.beije.turing.ecommerce.Utente</class>
+		<class>it.beije.turing.ecommerce.Anagrafica</class>
+		<class>it.beije.turing.ecommerce.Login</class>
+		<class>it.beije.turing.ecommerce.Fatturazione</class>
+		<class>it.beije.turing.ecommerce.Indirizzo</class>
+		<class>it.beije.turing.ecommerce.Ordine</class>
+		<class>it.beije.turing.ecommerce.Carrello</class>
+		<class>it.beije.turing.ecommerce.Contenuto</class>
+		<class>it.beije.turing.ecommerce.Prodotto</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/turing"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="beije"/>
+			<property name="javax.persistence.jdbc.password" value="MattiaPagani"/>
 		</properties>
 
 	</persistence-unit>
