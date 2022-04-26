@@ -106,7 +106,7 @@ public class ECommerceManagerErcole {
 		entityManager.persist(u);
 		
 		entityTransaction.commit();
-		System.out.println("Lapassword è stata modificata!");
+		System.out.println("La password è stata modificata!");
 		return true;
 	}
 }
