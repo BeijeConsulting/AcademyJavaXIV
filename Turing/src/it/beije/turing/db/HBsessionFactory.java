@@ -1,10 +1,11 @@
 package it.beije.turing.db;
 
+import it.beije.turing.beanecommerce.Utenti;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import it.beije.turing.rubrica.Contatto;
+
 
 public class HBsessionFactory {
 
@@ -17,7 +18,7 @@ public class HBsessionFactory {
 			System.out.println("creo SessionFactory...");
 
 			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);
+					.addAnnotatedClass(Utenti.class);
 
 			sessionFactory = configuration.buildSessionFactory();
 		}

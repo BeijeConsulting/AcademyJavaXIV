@@ -1,23 +1,22 @@
 package it.beije.turing.db;
 
-import java.util.List;
+import it.beije.turing.beanecommerce.Utenti;
+import it.beije.turing.manger.UtentiManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
-import it.beije.turing.rubrica.Contatto;
 
 public class JPAmanager {
 
 	public static void main(String[] args) {
 
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("peppeshop");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
-		Contatto contatto = entityManager.find(Contatto.class, 1);//SELECT c FROM Contatto as c WHERE id = 1
+		Utenti contatto = entityManager.find(Utenti.class, 1);//SELECT c FROM Contatto as c WHERE id = 1
 		System.out.println("contatto : " + contatto);
 		
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -50,14 +49,14 @@ public class JPAmanager {
 		//entityTransaction.rollback();
 		
 		//SELECT JPQL
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
-		List<Contatto> contatti = query.getResultList();
+		/*Query query = entityManager.createQuery("SELECT c FROM Utenti as c");
+		List<Utenti> contatti = query.getResultList();
 
-		for (Contatto c : contatti) {
+		for (Utenti c : contatti) {
 			System.out.println(c);
 		}
-		
-		entityManager.close();
+
+		entityManager.close();*/
 
 	}
 
