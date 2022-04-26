@@ -21,6 +21,9 @@ public class Product {
     @Column(name = "price")
     private double price;
 
+    @Column(name = "category")
+    private String category;
+
     public int getId() {
         return id;
     }
