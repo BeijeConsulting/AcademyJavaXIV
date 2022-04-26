@@ -10,18 +10,19 @@ public class Ordine {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
-    @Column(name = "idCliente")
-    private int idCliente;
+    @ManyToOne
+    @JoinColumn(name="idCliente")
+    private Cliente idCliente;
     @Column(name = "valoreTotale")
     private double valoreTotale;
     @Column(name = "stato")
     private String stato;
 
     public Ordine(){
-        this(0, 0.00, "");
+        this(null, 0.00, "");
     }
 
-    public Ordine( int idCliente, double valoreTotale, String stato) {
+    public Ordine( Cliente idCliente, double valoreTotale, String stato) {
 
         this.idCliente = idCliente;
         this.valoreTotale = valoreTotale;
@@ -36,11 +37,11 @@ public class Ordine {
         this.id = id;
     }
 
-    public int getIdCliente() {
+    public Cliente getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(Cliente idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -64,7 +65,7 @@ public class Ordine {
     public String toString() {
         return "Ordine  [" +
                 " Id = " + id +
-                " , IdCliente = " + idCliente +
+                " , IdCliente = " + idCliente.getId() +
                 " , ValoreTotale=" + valoreTotale +
                 " , Stato='" + stato + '\'' +
                 " ] ";

@@ -1,10 +1,17 @@
 package it.beije.turing.Ecomm.Beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name="cliente")
@@ -21,6 +28,8 @@ public class Cliente {
     private String indirizzo;
     @Column(name = "email")
     private String email;
+    @OneToMany(mappedBy="idCliente")
+    private List<Ordine> ordini;
 
     public Cliente()
     {
@@ -31,6 +40,7 @@ public class Cliente {
         this.cognome = cognome;
         this.indirizzo = indirizzo;
         this.email = email;
+        this.ordini = new ArrayList<>();
     }
 
     public int getId() {
@@ -83,4 +93,10 @@ public class Cliente {
                 " , Email='" + email + '\'' +
                 " ]";
     }
+	public List<Ordine> getOrdini() {
+		return ordini;
+	}
+	public void setOrdini(List<Ordine> ordini) {
+		this.ordini = ordini;
+	}
 }
