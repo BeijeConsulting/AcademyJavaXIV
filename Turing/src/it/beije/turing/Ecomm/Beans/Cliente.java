@@ -1,10 +1,13 @@
 package it.beije.turing.Ecomm.Beans;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.Table;
+@Entity
+@Table(name="cliente")
 public class Cliente {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -19,9 +22,11 @@ public class Cliente {
     @Column(name = "email")
     private String email;
 
-
-    public Cliente(int id, String nome, String cognome, String indirizzo, String email) {
-        this.id = id;
+    public Cliente()
+    {
+    	this("","","","");
+    }
+    public Cliente(String nome, String cognome, String indirizzo, String email) {
         this.nome = nome;
         this.cognome = cognome;
         this.indirizzo = indirizzo;
