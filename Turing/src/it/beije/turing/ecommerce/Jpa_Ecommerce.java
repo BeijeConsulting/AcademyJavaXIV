@@ -3,11 +3,9 @@ package it.beije.turing.ecommerce;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-
 import it.beije.turing.jpa.EntityManagerSingleton;
-import it.beije.turing.rubrica.Contatto;
+
 
 public class Jpa_Ecommerce {
 	
