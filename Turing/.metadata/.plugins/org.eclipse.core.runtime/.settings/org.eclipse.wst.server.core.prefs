@@ -1,0 +1,2 @@
+eclipse.preferences.version=1
+runtimes=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<runtimes>\n  <runtime id\="apache-tomcat-8.5.73" location\="/Users/matteoprovezza/apache-tomcat-8.5.73" name\="apache-tomcat-8.5.73" runtime-type-id\="org.eclipse.jst.server.tomcat.runtime.85" timestamp\="0"/>\n</runtimes>\n
