@@ -1,6 +1,6 @@
 package it.beije.xiv.esercizi;
 
-public class Chimpanzee extends Ape {
+public class Chimpanzee extends Ape{
 	
 	static{System.out.println("Chimpanzee static message");}
 	{System.out.println("Chimpanzee instance message");}

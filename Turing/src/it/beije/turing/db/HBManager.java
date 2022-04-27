@@ -51,14 +51,14 @@ public class HBManager {
 //
 //			
 			//SELECT HQL
-//			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
-//			List<Contatto> contatti = query.getResultList();
-//			
-//			Contatto contatto = null;
-//			for (Contatto c : contatti) {
-//				System.out.println(c);
-//				if (c.getId() == 12) contatto = c;
-//			}
+			Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
+			List<Contatto> contatti = query.getResultList();
+			
+			Contatto contatto = null;
+			for (Contatto c : contatti) {
+				System.out.println(c);
+				if (c.getId() == 12) contatto = c;
+			}
 
 			
 //			//UPDATE
