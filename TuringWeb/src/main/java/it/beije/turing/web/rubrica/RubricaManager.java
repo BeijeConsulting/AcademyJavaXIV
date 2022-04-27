@@ -1,4 +1,4 @@
-package it.beije.turing.challenge.rubrica;
+package it.beije.turing.web.rubrica;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +16,13 @@ public class RubricaManager {
 	public void setAllContatti(List<Contatto> allContatti) {
 		this.allContatti = allContatti;
 	}
-
+// TODO: IMPLEMENTA NELLA SERVLET
 	public void printAllContatti() {
 		for(Contatto c : allContatti) {
 			System.out.println(c);
 		}
 	}
-
+	// TODO: IMPLEMENTA NELLA SERVLET
 	public void AggiungiContatto(Scanner s) {
 		List<Contatto> ris = new ArrayList<>(allContatti);
 		Contatto c = new Contatto();
@@ -44,7 +44,7 @@ public class RubricaManager {
 		ris.add(c);
 		allContatti = new ArrayList<>(ris);
 	}
-
+	// TODO: IMPLEMENTA NELLA SERVLET
 	public void ModificaContatto(Scanner s) {
 		List<Contatto> ris = new ArrayList<>(allContatti);
 
@@ -93,7 +93,7 @@ public class RubricaManager {
 		ris.set(i, c);
 		allContatti = new ArrayList<>(ris);
 	}
-
+	// TODO: IMPLEMENTA NELLA SERVLET
 	public void EliminaContatto(Scanner s) {
 		List<Contatto> ris = new ArrayList<>(allContatti);
 
@@ -138,7 +138,7 @@ public class RubricaManager {
 		}
 		return ris;
 	}
-
+	// TODO: IMPLEMENTA NELLA SERVLET
 	public void UnisciContattiDuplicati(Scanner s) {
 		List<Contatto> ris = new ArrayList<>();
 		sort(s);
@@ -160,7 +160,7 @@ public class RubricaManager {
 		}
 		allContatti = new ArrayList<>(ris);
 	}
-	
+	// TODO: IMPLEMENTA NELLA SERVLET
 	public void cercaContatto(Scanner s) {
 		System.out.println("Inserire tipo ricerca ((N)ome,(C)ognome,(T)elefono,(E)mail o (A)ll[Ricerca per Nome,Cognome,Telefono e Email][exit per uscire]):");
 		String type = null;

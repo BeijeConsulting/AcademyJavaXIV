@@ -1,4 +1,4 @@
-package it.beije.turing.challenge.rubrica;
+package it.beije.turing.web.rubrica;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,7 +12,7 @@ public class EntityManagerFactorySingleton {
 	
 	public static EntityManager createEntityManager() {
 		if(entityManagerFactory == null) {
-			entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+			entityManagerFactory = Persistence.createEntityManagerFactory("TuringWeb");
 			
 		}
 		return entityManagerFactory.createEntityManager();

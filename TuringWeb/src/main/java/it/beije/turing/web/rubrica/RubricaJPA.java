@@ -1,4 +1,4 @@
-package it.beije.turing.challenge.rubrica;
+package it.beije.turing.web.rubrica;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.hibernate.HibernateException;
 
 
 
-public class RubricaJPA implements Rubrica{
+public class RubricaJPA{
 	public static List<Contatto> readRubricaFromDB(){
 		List<Contatto> ris = new ArrayList<Contatto>();
 		EntityManager entityManager = null;

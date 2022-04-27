@@ -1,4 +1,4 @@
-package it.beije.turing.challenge.rubrica;
+package it.beije.turing.web.rubrica;
 
 import java.io.Serializable;
 import java.util.Objects;

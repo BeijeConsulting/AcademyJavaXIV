@@ -5,15 +5,35 @@
 <title>Insert title here</title>
 </head>
 <body>
-CIAO TURING<br>
+Rubrica Tomcat<br>
 <br>
-<form action="./test" method="post">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lastname" value="Doe"><br><br>
-  <input type="submit" value="Submit">
-</form> 
+
+<form action="./print.html" method="post">
+  <label for="print">Stampa Tutti i contatti:     </label>
+  <input type="submit" id="print" name="type" value="Submit"><br>
+ </form>
+ <form action="./search.html" method="post">
+  <label for="search">Cerca contatto:     </label>
+  <input type="submit" id="search" name="type" value="Submit"><br>
+ </form>
+ <form action="./add.html" method="post">
+  <label for="add">Aggiungi contatto:     </label>
+  <input type="submit" id="add" name="type" value="Submit"><br>
+ </form>
+ <form action="./remove.html" method="post">
+  <label for="remove">Rimuovi contatto:     </label>
+  <input type="submit" id="remove" name="type" value="Submit"><br>
+ </form>
+ <form action="./modify.html" method="post">
+  <label for="modify">Modifica contatto:     </label>
+  <input type="submit" id="modify" name="type" value="Submit"><br>
+ </form>
+ <form action="./merge.html" method="post">
+  <label for="merge">Unisci contatti duplicati:     </label>
+  <input type="submit" id="merge" name="type" value="Submit"><br>
+ </form>
+
+
 
 </body>
 </html>
