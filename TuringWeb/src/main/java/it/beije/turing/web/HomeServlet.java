@@ -6,24 +6,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class MyServlet
  */
 
-@WebServlet("/servlet")
-public class MyServlet extends HttpServlet
+@WebServlet("/rubrica")
+public class HomeServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyServlet()
+    public HomeServlet()
     {
         super();
-        System.out.println("APRO SERVLET");
+        System.out.println("APRO HOME SERVLET");
     }
 
 	/**
@@ -32,9 +31,7 @@ public class MyServlet extends HttpServlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		response.sendRedirect("index.html");
-		System.out.println("MyServlet doGet");
-		//HttpSession session = request.getSession();
-		//System.out.println("session : " + session.getId());		
+		System.out.println("HomeServlet doGet");	
 	}
 
 	/**
@@ -42,7 +39,7 @@ public class MyServlet extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		System.out.println("MyServlet doPost");
+		System.out.println("HomeServlet doPost");
 		//doGet(request, response);
 	}
 }
