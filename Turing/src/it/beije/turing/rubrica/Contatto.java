@@ -1,32 +1,45 @@
 package it.beije.turing.rubrica;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name = "rubrica")
 public class Contatto {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
 	
+	@Column(name = "nome")
 	private String nome;
+	
+	@Column(name = "cognome")
 	private String cognome;
+	
+	@Column(name = "telefono")
 	private String telefono;
+	
+	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "note")
 	private String note;
 	
 	
-	public Contatto() {
-		
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
-	public Contatto(String nome, String cognome, String telefono, String email) {
-		this.nome = nome;
-		this.cognome = cognome;
-		this.telefono = telefono;
-		this.email = email;
-
-	}
 	public String getNome() {
 		return nome;
 	}
@@ -62,10 +75,10 @@ public class Contatto {
 		this.note = note;
 	}
 	
-
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-				.append("{ cognome : ").append(this.cognome)
+				.append("{ id : ").append(this.id)
+				.append(", cognome : ").append(this.cognome)
 				.append(", nome : ").append(this.nome)
 				.append(", telefono : ").append(this.telefono)
 				.append(", email : ").append(this.email)
@@ -73,38 +86,5 @@ public class Contatto {
 		
 		return builder.toString();
 	}
-	
-	public static Contatto read() {
-		
-		@SuppressWarnings("resource")
-		Scanner in = new Scanner(System.in);
-	
-		System.out.print("Inserisci Nome:");
-		String nome = in.nextLine();
-		if(nome.equals("")) {return null;}
-		
-		System.out.print("inserisci Cognome :");
-		String cognome= in.nextLine();
-		if(cognome.equals("")) {return null;}
-		
-		System.out.print("inserisci telefono :");
-		String telefono = in.nextLine();
-		if(telefono.equals("")) {return null;}
-		
-		System.out.print("Email :");
-		String email = in.nextLine();
-		if(email.equals("")) {return null;}
 
-		
-		return new Contatto(nome, cognome, telefono, email);
-		
-	}
-	
-	public void stampa() {
-		
-		System.out.println ("Nome: "+ nome+ " Cognome : "+ cognome + " Tel: " + telefono+ " Email : "+ email);
-		
-	}
-		
-	
 }

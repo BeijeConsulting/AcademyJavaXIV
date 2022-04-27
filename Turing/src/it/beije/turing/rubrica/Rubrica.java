@@ -35,7 +35,7 @@ public class Rubrica {
 	
 	public void Aggiungi() {
 		
-		this.contatti.add(Contatto.read());
+		//this.contatti.add(Contatto.read());
 		
 	}
 	
@@ -109,8 +109,8 @@ public class Rubrica {
 		try {email = (columns[0]);}
 		catch(ArrayIndexOutOfBoundsException e) { email = ""; }
 		
-		return new Contatto(nome, cognome, telefono, email);
-		
+		//return new Contatto(nome, cognome, telefono, email);
+		return null;
 	}
 
 /////////////////////////////////////////		Cambia Nome Cognome			///////////////////////////////////////////////////////////////////				
@@ -258,7 +258,7 @@ private ArrayList<Contatto> filtraPerTelefono(String elemento) {
 	public void stampa(ArrayList<Contatto> ciao) {
 		
 		for(Contatto c : ciao) {
-			c.stampa();
+			//c.stampa();
 		}
 		
 	}
