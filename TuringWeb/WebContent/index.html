@@ -1,19 +1,61 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-CIAO TURING<br>
-<br>
-<form action="./test" method="post">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lastname" value="Doe"><br><br>
-  <input type="submit" value="Submit">
-</form> 
-
-</body>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Beije Rubrica</title>
+		<style type="text/css">
+			h1 {
+				text-align:center;
+			}
+			
+			.container {
+				display:flex;
+				justify-content:space-between;
+				width:50%;
+				margin:auto;
+				margin-bottom:30px;
+			}
+			
+			input {
+				padding:10px;
+				font-size:20px;
+				border-radius:10px;
+				box-shadow: 0px 2px 5px gray;
+				border: none;
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Gestore rubrica</h1>
+		<br>
+		
+		<div class="container">
+			<form action="./print">
+				<input type="submit" value="Stampa contatti">
+			</form>
+			<form action="./search">
+				<input type="submit" value="Cerca contatto">
+			</form>
+			<form action="./insert">
+				<input type="submit" value="Inserisci contatto">
+			</form>
+			<form action="./modify">
+				<input type="submit" value="Modifica contatto">
+			</form>
+		</div>
+		
+		<div class="container">
+			<form action="./delete">
+				<input type="submit" value="Elimina contatto">
+			</form>
+			<form action="./findDup">
+				<input type="submit" value="Cerca contatti duplicati">
+			</form>
+			<form action="./mergeDup">
+				<input type="submit" value="Unisci contatti duplicati">
+			</form>
+		</div>
+		 
+	</body>
 </html>
