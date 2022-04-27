@@ -152,8 +152,8 @@ public class HBhandler
 		
 		for(Contatto contatto : contatti)
 		{
-			if (contatto.getId() == Integer.parseInt(filtro)) cont.add(contatto);
-			else if (contatto.getNome().equals(filtro)) cont.add(contatto);
+			//if (contatto.getId() == Integer.parseInt(filtro)) cont.add(contatto);
+			if (contatto.getNome().equals(filtro)) cont.add(contatto);
 			else if (contatto.getCognome().equals(filtro)) cont.add(contatto);
 			else if (contatto.getEmail().equals(filtro)) cont.add(contatto);
 			else if (contatto.getTelefono().equals(filtro)) cont.add(contatto);
