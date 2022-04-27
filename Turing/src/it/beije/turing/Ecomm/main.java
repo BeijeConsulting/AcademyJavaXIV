@@ -13,7 +13,7 @@ public class main {
 	public static void main(String[] args) {
 	DBInterface db = new JPA_Manager();	// TODO Auto-generated method stub
 	List<Cliente> listClienti = db.getClienti();
-	System.out.println(listClienti.get(0).getOrdini().get(0));
+	System.out.println(listClienti.get(0).getOrdini().get(0).getCarrello().get(0));
 //	if (listClienti.isEmpty())
 //	{
 //		Cliente c = new Cliente();

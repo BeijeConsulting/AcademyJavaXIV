@@ -9,18 +9,18 @@ public class Acquisto {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private int idAcquisto;
-
-    @Column(name = "idOrdine")
+    @ManyToOne
+    @JoinColumn(name = "idOrdine")
     private int idOrdine;
     @Column(name = "idProdotto")
     private int idProdotto;
     @Column(name = "quantita")
-    private double quantita;
+    private int quantita;
 
     public Acquisto(){
-        this(0, 0.00);
+        this(0, 0);
     }
-    public Acquisto( int idProdotto, double quantita) {
+    public Acquisto( int idProdotto, int quantita) {
 
         this.idProdotto = idProdotto;
         this.quantita = quantita;
@@ -50,11 +50,16 @@ public class Acquisto {
         this.idProdotto = idProdotto;
     }
 
-    public double getQuantita() {
+    public int getQuantita() {
         return quantita;
     }
 
-    public void setQuantita(double quantita) {
+    public void setQuantita(int quantita) {
         this.quantita = quantita;
+    }
+    
+    public String toString()
+    {
+    	return Integer.valueOf(this.getQuantita()).toString();
     }
 }

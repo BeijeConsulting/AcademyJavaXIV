@@ -1,5 +1,7 @@
 package it.beije.turing.Ecomm.Beans;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,8 @@ public class Ordine {
     private double valoreTotale;
     @Column(name = "stato")
     private String stato;
+    @OneToMany(mappedBy="idOrdine")
+    private List<Acquisto> Carrello;
 
     public Ordine(){
         this(null, 0.00, "");
@@ -70,4 +74,12 @@ public class Ordine {
                 " , Stato='" + stato + '\'' +
                 " ] ";
     }
+
+	public List<Acquisto> getCarrello() {
+		return Carrello;
+	}
+
+	public void setCarrello(List<Acquisto> carrello) {
+		Carrello = carrello;
+	}
 }
