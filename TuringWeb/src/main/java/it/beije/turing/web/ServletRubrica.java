@@ -18,12 +18,11 @@ public class ServletRubrica extends HttpServlet {
     private static final long serialVersionUID = 1L;
     public ServletRubrica() {
         super();
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-       OpRubrica rubrica= new JPAManager();
+     OpRubrica rubrica= new JPAManager();
 
         List<Contatto> listC=rubrica.showContact(Order.NO);
         StringBuilder html= new StringBuilder();

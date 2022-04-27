@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/insert")
 public class InsertRubrica extends HttpServlet {
-    OpRubrica rubrica;
+   private OpRubrica rubrica;
     public InsertRubrica() {
         super();
      rubrica= new JPAManager();
@@ -28,7 +28,6 @@ public class InsertRubrica extends HttpServlet {
         //TODO Auto-generated method stub
         //response.getWriter().append("Served at: ").append(request.getContextPath());
     }
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nome=request.getParameter("nome");
