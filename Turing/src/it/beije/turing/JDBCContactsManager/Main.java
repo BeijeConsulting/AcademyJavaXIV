@@ -1,6 +1,4 @@
-package it.beije.turing.ContactsManager;
-
-import java.util.Scanner;
+package it.beije.turing.JDBCContactsManager;
 
 public class Main {
 

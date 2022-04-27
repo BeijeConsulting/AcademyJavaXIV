@@ -1,4 +1,4 @@
-package it.beije.turing.ContactsManager;
+package it.beije.turing.JDBCContactsManager;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package it.beije.turing.ContactsManager;
+package it.beije.turing.JDBCContactsManager;
 
 import it.beije.turing.rubrica.Contatto;
 
