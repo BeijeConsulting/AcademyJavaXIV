@@ -13,16 +13,19 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/ServletRubrica")
 public class ServletRubrica extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String form = "<form name=\"loginForm\" method=\"post\" action=\"ServletAggiungi\">\r\n"
+	private static final String ADD = "<form name=\"loginForm\" method=\"get\" action=\"ServletAggiungi\">\r\n"
        		+ "    <input type=\"submit\" value=\"AggiungiContatto\" />\r\n"
        		+ "</form>";
+	
+	private static final String SHOW = "<form name=\"loginForm\" method=\"get\" action=\"ServletMostra\">\r\n"
+       		+ "    <input type=\"submit\" value=\"AggiungiContatto\" />\r\n"
+       		+ "</form>";
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ServletRubrica() {
         super();
-        System.out.println("TestServletRubrica....");
-        System.out.println("TestServletRubrica....");
         System.out.println("TestServletRubrica....");
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +37,7 @@ public class ServletRubrica extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.getWriter().append("<html><body>").append(form).append("<html><body>");
+		response.getWriter().append("<html><body>").append(ADD).append("<html><body>");
 	}
 
 	/**

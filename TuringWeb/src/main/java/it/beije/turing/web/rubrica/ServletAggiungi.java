@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 public class ServletAggiungi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private int a = 0;
-       private static final String form = "<form name=\"loginForm\" method=\"get\" action=\"ServletAggiungi\">\r\n"
+       private static final String form = "<form name=\"loginForm\" method=\"post\" action=\"ServletAggiungi\">\r\n"
        		+ "    Nome: <input type=\"text\" name=\"nome\"/> <br/>\r\n"
        		+ "    Cognome: <input type=\"text\" name=\"cognome\"/> <br/>\r\n"
        		+ "    Telefono: <input type=\"text\" name=\"telefono\"/> <br/>\r\n"
