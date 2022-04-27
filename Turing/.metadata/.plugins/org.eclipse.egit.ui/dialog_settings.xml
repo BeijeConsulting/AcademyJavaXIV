@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item key="GitSelectRepositoryPage.lastRepository" value="/Users/matteoprovezza/git/AcademyJavaXIV/.git"/>
 	<list key="RepositorySelectionPage.UsedUris">
+		<item value="https://github.com/BeijeConsulting/AcademyJavaXIV.git"/>
 		<item value="git@github.com:BeijeConsulting/AcademyJavaXIV.git"/>
 		<item value="matteoprovezza@github.com:BeijeConsulting/AcademyJavaXIV.git"/>
+	</list>
+	<list key="EGit.KnownHosts">
+		<item value="git.eclipse.org"/>
+		<item value="bitbucket.org"/>
+		<item value="github.com"/>
 	</list>
 	<section name="org.eclipse.egit.ui.internal.dialogs.CheckoutDialog.dialogBounds">
 		<item key="DIALOG_X_ORIGIN" value="351"/>
@@ -16,6 +23,33 @@
 		<item key="DIALOG_Y_ORIGIN" value="103"/>
 		<item key="DIALOG_WIDTH" value="600"/>
 		<item key="DIALOG_HEIGHT" value="445"/>
+		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.pull.PullResultDialog.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="288"/>
+		<item key="DIALOG_Y_ORIGIN" value="198"/>
+		<item key="DIALOG_WIDTH" value="719"/>
+		<item key="DIALOG_HEIGHT" value="302"/>
+		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
+	</section>
+	<section name="GitImportWizard">
+	</section>
+	<section name="org.eclipse.egit.ui.internal.staging.StagingView">
+		<item key="MAIN_SASH_FORM_ORIENTATION_VERTICAL" value="false"/>
+		<item key="HORIZONTAL_SASH_FORM_WEIGHT" value="200,200"/>
+		<item key="STAGING_SASH_FORM_WEIGHT" value="200,200"/>
+		<item key="sortItemState" value="false"/>
+	</section>
+	<section name="GitCommitMessageComponent">
+		<list key="/Users/matteoprovezza/git/AcademyJavaXIV/.git">
+			<item value="empty"/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.dialogs.MergeTargetSelectionDialog.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="374"/>
+		<item key="DIALOG_Y_ORIGIN" value="-13"/>
+		<item key="DIALOG_WIDTH" value="586"/>
+		<item key="DIALOG_HEIGHT" value="667"/>
 		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
 	</section>
 </section>
