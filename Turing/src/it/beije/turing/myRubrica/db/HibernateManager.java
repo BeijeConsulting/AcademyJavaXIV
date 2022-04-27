@@ -85,19 +85,20 @@ public class HibernateManager implements OpRubrica {
     }
 
     @Override
-    public List<Contatto> contattiDuplicati() {
+    public List<List<Contatto>> contattiDuplicati() {
         return null;
     }
 
     @Override
-    public void unisciContatti() {
+    public void unisciContatti(List<List<Contatto>> l) {
 
     }
 
     @Override
-    public List<Contatto> importFromCVS(String path) {
+    public List<Contatto> importFromCVS(String path, String separator) {
         return null;
     }
+
 
     @Override
     public List<Contatto> importFromXML(String path) {
@@ -105,9 +106,10 @@ public class HibernateManager implements OpRubrica {
     }
 
     @Override
-    public void exportFromCVS(String path, List<Contatto> contatti) {
+    public void exportFromCVS(String path, List<Contatto> contats, String separator) {
 
     }
+
 
     @Override
     public void exportFromXML(String path, List<Contatto> contatti) {

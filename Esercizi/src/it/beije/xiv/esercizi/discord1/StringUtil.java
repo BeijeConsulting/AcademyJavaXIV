@@ -4,7 +4,7 @@ package it.beije.xiv.esercizi.discord1;
 
 
 public class StringUtil {
-    //TODO
+
     private static void p(String s){
         System.out.println(s);
     }
@@ -157,7 +157,6 @@ public class StringUtil {
     }
 
     public static String replace(String s, String oldChar, String newChar){
-        //TODO
         return "";
     }
     public static String trim(String s){

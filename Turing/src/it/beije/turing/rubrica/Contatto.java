@@ -18,19 +18,19 @@ public class Contatto {
 	private int id;
 	
 	@Column(name = "nome")
-	private String nome;
+	private String nome="";
 	
 	@Column(name = "cognome")
-	private String cognome;
+	private String cognome="";
 	
 	@Column(name = "telefono")
-	private String telefono;
+	private String telefono="";
 	
 	@Column(name = "email")
-	private String email;
+	private String email="";
 	
 	@Column(name = "note")
-	private String note;
+	private String note="";
 	
 	
 	public int getId() {
@@ -74,7 +74,6 @@ public class Contatto {
 	public void setNote(String note) {
 		this.note = note;
 	}
-
 
 	
 	public String toString() {
