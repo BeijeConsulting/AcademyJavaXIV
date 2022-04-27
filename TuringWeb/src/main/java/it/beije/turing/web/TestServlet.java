@@ -34,10 +34,7 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("TestServlet doGet");
-		//...
-//		System.out.println("c :" + ++c);
-//		String fname = request.getParameter("fname");
-//		String lname = request.getParameter("lname");
+
 
 		HttpSession session = request.getSession();
 		System.out.println("session : " + session.getId());
@@ -45,7 +42,7 @@ public class TestServlet extends HttpServlet {
 		String lname = (String)session.getAttribute("lname");	
 		System.out.println("fname : " + fname);
 		System.out.println("lname : " + lname);
-		
+
 
 		response.getWriter().append("<html><body>Served at: ").append(request.getContextPath()).append("<br>").append("ID : ").append(session.getId()).append("</body></html>");
 	}

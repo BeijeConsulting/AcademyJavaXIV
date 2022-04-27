@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+<body>
+
+<h3>Inserisic Contatto</h3>
+
+<div>
+    <form action="./insert"  method="post">
+        <label for="Nome">Nome</label>
+        <input type="text" id="nome" name="nome" placeholder="Inserisci nome">
+
+        <label for="Cognome">Cognome</label>
+        <input type="text" id="Cognome" name="cognome" placeholder="Inserisci Cognome">
+
+        <label for="Email">Email</label>
+        <input type="text" id="Email" name="email" placeholder="Inserisci Email">
+
+        <label for="Tel">Telefono</label>
+        <input type="text" id="Tel" name="tel" placeholder="Inserisci telefono">
+
+        <label for="Note">Note</label>
+        <input type="text" id="Note" name="note" placeholder="Inserisci Note">
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+</body>
+</html>
