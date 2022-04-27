@@ -1,5 +1,4 @@
-package it.beije.turing.rubrica;
-
+package it.beije.turing.web.rubrica;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -19,11 +18,11 @@ public class RubricaManager {
 	public static void main(String[] args) {
 		//JpaManager.addContatti(contatti);
 		
-	//	JpaManager.updateJpa();
-	//	JpaManager.readContatti();
+		JpaManager.updateJpa();
+		JpaManager.readContatti();
 //		JDBCmanager.addContatti(contatti);
 //		JDBCmanager.readContatti();
-		mainMenu();
+//		mainMenu();
 //		scanner.close();
 //		try {
 //			RubricaXML.writeXML(contatti, path);
