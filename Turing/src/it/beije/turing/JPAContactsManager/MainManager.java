@@ -1,4 +1,6 @@
-package it.beije.turing.JDBCContactsManager;
+package it.beije.turing.JPAContactsManager;
+
+import it.beije.turing.JDBCContactsManager.ScannerSwitch;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,6 +12,8 @@ public class MainManager {
 
     public static void mainSwitch(String[] args) {
         boolean endProgram = false;
+        Scanner scan = new Scanner(System.in);
+        
             while (!endProgram) {
                 mainInterface();
                 System.out.println("Enter the number of the desired option: ");
@@ -29,6 +33,12 @@ public class MainManager {
                     case 5:
 
                         break;
+                    case 6:
+
+                        break;
+                    case 7:
+
+                        break;
                     default:
                         System.out.println("Program ended. ");
                         endProgram = true;
@@ -42,12 +52,8 @@ public class MainManager {
         System.out.println("Case 3: Create new Contact");
         System.out.println("Case 4: Modify a Contact");
         System.out.println("Case 5: Delete a Contact");
+        System.out.println("Case 6: Find duplicate Contacts");
+        System.out.println("Case 7: Combine duplicate Contacts");
         System.out.println("Press any other number to close the program.");
-    }
-
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/turing?serverTimezone=CET", "root", "56Bg-P1ae-9xnM");
     }
 }

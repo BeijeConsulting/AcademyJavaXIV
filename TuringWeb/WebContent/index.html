@@ -1,19 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestiore Rubrica | Java</title>
 </head>
-<body>
-CIAO TURING<br>
-<br>
-<form action="./test" method="post">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lastname" value="Doe"><br><br>
-  <input type="submit" value="Submit">
-</form> 
+<style>
+   * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+   }
+   body {
+      font-family: Helvetica, sans-serif;
+      background-color: #23272e;
+      color: white;
+   }
+   a {
+      text-decoration: none;
+      color: #fff;
+   }
+   a:hover {
+      text-decoration: none;
+   }
 
+   h1 {
+      text-align: center;
+      padding: 30px 0;
+   }
+   .container {
+      margin: auto 0;
+      display: flex;
+      justify-content: center;
+   }
+   .btn {
+      display: block;
+      padding: 10px 20px;
+      border-radius: 4px;
+      border: 2px solid white;
+      font-size: 20px;
+      margin: 20px;
+   }
+</style>
+<body>
+<h1>Gestione rubrica</h1>
+<div class="container">
+    <a class="btn" href="http://localhost:8080/TuringWeb/show">MOSTRA TUTTI</a>
+    <a class="btn" href="http://localhost:8080/TuringWeb/test">CERCA CONTATTO</a>
+</div>
 </body>
 </html>

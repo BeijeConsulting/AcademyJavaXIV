@@ -1,4 +1,4 @@
-package main.java.it.beije.turing.web;
+package it.beije.turing.web;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -58,7 +58,6 @@ public class TestServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
-		
 		System.out.println("fname : " + fname);
 		System.out.println("lname : " + lname);
 		

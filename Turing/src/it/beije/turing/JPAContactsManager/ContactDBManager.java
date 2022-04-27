@@ -1,5 +1,9 @@
 package it.beije.turing.JPAContactsManager;
 
-public class ContactDBManager {
+import javax.persistence.EntityManager;
 
+public class ContactDBManager {
+    public static void ShowContacts() {
+        EntityManager entityManager = EntityManagerFactorySingleton.createEntityManager();
+    }
 }
