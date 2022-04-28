@@ -68,10 +68,11 @@ public class TestServlet extends HttpServlet {
 		session.setAttribute("lname", lname);
 
 		
-		response.getWriter().append("<html><body>")
-		.append("fname : ").append(fname).append("<br>")
-		.append("lname : ").append(lname).append("<br>")
-		.append("</body></html>");
+//		response.getWriter().append("<html><body>")
+//		.append("fname : ").append(fname).append("<br>")
+//		.append("lname : ").append(lname).append("<br>")
+//		.append("</body></html>");
+		response.sendRedirect("example.jsp");
 	}
 
 }
