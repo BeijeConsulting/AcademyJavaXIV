@@ -4,6 +4,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/Turing/pom.xml" />
+        <option value="$PROJECT_DIR$/TuringWeb/pom.xml" />
       </list>
     </option>
   </component>

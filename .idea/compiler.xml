@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Turing" />
+        <module name="TuringWeb" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Turing" target="1.8" />
+      <module name="TuringWeb" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

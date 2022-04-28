@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <TITLE> Rubrica Online </TITLE>
+</head>
+<body>
+<link href="style.css" rel="stylesheet">
+
+<h2>Benvenuto</h2>
+<p>Clicca sui bottoni per selezionare la registrazione o l'accesso.</p>
+
+<div class="tab">
+    <button class="tablinks" onclick="openMenu(event, 'Registrati')" id="defaultOpen">Registrati</button>
+    <button class="tablinks" onclick="openMenu(event, 'Accedi')">Accedi</button>
+</div>
+
+<div id="Registrati" class="tabcontent">
+    <FORM action="Register" method="POST">
+        <P>
+            Nome:    <INPUT type="text" name="firstname" value=""><BR>
+            Cognome: <INPUT type="text" name="lastname" value=""><BR>
+            Email:   <INPUT type="email" name="email" value=""><BR>
+            User: <INPUT type="text" name="user" value=""><BR>
+            Password: <INPUT type="password" name="pw" value=""><BR>
+            <INPUT type="submit" value="Registra"> <INPUT type="reset" value="Annulla">
+        </P>
+    </FORM>
+
+</div>
+
+<div id="Accedi" class="tabcontent">
+    <FORM action="Login" method="POST">
+        <P>
+            Nome:    <INPUT type="text" name="firstname" value=""><BR>
+            Cognome: <INPUT type="text" name="lastname" value=""><BR>
+            <INPUT type="submit" value="Accedi"> <INPUT type="reset" value="Annulla">
+        </P>
+    </FORM>
+
+</div>
+
+
+<div id="Footer" class="tabfooter">
+    <P>
+        yess
+    </P>
+</div>
+
+
+
+<script>
+function openMenu(evt, funcName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(funcName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+</html>
