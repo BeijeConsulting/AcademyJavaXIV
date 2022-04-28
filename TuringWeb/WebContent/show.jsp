@@ -12,14 +12,15 @@
 body {
 background-color: #23272e;
 color: white;
+}
 
-.table { color: #fff
+.table { color: #fff;
 }
 </style>
 <title>Contatti</title>
 </head>
 <body>
-<table class=table>
+<table class="table">
 <thead>
 <tr>
  <th scope="col">id</th>
@@ -33,12 +34,12 @@ color: white;
  <tbody>
   <% for (Contatto contatto : ContactDBManager.ShowContacts()) { %>
   <tr>
-       <th scope="row"><% contatto.getId()%></th>
-         <td><% contatto.getNome()%></td>
-       <td><% contatto.getCognome()%> </td>
-          <td><% contatto.getTelefono()%></td>
-                 <td><% contatto.getEmail()%></td>
-               <td><% contatto.getNote()%></td>
+       <th scope="row"><% out.print(contatto.getId());%></th>
+         <td><% out.print(contatto.getNome());%></td>
+       <td><% out.print(contatto.getCognome());%> </td>
+          <td><% out.print(contatto.getTelefono());%></td>
+                 <td><% out.print(contatto.getEmail());%></td>
+               <td><% out.print(contatto.getNote());%></td>
               </tr>
          <%  }%>
 </tbody>

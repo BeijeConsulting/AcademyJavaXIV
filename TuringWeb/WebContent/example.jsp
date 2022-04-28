@@ -52,14 +52,12 @@ int y = 4;
 int z = x + y;
 
 System.out.println("z = " + z);
-
-//request.getSession();
+request.getSession();
 String fname = (String)session.getAttribute("fname");
 String lname = (String)session.getAttribute("lname");
 
-
-//Contatto contatto = new Contatto();
-
+Contatto contatto = new Contatto();
+//out.print(contatto.toString());
 //out.print("z = " + z);
 %>
 <br>
