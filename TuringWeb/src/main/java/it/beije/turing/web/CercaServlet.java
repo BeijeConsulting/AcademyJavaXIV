@@ -1,7 +1,5 @@
 package it.beije.turing.web;
 
-
-
 import it.beije.turing.web.db.Contatto;
 import it.beije.turing.web.db.JPAManager;
 import it.beije.turing.web.db.OpRubrica;
@@ -35,6 +33,5 @@ public class CercaServlet extends HttpServlet {
         HttpSession s= request.getSession();
         s.setAttribute("risultati",c);
         response.sendRedirect("risultati2.jsp");
-
     }
 }
