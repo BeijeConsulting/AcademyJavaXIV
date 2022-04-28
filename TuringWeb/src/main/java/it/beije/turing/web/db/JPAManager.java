@@ -1,8 +1,6 @@
-package it.beije.turing.myRubrica.db;
+package it.beije.turing.web.db;
 
-import it.beije.turing.myRubrica.interfaces.OpRubrica;
-import it.beije.turing.myRubrica.interfaces.Order;
-import it.beije.turing.rubrica.Contatto;
+
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
@@ -16,9 +14,9 @@ import java.util.List;
  */
 public class JPAManager implements OpRubrica {
     private EntityManagerFactory entityManagerFactory=null;
-    public JPAManager(){
-        entityManagerFactory = Persistence.createEntityManagerFactory("turing");
-    }
+        public JPAManager(){
+             entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+        }
 
     @Override
     public List<Contatto> showContact(Order order) {
@@ -40,6 +38,24 @@ public class JPAManager implements OpRubrica {
 
     @Override
     public List<Contatto> search(String s) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction();
+
+
+        String beginStatement = "SELECT c FROM Contatto as c WHERE " +
+                " c.nome LIKE \'%"+s+"%\' OR " +
+                " c.cognome LIKE \'%"+s+"%\' OR"+
+                " c.note LIKE \'%"+s+"%\' OR"+
+                " c.telefono LIKE \'%"+s+"%\' OR"+
+                " c.cognome LIKE \'%"+s+"%\'";
+
+
+        Query query = entityManager.createQuery(beginStatement);
+        return query.getResultList();
+    }
+
+   /* @Override
+    public List<Contatto> search(String s) {
         /**
          *Non è molto elegante come soluzione ma con i creteria non gira
          */
@@ -57,7 +73,7 @@ public class JPAManager implements OpRubrica {
         Predicate pred5 = criteriaBuilder.like(itemRoot.get("note"),search );
 
         criteriaQuery.select(itemRoot).where(new Predicate[]{pred1,pred2,pred3,pred4,pred5});*/
-        // criteriaQuery.select(itemRoot).where(pred1);
+      // criteriaQuery.select(itemRoot).where(pred1);
 /*
 
 
@@ -73,11 +89,11 @@ public class JPAManager implements OpRubrica {
 
         entityManager.close();
         List <Contatto> resultList=entityManager.createQuery(criteriaQuery).getResultList();
-        entityManager.close();*/
+        entityManager.close();
 
         List<Contatto> resultList=new ArrayList<>();
         List<Contatto> contattos= showContact(Order.NO);
-
+if(s!=null){
         for (Contatto contatto: contattos) {
             boolean t=false;
             if(contatto.getNome().contains(s)){
@@ -99,11 +115,12 @@ public class JPAManager implements OpRubrica {
             if(t){
                 resultList.add(contatto);
             }
-        }
+        }}
 
         return resultList;
     }
 
+*/
     @Override
     public boolean insert(Contatto c) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -182,8 +199,8 @@ public class JPAManager implements OpRubrica {
             for (int j = i; j <resultList.size()-1 ; j++) {
 
                 if( resultList.get(i).getId()!=resultList.get(j).getId() &&
-                        (resultList.get(i).getEmail().equalsIgnoreCase(resultList.get(j).getEmail()) || resultList.get(i).getTelefono().equalsIgnoreCase(resultList.get(j).getTelefono()))
-                        && (!resultList.get(i).getEmail().isEmpty() && !resultList.get(i).getTelefono().isEmpty() && resultList.get(j).getEmail().isEmpty() && !resultList.get(j).getTelefono().isEmpty())
+                (resultList.get(i).getEmail().equalsIgnoreCase(resultList.get(j).getEmail()) || resultList.get(i).getTelefono().equalsIgnoreCase(resultList.get(j).getTelefono()))
+                && (!resultList.get(i).getEmail().isEmpty() && !resultList.get(i).getTelefono().isEmpty() && resultList.get(j).getEmail().isEmpty() && !resultList.get(j).getTelefono().isEmpty())
                 ){
                     contattos.add(resultList.get(j));
                 }
@@ -238,7 +255,7 @@ public class JPAManager implements OpRubrica {
 
     @Override
     public List<Contatto> importFromCVS(String path,String separator) {
-        List<Contatto> list=OpRubrica.importFileCVS(path,separator);
+        List<Contatto> list= OpRubrica.importFileCVS(path,separator);
         for (Contatto c:list) {
             insert(c);
         }
@@ -248,10 +265,10 @@ public class JPAManager implements OpRubrica {
 
     @Override
     public List<Contatto> importFromXML(String path) {
-        List<Contatto> list=OpRubrica.impotFileXML(path);
-        for (Contatto c:list) {
-            insert(c);
-        }
+            List<Contatto> list= OpRubrica.impotFileXML(path);
+            for (Contatto c:list) {
+                insert(c);
+            }
         return list;
     }
 
@@ -262,7 +279,7 @@ public class JPAManager implements OpRubrica {
 
     @Override
     public void exportFromXML(String path, List<Contatto> contatti) {
-        OpRubrica.exportFileXML(path,contatti);
+         OpRubrica.exportFileXML(path,contatti);
     }
 
 

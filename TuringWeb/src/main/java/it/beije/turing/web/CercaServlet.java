@@ -1,8 +1,10 @@
 package it.beije.turing.web;
 
-import it.beije.turing.myRubrica.db.JPAManager;
-import it.beije.turing.myRubrica.interfaces.OpRubrica;
-import it.beije.turing.rubrica.Contatto;
+
+
+import it.beije.turing.web.db.Contatto;
+import it.beije.turing.web.db.JPAManager;
+import it.beije.turing.web.db.OpRubrica;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,7 +30,7 @@ public class CercaServlet extends HttpServlet {
         String search=request.getParameter("parameter");
 
         OpRubrica op= new JPAManager();
-        List<Contatto>  c = op.search(search);
+        List<Contatto> c = op.search(search);
 
         HttpSession s= request.getSession();
         s.setAttribute("risultati",c);

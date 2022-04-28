@@ -5,9 +5,11 @@ package it.beije.turing.web;
  * Data: 27 apr 2022
  */
 
-import it.beije.turing.myRubrica.db.JPAManager;
-import it.beije.turing.myRubrica.interfaces.OpRubrica;
-import it.beije.turing.rubrica.Contatto;
+
+
+import it.beije.turing.web.db.Contatto;
+import it.beije.turing.web.db.JPAManager;
+import it.beije.turing.web.db.OpRubrica;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

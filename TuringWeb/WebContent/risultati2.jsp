@@ -1,5 +1,7 @@
-<%@ page import="it.beije.turing.rubrica.Contatto" %>
-<%@ page import="java.util.List" %><%--
+
+<%@ page import="java.util.List" %>
+<%@ page import="it.beije.turing.web.db.Contatto" %>
+<%--
   Created by IntelliJ IDEA.
   User: giusepperaddato
   Date: 28/04/22

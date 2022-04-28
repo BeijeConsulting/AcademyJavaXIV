@@ -1,7 +1,7 @@
-<%@ page import="it.beije.turing.myRubrica.interfaces.OpRubrica" %>
-<%@ page import="it.beije.turing.myRubrica.db.HibernateManager" %>
-<%@ page import="it.beije.turing.myRubrica.interfaces.Order" %>
-<%@ page import="it.beije.turing.rubrica.Contatto" %>
+
+
+<%@ page import="it.beije.turing.web.db.Order" %>
+<%@ page import="it.beije.turing.web.db.Contatto" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -38,7 +38,7 @@
 </head>
 <body>
 
-<jsp:useBean id="op" class="it.beije.turing.myRubrica.db.JPAManager"></jsp:useBean>
+<jsp:useBean id="op" class="it.beije.turing.web.db.JPAManager"></jsp:useBean>
 
 <%
     String s = request.getParameter("ordina");

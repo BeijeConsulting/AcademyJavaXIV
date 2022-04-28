@@ -1,15 +1,10 @@
-package it.beije.turing.web;
+package it.beije.turing.web.db;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
-//@Entity
-//@Table(name = "rubrica")
+@Entity
+@Table(name = "rubrica")
 public class Contatto {
 
 	@Id
@@ -18,19 +13,19 @@ public class Contatto {
 	private int id;
 	
 	@Column(name = "nome")
-	private String nome;
+	private String nome="";
 	
 	@Column(name = "cognome")
-	private String cognome;
+	private String cognome="";
 	
 	@Column(name = "telefono")
-	private String telefono;
+	private String telefono="";
 	
 	@Column(name = "email")
-	private String email;
+	private String email="";
 	
 	@Column(name = "note")
-	private String note;
+	private String note="";
 	
 	
 	public int getId() {
@@ -74,6 +69,7 @@ public class Contatto {
 	public void setNote(String note) {
 		this.note = note;
 	}
+
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()

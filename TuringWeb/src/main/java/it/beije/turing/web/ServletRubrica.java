@@ -1,9 +1,10 @@
 package it.beije.turing.web;
 
-import it.beije.turing.myRubrica.db.JPAManager;
-import it.beije.turing.myRubrica.interfaces.OpRubrica;
-import it.beije.turing.myRubrica.interfaces.Order;
-import it.beije.turing.rubrica.Contatto;
+
+import it.beije.turing.web.db.Contatto;
+import it.beije.turing.web.db.JPAManager;
+import it.beije.turing.web.db.OpRubrica;
+import it.beije.turing.web.db.Order;
 
 import java.io.IOException;
 import java.util.List;
