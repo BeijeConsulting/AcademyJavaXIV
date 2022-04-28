@@ -8,18 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MyServlet
+ * Servlet implementation class ServletContatto
  */
-@WebServlet("/servlet")
-public class MyServlet extends HttpServlet {
+@WebServlet("/ServletContatto")
+public class ServletContatto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyServlet() {
+    public ServletContatto() {
         super();
-        System.out.println("prova");
         // TODO Auto-generated constructor stub
     }
 
@@ -30,13 +29,10 @@ public class MyServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("MyServlet doGet");
 		
-//		Contatto contatto = new Contatto();
-//		contatto.setNome("Pippo");
-//		contatto.setCognome("Rossi");
-//		
-//		request.getSession().setAttribute("contatto", contatto);
+		Contatto contatto = (Contatto)request.getSession().getAttribute("contatto");
+		System.out.println("contatto : " + contatto);
 		
-		response.sendRedirect("insert_contatto.jsp");
+		response.getWriter().append("Contatto: ").append(contatto.toString());
 	}
 
 	/**
