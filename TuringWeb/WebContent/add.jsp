@@ -20,18 +20,20 @@
 	<br>
 	<%="session: " + session.getId()%>
 	<br>
+	<jsp:useBean id="contatto" class="it.beije.turing.web.rubrica.Contatto" scope="session"></jsp:useBean>
 	<%
-	String name = (String)session.getAttribute("name");
-	String surname = (String)session.getAttribute("lname");
-	String tel = (String)session.getAttribute("tel");
-	String email = (String)session.getAttribute("email");
-	String note =(String)session.getAttribute("note");
-	List<Contatto> ris = rm.AggiungiContatto(name, surname, tel, email, note);
+	List<Contatto> ris = rm.AggiungiContatto(contatto.getNome(), contatto.getCognome(), contatto.getTelefono(), contatto.getEmail(), contatto.getNote());
 	%>
 	<%="Contatto aggiunto: "+ ris.get(ris.size()-1) %><br>
 	<%
 	rm.setAllContatti(rm.writeRubricaOnDB(ris));
 	%>
+	
+	<form action="./index.html" method="post">
+ 		<label for="merge">Torna alla Home:     </label>
+  		<input type="submit" id="merge" name="type" value="Submit"><br>
+  	</form>
+	
 	<%-- 
 	<%
 	for (Contatto c : ris) {

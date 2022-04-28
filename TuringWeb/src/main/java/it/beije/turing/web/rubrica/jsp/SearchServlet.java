@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.beije.turing.web.rubrica.Contatto;
+
 /**
  * Servlet implementation class SearchServlet
  */
@@ -34,10 +36,14 @@ public class SearchServlet extends HttpServlet {
 		String tel = request.getParameter("tel");
 		String email = request.getParameter("email");
 		
-		session.setAttribute("name", name);
-		session.setAttribute("lname", surname);
-		session.setAttribute("tel", tel);
-		session.setAttribute("email", email);
+		Contatto contatto = new Contatto();
+		contatto.setNome(name);
+		contatto.setCognome(surname);
+		contatto.setEmail(email);
+		contatto.setTelefono(tel);
+		contatto.setNote("");
+		
+		session.setAttribute("contatto", contatto);
 		response.sendRedirect("./search.jsp");
 	}
 

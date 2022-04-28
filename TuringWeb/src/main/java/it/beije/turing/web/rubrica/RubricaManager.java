@@ -69,45 +69,38 @@ public class RubricaManager {
 		ris.add(c);
 		return ris;
 	}
-	// TODO: IMPLEMENTA NELLA SERVLET
-	public void ModificaContatto(Scanner s) {
+	public List<Contatto> ModificaContatto(List<Contatto> allContatti, Contatto contatto) {
 		List<Contatto> ris = new ArrayList<>(allContatti);
-
-		System.out.println("Lista Contatti Disponibili:");
-		int i = 0;
-		for(Contatto c : ris) {
-			System.out.println("idList: "+i+" "+c);
-			i++;
+		int pos = -1;
+		Contatto c = null;
+		for(int i = 0; i < ris.size(); i++) {
+			if(ris.get(i).getId() == contatto.getId()) {
+				c = ris.get(i);
+				pos = i;
+				break;
+			}
 		}
-		System.out.println("Inserire numero idList da modificare:");
-		String nContatto = s.nextLine();
-		try {
-			i = Integer.parseInt(nContatto);
-		}catch(NumberFormatException nfEx) {
-			System.out.println("Inserire un numero valido!");
-			nfEx.printStackTrace();
-			System.out.println("Quitting...");
-			return;
+		if(c == null) {
+			System.out.println("Nessun contatto trovato");
+			return ris;
 		}
-		Contatto c = ris.get(i);
-		System.out.println("Inserire Nome:");
-		String nome = s.nextLine();
+		String nome = contatto.getNome();
 		if(nome.length() == 0 || nome.isEmpty())
 			nome = c.getNome();
-		System.out.println("Inserire Cognome:");
-		String cognome = s.nextLine();
+		
+		String cognome = contatto.getCognome();
 		if(cognome.length() == 0 || cognome.isEmpty())
 			cognome = c.getCognome();
-		System.out.println("Inserire Telefono:");
-		String telefono = s.nextLine();
+
+		String telefono = contatto.getTelefono();
 		if(telefono.length() == 0 || telefono.isEmpty())
 			telefono = c.getTelefono();
-		System.out.println("Inserire Email:");
-		String email = s.nextLine();
+
+		String email = contatto.getEmail();
 		if(email.length() == 0 || email.isEmpty())
 			email = c.getEmail();
-		System.out.println("Inserire Note:");
-		String note = s.nextLine();
+
+		String note = contatto.getNote();
 		if(note.length() == 0 || note.isEmpty())
 			note = c.getNote();
 		c.setCognome(cognome);
@@ -115,31 +108,19 @@ public class RubricaManager {
 		c.setTelefono(telefono);
 		c.setEmail(email);
 		c.setNote(note);
-		ris.set(i, c);
-		allContatti = new ArrayList<>(ris);
+		ris.set(pos, c);
+		return ris;
 	}
-	// TODO: IMPLEMENTA NELLA SERVLET
-	public void EliminaContatto(Scanner s) {
+	
+	public List<Contatto> EliminaContatto(List<Contatto> allContatti,int id) {
 		List<Contatto> ris = new ArrayList<>(allContatti);
-
-		System.out.println("Lista Contatti Disponibili:");
-		int i = 0;
 		for(Contatto c : ris) {
-			System.out.println("idList: "+i+" "+c);
-			i++;
+			if(c.getId() == id) {
+				ris.remove(c);
+				break;
+			}
 		}
-		System.out.println("Inserire numero idList da eliminare:");
-		String nContatto = s.nextLine();
-		try {
-			i = Integer.parseInt(nContatto);
-		}catch(NumberFormatException nfEx) {
-			System.out.println("Inserire un numero valido!");
-			nfEx.printStackTrace();
-			System.out.println("Quitting...");
-			return;
-		}
-		ris.remove(i);
-		allContatti = new ArrayList<>(ris);
+		return ris;
 	}
 
 	public void EliminaTuttiContatti() {
@@ -151,44 +132,45 @@ public class RubricaManager {
 		allContatti =  new ArrayList<>();
 		System.out.println("Fatto.");
 	}
-	// TODO: IMPLEMENTA NELLA SERVLET
-	/*
-	public List<Contatto> TrovaContattiDuplicati(Scanner s){
+	
+	public List<Contatto> TrovaContattiDuplicati(List<Contatto> allContatti){
 		List<Contatto> ris = new ArrayList<>();
-		sort(s);
-		for(int i = 0; i + 1 < allContatti.size(); i++) {
-			if(allContatti.get(i).equals(allContatti.get(i+1))) {
-				ris.add(allContatti.get(i));
+		List<Contatto> tmp = sort(allContatti,"N");
+		for(int i = 0; i + 1 < tmp.size(); i++) {
+			if(tmp.get(i).getNome().equals(tmp.get(i+1).getNome())
+					&& tmp.get(i).getCognome().equals(tmp.get(i+1).getCognome())
+					&& tmp.get(i).getTelefono().equals(tmp.get(i+1).getTelefono())
+					&& tmp.get(i).getEmail().equals(tmp.get(i+1).getEmail())) {
+				ris.add(tmp.get(i));
 				i += 1;
 			}
 		}
 		return ris;
 	}
-	*/
-	// TODO: IMPLEMENTA NELLA SERVLET
-	/*
-	public void UnisciContattiDuplicati(Scanner s) {
+	
+
+	public List<Contatto> UnisciContattiDuplicati(List<Contatto> allContatti) {
 		List<Contatto> ris = new ArrayList<>();
-		sort(s);
-		for(int i = 0; i < allContatti.size(); i++) {
-			for(int j = i+1; j < allContatti.size();j++) {
-				if(allContatti.get(i).getNome().equals(allContatti.get(j).getNome())
-						&& allContatti.get(i).getCognome().equals(allContatti.get(j).getCognome())
-						&& allContatti.get(i).getTelefono().equals(allContatti.get(j).getTelefono())
-						&& allContatti.get(i).getEmail().equals(allContatti.get(j).getEmail())) {
+		List<Contatto> tmp = sort(allContatti,"N");
+		for(int i = 0; i < tmp.size(); i++) {
+			for(int j = i+1; j < tmp.size();j++) {
+				if(tmp.get(i).getNome().equals(tmp.get(j).getNome())
+						&& tmp.get(i).getCognome().equals(tmp.get(j).getCognome())
+						&& tmp.get(i).getTelefono().equals(tmp.get(j).getTelefono())
+						&& tmp.get(i).getEmail().equals(tmp.get(j).getEmail())) {
 					continue;
 				}
-				ris.add(allContatti.get(i));
+				ris.add(tmp.get(i));
 				i = j-1;
 				break;
 			}
-			if(i+1 >=  allContatti.size()) {
-				ris.add(allContatti.get(i));
+			if(i+1 >=  tmp.size()) {
+				ris.add(tmp.get(i));
 			}
 		}
-		allContatti = new ArrayList<>(ris);
+		return ris;
 	}
-	*/
+	
 	public List<Contatto> cercaContatto(String nome, String cognome, String telefono, String email) {
 		List<Contatto> ris = new ArrayList<>();
 		

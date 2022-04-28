@@ -8,19 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.beije.turing.web.rubrica.Contatto;
-
 /**
- * Servlet implementation class AddServlet
+ * Servlet implementation class RemoveServlet
  */
-@WebServlet("/add_servlet")
-public class AddServlet extends HttpServlet {
+@WebServlet("/remove_servlet")
+public class RemoveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddServlet() {
+    public RemoveServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,22 +28,17 @@ public class AddServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String id = request.getParameter("id");
+		int realId = -1;
+		try{
+			realId = Integer.parseInt(id);
+		}catch(NumberFormatException nfEx) {
+			System.out.println("Inserire un ID valido");
+			throw nfEx;
+		}
 		HttpSession session = request.getSession();
-		String name = request.getParameter("name");
-		String surname = request.getParameter("lname");
-		String tel = request.getParameter("tel");
-		String email = request.getParameter("email");
-		String note = request.getParameter("note");
-		
-		Contatto c = new Contatto();
-		c.setNome(name);
-		c.setCognome(surname);
-		c.setTelefono(tel);
-		c.setNote(note);
-		c.setEmail(email);
-		
-		session.setAttribute("contatto", c);
-		response.sendRedirect("./add.jsp");
+		session.setAttribute("id", realId);
+		response.sendRedirect("./remove.jsp");
 	}
 
 	/**

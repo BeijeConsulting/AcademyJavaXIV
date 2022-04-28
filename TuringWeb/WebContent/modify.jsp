@@ -1,6 +1,5 @@
 <%@page import="it.beije.turing.web.rubrica.Contatto"%>
 <%@page import="it.beije.turing.web.rubrica.RubricaManager"%>
-<%@page import="java.time.LocalDateTime"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -16,29 +15,19 @@
 	
 	RubricaManager rm = new RubricaManager();
 	%>
-	<%="Cerca contatti"%>
+	<%="Modifica contatto"%>
 	<br>
 	<%="session: " + session.getId()%>
 	<br>
 	<jsp:useBean id="contatto" class="it.beije.turing.web.rubrica.Contatto" scope="session"></jsp:useBean>
 	<%
-	List<Contatto> ris = rm.cercaContatto(contatto.getNome(), contatto.getCognome(), contatto.getTelefono(), contatto.getEmail());
+		List<Contatto> tmp = rm.getAllContatti();
+		List<Contatto> ris = rm.ModificaContatto(tmp,contatto);
+		rm.setAllContatti(ris);
+		rm.writeRubricaOnDB(rm.getAllContatti());
+		response.sendRedirect("./index.html");
 	%>
 	
-	<%="Serched: "+contatto.getNome()+" "+contatto.getCognome()+" "+contatto.getTelefono()+" "+contatto.getEmail()+" "%><br>
-	<%
-	for (Contatto c : ris) {
-	%>
-	<%=c.toString()%><br>
-	<%
-	}
-	%>
-	<br>
-	
-	<form action="./index.html" method="post">
- 		<label for="merge">Torna alla Home:     </label>
-  		<input type="submit" id="merge" name="type" value="Submit"><br>
-  	</form>
-	
+
 </body>
 </html>
