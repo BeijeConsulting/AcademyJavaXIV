@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+/Users/matteoprovezza/Desktop/Beije/AcademyJavaXIV/dir/Turing/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+2431156480.index
+2628338171.index
+2240356663.index
+3443042414.index
+889596408.index
+3689286884.index
