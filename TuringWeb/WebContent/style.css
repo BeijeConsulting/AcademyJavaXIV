@@ -66,10 +66,10 @@ h2 {
    margin-top: 30px;
    text-align: center;
 }
-form {
+.my_form {
    width: 300px;
 }
-input {
+input, textarea {
    display: block;
    padding: 7px;
    width: 100%;
@@ -78,7 +78,8 @@ input {
    border: none;
    border-radius: 5px;
 }
-input:focus {
+input:focus,
+textarea:focus {
    outline: none;
 }
 label {

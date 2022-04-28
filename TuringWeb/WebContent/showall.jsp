@@ -40,8 +40,17 @@
                     <td><% out.print(c.getEmail()); %></td>
                     <td><% out.print(c.getNote()); %></td>
                     <td>
-                        <button class="btn btn-success">MODIFICA</button>
-                        <button class="btn btn-danger">ELIMINA</button>
+                        <form class="d-inline-block" action="./edit.jsp">
+                              <input type="hidden" name="fname" value="<%= c.getNome() %>">
+                              <input type="hidden" name="lname" value="<%= c.getCognome() %>">
+                              <input type="hidden" name="phone" value="<%= c.getTelefono() %>">
+                              <input type="hidden" name="email" value="<%= c.getEmail() %>">
+                              <input type="hidden" name="notes" value="<%= c.getNote() %>">
+                              <input class="btn btn-success" type="submit" value="MODIFICA">
+                        </form>
+                        <form class="d-inline-block" action="./delete.jsp">
+                              <input class="btn btn-danger" type="submit" value="ELIMINA">
+                        </form>
                     </td>
                 </tr>
             <% } %>

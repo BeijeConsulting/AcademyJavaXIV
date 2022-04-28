@@ -3,6 +3,7 @@ package it.beije.turing.web.util;
 import it.beije.turing.web.rubrica.Contatto;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,26 @@ public class MyJPAManager {
 
         return contactsFound;
 
+    }
+
+    public static void createContact(Contatto contact) {
+        EntityManager entityManager = JPAEntityFactory.createJPAEntityManager("turing");
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        Contatto newContatto = new Contatto();
+        newContatto.setCognome(contact.getCognome());
+        newContatto.setNome(contact.getNome());
+        newContatto.setEmail(contact.getEmail());
+        newContatto.setTelefono(contact.getTelefono());
+        newContatto.setNote(contact.getNote());
+
+        entityManager.persist(newContatto);
+        entityTransaction.commit();
+    }
+
+    public static void updateContact(Contatto contact) {
+        //TODO mofica contatto
     }
 
 }
