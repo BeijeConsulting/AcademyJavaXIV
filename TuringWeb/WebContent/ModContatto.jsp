@@ -9,17 +9,49 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%CommandInterface link = CommandInterface.getInstance();
-	for(Contatto c : link.getList())
+<jsp:useBean id="list" type="java.util.List<Contatto>" scope="session" ></jsp:useBean>
+<%
+	out.println("<table>");
+	out.println("<tr>");
+	out.println("<th>ID</th>");
+	out.println("<th>Nome</th>");
+	out.println("<th>Cogome</th>");
+	out.println("<th>Telefono</th>");
+	out.println("</tr>");
+	for(Contatto c : list)
 	{
-		out.println(c);
-		out.println("<br>");
+		out.println("<tr>");
+		out.println("<td>"+c.getId()+"</td>");
+		out.println("<td>"+c.getNome()+"</td>");
+		out.println("<td>"+c.getCognome()+"</td>");
+		out.println("<td>"+c.getTelefono()+"</td>");
+		out.println("</tr>");
 	}
+	out.println("</table>");
 	%>
 	
 <%if(session.getAttribute("mode")==null||session.getAttribute("mode").toString().equalsIgnoreCase("main"))
 	{
-		out.println("<form action=\"./main\" method=\"post\"><input type=\"text\" id=\"command\" name=\"command\" value=\"\"><br><br><input type=\"submit\" value=\"Submit\"></form>");
+	out.println("<form action=\"./main\" method=\"post\">");
+	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"new\">");
+	out.println("<input type=\"submit\" value=\"new\">");
+	out.println("</form>");
+	out.println("<form action=\"./main\" method=\"post\">");
+	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"delete\">");
+	out.println("<input type=\"submit\" value=\"delete\">");
+	out.println("</form>");
+	out.println("<form action=\"./main\" method=\"post\">");
+	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"back\">");
+	out.println("<input type=\"submit\" value=\"Back\">");
+	out.println("</form>");
+	out.println("<form action=\"./main\" method=\"post\">");
+	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"modify\">");
+	out.println("<input type=\"submit\" value=\"modify\">");
+	out.println("</form>");
+	out.println("<form action=\"./main\" method=\"post\">");
+	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"search\">");
+	out.println("<input type=\"submit\" value=\"Search\">");
+	out.println("</form>");
 	}
  else if(session.getAttribute("mode").toString().equalsIgnoreCase("add")) 
 {

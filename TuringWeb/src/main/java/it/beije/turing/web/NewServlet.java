@@ -30,10 +30,7 @@ public class NewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		response.getWriter().append("<html><body><center><h>commands: print, new, modify</h><form action=\"./main\" method=\"post\">\r\n"
-//				+ "  <input type=\"text\" id=\"command\" name=\"command\" value=\"\"><br><br>\r\n"
-//				+ "  <input type=\"submit\" value=\"Submit\">\r\n"
-//				+ "</form></body></html>");
+		request.getSession().setAttribute("list", link.getList());
 		response.sendRedirect(jsp);
 	}
 
