@@ -35,7 +35,9 @@ x + y =&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= x + y %><br>
 <%= x + 3 %>
 --%>
 FNAME = <%= fname %><br>
-LNAME = <%= lname %>
+LNAME = <%= lname %><br>
 
+<jsp:useBean id="contatto" class="it.beije.turing.web.Contatto" scope="session"></jsp:useBean>
+<%= contatto %>
 </body>
 </html>
