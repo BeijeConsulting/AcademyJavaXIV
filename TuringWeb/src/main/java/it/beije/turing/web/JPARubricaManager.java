@@ -1,4 +1,4 @@
-package main.java.it.beije.turing.web.rubrica;
+package it.beije.turing.web;
 
 
 import java.util.List;
@@ -9,7 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import main.java.it.beije.turing.web.rubrica.Contatto;
+import it.beije.turing.web.rubrica.Contatto;
 
 
 public class JPARubricaManager {

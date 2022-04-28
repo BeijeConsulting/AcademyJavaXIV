@@ -1,6 +1,4 @@
-package it.beije.turing.web.rubrica;
-
-
+package it.beije.turing.web;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-@Entity
-@Table(name = "rubrica")
+//@Entity
+//@Table(name = "rubrica")
 public class Contatto {
 
 	@Id
