@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<form name= "loginForm" method= "post" action="aggiungicontatto.jsp">
+	<form name= "loginForm" method= "get" action="aggiungicontatto.jsp">
 		Nome<input type= "text" name="nome"/> <br />
 		Cognome<input type= "text" name= "cognome\"/> <br />
 		Telefono<input type= "text\" name= "telefono"/> <br />
