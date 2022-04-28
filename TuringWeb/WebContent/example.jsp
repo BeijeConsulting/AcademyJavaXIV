@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<% 
+<%
 int x = 1;
 int y = 4;
 int z = x + y;

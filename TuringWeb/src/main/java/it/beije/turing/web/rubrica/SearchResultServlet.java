@@ -47,12 +47,12 @@ public class SearchResultServlet extends HttpServlet {
             (contact.getCognome() == null) &&
             (contact.getTelefono() == null) &&
             (contact.getEmail() == null)
-        ) response.sendRedirect("invalid_form.html");
+        ) response.sendRedirect("invalid_form.jsp");
         else {
             List<Contatto> contactsFound = MyJPAManager.searchContacts(contact);
 
             if (contactsFound.size() == 0){
-                response.sendRedirect("not_found.html");
+                response.sendRedirect("not_found.jsp");
 
             }else {
                 StringBuilder b = new StringBuilder();
