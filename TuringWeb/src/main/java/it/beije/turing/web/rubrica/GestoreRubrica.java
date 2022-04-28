@@ -57,14 +57,6 @@ public List<Contatto> getList()
 	{
 		tmp.add(c);
 	}
-	for(Contatto c:newEntries)
-	{
-		tmp.add(c);
-	}
-	for(Contatto c:modifiedEntries)
-	{
-		tmp.add(c);
-	}
 	return tmp;
 }
 

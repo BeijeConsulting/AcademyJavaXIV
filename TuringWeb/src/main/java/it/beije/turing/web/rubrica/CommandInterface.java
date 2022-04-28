@@ -20,7 +20,7 @@ public interface CommandInterface {
 
 	public void modify(int id, String nome, String cognome, String telefono, String email,String note);
 
-	//public void ExportXML(String fileName);
+	public List<Contatto> getList();
 
 	public List<Contatto> search(String... command);
 

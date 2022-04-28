@@ -71,9 +71,11 @@ public class JPA_Manager implements DbInterface {
 		EntityManager em = EMFactory.getInstance();
 		EntityTransaction entityTransaction = em.getTransaction();
 		entityTransaction.begin();
-		em.remove(search("id ="+id).get(0));
+		Contatto c =search("id ="+id).get(0);
+		c= em.contains(c)? c:em.merge(c);
+		em.remove(c);
 		entityTransaction.commit();
-		
+		em.close();
 	}
 
 }

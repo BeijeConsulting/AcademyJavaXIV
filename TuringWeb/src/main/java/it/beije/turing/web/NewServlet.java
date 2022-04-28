@@ -16,6 +16,7 @@ import it.beije.turing.web.rubrica.CommandInterface;
 public class NewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CommandInterface link;
+	private final String jsp = "ModContatto.jsp";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -29,10 +30,11 @@ public class NewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("<html><body><center><h>commands: print, new, modify</h><form action=\"./main\" method=\"post\">\r\n"
-				+ "  <input type=\"text\" id=\"command\" name=\"command\" value=\"\"><br><br>\r\n"
-				+ "  <input type=\"submit\" value=\"Submit\">\r\n"
-				+ "</form></body></html>");
+//		response.getWriter().append("<html><body><center><h>commands: print, new, modify</h><form action=\"./main\" method=\"post\">\r\n"
+//				+ "  <input type=\"text\" id=\"command\" name=\"command\" value=\"\"><br><br>\r\n"
+//				+ "  <input type=\"submit\" value=\"Submit\">\r\n"
+//				+ "</form></body></html>");
+		response.sendRedirect(jsp);
 	}
 
 	/**
@@ -40,41 +42,66 @@ public class NewServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getParameter("command");
-		String id = null;
 		if(command.contains(" "))
 		{
 			String[]tmp=command.split(" ");
 			command=tmp[0];
-			id=tmp[1];
 		}
 		switch (command) {
-		case "print":
-			response.getWriter().append("<html><body><center>")
-			.append("<br>").append(link.print()).append("</center></body></html>");
+		case "back":
+			request.getSession().setAttribute("mode", "main");
+			response.sendRedirect(jsp);
 			break;
+			
+			
 		case "new":
-			String[] tmp =getForm(request);
-			if(request.getParameter("flag") == null)
-			{
-				response.sendRedirect("AddContatto.html");
-			}
-			else link.add(tmp[0],tmp[1],tmp[2],tmp[3],tmp[4]);
+			
+			if(request.getParameter("flag")!=null)
+				{
+				String[] tmp = getForm(request);
+					link.add(tmp[0], tmp[1], tmp[2], tmp[3], tmp[4]);
+					request.getSession().setAttribute("mode", "main");
+				}
+			
+			else
+			request.getSession().setAttribute("mode", "add");
+			
+			
+			response.sendRedirect(jsp);
 			break;
+			
+			
 		case "modify":
-			if(id!=null) {
-			tmp =getForm(request);
+			//tmp =getForm(request);
 			if(request.getParameter("flag") == null)
 			{
-				response.getWriter().append(makeForm());			
+				response.sendRedirect(jsp);
+				
 			}
-			else link.add(tmp[0],tmp[1],tmp[2],tmp[3],tmp[4]);
-			}
+			//else link.modify(Integer.parseInt(tmp[0]),tmp[1],tmp[2],tmp[3],tmp[4],tmp[5]);
 			break;
+			
+			
+		case "delete":
+			if(request.getParameter("flag") !=null)
+			{
+				String id=request.getParameter("id");
+				if(id!=null)
+				{
+					link.delete(id);
+					request.getSession().setAttribute("mode", "main");
+				}
+			}
+			else
+			{
+			request.getSession().setAttribute("mode","delete");
+			}
+			
+			response.sendRedirect(jsp);
 		default:
 			break;
 		}
 		
-		doGet(request, response);
 	}
 
 	private String makeForm() {
