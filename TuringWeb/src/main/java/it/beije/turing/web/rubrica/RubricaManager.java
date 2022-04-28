@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class RubricaManager {
 	public static Scanner scanner = new Scanner(System.in);
 
@@ -282,6 +281,23 @@ public class RubricaManager {
 		}
 	}
 
+	public static List<Contatto> trovaDuplicatiServlet() {
+		List<Contatto> contatti = JPACriteria.findAll(EntityManagerSingleton.createEntityManager(), 1);
+		List<Contatto> contattiCercati = new ArrayList<>();
+		List<Contatto> doppi = new ArrayList<>();
+
+		for (Contatto contatto : contatti) {
+			System.out.println(contatto);
+			if (isDoppio(contatto, contattiCercati)) {
+				doppi.add(contatto);
+				System.out.println("Doppio trovato.");
+			} else {
+				contattiCercati.add(contatto);
+			}
+		}
+		return doppi;
+	}
+
 	public static boolean isDoppio(Contatto contatto, List<Contatto> cerca) {
 		for (Contatto c : cerca) {
 			if (isContattoEqual(contatto, c))
@@ -291,12 +307,17 @@ public class RubricaManager {
 	}
 
 	public static boolean isContattoEqual(Contatto c1, Contatto c2) {
-		if (c1.getCognome().equals(c2.getCognome()) && c1.getNome().equals(c2.getNome())
-				&& c1.getEmail().equals(c2.getEmail()) && c1.getTelefono().equals(c2.getTelefono())
-				&& c1.getNote().equals(c2.getNote())) {
-			return true;
-		} else
-			return false;
+		if (c1.getCognome() != null && c2.getCognome() != null && c1.getNome() != null && c2.getNome() != null
+				&& c1.getEmail() != null && c2.getEmail() != null && c1.getTelefono() != null
+				&& c2.getTelefono() != null && c1.getNote() != null && c2.getNote() != null) {
+
+			if (c1.getCognome().equals(c2.getCognome()) && c1.getNome().equals(c2.getNome())
+					&& c1.getEmail().equals(c2.getEmail()) && c1.getTelefono().equals(c2.getTelefono())
+					&& c1.getNote().equals(c2.getNote())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

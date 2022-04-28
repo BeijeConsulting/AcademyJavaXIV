@@ -29,13 +29,16 @@ public class ServletRubrica extends HttpServlet {
        		+ "    <input type=\"submit\" value=\"Cancella Contatti\" />\r\n"
        		+ "</form>";
 	
+	private static final String DOUBLES = "<form name=\"loginForm\" method=\"get\" action=\"ServletContattiDoppi\">\r\n"
+       		+ "    <input type=\"submit\" value=\"Trova doppi\" />\r\n"
+       		+ "</form>";
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ServletRubrica() {
         super();
-        System.out.println("TestServletRubrica....");
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
@@ -49,6 +52,7 @@ public class ServletRubrica extends HttpServlet {
 		response.getWriter().append("<html><body>").append(SHOW).append("<html><body>");
 		response.getWriter().append("<html><body>").append(FIND).append("<html><body>");
 		response.getWriter().append("<html><body>").append(DELETE).append("<html><body>");
+		response.getWriter().append("<html><body>").append(DOUBLES).append("<html><body>");
 	}
 
 	/**
