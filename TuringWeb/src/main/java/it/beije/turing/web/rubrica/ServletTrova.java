@@ -3,7 +3,6 @@ package it.beije.turing.web.rubrica;
 import java.io.IOException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletMostra
+ * Servlet implementation class ServletTrova
  */
-@WebServlet("/ServletMostra")
-public class ServletMostra extends HttpServlet {
+@WebServlet("/ServletTrova")
+public class ServletTrova extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final String form = "<form name=\"loginForm\" method=\"post\" action=\"ServletTrova\">\r\n"
+       		+ "    Nome: <input type=\"text\" name=\"nome\"/> <br/>\r\n"
+       		+ "    <input type=\"submit\" value=\"TROVA\" />\r\n"
+       		+ "</form>";
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletMostra() {
+    public ServletTrova() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,8 +32,7 @@ public class ServletMostra extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		writer(JPACriteria.findAll(EntityManagerSingleton.createEntityManager(), 0) ,response);
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("<html><body>").append(form).append("<html><body>");
 	}
 
 	/**
@@ -39,14 +40,11 @@ public class ServletMostra extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-	
-	public static void writer(List<Contatto> contatti, HttpServletResponse response) throws ServletException, IOException {
-		for(Contatto contatto : contatti) {
-			response.getWriter().append(contatto.toString()).append("<br>");
-			response.getWriter().append("<br>\n");
-		}
+		response.getWriter().append("<html><body>Utenti trovati: <br>");
+		List<Contatto> contatti = JPACriteria.findContatto(request.getParameter("nome"), EntityManagerSingleton.createEntityManager(), 2);
+		for(Contatto c : contatti)
+			response.getWriter().append(c.toString()).append("<br>");
+		response.getWriter().append("<html><body>");
 	}
 
 }
