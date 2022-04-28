@@ -101,6 +101,8 @@ public class Contatto {
 				.append(", nome : ").append(this.nome)
 				.append(", telefono : ").append(this.telefono)
 				.append(", email : ").append(this.email)
+				.append(", email : ").append(this.indirizzo)
+				.append(", email : ").append(this.dataDiNascita)
 				.append(", note : ").append(this.note).append(" }");
 		
 		return builder.toString();

@@ -17,155 +17,81 @@ import it.beije.turing.web.rubrica.JPAmanager;
 import it.beije.turing.web.rubrica.Contatto;
 
 public class GestoreFunction {
-	
-	public static void stampa(List<Contatto> contatti) {
-		System.out.println();
-		for(Contatto c : contatti) {
-			System.out.println(c);
-		}
-	}
-
-	public static String sceltaFile(Scanner s) {
-		String str = null;
-		
-		int x = 0;
-		do {
-			System.out.print("\nVuoi effettuare l'export su un file csv o xml? ");
-			str = s.next();
-			
-			if(str.equalsIgnoreCase("csv")) {
-				str = "csv";
-				x++;
-			} else if(str.equalsIgnoreCase("xml")) {
-				str = "xml";
-				x++;
-			} else {
-				System.out.print("Inserisci un tipo di file corretto.");
-			}
-		} while(x == 0);
-		
-		return str;
-	}
-	
-	public static Contatto inserisciDati(Scanner s) {
+	public static boolean areEqual(Contatto c, Contatto c1) {
 		Contatto contatto = new Contatto();
 		
-		System.out.print("\nInserisci il nome : ");
-		contatto.setNome(s.nextLine());
-		System.out.print("Inserisci il cognome : ");
-		contatto.setCognome(s.nextLine()); 
-		System.out.print("Inserisci il numero di telefono : ");
-		contatto.setTelefono(s.nextLine()); 
-		System.out.print("Inserisci l' email : ");
-		contatto.setEmail(s.nextLine()); 
-		System.out.print("Inserisci il note : ");
-		contatto.setNote(s.nextLine()); 
+		contatto.setId(c.getId());
 		
-		return contatto;
-	}
-	
-	public static void stampaRubrica(Scanner s) {
-		List<Contatto> contatti = null;
-		int x = 0;
-		
-		do {
-			System.out.print("\nVuoi ordinarli per nome o per cognome? (no, nome, cognome) : ");
-			String str = s.next();
-			if(str.equalsIgnoreCase("no")) {	
-				contatti = JPAcriteriaManager.getRubrica();
-				x++;
-			} else if(str.equalsIgnoreCase("nome")) {
-				contatti = JPAcriteriaManager.getOrderedByNameRubrica();
-				System.out.println("Rubrica ordinata per nome ->");
-				x++;
-			} else if(str.equalsIgnoreCase("cognome")) {
-				contatti = JPAcriteriaManager.getOrderedByCognomeRubrica();
-				System.out.println("Rubrica ordinata per cognome ->");
-				x++;
-			} else {
-				System.out.println("Inserisci un input valido. ");
-			}
-		} while(x == 0);
-		
-		stampa(contatti);
-	}
-	
-	public static void trovaContatto(Scanner s) {
-		String nome = "";
-		String cognome = "";
-		List<Contatto> contattiTrovati = new ArrayList<Contatto>();
-		List<Contatto> contatti = JPAcriteriaManager.getRubrica(); 
-		
-		System.out.print("\nInserisci nome del contatto che vuoi cercare: ");
-		nome = s.next();
-		System.out.print("Inserisci cognome del contatto che vuoi cercare: ");
-		cognome = s.next();
-		
-		for(Contatto contatto : contatti) {
-			if(nome.equals(contatto.getNome()) && cognome.equals(contatto.getCognome())) {
-				contattiTrovati.add(contatto);
-			}
-		}
-		
-		if(contattiTrovati.size() == 1) {
-			System.out.print("Contatto trovato -> ");
-			stampa(contattiTrovati);
-		} else if(contattiTrovati.size() > 1){
-			System.out.print("Contatti trovati -> ");
-			stampa(contattiTrovati);
+		if(c.getNome() == null & c1.getNome() == null) {
+			contatto.setNome("true");
+		} else if(c.getNome() == null | c1.getNome() == null) {
+			contatto.setNome("false");
+		} else if(c.getNome().equals(c1.getNome())) {
+			contatto.setNome("true");
 		} else {
-			System.out.print("Nessun " + nome +" "+ cognome +" e' stato trovato in rubrica.");
+			contatto.setNome("false");
 		}
-	}
-	
-	public static void inserisciContatto(Scanner s) {
-		s = new Scanner(System.in);
 		
-		Contatto newContatto = inserisciDati(s);
+		if(c.getCognome() == null & c1.getCognome() == null) {
+			contatto.setCognome("true");
+		} else if(c.getCognome() == null | c1.getCognome() == null) {
+			contatto.setCognome("false");
+		} else if(c.getCognome().equals(c1.getCognome())) {
+			contatto.setCognome("true");
+		} else {
+			contatto.setNome("false");
+		}
 		
-		JPAmanager.insertToRubrica(newContatto);
-	}
-
-	public static void modificaContatto(Scanner s) {
-		String str = "";
-		List<Contatto> contatti = JPAcriteriaManager.getRubrica();
+		if(c.getEmail() == null & c1.getEmail() == null) {
+			contatto.setEmail("true");
+		} else if(c.getEmail() == null | c1.getEmail() == null) {
+			contatto.setEmail("false");
+		} else if(c.getEmail().equals(c1.getEmail())) {
+			contatto.setEmail("true");
+		} else {
+			contatto.setNome("false");
+		}
 		
-		stampa(contatti);
+		if(c.getTelefono() == null & c1.getTelefono() == null) {
+			contatto.setTelefono("true");
+		} else if(c.getTelefono() == null | c1.getTelefono() == null) {
+			contatto.setTelefono("false");
+		} else if(c.getTelefono().equals(c1.getTelefono())) {
+			contatto.setTelefono("true");
+		} else {
+			contatto.setNome("false");
+		}
 		
-		System.out.print("\nInserisci l'id del contatto che vuoi modificare: ");
-		str = s.next();
+		if(c.getDataDiNascita() == null & c1.getDataDiNascita() == null) {
+			contatto.setDataDiNascita("true");
+		} else if(c.getDataDiNascita() == null | c1.getDataDiNascita() == null) {
+			contatto.setDataDiNascita("false");
+		} else if(c.getDataDiNascita().equals(c1.getDataDiNascita())) {
+			contatto.setDataDiNascita("true");
+		} else {
+			contatto.setNome("false");
+		}
 		
-		s = new Scanner(System.in);
-		Contatto contatto = inserisciDati(s);
+		if(c.getIndirizzo() == null & c1.getIndirizzo() == null) {
+			contatto.setIndirizzo("true");
+		} else if(c.getIndirizzo() == null | c1.getIndirizzo() == null) {
+			contatto.setIndirizzo("false");
+		} else if(c.getIndirizzo().equals(c1.getIndirizzo())) {
+			contatto.setIndirizzo("true");
+		} else {
+			contatto.setNome("false");
+		}
 		
-		JPAmanager.updateContattoRubrica(contatto, Integer.parseInt(str));;
-	}
-
-	public static void eliminaContatto(Scanner s) {
-		List<Contatto> contatti = JPAcriteriaManager.getRubrica();
-		
-		stampa(contatti);
-		
-		
-		System.out.print("\nInserisci l'id del contatto che vuoi eliminare: ");
-		String str = s.next();
-		
-		int x = 0;
-		do {
-			System.out.print("\nSei sicuro di voler eliminare il contatto? (Si/No): ");
-			String confirm = s.next().toLowerCase();
-			
-			if(confirm.equals("si")) {
-				JPAmanager.deleteContattoRubrica(Integer.parseInt(str));
-				x++;
-			} else if(confirm.equals("no")) {
-				x++;
-			}
-		} while(x == 0);
-	}
-
-	public static boolean areEqual(Contatto c, Contatto c1) {
-		return c.getNome().equals(c1.getNome()) && c.getCognome().equals(c1.getCognome()) && c.getTelefono().equals(c1.getTelefono()) && c.getEmail().equals(c1.getEmail()) && c.getNote().equals(c1.getNote());
+		if(c.getNote() == null & c1.getNote() == null) {
+			contatto.setNote("true");
+		} else if(c.getNote() == null | c1.getNote() == null) {
+			contatto.setNote("false");
+		} else if(c.getNote().equals(c1.getNote())) {
+			contatto.setNote("true");
+		} else {
+			contatto.setNome("false");
+		}
+		return contatto.getNome().equals("true") && contatto.getCognome().equals("true") && contatto.getTelefono().equals("true") && contatto.getEmail().equals("true") && contatto.getDataDiNascita().equals("true") && contatto.getIndirizzo().equals("true") && contatto.getNote().equals("true");
 	}
 	
 	public static List<Contatto> trovaContattiDuplicati() {
@@ -186,13 +112,6 @@ public class GestoreFunction {
 					}
 				}
 			}
-		}
-		
-		if(contattiDup.size() > 0) {
-			System.out.println("Contatti duplicati: ");
-			stampa(contattiDup);
-		} else {
-			System.out.println("Nessun contatto e' stato duplicato.");
 		}
 		
 		return contattiDup;

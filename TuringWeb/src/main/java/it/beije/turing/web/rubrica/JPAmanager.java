@@ -33,6 +33,27 @@ public class JPAmanager {
 		entityTransaction.begin();
 		
 		if(contatto.getId() == 0) {
+			if(contatto.getNome().equals("")) {
+				contatto.setNome(null);
+			}
+			if(contatto.getCognome().equals("")) {
+				contatto.setCognome(null);
+			}
+			if(contatto.getEmail().equals("")) {
+				contatto.setEmail(null);
+			}
+			if(contatto.getTelefono().equals("")) {
+				contatto.setTelefono(null);
+			}
+			if(contatto.getNote().equals("")) {
+				contatto.setNote(null);
+			}
+			if(contatto.getDataDiNascita().equals("")) {
+				contatto.setDataDiNascita(null);
+			}
+			if(contatto.getIndirizzo().equals("")) {
+				contatto.setIndirizzo(null);
+			}
 			entityManager.persist(contatto);
 		} else {
 			System.out.println("Contatto invalido per questa operazione.");
@@ -65,6 +86,12 @@ public class JPAmanager {
 			}
 			if(!newContatto.getNote().equals("") && newContatto.getNote() != null) {
 				contatto.setNote(newContatto.getNote());
+			}
+			if(!newContatto.getDataDiNascita().equals("") && newContatto.getDataDiNascita() != null) {
+				contatto.setDataDiNascita(newContatto.getDataDiNascita());
+			}
+			if(!newContatto.getIndirizzo().equals("") && newContatto.getIndirizzo() != null) {
+				contatto.setIndirizzo(newContatto.getIndirizzo());
 			}
 			entityManager.persist(contatto);
 		}

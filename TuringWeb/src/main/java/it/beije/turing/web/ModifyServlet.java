@@ -11,16 +11,16 @@ import it.beije.turing.web.rubrica.Contatto;
 import it.beije.turing.web.rubrica.JPAmanager;
 
 /**
- * Servlet implementation class InsertServlet
+ * Servlet implementation class ModifyServlet
  */
-@WebServlet("/insert")
-public class InsertServlet extends HttpServlet {
+@WebServlet("/modify")
+public class ModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertServlet() {
+    public ModifyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,13 +47,11 @@ public class InsertServlet extends HttpServlet {
 		contatto.setTelefono(request.getParameter("phone"));
 		contatto.setNote(request.getParameter("notes"));
 		
-		if(contatto.getNome().equals("") && contatto.getCognome().equals("") && contatto.getTelefono().equals("") && contatto.getEmail().equals("") && contatto.getDataDiNascita().equals("") && contatto.getIndirizzo().equals("") && contatto.getNote().equals("")) {
-			response.sendRedirect("index.jsp");
-		} else {			
-			JPAmanager.insertToRubrica(contatto);
-			
-			response.sendRedirect("index.jsp");
-		}
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		JPAmanager.updateContattoRubrica(contatto, id);
+		
+		response.sendRedirect("index.jsp");
 	}
 
 }

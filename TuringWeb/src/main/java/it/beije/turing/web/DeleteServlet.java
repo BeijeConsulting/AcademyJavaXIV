@@ -7,20 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.beije.turing.web.rubrica.Contatto;
 import it.beije.turing.web.rubrica.JPAmanager;
 
 /**
- * Servlet implementation class InsertServlet
+ * Servlet implementation class DeleteServlet
  */
-@WebServlet("/insert")
-public class InsertServlet extends HttpServlet {
+@WebServlet("/delete")
+public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertServlet() {
+    public DeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,23 +36,11 @@ public class InsertServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Contatto contatto = new Contatto();
+		int id = Integer.parseInt(request.getParameter("id"));
 		
-		contatto.setNome(request.getParameter("name"));
-		contatto.setCognome(request.getParameter("surname"));
-		contatto.setIndirizzo(request.getParameter("address"));
-		contatto.setDataDiNascita(request.getParameter("birthday"));
-		contatto.setEmail(request.getParameter("email"));
-		contatto.setTelefono(request.getParameter("phone"));
-		contatto.setNote(request.getParameter("notes"));
+		JPAmanager.deleteContattoRubrica(id);
 		
-		if(contatto.getNome().equals("") && contatto.getCognome().equals("") && contatto.getTelefono().equals("") && contatto.getEmail().equals("") && contatto.getDataDiNascita().equals("") && contatto.getIndirizzo().equals("") && contatto.getNote().equals("")) {
-			response.sendRedirect("index.jsp");
-		} else {			
-			JPAmanager.insertToRubrica(contatto);
-			
-			response.sendRedirect("index.jsp");
-		}
+		response.sendRedirect("index.jsp");
 	}
 
 }
