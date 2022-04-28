@@ -1,5 +1,7 @@
 package it.beije.turing.web;
 
+import it.beije.turing.web.rubrica.Contatto;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

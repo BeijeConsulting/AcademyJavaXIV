@@ -1,7 +1,9 @@
 package it.beije.turing.web;
 
+import it.beije.turing.web.rubrica.Contatto;
+import it.beije.turing.web.rubrica.JPACriteriaManager;
+
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +15,8 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class TestServlet
  */
-@WebServlet("/test")
-public class TestServlet extends HttpServlet {
+@WebServlet("/insert")
+public class InsertContatto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private int c;
@@ -22,7 +24,7 @@ public class TestServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TestServlet() {
+    public InsertContatto() {
         super();
         c = 0;
         System.out.println("TestServlet....");
@@ -34,17 +36,8 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("TestServlet doGet");
-		//...
-//		System.out.println("c :" + ++c);
-//		String fname = request.getParameter("fname");
-//		String lname = request.getParameter("lname");
-
 		HttpSession session = request.getSession();
-		System.out.println("session : " + session.getId());
-		String fname = (String)session.getAttribute("fname");
-		String lname = (String)session.getAttribute("lname");	
-		System.out.println("fname : " + fname);
-		System.out.println("lname : " + lname);
+
 		
 
 		response.getWriter().append("<html><body>Served at: ").append(request.getContextPath()).append("<br>").append("ID : ").append(session.getId()).append("</body></html>");
@@ -55,24 +48,49 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("TestServlet doPost");
-		// TODO Auto-generated method stub
+
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
+		String email = request.getParameter("email");
+		String telefono = request.getParameter("telefono");
+		String note = request.getParameter("note");
+
 		
 		System.out.println("fname : " + fname);
 		System.out.println("lname : " + lname);
+		System.out.println("email : " + email);
+		System.out.println("telefono : " + telefono);
+		System.out.println("note : " + note);
 		
 		HttpSession session = request.getSession();
 		System.out.println("session : " + session.getId());
 		session.setAttribute("fname", fname);
 		session.setAttribute("lname", lname);
+		session.setAttribute("email", email);
+		session.setAttribute("telefono", telefono);
+		session.setAttribute("note", note);
 
-		
-//		response.getWriter().append("<html><body>")
-//		.append("fname : ").append(fname).append("<br>")
-//		.append("lname : ").append(lname).append("<br>")
-//		.append("</body></html>");
-		response.sendRedirect("example.jsp");
+		Contatto contatto = new Contatto();
+		contatto.setNome(fname);
+		contatto.setCognome(lname);
+		contatto.setEmail(email);
+		contatto.setTelefono(telefono);
+		contatto.setNote(note);
+
+
+		JPACriteriaManager.insertContatto(contatto);
+
+		response.getWriter().append("<html><body>")
+		.append("fname : ").append(fname).append("<br>")
+		.append("lname : ").append(lname).append("<br>")
+		.append("telefono : ").append(telefono).append("<br>")
+		.append("email : ").append(email).append("<br>")
+		.append("note : ").append(note).append("<br>")
+		.append("<div class=\"container\">\n" +
+				"    <form action=\"../TuringWeb\" method=\"post\"><input type=\"submit\" value=\"Torna indietro\">\n" +
+				"    </form>\n" +
+				"</div></body></html>");
+
 	}
 
 }
