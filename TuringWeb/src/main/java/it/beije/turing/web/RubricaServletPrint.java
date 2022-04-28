@@ -3,6 +3,7 @@ package it.beije.turing.web;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -14,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.HibernateException;
 
@@ -64,10 +66,18 @@ public class RubricaServletPrint extends HttpServlet {
 			}
 			
 		}
-	
-		// TODO Auto-generated method stub
+		//HttpSession session = request.getSession();
+		//System.out.println("session : " + session.getId());
+		//String value = (String)session.getAttribute("type");	
+		String value = request.getParameter("type");
+		if(value.equalsIgnoreCase("name")) {
+			ris = sort(ris,"N");
+		}else {
+			ris = sort(ris,"S");
+		}
+		
 		for(Contatto c : ris) {
-			response.getWriter().append("<contatto>").append(c.toString()).append("</contatto>").append("<br>");
+			response.getWriter().append(c.toString()).append("<br>");
 		}
 		
 		
@@ -80,5 +90,53 @@ public class RubricaServletPrint extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+	private void swap(List<Contatto> contatti, int i) {
+		Contatto tmp = contatti.get(i);
+		Contatto tmp2 = contatti.get(i+1);
+		contatti.remove(i+1);
+		contatti.remove(i);
+		contatti.add(i,tmp2);
+		contatti.add(i+1,tmp);
+	}
 
+	public List<Contatto> sort(List<Contatto> allContatti, String type) {
+		boolean swapped = true;
+		List<Contatto> ris = new ArrayList<>(allContatti);
+
+		switch(type.toUpperCase().charAt(0)) {
+		case 'N':
+			while(swapped) {
+				swapped = false;
+				for(int i = 0; (i+1) < ris.size(); i++) {
+					if(ris.get(i).getNome().toUpperCase().compareTo(ris.get(i+1).getNome().toUpperCase()) >= 0) {
+						if(ris.get(i).getNome().toUpperCase().compareTo(ris.get(i+1).getNome().toUpperCase()) == 0) {
+							continue;
+						}
+						swap(ris,i);
+						swapped = true;
+					}
+				}
+			}
+			break;
+		default:
+			System.out.println("Tipo invalido, ordinamento per Cognome.");
+		case 'S':
+			while(swapped) {
+				swapped = false;
+				for(int i = 0; (i+1) < ris.size(); i++) {
+					if(ris.get(i).getCognome().toUpperCase().compareTo(ris.get(i+1).getCognome().toUpperCase()) >= 0) {
+						if(ris.get(i).getCognome().toUpperCase().compareTo(ris.get(i+1).getCognome().toUpperCase()) == 0) {
+							continue;
+						}
+						swap(ris,i);
+						swapped = true;
+					}
+				}
+			}
+			break;
+		}
+		return ris;
+	}
+	
 }
