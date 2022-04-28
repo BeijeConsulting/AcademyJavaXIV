@@ -11,47 +11,33 @@
 </head>
 <body>
 
-<% 
+<%
 int x = 1;
 int y = 4;
 int z = x + y;
 
-out.println("z = " + z);
-
+out.println("example");
+%>
+<br>
+<%
 request.getSession();
 
-String nome = (String) session.getAttribute("nome");
+String nome = (String) session.getAttribute("name");
 String cognome = (String) session.getAttribute("cognome");
 
-Contatto contatto = new Contatto();
+ Contatto contatto = new Contatto();
 
 contatto.setNome(nome);
 contatto.setCognome(cognome);
 
 out.println(contatto.toString());
-
-
-
-
-
-
-
-//out.print("z = " + z);
 %>
 <br>
-<%-- 
-x + y =&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= x + y %><br>
-<% for (char a = 'a'; a <= 'z'; a++) { %>
-	<%= a %>
-	
-<% } %>
-<br>
-<%= x + 3 %>
-<br>
---%>
 
-FNAME = <%= nome %><br>
-LNAME = <%= cognome %>
+
+
+
+
 
 
 

@@ -1,5 +1,4 @@
-
-package it.beije.turing.web;
+package it.beije.turing.web.rubrica;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MyServlet
+ * Servlet implementation class ServletContatto
  */
-@WebServlet("/servlet")
-public class MyServlet extends HttpServlet {
+@WebServlet("/ServletContatto")
+public class ServletContatto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyServlet() {
+    public ServletContatto() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,22 +27,21 @@ public class MyServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("MyServlet doGet");
-		Contatto contatto = new Contatto();
+		System.out.println("ServletContatto doGet ");
 		
-//		request.getSession().setAttribute("contatto", contatto);
+		Contatto contatto = (Contatto) request.getSession().getAttribute("contatto");
 		
-		response.sendRedirect("insert_contatto.jsp");
-		
-		
-//				contatto.setCognome("Rossi");
-		
-		
-//		System.out.println("nome " + contatto.getNome());
-//		System.out.println("cognome " + contatto.getCognome());
+		System.out.println("contatto " + contatto);
 
+		response.getWriter().append("Contatto: ").append(contatto.toString());
 		
 		
+//		Contatto contatto = (Contatto) request.getSession().getAttribute("contatto");
+//
+//		System.out.println("contatto : " + contatto);
+//		contatto.setCognome("ciao");
+//		
+//		response.getWriter().append("Contatto: ").append(contatto.getCognome().toString());
 	}
 
 	/**
@@ -55,4 +53,3 @@ public class MyServlet extends HttpServlet {
 	}
 
 }
-

@@ -1,4 +1,4 @@
-package it.beije.turing.web;
+package it.beije.turing.web.rubrica;
 
 
 import java.io.IOException;
