@@ -63,8 +63,8 @@ public class TestServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		System.out.println("session : " + session.getId());
-		session.setAttribute("fname", "mattia");
-		session.setAttribute("lname", "mattia");
+		session.setAttribute("fname", fname);
+		session.setAttribute("lname", lname);
 
 		
 //		response.getWriter().append("<html><body>")
