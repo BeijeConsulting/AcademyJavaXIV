@@ -1,4 +1,4 @@
-<%@page import="it.beije.turing.web.Contatto"%>
+<%@page import="it.beije.turing.web.rubrica.Contatto"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>

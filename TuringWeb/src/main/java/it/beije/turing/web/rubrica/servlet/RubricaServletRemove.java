@@ -1,4 +1,4 @@
-package it.beije.turing.web;
+package it.beije.turing.web.rubrica.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RubricaServletAdd
+ * Servlet implementation class RubricaServletRemove
  */
-@WebServlet("/rubricaservletadd")
-public class RubricaServletAdd extends HttpServlet {
+@WebServlet("/rubricaservletremove")
+public class RubricaServletRemove extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RubricaServletAdd() {
+    public RubricaServletRemove() {
         super();
         // TODO Auto-generated constructor stub
     }

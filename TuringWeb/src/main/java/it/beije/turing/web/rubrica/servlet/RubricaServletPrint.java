@@ -1,4 +1,4 @@
-package it.beije.turing.web;
+package it.beije.turing.web.rubrica.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import it.beije.turing.web.rubrica.Contatto;
 /**
  * Servlet implementation class RubricaServlet
  */
-@WebServlet("/rubricaservletprint")
+@WebServlet("/rubrica_servlet_print")
 public class RubricaServletPrint extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -5,9 +5,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>Ricerca</h2>
-<p>Seleziona tipo di ricerca:</p>
-<form action="./search_servlet" method="post">
+<h2>Aggiungi Contatto</h2>
+<p>Inserire i dati da salvare su DB:</p>
+<form action="./add_servlet" method="post">
   <label for="name">First name:</label><br>
   <input type="text" id="name" name="name"><br>
   <label for="lname">Last name:</label><br>
@@ -16,6 +16,8 @@
   <input type="text" id="tel" name="tel"><br>
   <label for="email">Telephone Number:</label><br>
   <input type="text" id="email" name="email"><br>
+  <label for="note">Note:</label><br>
+  <input type="text" id="note" name="note"><br>
   <input type="submit" value="Submit"><br>
  </form>
 </body>

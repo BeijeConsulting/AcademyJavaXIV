@@ -4,10 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.HibernateException;
+
 
 
 public class RubricaManager {
 	private List<Contatto> allContatti = null;
+
+	public RubricaManager(){
+		if(allContatti == null) {
+			allContatti = new ArrayList<Contatto>();
+			EntityManager entityManager = null;
+			try {
+				entityManager = EntityManagerFactorySingleton.createEntityManager();
+				CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+				CriteriaQuery<Contatto> cq = cb.createQuery(Contatto.class);
+				Root<Contatto> from = cq.from(Contatto.class);
+				cq.select(from);
+				TypedQuery<Contatto> q = entityManager.createQuery(cq);
+				allContatti = q.getResultList();
+
+			} catch (HibernateException hbmEx) {
+				hbmEx.printStackTrace();
+				throw hbmEx;
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				entityManager.close();
+			}
+		}
+	}
 
 	public List<Contatto> getAllContatti() {
 		return allContatti;
@@ -16,33 +51,23 @@ public class RubricaManager {
 	public void setAllContatti(List<Contatto> allContatti) {
 		this.allContatti = allContatti;
 	}
-// TODO: IMPLEMENTA NELLA SERVLET
+
 	public void printAllContatti() {
 		for(Contatto c : allContatti) {
 			System.out.println(c);
 		}
 	}
-	// TODO: IMPLEMENTA NELLA SERVLET
-	public void AggiungiContatto(Scanner s) {
+
+	public List<Contatto> AggiungiContatto(String nome, String cognome, String telefono, String email, String note) {
 		List<Contatto> ris = new ArrayList<>(allContatti);
 		Contatto c = new Contatto();
-		System.out.println("Inserire Nome:");
-		String nome = s.nextLine();
-		System.out.println("Inserire Cognome:");
-		String cognome = s.nextLine();
-		System.out.println("Inserire Telefono:");
-		String telefono = s.nextLine();
-		System.out.println("Inserire Email:");
-		String email = s.nextLine();
-		System.out.println("Inserire Note:");
-		String note = s.nextLine();
 		c.setCognome(cognome);
 		c.setNome(nome);
 		c.setTelefono(telefono);
 		c.setEmail(email);
 		c.setNote(note);
 		ris.add(c);
-		allContatti = new ArrayList<>(ris);
+		return ris;
 	}
 	// TODO: IMPLEMENTA NELLA SERVLET
 	public void ModificaContatto(Scanner s) {
@@ -110,7 +135,7 @@ public class RubricaManager {
 		}catch(NumberFormatException nfEx) {
 			System.out.println("Inserire un numero valido!");
 			nfEx.printStackTrace();
-		System.out.println("Quitting...");
+			System.out.println("Quitting...");
 			return;
 		}
 		ris.remove(i);
@@ -126,7 +151,8 @@ public class RubricaManager {
 		allContatti =  new ArrayList<>();
 		System.out.println("Fatto.");
 	}
-
+	// TODO: IMPLEMENTA NELLA SERVLET
+	/*
 	public List<Contatto> TrovaContattiDuplicati(Scanner s){
 		List<Contatto> ris = new ArrayList<>();
 		sort(s);
@@ -138,7 +164,9 @@ public class RubricaManager {
 		}
 		return ris;
 	}
+	*/
 	// TODO: IMPLEMENTA NELLA SERVLET
+	/*
 	public void UnisciContattiDuplicati(Scanner s) {
 		List<Contatto> ris = new ArrayList<>();
 		sort(s);
@@ -160,74 +188,144 @@ public class RubricaManager {
 		}
 		allContatti = new ArrayList<>(ris);
 	}
-	// TODO: IMPLEMENTA NELLA SERVLET
-	public void cercaContatto(Scanner s) {
-		System.out.println("Inserire tipo ricerca ((N)ome,(C)ognome,(T)elefono,(E)mail o (A)ll[Ricerca per Nome,Cognome,Telefono e Email][exit per uscire]):");
-		String type = null;
-		while(type == null || type.isEmpty()) {
-			type = s.nextLine();
+	*/
+	public List<Contatto> cercaContatto(String nome, String cognome, String telefono, String email) {
+		List<Contatto> ris = new ArrayList<>();
+		
+		if(nome.isEmpty())
+			nome = null;
+		if(cognome.isEmpty())
+			cognome = null;
+		if(telefono.isEmpty())
+			telefono = null;
+		if(email.isEmpty())
+			email = null;
+		if(nome != null && cognome == null && telefono == null && email == null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getNome().contains(nome)){
+					ris.add(allContatti.get(i));
+				}
+			}
+			
+		}else if(nome == null && cognome != null && telefono == null && email == null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getCognome().contains(cognome)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome == null && cognome == null && telefono != null && email == null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getTelefono().contains(telefono)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome == null && cognome == null && telefono == null && email != null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getEmail().contains(email)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome != null && cognome != null && telefono == null && email == null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getCognome().contains(cognome)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome != null && cognome == null && telefono != null && email == null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getTelefono().contains(telefono)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome != null && cognome == null && telefono == null && email != null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getEmail().contains(email)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome == null && cognome != null && telefono != null && email == null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getTelefono().contains(telefono)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome == null && cognome != null && telefono == null && email != null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getEmail().contains(email)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome == null && cognome == null && telefono != null && email != null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getTelefono().contains(telefono) && allContatti.get(i).getEmail().contains(email)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome != null && cognome != null && telefono != null && email == null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getTelefono().contains(telefono)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome != null && cognome != null && telefono == null && email != null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getEmail().contains(email)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome != null && cognome == null && telefono != null && email != null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getTelefono().contains(telefono) && allContatti.get(i).getEmail().contains(email)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome == null && cognome != null && telefono != null && email != null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getTelefono().contains(telefono) && allContatti.get(i).getEmail().contains(email)){
+					ris.add(allContatti.get(i));
+				}
+			}
+
+		}else if(nome != null && cognome != null && telefono != null && email != null) {
+			
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getCognome().contains(cognome) 
+						&& allContatti.get(i).getTelefono().contains(telefono) && allContatti.get(i).getEmail().contains(email)){
+					ris.add(allContatti.get(i));
+				}
+			}
+			
 		}
-		if(type.equalsIgnoreCase("exit")) {
-			System.out.println("Quitting...");
-			return;
-		}
-		String search = "";
-		if(!type.equalsIgnoreCase("A")) {
-			System.out.println("Inserire dato da ricercare:");
-			search = s.nextLine();
-		}
-		switch(type.toUpperCase()) {
-			case "C":
-				for(int i = 0; i < allContatti.size(); i++) {
-					if(allContatti.get(i).getCognome() != null && allContatti.get(i).getCognome().contains(search)) {
-						System.out.println(allContatti.get(i));
-					}
-				}
-				break;
-			case "N":
-				for(int i = 0; i < allContatti.size(); i++) {
-					if(allContatti.get(i).getNome() != null && allContatti.get(i).getNome().contains(search)) {
-						System.out.println(allContatti.get(i));
-					}
-				}
-				break;
-			case "T":
-				for(int i = 0; i < allContatti.size(); i++) {
-					if(allContatti.get(i).getTelefono() != null && allContatti.get(i).getTelefono().contains(search)) {
-						System.out.println(allContatti.get(i));
-					}
-				}
-				break;
-			case "E":
-				for(int i = 0; i < allContatti.size(); i++) {
-					if(allContatti.get(i).getEmail() != null && allContatti.get(i).getEmail().contains(search)) {
-						System.out.println(allContatti.get(i));
-					}
-				}
-				break;
-			case "A":
-				System.out.println("Inserire nome da ricercare:");
-				String nome = s.nextLine();
-				System.out.println("Inserire cognome da ricercare:");
-				String cognome = s.nextLine();
-				System.out.println("Inserire telefono da ricercare:");
-				String telefono = s.nextLine();
-				System.out.println("Inserire email da ricercare:");
-				String email = s.nextLine();
-				for(int i = 0; i < allContatti.size(); i++) {
-					if(allContatti.get(i).getEmail() != null && 
-							(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getCognome().contains(cognome) 
-								&& allContatti.get(i).getTelefono().contains(telefono) && allContatti.get(i).getEmail().contains(email))) {
-						System.out.println(allContatti.get(i));
-					}
-				}
-				break;
-			default:
-				System.out.println("Illegal search type!");
-				System.out.println("Quitting...");
-		}
+		
+		return ris;
 	}
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void swap(List<Contatto> contatti, int i) {
 		Contatto tmp = contatti.get(i);
 		Contatto tmp2 = contatti.get(i+1);
@@ -237,16 +335,7 @@ public class RubricaManager {
 		contatti.add(i+1,tmp);
 	}
 
-	public boolean sort(Scanner s) {
-		String type = null;
-		while(type == null || type.length() == 0) {
-			System.out.println("Inserire ordinamento (N)ome,(C)ognome[digitare exit per uscire]:");
-			type = s.nextLine();
-		}
-		if(type.equalsIgnoreCase("exit")) {
-			System.out.println("Quitting...");
-			return false;
-		}
+	public List<Contatto> sort(List<Contatto> allContatti, String type) {
 		boolean swapped = true;
 		List<Contatto> ris = new ArrayList<>(allContatti);
 
@@ -267,7 +356,7 @@ public class RubricaManager {
 			break;
 		default:
 			System.out.println("Tipo invalido, ordinamento per Cognome.");
-		case 'C':
+		case 'S':
 			while(swapped) {
 				swapped = false;
 				for(int i = 0; (i+1) < ris.size(); i++) {
@@ -282,9 +371,72 @@ public class RubricaManager {
 			}
 			break;
 		}
-		setAllContatti(ris);
-		return true;
+		return ris;
 	}
-
+	
+	public List<Contatto> writeRubricaOnDB(List<Contatto> allContact) {
+		List<Contatto> ris = new ArrayList<Contatto>();
+		EntityManager entityManager = null;
+		try {
+			entityManager = EntityManagerFactorySingleton.createEntityManager();
+			Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
+			List<Contatto> contatti = query.getResultList();
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			//REMOVE CONTATTO IN DB
+			OUTER:for(int i = 0; i < contatti.size(); i++) {
+				for(int j = 0; j < allContact.size(); j++) {
+					if(contatti.get(i).equals(allContact.get(j))) {
+						continue OUTER;
+					}
+				}
+				entityManager.remove(contatti.get(i));
+			}
+			entityTransaction.commit();
+			
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
+		}
+		
+		try {
+			entityManager = EntityManagerFactorySingleton.createEntityManager();
+			Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
+			List<Contatto> contatti = query.getResultList();
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			//INSERT NEW CONTATTO IN DB
+			OUTER:for(int i = 0; i < allContact.size(); i++) {
+				for(int j = 0; j < contatti.size(); j++) {
+					if(contatti.get(j).equals(allContact.get(i))) {
+						continue OUTER;
+					}
+				}
+				Contatto tmp = new Contatto();
+				tmp.setNome(allContact.get(i).getNome());
+				tmp.setCognome(allContact.get(i).getCognome());
+				tmp.setEmail(allContact.get(i).getEmail());
+				tmp.setNote(allContact.get(i).getNote());
+				tmp.setTelefono(allContact.get(i).getTelefono());
+				entityManager.persist(tmp);
+			}
+			entityTransaction.commit();
+			ris = query.getResultList();
+		}catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
+		}
+		return ris;
+	}
 
 }
