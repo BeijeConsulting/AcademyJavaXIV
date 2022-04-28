@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="it.beije.turing.web.rubrica.Contatto"%>
 <%@page import="it.beije.turing.web.util.MyJPAManager"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,42 +14,73 @@
 </head>
 <body>
 
+   <%
+   String fname = request.getParameter("fname");
+           String lname = request.getParameter("lname");
+           String phone = request.getParameter("phone");
+           String email = request.getParameter("email");
+
+           Contatto contact = new Contatto();
+           if (!fname.equals("")) contact.setNome(fname);
+           if (!lname.equals("")) contact.setCognome(lname);
+           if (!phone.equals("")) contact.setTelefono(phone);
+           if (!email.equals("")) contact.setEmail(email);
+
+           if ((contact.getNome() == null) &&
+               (contact.getCognome() == null) &&
+               (contact.getTelefono() == null) &&
+               (contact.getEmail() == null)
+           ) response.sendRedirect("invalid_form.jsp");
+           else {
+               List<Contatto> contactsFound = MyJPAManager.searchContacts(contact);
+
+               if (contactsFound.size() == 0){
+                   response.sendRedirect("not_found.jsp");
+
+               }else {%>
+
    <%@ include file="header.jsp"%>
 
-   <h1>Contatti trovati</h1>
+      <h1>Contatti trovati</h1>
 
-   <div class="container">
-      <table class="table">
-         <thead>
-            <tr>
-               <th scope="col">#</th>
-               <th scope="col">Nome</th>
-               <th scope="col">Cognome</th>
-               <th scope="col">Telefono</th>
-               <th scope="col">Email</th>
-               <th scope="col">Note</th>
-               <th scope="col">Azioni</th>
-            </tr>
-         </thead>
-         <tbody>
-            <% for (Contatto c : MyJPAManager.searchContact()) { %>
-                <tr>
-                    <th scope="row"><% out.print(c.getId()); %></th>
-                    <td><% out.print(c.getNome()); %></td>
-                    <td><% out.print(c.getCognome()); %></td>
-                    <td><% out.print(c.getTelefono()); %></td>
-                    <td><% out.print(c.getEmail()); %></td>
-                    <td><% out.print(c.getNote()); %></td>
-                    <td>
-                        <button class="btn btn-success">MODIFICA</button>
-                        <button class="btn btn-danger">ELIMINA</button>
-                    </td>
-                </tr>
-            <% } %>
+      <div class="container">
+         <table class="table">
+            <thead>
+               <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Cognome</th>
+                  <th scope="col">Telefono</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Note</th>
+                  <th scope="col">Azioni</th>
+               </tr>
+            </thead>
+            <tbody>
+               <% for (Contatto c : contactsFound) { %>
+                   <tr>
+                       <th scope="row"><% out.print(c.getId()); %></th>
+                       <td><% out.print(c.getNome()); %></td>
+                       <td><% out.print(c.getCognome()); %></td>
+                       <td><% out.print(c.getTelefono()); %></td>
+                       <td><% out.print(c.getEmail()); %></td>
+                       <td><% out.print(c.getNote()); %></td>
+                       <td>
+                           <button class="btn btn-success">MODIFICA</button>
+                           <button class="btn btn-danger">ELIMINA</button>
+                       </td>
+                   </tr>
+               <% } %>
 
-         </tbody>
-      </table>
-   </div>
+            </tbody>
+         </table>
+      </div>
+
+   <%            }
+           }%>
+
+
+
 
 </body>
 </html>

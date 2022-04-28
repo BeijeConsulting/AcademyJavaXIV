@@ -16,7 +16,7 @@
 
 <h2>Dati contatto</h2>
 <div class="container">
-  <form action="./search_result">
+  <form action="./search_result.jsp">
     <label for="fname">Nome:</label>
     <input type="text" id="fname" name="fname">
     <label for="lname">Cognome:</label>
