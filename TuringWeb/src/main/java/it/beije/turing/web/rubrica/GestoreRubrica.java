@@ -251,10 +251,10 @@ public void modify(int x,String nome, String cognome, String telefono, String em
 @Override
 public List<Contatto> search(String... command) {
 	StringBuilder query = new StringBuilder();
-	for(int i=1;i<command.length;i+=2)
+	for(int i=0;i<command.length;i+=2)
 	{
 		query.append(command[i]+"='"+command[i+1]+"' ");
-		if(i!=1)
+		if(i!=0)
 		{
 			query.insert(0, ",");
 		}

@@ -36,18 +36,26 @@
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"new\">");
 	out.println("<input type=\"submit\" value=\"new\">");
 	out.println("</form>");
+	
+	
 	out.println("<form action=\"./main\" method=\"post\">");
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"delete\">");
 	out.println("<input type=\"submit\" value=\"delete\">");
 	out.println("</form>");
+	
+	
 	out.println("<form action=\"./main\" method=\"post\">");
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"back\">");
 	out.println("<input type=\"submit\" value=\"Back\">");
 	out.println("</form>");
+	
+	
 	out.println("<form action=\"./main\" method=\"post\">");
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"modify\">");
 	out.println("<input type=\"submit\" value=\"modify\">");
 	out.println("</form>");
+	
+	
 	out.println("<form action=\"./main\" method=\"post\">");
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"search\">");
 	out.println("<input type=\"submit\" value=\"Search\">");
@@ -58,14 +66,30 @@
 	out.println("<form action=\"./main\" method=\"post\">");
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"new\">");
 	out.println("<input type= \"hidden\" id=\"flag\" name=\"flag\" value=\"true\">");
-	out.println("<input type=\"text\" id=\"nome\" name=\"nome\" value=\"nome\">");
-	out.println("<input type=\"text\" id=\"conome\" name=\"cognome\" value=\"cognome\">");
-	out.println("<input type=\"text\" id=\"email\" name=\"email\" value=\"email\">");
-	out.println("<input type=\"text\" id=\"telefono\" name=\"telefono\" value=\"telefono\">");
-	out.println("<input type=\"text\" id=\"note\" name=\"note\" value=\"note\">");
+	
+	out.println( "<label for=\"nome\">Nome</label>");
+	out.println("<input type=\"text\" id=\"nome\" name=\"nome\" value=\"\"><br>");
+			
+	out.println( "<label for=\"cognome\">Cognome</label>");
+	out.println("<input type=\"text\" id=\"cognome\" name=\"cognome\" value=\"\"><br>");
+			
+	out.println( "<label for=\"email\">Email</label>");
+	out.println("<input type=\"text\" id=\"email\" name=\"email\" value=\"\"><br>");
+	
+	out.println( "<label for=\"telefono\">Telefono</label>");
+	out.println("<input type=\"text\" id=\"telefono\" name=\"telefono\" value=\"\"><br>");
+			
+	out.println( "<label for=\"note\">Note</label>");
+	out.println("<input type=\"text\" id=\"note\" name=\"note\" value=\"\"><br>");
+	
+	
+	
+	
 	out.println("<br><br>");
 	out.println("<input type=\"submit\" value=\"Submit\">");
 	out.println("</form>");
+	
+	
 	out.println("<form action=\"./main\" method=\"post\">");
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"back\">");
 	out.println("<input type=\"submit\" value=\"Back\">");
@@ -73,16 +97,41 @@
 }
  else if(session.getAttribute("mode").toString().equalsIgnoreCase("delete")) {
 	out.println("<form action=\"./main\" method=\"post\">");
+	
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"delete\">");
 	out.println("<input type= \"hidden\" id=\"flag\" name=\"flag\" value=\"true\">");
-	out.println("<input type=\"text\" id=\"id\" name=\"id\" value=\"id\">");
+	
+	out.println( "<label for=\"id\">ID to delete</label>");
+	out.println("<input type=\"text\" id=\"id\" name=\"id\" value=\"\">");
+			
 	out.println("<input type=\"submit\" value=\"Submit\">");
 	out.println("</form>");
+	
+	
 	
 	out.println("<form action=\"./main\" method=\"post\">");
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"back\">");
 	out.println("<input type=\"submit\" value=\"Back\">");
 	out.println("</form>");
+ }
+ else if(session.getAttribute("mode").toString().equalsIgnoreCase("modify")) {
+		out.println("<form action=\"./main\" method=\"post\">");
+		
+		out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"modify\">");
+		out.println("<input type= \"hidden\" id=\"flag\" name=\"flag\" value=\"true\">");
+		
+		out.println( "<label for=\"id\">ID to modify</label>");
+		out.println("<input type=\"text\" id=\"id\" name=\"id\" value=\"\">");
+				
+		out.println("<input type=\"submit\" value=\"Submit\">");
+		out.println("</form>");
+		
+		
+		
+		out.println("<form action=\"./main\" method=\"post\">");
+		out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"back\">");
+		out.println("<input type=\"submit\" value=\"Back\">");
+		out.println("</form>");
  }
 %>
 </body>
