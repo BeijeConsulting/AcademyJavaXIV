@@ -26,8 +26,11 @@
 	contatto.setTelefono(request.getParameter("telefono"));
 	contatto.setNote(request.getParameter("note"));
 	
-	if(contatto.getNome() != null)
+	if(contatto.getNome() != null){
 		JpaManager.addContatti(contatto);
+		response.sendRedirect("http://localhost:8080/turing/mostracontatti.jsp");
+	}
+		
 	
 	%>
 	
