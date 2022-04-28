@@ -40,6 +40,24 @@ public class JPAManager implements OpRubrica {
 
     @Override
     public List<Contatto> search(String s) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction();
+
+
+        String beginStatement = "SELECT c FROM Contatto as c WHERE " +
+                " c.nome LIKE \'%"+s+"%\' OR " +
+                " c.cognome LIKE \'%"+s+"%\' OR"+
+                " c.note LIKE \'%"+s+"%\' OR"+
+                " c.telefono LIKE \'%"+s+"%\' OR"+
+                " c.cognome LIKE \'%"+s+"%\'";
+
+
+        Query query = entityManager.createQuery(beginStatement);
+        return query.getResultList();
+    }
+
+   /* @Override
+    public List<Contatto> search(String s) {
         /**
          *Non è molto elegante come soluzione ma con i creteria non gira
          */
@@ -73,11 +91,11 @@ public class JPAManager implements OpRubrica {
 
         entityManager.close();
         List <Contatto> resultList=entityManager.createQuery(criteriaQuery).getResultList();
-        entityManager.close();*/
+        entityManager.close();
 
         List<Contatto> resultList=new ArrayList<>();
         List<Contatto> contattos= showContact(Order.NO);
-
+if(s!=null){
         for (Contatto contatto: contattos) {
             boolean t=false;
             if(contatto.getNome().contains(s)){
@@ -99,11 +117,12 @@ public class JPAManager implements OpRubrica {
             if(t){
                 resultList.add(contatto);
             }
-        }
+        }}
 
         return resultList;
     }
 
+*/
     @Override
     public boolean insert(Contatto c) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();

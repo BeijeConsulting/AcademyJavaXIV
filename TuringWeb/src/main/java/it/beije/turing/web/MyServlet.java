@@ -15,14 +15,14 @@ public class MyServlet extends HttpServlet {
 
     public MyServlet() {
         super();
-
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("MyServlet doGet");
-		
+		System.out.println("Ciao");
+		System.out.println("Ciao");
 //		Contatto contatto = new Contatto();
 //		contatto.setNome("Pippo");
 //		contatto.setCognome("Rossi");

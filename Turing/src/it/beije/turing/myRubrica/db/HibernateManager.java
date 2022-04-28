@@ -23,6 +23,10 @@ public class HibernateManager implements OpRubrica {
         HibernateSessionFactory.opSession().close();
     }
 
+    public List<Contatto> showContact() {
+        return  showContact(Order.NO);
+    }
+
     @Override
     public List<Contatto> showContact(Order order) {
 
@@ -31,10 +35,10 @@ public class HibernateManager implements OpRubrica {
 
         if(order==Order.NO){
 
-        }else if(order==Order.COGNOME){
-            s.append(" ORDER BY nome DESC");
         }else if(order==Order.NOME){
-            s.append(" ORDER BY cognome DESC");
+            s.append(" ORDER BY c.nome ASC");
+        }else if(order==Order.COGNOME){
+            s.append(" ORDER BY c.cognome ASC");
         }
 
         Query<Contatto> query = opSession.createQuery(s.toString());
