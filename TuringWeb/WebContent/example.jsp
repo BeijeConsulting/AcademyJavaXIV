@@ -34,8 +34,8 @@ x + y =&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= x + y %><br>
 <br>
 <%= x + 3 %>
 --%>
-FNAME = <%= fname %><br>
-LNAME = <%= lname %>
+FNAME = <%= "m" %><br>
+LNAME = <%= "p" %>
 
 </body>
 </html>
