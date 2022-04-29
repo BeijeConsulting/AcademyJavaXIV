@@ -39,6 +39,12 @@
         justify-content: center;
     }
 
+    .container2 {
+        margin: auto 0;
+        display: flex;
+        justify-content: center;
+    }
+
     .btn {
         display: block;
         padding: 10px 20px;
@@ -51,10 +57,15 @@
 <body>
 <h1>Gestione rubrica</h1>
 <div class="container">
-    <a class="btn" href="http://localhost:8080/TuringWeb/show.jsp">MOSTRA TUTTI</a>
+    <a class="btn" href="http://localhost:8080/TuringWeb/show_contacts">MOSTRA TUTTI</a>
     <a class="btn" href="http://localhost:8080/TuringWeb/search_contacts.jsp">CERCA CONTATTO</a>
-    <a class="btn" href="http://localhost:8080/TuringWeb/prova.jsp">JSP</a>
     <a class="btn" href="http://localhost:8080/TuringWeb/create_contact.jsp">CREA CONTATTO</a>
+</div>
+<div class="container2">
+    <a class="btn" href="http://localhost:8080/TuringWeb/edit_contact_from_index.jsp">MODIFICA CONTATTO</a>
+    <a class="btn" href="http://localhost:8080/TuringWeb/delete_contact.jsp">ELIMINA CONTATTO</a>
+    <a class="btn" href="http://localhost:8080/TuringWeb/create_contact.jsp">TROVA CONTATTI DUPLICATI</a>
+    <a class="btn" href="http://localhost:8080/TuringWeb/create_contact.jsp">ELIMINA CONTATTI DUPLICATI</a>
 </div>
 </body>
 </html>

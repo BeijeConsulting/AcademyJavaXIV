@@ -68,4 +68,42 @@ public class ContactDBManager {
 
         return contactsFound;
     }
+
+    public static void updateContact(int id, String nome, String cognome, String email, String telefono, String note) {
+        EntityManager entityManager = EntityManagerFactorySingleton.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        Contatto contatto = entityManager.find(Contatto.class, id);
+
+        if(contatto != null) {
+            if(nome != "") {
+                contatto.setNome(nome);
+            }
+            if(cognome != "") {
+                contatto.setCognome(cognome);
+            }
+            if(email != "") {
+                contatto.setEmail(email);
+            }
+            if(telefono != "") {
+                contatto.setTelefono(telefono);
+            }
+            if(note != "") {
+                contatto.setNote(note);
+            }
+            entityManager.persist(contatto);
+            entityTransaction.commit();
+        }
+    }
+
+    public static void deleteContact(int id) {
+        EntityManager entityManager = EntityManagerFactorySingleton.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+        Contatto contatto = entityManager.find(Contatto.class, id);
+
+        entityManager.remove(contatto);
+        entityTransaction.commit();
+    }
 }

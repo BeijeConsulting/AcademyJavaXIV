@@ -32,7 +32,6 @@
     <title>Contatti</title>
 </head>
 <body>
-<%@ include file="header.jsp" %>
 <table class="table">
     <thead>
     <tr>
@@ -59,26 +58,6 @@
         <td><%=contatto1.getEmail()%>
         </td>
         <td><%=contatto1.getNote()%>
-        </td>
-        <td>
-            <form class="d-inline-block" action="edit_contact.jsp">
-                <input type="hidden" name="id" value="<%= contatto1.getId() %>">
-                <input type="hidden" name="fname" value="<%= contatto1.getNome() %>">
-                <input type="hidden" name="lname" value="<%= contatto1.getCognome() %>">
-                <input type="hidden" name="phone" value="<%= contatto1.getTelefono() %>">
-                <input type="hidden" name="email" value="<%= contatto1.getEmail() %>">
-                <input type="hidden" name="notes" value="<%= contatto1.getNote() %>">
-                <input class="btn btn-success" type="submit" value="MODIFICA">
-            </form>
-            <form class="d-inline-block" action="./delete_contact.jsp">
-                <input type="hidden" name="id" value="<%= contatto1.getId() %>">
-                <input type="hidden" name="fname" value="<%= contatto1.getNome() %>">
-                <input type="hidden" name="lname" value="<%= contatto1.getCognome() %>">
-                <input type="hidden" name="phone" value="<%= contatto1.getTelefono() %>">
-                <input type="hidden" name="email" value="<%= contatto1.getEmail() %>">
-                <input type="hidden" name="notes" value="<%= contatto1.getNote() %>">
-                <input class="btn btn-danger" type="submit" value="ELIMINA">
-            </form>
         </td>
     </tr>
     <% }%>

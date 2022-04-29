@@ -1,9 +1,19 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: simonepitossi
+  Date: 29/04/22
+  Time: 15:52
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Create Contact</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Crea Contatto | Java</title>
 </head>
 <style>
     * {
@@ -34,6 +44,15 @@
     }
 
     .container {
+        padding: 30px 0;
+        width: 80%;
+        min-width: 300px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    .container2 {
         padding: 30px 0;
         width: 80%;
         min-width: 300px;
@@ -91,27 +110,42 @@
         background-color: #fff;
         color: #23272e;
     }
-
 </style>
 <body>
 
 <%@ include file="header.jsp" %>
 
+<h1>Modifica contatto</h1>
+
+<h2>Dati contatto</h2>
 <div class="container">
-    <form action="./create_contact" method="post">
-        <label for="nome">First name:</label><br>
-        <input type="text" id="nome" name="nome"><br>
-        <label for="cognome">Last name:</label><br>
-        <input type="text" id="cognome" name="cognome"><br><br>
-        <label for="telefono">Phone number:</label><br>
-        <input type="text" id="telefono" name="telefono"><br>
-        <label for="email">Email:</label><br>
-        <input type="text" id="email" name="email"><br><br>
-        <label for="note">Note:</label><br>
-        <input type="text" id="note" name="note"><br><br>
-        <input type="submit" value="Submit">
+    <form class="my_form" action="./update_contact" method="POST">
+        <label for="fname">Id:</label>
+        <input type="number" id="id" name="id">
+        <label for="fname">Nome:</label>
+        <input type="text" id="fname" name="fname">
+        <label for="lname">Cognome:</label>
+        <input type="text" id="lname" name="lname">
+        <label for="phone">Telefono:</label>
+        <input type="text" id="phone" name="phone">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <label for="notes">Note:</label>
+        <input type="text" id="notes" name="notes">
+        <input class="submit" type="submit" value="Submit">
     </form>
 </div>
+<div class="container2">
+    <iframe id="inlineFrameExample"
+            title="id"
+            width="3000"
+            height="1500"
+            src="http://localhost:8080/TuringWeb/show_contacts_for_delete"
+    >
 
+    </iframe>
+
+
+</div>
 </body>
 </html>

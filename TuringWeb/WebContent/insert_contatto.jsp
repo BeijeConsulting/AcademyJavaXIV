@@ -1,4 +1,5 @@
-<%@page import="it.beije.turing.web.Contatto"%>
+<%@page import="main.java.it.beije.turing.JPAContactsManager.Contatto"%>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -9,7 +10,7 @@
 </head>
 <body>
 
-<jsp:useBean id="contatto" class="it.beije.turing.web.Contatto"></jsp:useBean>
+<jsp:useBean id="contatto" type="java.util.List<main.java.it.beije.turing.JPAContactsManager.Contatto>" scope="session"></jsp:useBean>
 <%--
 Contatto contatto = (Contatto) session.getAttribute("contatto");
 if (contatto == null) {

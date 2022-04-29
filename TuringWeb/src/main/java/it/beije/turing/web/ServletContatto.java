@@ -1,4 +1,6 @@
-package it.beije.turing.web;
+package main.java.it.beije.turing.web;
+
+import main.java.it.beije.turing.JPAContactsManager.Contatto;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

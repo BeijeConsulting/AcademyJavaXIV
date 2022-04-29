@@ -1,4 +1,4 @@
-<%@page import="it.beije.turing.web.Contatto"%>
+<%@page import="main.java.it.beije.turing.JPAContactsManager.Contatto"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -37,7 +37,7 @@ x + y =&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= x + y %><br>
 FNAME = <%= fname %><br>
 LNAME = <%= lname %><br>
 
-<jsp:useBean id="contatto" class="it.beije.turing.web.Contatto" scope="session"></jsp:useBean>
+<jsp:useBean id="contatto" class="main.java.it.beije.turing.JPAContactsManager.Contatto" scope="session"></jsp:useBean>
 <%= contatto %>
 </body>
 </html>

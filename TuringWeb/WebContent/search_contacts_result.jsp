@@ -26,42 +26,13 @@
         }
 
         .table {
-            color: #fff
+            color: #fff;
+        }
     </style>
     <title>Contatti</title>
 </head>
 <body>
-
-<%
-    String fname = request.getParameter("fname");
-    String lname = request.getParameter("lname");
-    String phone = request.getParameter("phone");
-    String email = request.getParameter("email");
-
-    System.out.println(fname);
-    System.out.println(lname);
-    System.out.println(phone);
-    System.out.println(email);
-
-    Contatto contact = new Contatto();
-    if (!fname.equals("")) contact.setNome(fname);
-    if (!lname.equals("")) contact.setCognome(lname);
-    if (!phone.equals("")) contact.setTelefono(phone);
-    if (!email.equals("")) contact.setEmail(email);
-
-    if ((contact.getNome() == null) &&
-            (contact.getCognome() == null) &&
-            (contact.getTelefono() == null) &&
-            (contact.getEmail() == null)
-    ) response.sendRedirect("invalid_form.jsp");
-    else {
-        List<Contatto> contactsFound = ContactDBManager.searchContacts(contact);
-
-        if (contactsFound.size() == 0) {
-            response.sendRedirect("not_found.jsp");
-
-        } else {
-%>
+<%@ include file="header.jsp" %>
 
 <h1 class="text-center">Contatti corrispondenti trovati</h1>
 <div class="container">
@@ -78,18 +49,42 @@
         </thead>
         <tbody>
 
-
-        <%for (Contatto contatto : contactsFound) { %>
+        <jsp:useBean id="contactsFound" type="java.util.List" scope="session"></jsp:useBean>
+        <%for (Contatto contatto : (List<Contatto>) contactsFound) { %>
         <tr>
-            <th scope="row"><%out.print(contatto.getId());%></th>
-            <td><%out.print(contatto.getNome());%></td>
-            <td><%out.print(contatto.getCognome());%></td>
-            <td><%out.print(contatto.getTelefono());%></td>
-            <td><%out.print(contatto.getEmail()); %></td>
-            <td><%out.print(contatto.getNote()); %></td>
+            <th scope="row"><%=contatto.getId()%>
+            </th>
+            <td><%=contatto.getNome()%>
+            </td>
+            <td><%=contatto.getCognome()%>
+            </td>
+            <td><%=contatto.getTelefono()%>
+            </td>
+            <td><%=contatto.getEmail()%>
+            </td>
+            <td><%=contatto.getNote() %>
+            </td>
+            <td>
+            <form class="d-inline-block" action="edit_contact.jsp">
+                <input type="hidden" name="id" value="<%= contatto.getId() %>">
+                <input type="hidden" name="fname" value="<%= contatto.getNome() %>">
+                <input type="hidden" name="lname" value="<%= contatto.getCognome() %>">
+                <input type="hidden" name="phone" value="<%= contatto.getTelefono() %>">
+                <input type="hidden" name="email" value="<%= contatto.getEmail() %>">
+                <input type="hidden" name="notes" value="<%= contatto.getNote() %>">
+                <input class="btn btn-success" type="submit" value="MODIFICA">
+            </form>
+            <form class="d-inline-block" action="./delete_contact.jsp">
+                <input type="hidden" name="id" value="<%= contatto.getId() %>">
+                <input type="hidden" name="fname" value="<%= contatto.getNome() %>">
+                <input type="hidden" name="lname" value="<%= contatto.getCognome() %>">
+                <input type="hidden" name="phone" value="<%= contatto.getTelefono() %>">
+                <input type="hidden" name="email" value="<%= contatto.getEmail() %>">
+                <input type="hidden" name="notes" value="<%= contatto.getNote() %>">
+                <input class="btn btn-danger" type="submit" value="ELIMINA">
+            </form>
+            </td>
         </tr>
-        <%}%>
-        <%}%>
         <%}%>
         </tbody>
     </table>
