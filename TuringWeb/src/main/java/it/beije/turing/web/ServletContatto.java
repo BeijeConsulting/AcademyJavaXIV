@@ -1,4 +1,4 @@
-package main.java.it.beije.turing.web;
+package it.beije.turing.web;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,19 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MyServlet
+ * Servlet implementation class ServletContatto
  */
-@WebServlet("/servlet")
-public class MyServlet extends HttpServlet {
+@WebServlet("/ServletContatto")
+public class ServletContatto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public MyServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ServletContatto() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,13 +29,10 @@ public class MyServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("MyServlet doGet");
 		
-//		Contatto contatto = new Contatto();
-//		contatto.setNome("Pippo");
-//		contatto.setCognome("Rossi");
-//		
-//		request.getSession().setAttribute("contatto", contatto);
+		Contatto contatto = (Contatto)request.getSession().getAttribute("contatto");
+		System.out.println("contatto : " + contatto);
 		
-		response.sendRedirect("insert_contatto.jsp");
+		response.getWriter().append("Contatto: ").append(contatto.toString());
 	}
 
 	/**
@@ -43,7 +40,6 @@ public class MyServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("enrro");
 		doGet(request, response);
 	}
 

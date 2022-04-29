@@ -1,4 +1,4 @@
-package main.java.it.beije.turing.web;
+package it.beije.turing.web;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -16,9 +16,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/test")
 public class TestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	private int c;
-
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -42,10 +42,10 @@ public class TestServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		System.out.println("session : " + session.getId());
 		String fname = (String)session.getAttribute("fname");
-		String lname = (String)session.getAttribute("lname");
+		String lname = (String)session.getAttribute("lname");	
 		System.out.println("fname : " + fname);
 		System.out.println("lname : " + lname);
-
+		
 
 		response.getWriter().append("<html><body>Served at: ").append(request.getContextPath()).append("<br>").append("ID : ").append(session.getId()).append("</body></html>");
 	}
@@ -58,20 +58,21 @@ public class TestServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
-
+		
 		System.out.println("fname : " + fname);
 		System.out.println("lname : " + lname);
-
+		
 		HttpSession session = request.getSession();
 		System.out.println("session : " + session.getId());
 		session.setAttribute("fname", fname);
 		session.setAttribute("lname", lname);
 
-
-		response.getWriter().append("<html><body>")
-		.append("fname : ").append(fname).append("<br>")
-		.append("lname : ").append(lname).append("<br>")
-		.append("</body></html>");
+		
+//		response.getWriter().append("<html><body>")
+//		.append("fname : ").append(fname).append("<br>")
+//		.append("lname : ").append(lname).append("<br>")
+//		.append("</body></html>");
+		response.sendRedirect("example.jsp");
 	}
 
 }
