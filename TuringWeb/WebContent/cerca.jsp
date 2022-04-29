@@ -9,15 +9,16 @@
 <html>
 <head>
     <title>Cerca</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <form action="./cerca"  method="post">
-    <label for="Nome">Nome</label>
-    <input type="text" id="nome" name="parameter" placeholder="Inserisci nome">
-    <input type="submit" value="Submit">
-
+    <label for="Nome"><b>Immettere Parola da ricercare</b></label>
+    <input type="text" id="nome" name="parameter" placeholder="Inserisci parola">
+    <input type="submit" value="Cerca">
 </form>
-
+    <iframe src="risultati.jsp" title="Risultati" width="100%" height="100%">
+    </iframe>
 </body>
 </html>

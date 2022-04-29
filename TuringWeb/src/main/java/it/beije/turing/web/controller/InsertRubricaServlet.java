@@ -1,4 +1,4 @@
-package it.beije.turing.web;
+package it.beije.turing.web.controller;
 
 /**
  * @author Giuseppe Raddato
@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/insert")
-public class InsertRubrica extends HttpServlet {
+public class InsertRubricaServlet extends HttpServlet {
    private OpRubrica rubrica;
-    public InsertRubrica() {
+    public InsertRubricaServlet() {
         super();
      rubrica= new JPAManager();
     }
