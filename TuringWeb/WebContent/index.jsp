@@ -12,7 +12,6 @@
 
 <h1>HOMEPAGE RUBRICA</h1>
 
-
 <label for="contacts">Contatti:</label>
 <br>
 <textarea id="contacts" name="contacts" rows="10" cols="100" readonly>
@@ -27,22 +26,46 @@ for (Contatto c : contatti)
 }
 %>
 </textarea>
-<br>
+<br><br>
 
+<div style="float:left;clear:both;display: flex;">
 <form action="./util" id="getRubrica" method="post">
 <input type="hidden" name="post" value="getRubrica"/>
-  <h3>Mostra Rubrica:</h3>
+  <h3 style="display:inline-block;">Mostra Rubrica:</h3>
   <input type="submit">
 </form>
+</div>
 <br>
 
+
+<div style="float:left;clear:both;display: flex;">
+<form action="./util" id="findDuplicates" method="post">
+<input type="hidden" name="post" value="findDuplicates"/>
+  <h3 style="display:inline-block;">Trova Contatti Duplicati:</h3>
+  <input type="submit">
+</form>
+</div>
+<br>
+
+<div style="float:left;clear:both;display: flex;">
+<form action="./util" id="uniteDuplicates" method="post">
+<input type="hidden" name="post" value="uniteDuplicates"/>
+  <h3 style="display:inline-block;">Unisci Contatti Duplicati:</h3>
+  <input type="submit">
+</form>
+</div>
+<br>
+
+<div style="float:left;clear:both;display: flex;">
 <form action="./util" id="findContact" method="post">
 <input type="hidden" name="post" value="findContact"/>
   <h3>Trova contatto (filtro):</h3> <input type="text" name="filtro" placeholder="filtro">
   <input type="submit">
 </form>
+</div>
 <br>
 
+<div style="float:left;clear:both;display: flex;">
 <form action="./util" id="modifyContact" method="post">
 <h3>Modifica Contatto:</h3>
 <input type="hidden" name="post" value="modifyContact"/>
@@ -76,29 +99,19 @@ for (Contatto c : contatti)
 		</tr>
 	</table>
 </form>
+</div>
 <br>
 
+<div style="float:left;clear:both;display: flex;">
 <form action="./util" id="deleteContact" method="post">
 <input type="hidden" name="post" value="deleteContact"/>
   <h3>Elimina Contatto (indice):</h3> <input type="text" name="indice" placeholder="indice">
   <input type="submit">
 </form>
+</div>
 <br>
 
-<form action="./util" id="findDuplicates" method="post">
-<input type="hidden" name="post" value="findDuplicates"/>
-  <h3>Trova Contatti Duplicati:</h3>
-  <input type="submit">
-</form>
-<br>
-
-<form action="./util" id="uniteDuplicates" method="post">
-<input type="hidden" name="post" value="uniteDuplicates"/>
-  <h3>Unisci Contatti Duplicati:</h3>
-  <input type="submit">
-</form>
-<br>
-
+<div style="float:left;clear:both;display: flex;">
 <form action="./util" id="addContact" method="post">
 <h3>Crea Contatto:</h3>
 <input type="hidden" name="post" value="addContact"/>
@@ -128,6 +141,7 @@ for (Contatto c : contatti)
 		</tr>
 	</table>
 </form>
+</div>
 
 </body>
 </html>
