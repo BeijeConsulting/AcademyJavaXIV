@@ -20,10 +20,7 @@
    <input type="text" id="nome" name="idPar" placeholder="Inserisci ID">
    <input type="submit" value="Cerca">
 </form>
-
-
       <%
-
          if(contatto!=null){
 
             out.println("<iframe src=\"form.jsp?type=delete\" title=\"Risultati\" width=\"100%\" height=\"100%\"> </iframe>");
