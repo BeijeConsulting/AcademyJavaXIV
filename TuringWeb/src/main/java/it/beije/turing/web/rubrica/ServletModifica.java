@@ -10,19 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletTrova
+ * Servlet implementation class ServletModifica
  */
-@WebServlet("/ServletTrova")
-public class ServletTrova extends HttpServlet {
+@WebServlet("/ServletModifica")
+public class ServletModifica extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-//	private static final String form = "<form name=\"loginForm\" method=\"post\" action=\"ServletTrova\">\r\n"
-//       		+ "    Nome: <input type=\"text\" name=\"nome\"/> <br/>\r\n"
-//       		+ "    <input type=\"submit\" value=\"TROVA\" />\r\n"
-//       		+ "</form>";
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletTrova() {
+    public ServletModifica() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +29,23 @@ public class ServletTrova extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		response.getWriter().append("<html><body>").append(form).append("<html><body>");
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		List<Contatto> contatto = JPACriteria.findContatto(id, EntityManagerSingleton.createEntityManager());
+		if(contatto != null && contatto.size() > 0) {
+			Contatto c = contatto.get(0);
+			c.setCognome(request.getParameter("cognome"));
+			c.setNome(request.getParameter("nome"));
+			c.setEmail(request.getParameter("email"));
+			c.setTelefono(request.getParameter("telefono"));
+			c.setNote(request.getParameter("note"));
+			JpaManager.modifyContatto(c, EntityManagerSingleton.createEntityManager());
+			response.sendRedirect("http://localhost:8080/turing/contatto_modificato.jsp");
+		}
+		else {
+			response.sendRedirect("http://localhost:8080/turing/contatto_not_found.jsp");
+		}
+		
 	}
 
 	/**
@@ -40,9 +53,7 @@ public class ServletTrova extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		List<Contatto> contatti = JPACriteria.findContatto(request.getParameter("nome"), EntityManagerSingleton.createEntityManager(), 2);
-		request.setAttribute("contatti", contatti);
-		request.getRequestDispatcher("/mostra_contatti.jsp").forward(request, response);
+		doGet(request, response);
 	}
 
 }

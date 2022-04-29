@@ -15,21 +15,19 @@ import javax.servlet.http.HttpSession;
 public class ServletAggiungi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private int a = 0;
-       private static final String form = "<form name=\"loginForm\" method=\"post\" action=\"ServletAggiungi\">\r\n"
-       		+ "    Nome: <input type=\"text\" name=\"nome\"/> <br/>\r\n"
-       		+ "    Cognome: <input type=\"text\" name=\"cognome\"/> <br/>\r\n"
-       		+ "    Telefono: <input type=\"text\" name=\"telefono\"/> <br/>\r\n"
-       		+ "    Email: <input type=\"text\" name=\"email\"/> <br/>\r\n"
-       		+ "    Note: <input type=\"text\" name=\"note\"/> <br/>\r\n"
-       		+ "    <input type=\"submit\" value=\"Login\" />\r\n"
-       		+ "</form>";
+//       private static final String form = "<form name=\"loginForm\" method=\"post\" action=\"ServletAggiungi\">\r\n"
+//       		+ "    Nome: <input type=\"text\" name=\"nome\"/> <br/>\r\n"
+//       		+ "    Cognome: <input type=\"text\" name=\"cognome\"/> <br/>\r\n"
+//       		+ "    Telefono: <input type=\"text\" name=\"telefono\"/> <br/>\r\n"
+//       		+ "    Email: <input type=\"text\" name=\"email\"/> <br/>\r\n"
+//       		+ "    Note: <input type=\"text\" name=\"note\"/> <br/>\r\n"
+//       		+ "    <input type=\"submit\" value=\"Login\" />\r\n"
+//       		+ "</form>";
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ServletAggiungi() {
         super();
-        System.out.println("TestServletRubrica...." + ++a);
-        System.out.println("TestServletRubrica...." + ++a);
         // TODO Auto-generated constructor stub
     }
 
@@ -38,43 +36,34 @@ public class ServletAggiungi extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		System.out.println("session : " + session.getId());
-		String fname = (String)session.getAttribute("fname");
-		String lname = (String)session.getAttribute("lname");	
-		System.out.println("fname : " + fname);
-		System.out.println("lname : " + lname);
-		
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.getWriter().append("<html><body>").append(form).append("<html><body>");
+//		response.getWriter().append("<html><body>").append(form).append("<html><body>");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("TestServlet doPost");
+		//System.out.println("TestServlet doPost");
 		// TODO Auto-generated method stub
 		Contatto contatto = new Contatto();
-		contatto.setNome(request.getParameter("nome"));
 		contatto.setCognome(request.getParameter("cognome"));
+		contatto.setNome(request.getParameter("nome"));
 		contatto.setEmail(request.getParameter("email"));
 		contatto.setTelefono(request.getParameter("telefono"));
 		contatto.setNote(request.getParameter("note"));
 		JpaManager.addContatti(contatto);
-		
+		request.setAttribute("contatto", contatto);
 		System.out.println("Nuovo contatto inserito:");
 		System.out.print(contatto);
+		request.getRequestDispatcher("/contatto_inserito.jsp").forward(request, response);
 		
-		HttpSession session = request.getSession();
-		System.out.println("session : " + session.getId());
+		
+		//HttpSession session = request.getSession();
 		//session.setAttribute("fname", fname);
 		//session.setAttribute("lname", lname);
-		response.getWriter().append("<html><body>").append(contatto.toString()).append("<html><body>");
-//		response.getWriter().append("<html><body>")
-//		.append("fname : ").append(fname).append("<br>")
-//		.append("lname : ").append(lname).append("<br>")
-//		.append("</body></html>");
+		//response.getWriter().append("<html><body>Contatto inserito: <br>").append(contatto.toString()).append("<html><body>");
+
 		
 	}
 

@@ -33,6 +33,10 @@ public class ServletRubrica extends HttpServlet {
        		+ "    <input type=\"submit\" value=\"Trova doppi\" />\r\n"
        		+ "</form>";
 	
+	private static final String MODIFY = "<form name=\"loginForm\" method=\"get\" action=\"ServletModifica\">\r\n"
+       		+ "    <input type=\"submit\" value=\"Modifica contatto\" />\r\n"
+       		+ "</form>";
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -48,11 +52,12 @@ public class ServletRubrica extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.getWriter().append("<html><body>").append(ADD).append("<html><body>");
-		response.getWriter().append("<html><body>").append(SHOW).append("<html><body>");
-		response.getWriter().append("<html><body>").append(FIND).append("<html><body>");
-		response.getWriter().append("<html><body>").append(DELETE).append("<html><body>");
-		response.getWriter().append("<html><body>").append(DOUBLES).append("<html><body>");
+//		response.getWriter().append("<html><body>").append(ADD).append("<html><body>");
+//		response.getWriter().append("<html><body>").append(SHOW).append("<html><body>");
+//		response.getWriter().append("<html><body>").append(FIND).append("<html><body>");
+//		response.getWriter().append("<html><body>").append(MODIFY).append("<html><body>");
+//		response.getWriter().append("<html><body>").append(DELETE).append("<html><body>");
+//		response.getWriter().append("<html><body>").append(DOUBLES).append("<html><body>");
 	}
 
 	/**
