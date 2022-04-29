@@ -122,7 +122,7 @@ public class NewServlet extends HttpServlet {
 				response.sendRedirect(fjsp);
 			}
 			
-			if(request.getParameter("flag2")!=null)
+			else if(request.getParameter("flag2")!=null)
 				{
 				String[] tmp = getForm(request);
 				String[] fields= {"nome","cognome","telefono","email","note"};
@@ -135,9 +135,12 @@ public class NewServlet extends HttpServlet {
 						args.add(tmp[i]);
 					}
 				}
+				if(!args.isEmpty()) {
 				request.getSession().setAttribute("list", link.search(args.toArray(new String[0])));
-					request.getSession().setAttribute("mode", "main");
-					response.sendRedirect(jsp);
+				response.sendRedirect(jsp);
+				}
+				else
+				doGet(request,response);
 				}
 		
 			break;

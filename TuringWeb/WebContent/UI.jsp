@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import ="it.beije.turing.web.rubrica.CommandInterface" %>
 <%@page import ="it.beije.turing.web.rubrica.bean.Contatto" %>
+<%@page import = "java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +10,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:useBean id="list" type="java.util.List<Contatto>" scope="session" ></jsp:useBean>
+
 <%
+	List<Contatto> list = (List<Contatto>)session.getAttribute("list");
+	if(list==null)
+	{
+		response.sendRedirect("./main");
+	}
+
 	out.println("<table>");
 	out.println("<tr>");
 	out.println("<th>ID</th>");

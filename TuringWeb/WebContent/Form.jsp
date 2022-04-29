@@ -8,8 +8,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:useBean id="contatto" class="it.beije.turing.web.rubrica.bean.Contatto" scope="session"></jsp:useBean>
+
 <%
+	Contatto contatto = (Contatto)session.getAttribute("contatto");
+	
+	if(contatto == null)
+	{
+		request.getRequestDispatcher("/main").forward(request,response);
+	}
+	else{
+
 	out.println("<form action=\"./main\" method=\"post\">");
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\""+session.getAttribute("type")+"\">");
 	out.println("<input type= \"hidden\" id=\"flag\" name=\"flag2\" value=\"true\">");
@@ -32,9 +40,6 @@
 	out.println( "<label for=\"note\">Note</label>");
 	out.println("<input type=\"text\" id=\"note\" name=\"note\" value=\""+contatto.getNote()+"\"><br>");
 	
-	
-	
-	
 	out.println("<br><br>");
 	out.println("<input type=\"submit\" value=\"Submit\">");
 	out.println("</form>");
@@ -44,7 +49,9 @@
 	out.println("<input type= \"hidden\" id=\"command\" name=\"command\" value=\"back\">");
 	out.println("<input type=\"submit\" value=\"Back\">");
 	out.println("</form>");
-
+	
+	session.setAttribute("contatto", null);
+	}
 %>
 </body>
 </html>
