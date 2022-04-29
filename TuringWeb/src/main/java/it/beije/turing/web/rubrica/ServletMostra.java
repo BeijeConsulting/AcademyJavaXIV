@@ -22,7 +22,6 @@ public class ServletMostra extends HttpServlet {
      */
     public ServletMostra() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -32,9 +31,6 @@ public class ServletMostra extends HttpServlet {
 		List<Contatto> contatti = JPACriteria.findAll(EntityManagerSingleton.createEntityManager(), 0);
 		request.setAttribute("contatti", contatti);
 		request.getRequestDispatcher("/mostra_contatti.jsp").forward(request, response);
-		//TODO Questo metodo deve ottenere una lista di contatti e passarla a una jsp per l'elaborazione
-		//Creare quindi una jsp "mostra contatti" che cicla sulla lista per mostrare i vari contatti contenuti in rubrica e poi mettere un'opzione
-		//Per tornare alla home
 		
 	}
 
@@ -44,12 +40,4 @@ public class ServletMostra extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-	//Vecchio metodo usato prima dell'esercizio MVC 
-//	public static void writer(List<Contatto> contatti, HttpServletResponse response) throws ServletException, IOException {
-//		for(Contatto contatto : contatti) {
-//			response.getWriter().append(contatto.toString()).append("<br>");
-//			response.getWriter().append("<br>\n");
-//		}
-//	}
-
 }

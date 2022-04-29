@@ -55,14 +55,14 @@ public class JpaManager {
 		em.getTransaction().commit();
 	}
 
-	public static void updateJpa() {
-		EntityManager entityManager = EntityManagerSingleton.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-		entityTransaction.begin();
-
-		Contatto contatto = entityManager.find(Contatto.class, 5978);
-		contatto.setNote("HO MODIFICATO QUESTO CAMPO");
-		entityManager.persist(contatto);
-		entityTransaction.commit();
-	}
+//	public static void updateJpa() {
+//		EntityManager entityManager = EntityManagerSingleton.createEntityManager();
+//		EntityTransaction entityTransaction = entityManager.getTransaction();
+//		entityTransaction.begin();
+//
+//		Contatto contatto = entityManager.find(Contatto.class, 5978);
+//		contatto.setNote("HO MODIFICATO QUESTO CAMPO");
+//		entityManager.persist(contatto);
+//		entityTransaction.commit();
+//	}
 }

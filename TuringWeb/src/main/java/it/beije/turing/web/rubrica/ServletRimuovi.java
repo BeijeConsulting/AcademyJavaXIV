@@ -15,24 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ServletRimuovi")
 public class ServletRimuovi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-//	private static final String form = "<form name=\"loginForm\" method=\"post\" action=\"ServletRimuovi\">\r\n"
-//       		+ "    Nome: <input type=\"text\" name=\"nome\"/> <br/>\r\n"
-//       		+ "    <input type=\"submit\" value=\"CANCELLA\" />\r\n"
-//       		+ "</form>";
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ServletRimuovi() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		response.getWriter().append(form);
 		
 	}
 
