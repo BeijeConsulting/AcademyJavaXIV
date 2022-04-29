@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.beije.turing.web.rubrica.RubricaManager;
+
 /**
  * Servlet implementation class PrintServlet
  */
@@ -30,7 +32,19 @@ public class PrintServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		HttpSession session = request.getSession();
-		session.setAttribute("type", request.getParameter("type"));
+		//RubricaManager rm = (RubricaManager)session.getAttribute("rubricaManager");
+		RubricaManager rm = new RubricaManager();
+		String value = request.getParameter("type");
+		if (value == null) {
+			value = "N";
+		}
+		rm.setAllContatti(rm.sort(rm.getAllContatti(), value));
+		if (value.toUpperCase().startsWith("N")) {
+			System.out.print("Contatti ordinati per nome");
+		}else if (value.toUpperCase().startsWith("S")) {
+			System.out.print("Contatti ordinati per cognome");
+		}
+		session.setAttribute("allContatti", rm.getAllContatti());
 		response.sendRedirect("./print.jsp");
 	}
 

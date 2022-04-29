@@ -7,15 +7,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Modifica Contatto</title>
 </head>
-<body>
-
+<body bgcolor="#0F0F0F">
+<font color=#FFFFFF>
+<div align="center">
 	<%
-	
 	RubricaManager rm = new RubricaManager();
 	%>
-	<%="Modifica contatto"%>
+	<h1>Modifica contatto</h1>
 	<br>
 	<%="session: " + session.getId()%>
 	<br>
@@ -44,7 +44,8 @@
 			<input type="text" id="note" name="note"><br> 
 		<input type="submit" value="Submit"><br>
 	</form>
-
+</div>
+</font>
 
 
 </body>

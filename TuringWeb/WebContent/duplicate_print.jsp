@@ -7,29 +7,23 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Stampa e Unisci Duplicati</title>
 </head>
-<body>
-
-	<%
-	
-	RubricaManager rm = new RubricaManager();
-	%>
-	<%="Stampa contatti duplicati e uniscili"%>
+<body bgcolor="#0F0F0F">
+<font color=#FFFFFF>
+<div align="center">
+	<h1>Stampa contatti duplicati e uniscili</h1>
 	<br>
 	<%="session: " + session.getId()%>
 	<br>
+	<jsp:useBean id="allContatti" type="java.util.List<it.beije.turing.web.rubrica.Contatto>" scope="session"></jsp:useBean>
+	<jsp:useBean id="contattiDuplicati" type="java.util.List<it.beije.turing.web.rubrica.Contatto>" scope="session"></jsp:useBean>
 	<%
-	List<Contatto> tmp = rm.TrovaContattiDuplicati(rm.getAllContatti());
-	List<Contatto> allContatti = rm.getAllContatti();
-	List<Contatto> ris = rm.UnisciContattiDuplicati(allContatti);
-	rm.setAllContatti(ris);
-	rm.writeRubricaOnDB(rm.getAllContatti());
 	%>
 	<%="Contatti duplicati:"%>
 	<br>
 	<%
-	for (Contatto c : tmp) {
+	for (Contatto c : contattiDuplicati) {
 	%>
 	<%=c.toString()%><br>
 	<%
@@ -38,11 +32,13 @@
 	<%="Nuova lista contatti:"%>
 	<br>
 	<%
-	for (Contatto c : rm.getAllContatti()) {
+	for (Contatto c : allContatti) {
 	%>
 	<%=c.toString()%><br>
 	<%
 	}
+	session.removeAttribute("allContatti");
+	session.removeAttribute("contattiDuplicati");
 	%>
 	<br>
 	
@@ -50,6 +46,7 @@
  		<label for="merge">Torna alla Home:     </label>
   		<input type="submit" id="merge" name="type" value="Submit"><br>
   	</form>
-
+</div>
+</font>
 </body>
 </html>

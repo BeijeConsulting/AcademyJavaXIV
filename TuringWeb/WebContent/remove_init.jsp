@@ -7,15 +7,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Rimuovi Contatto</title>
 </head>
-<body>
-
+<body bgcolor="#0F0F0F">
+<font color=#FFFFFF>
+<div align="center">
 	<%
-	
 	RubricaManager rm = new RubricaManager();
 	%>
-	<%="Elimina contatto"%>
+	<h1>Elimina Contatto</h1>
 	<br>
 	<%="session: " + session.getId()%>
 	<br>
@@ -39,6 +39,7 @@
 	
 	%>
 	
-
+</div>
+</font>
 </body>
 </html>

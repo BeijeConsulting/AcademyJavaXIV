@@ -8,32 +8,25 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Inserisci nuovo Contatto</title>
 </head>
-<body>
+<body bgcolor="#0F0F0F">
+<font color=#FFFFFF>
+<div align="center">
 
-	<%
-	
-	RubricaManager rm = new RubricaManager();
-	%>
-	<%="Aggiungi Contatto"%>
+	<h1>Aggiungi Contatto</h1>
 	<br>
 	<%="session: " + session.getId()%>
 	<br>
 	<jsp:useBean id="contatto" class="it.beije.turing.web.rubrica.Contatto" scope="session"></jsp:useBean>
-	<%
-	List<Contatto> ris = rm.AggiungiContatto(contatto.getNome(), contatto.getCognome(), contatto.getTelefono(), contatto.getEmail(), contatto.getNote());
-	%>
-	<%="Contatto aggiunto: "+ ris.get(ris.size()-1) %><br>
-	<%
-	rm.setAllContatti(rm.writeRubricaOnDB(ris));
-	%>
-	
+	<%="Contatto aggiunto: "+ contatto.toString() %><br>
+	<% session.removeAttribute("contatto"); %>
 	<form action="./index.html" method="post">
  		<label for="merge">Torna alla Home:     </label>
   		<input type="submit" id="merge" name="type" value="Submit"><br>
   	</form>
-	
+</div>
+</font>
 	<%-- 
 	<%
 	for (Contatto c : ris) {

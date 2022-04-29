@@ -20,27 +20,25 @@ public class RubricaManager {
 	private List<Contatto> allContatti = null;
 
 	public RubricaManager(){
-		if(allContatti == null) {
-			allContatti = new ArrayList<Contatto>();
-			EntityManager entityManager = null;
-			try {
-				entityManager = EntityManagerFactorySingleton.createEntityManager();
-				CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-				CriteriaQuery<Contatto> cq = cb.createQuery(Contatto.class);
-				Root<Contatto> from = cq.from(Contatto.class);
-				cq.select(from);
-				TypedQuery<Contatto> q = entityManager.createQuery(cq);
-				allContatti = q.getResultList();
+		allContatti = new ArrayList<Contatto>();
+		EntityManager entityManager = null;
+		try {
+			entityManager = EntityManagerFactorySingleton.createEntityManager();
+			CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<Contatto> cq = cb.createQuery(Contatto.class);
+			Root<Contatto> from = cq.from(Contatto.class);
+			cq.select(from);
+			TypedQuery<Contatto> q = entityManager.createQuery(cq);
+			allContatti = q.getResultList();
 
-			} catch (HibernateException hbmEx) {
-				hbmEx.printStackTrace();
-				throw hbmEx;
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw e;
-			} finally {
-				entityManager.close();
-			}
+		} catch (HibernateException hbmEx) {
+			hbmEx.printStackTrace();
+			throw hbmEx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
 		}
 	}
 
@@ -87,7 +85,7 @@ public class RubricaManager {
 		String nome = contatto.getNome();
 		if(nome.length() == 0 || nome.isEmpty())
 			nome = c.getNome();
-		
+
 		String cognome = contatto.getCognome();
 		if(cognome.length() == 0 || cognome.isEmpty())
 			cognome = c.getCognome();
@@ -111,7 +109,7 @@ public class RubricaManager {
 		ris.set(pos, c);
 		return ris;
 	}
-	
+
 	public List<Contatto> EliminaContatto(List<Contatto> allContatti,int id) {
 		List<Contatto> ris = new ArrayList<>(allContatti);
 		for(Contatto c : ris) {
@@ -132,7 +130,7 @@ public class RubricaManager {
 		allContatti =  new ArrayList<>();
 		System.out.println("Fatto.");
 	}
-	
+
 	public List<Contatto> TrovaContattiDuplicati(List<Contatto> allContatti){
 		List<Contatto> ris = new ArrayList<>();
 		List<Contatto> tmp = sort(allContatti,"N");
@@ -147,7 +145,7 @@ public class RubricaManager {
 		}
 		return ris;
 	}
-	
+
 
 	public List<Contatto> UnisciContattiDuplicati(List<Contatto> allContatti) {
 		List<Contatto> ris = new ArrayList<>();
@@ -170,10 +168,10 @@ public class RubricaManager {
 		}
 		return ris;
 	}
-	
-	public List<Contatto> cercaContatto(String nome, String cognome, String telefono, String email) {
+
+	public List<Contatto> cercaContatto(List<Contatto> allContatti, String nome, String cognome, String telefono, String email) {
 		List<Contatto> ris = new ArrayList<>();
-		
+
 		if(nome.isEmpty())
 			nome = null;
 		if(cognome.isEmpty())
@@ -182,129 +180,134 @@ public class RubricaManager {
 			telefono = null;
 		if(email.isEmpty())
 			email = null;
-		if(nome != null && cognome == null && telefono == null && email == null) {
-			
+		if(nome == null && cognome == null && telefono == null && email == null) {
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getNome().contains(nome)){
+				ris.add(allContatti.get(i));
+			}
+		}
+		else if(nome != null && cognome == null && telefono == null && email == null) {
+
+			for(int i = 0; i < allContatti.size(); i++) {
+				if(allContatti.get(i).getNome().toUpperCase().contains(nome.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
-			
+
 		}else if(nome == null && cognome != null && telefono == null && email == null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getCognome().contains(cognome)){
+				if(allContatti.get(i).getCognome().toUpperCase().contains(cognome.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome == null && cognome == null && telefono != null && email == null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getTelefono().contains(telefono)){
+				if(allContatti.get(i).getTelefono().toUpperCase().contains(telefono.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome == null && cognome == null && telefono == null && email != null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getEmail().contains(email)){
+				if(allContatti.get(i).getEmail().toUpperCase().contains(email.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome != null && cognome != null && telefono == null && email == null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getCognome().contains(cognome)){
+				if(allContatti.get(i).getNome().toUpperCase().contains(nome.toUpperCase()) && allContatti.get(i).getCognome().toUpperCase().contains(cognome.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome != null && cognome == null && telefono != null && email == null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getTelefono().contains(telefono)){
+				if(allContatti.get(i).getNome().toUpperCase().contains(nome.toUpperCase()) && allContatti.get(i).getTelefono().toUpperCase().contains(telefono.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome != null && cognome == null && telefono == null && email != null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getEmail().contains(email)){
+				if(allContatti.get(i).getNome().toUpperCase().contains(nome.toUpperCase()) && allContatti.get(i).getEmail().toUpperCase().contains(email.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome == null && cognome != null && telefono != null && email == null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getTelefono().contains(telefono)){
+				if(allContatti.get(i).getCognome().toUpperCase().contains(cognome.toUpperCase()) && allContatti.get(i).getTelefono().toUpperCase().contains(telefono.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome == null && cognome != null && telefono == null && email != null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getEmail().contains(email)){
+				if(allContatti.get(i).getCognome().toUpperCase().contains(cognome.toUpperCase()) && allContatti.get(i).getEmail().toUpperCase().contains(email.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome == null && cognome == null && telefono != null && email != null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getTelefono().contains(telefono) && allContatti.get(i).getEmail().contains(email)){
+				if(allContatti.get(i).getTelefono().toUpperCase().contains(telefono.toUpperCase()) && allContatti.get(i).getEmail().toUpperCase().contains(email.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome != null && cognome != null && telefono != null && email == null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getTelefono().contains(telefono)){
+				if(allContatti.get(i).getNome().toUpperCase().contains(nome.toUpperCase()) && allContatti.get(i).getCognome().toUpperCase().contains(cognome.toUpperCase()) && allContatti.get(i).getTelefono().toUpperCase().contains(telefono.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome != null && cognome != null && telefono == null && email != null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getEmail().contains(email)){
+				if(allContatti.get(i).getNome().toUpperCase().contains(nome.toUpperCase()) && allContatti.get(i).getCognome().toUpperCase().contains(cognome.toUpperCase()) && allContatti.get(i).getEmail().toUpperCase().contains(email.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome != null && cognome == null && telefono != null && email != null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getTelefono().contains(telefono) && allContatti.get(i).getEmail().contains(email)){
+				if(allContatti.get(i).getNome().toUpperCase().contains(nome.toUpperCase()) && allContatti.get(i).getTelefono().toUpperCase().contains(telefono.toUpperCase()) && allContatti.get(i).getEmail().toUpperCase().contains(email.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome == null && cognome != null && telefono != null && email != null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getCognome().contains(cognome) && allContatti.get(i).getTelefono().contains(telefono) && allContatti.get(i).getEmail().contains(email)){
+				if(allContatti.get(i).getCognome().toUpperCase().contains(cognome.toUpperCase()) && allContatti.get(i).getTelefono().toUpperCase().contains(telefono.toUpperCase()) && allContatti.get(i).getEmail().toUpperCase().contains(email.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
 
 		}else if(nome != null && cognome != null && telefono != null && email != null) {
-			
+
 			for(int i = 0; i < allContatti.size(); i++) {
-				if(allContatti.get(i).getNome().contains(nome) && allContatti.get(i).getCognome().contains(cognome) 
-						&& allContatti.get(i).getTelefono().contains(telefono) && allContatti.get(i).getEmail().contains(email)){
+				if(allContatti.get(i).getNome().toUpperCase().contains(nome.toUpperCase()) && allContatti.get(i).getCognome().toUpperCase().contains(cognome.toUpperCase()) 
+						&& allContatti.get(i).getTelefono().toUpperCase().contains(telefono.toUpperCase()) && allContatti.get(i).getEmail().toUpperCase().contains(email.toUpperCase())){
 					ris.add(allContatti.get(i));
 				}
 			}
-			
+
 		}
-		
+
 		return ris;
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -355,7 +358,7 @@ public class RubricaManager {
 		}
 		return ris;
 	}
-	
+
 	public List<Contatto> writeRubricaOnDB(List<Contatto> allContact) {
 		List<Contatto> ris = new ArrayList<Contatto>();
 		EntityManager entityManager = null;
@@ -375,7 +378,7 @@ public class RubricaManager {
 				entityManager.remove(contatti.get(i));
 			}
 			entityTransaction.commit();
-			
+
 		}catch (HibernateException hbmEx) {
 			hbmEx.printStackTrace();
 			throw hbmEx;
@@ -385,7 +388,7 @@ public class RubricaManager {
 		} finally {
 			entityManager.close();
 		}
-		
+
 		try {
 			entityManager = EntityManagerFactorySingleton.createEntityManager();
 			Query query = entityManager.createQuery("SELECT c FROM Contatto as c");

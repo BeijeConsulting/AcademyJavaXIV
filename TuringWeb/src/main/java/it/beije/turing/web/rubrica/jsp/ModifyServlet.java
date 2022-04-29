@@ -1,6 +1,8 @@
 package it.beije.turing.web.rubrica.jsp;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import it.beije.turing.web.rubrica.Contatto;
+import it.beije.turing.web.rubrica.RubricaManager;
 
 /**
  * Servlet implementation class ModifyServlet
@@ -37,7 +40,8 @@ public class ModifyServlet extends HttpServlet {
 			realId = Integer.parseInt(id);
 		}catch(NumberFormatException nfEx) {
 			System.out.println("Inserire un ID valido");
-			throw nfEx;
+			response.sendRedirect("./main");
+			return;
 		}
 		String name = request.getParameter("name");
 		String surname = request.getParameter("lname");
@@ -45,15 +49,27 @@ public class ModifyServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String note = request.getParameter("note");
 		
-		Contatto c = new Contatto();
-		c.setId(realId);
-		c.setNome(name);
-		c.setCognome(surname);
-		c.setTelefono(tel);
-		c.setEmail(email);
-		c.setNote(note);
-		session.setAttribute("contatto", c);
-		response.sendRedirect("./modify.jsp");
+		if(name == null || surname == null || tel == null || email == null) {
+			response.sendRedirect("./main");
+			return;
+		}
+		
+		Contatto contatto = new Contatto();
+		contatto.setId(realId);
+		contatto.setNome(name);
+		contatto.setCognome(surname);
+		contatto.setTelefono(tel);
+		contatto.setEmail(email);
+		contatto.setNote(note);
+		
+		//RubricaManager rm = (RubricaManager)session.getAttribute("rubricaManager");
+		RubricaManager rm = new RubricaManager();
+		
+		List<Contatto> tmp = rm.getAllContatti();
+		List<Contatto> ris = rm.ModificaContatto(tmp,contatto);
+		rm.setAllContatti(ris);
+		rm.writeRubricaOnDB(rm.getAllContatti());
+		response.sendRedirect("./index.html");
 	}
 
 	/**

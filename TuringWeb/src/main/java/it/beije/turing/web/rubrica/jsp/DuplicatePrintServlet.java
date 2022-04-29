@@ -14,16 +14,16 @@ import it.beije.turing.web.rubrica.Contatto;
 import it.beije.turing.web.rubrica.RubricaManager;
 
 /**
- * Servlet implementation class SearchServlet
+ * Servlet implementation class DuplicatePrintServlet
  */
-@WebServlet("/search_servlet")
-public class SearchServlet extends HttpServlet {
+@WebServlet("/duplicate_print_servlet")
+public class DuplicatePrintServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchServlet() {
+    public DuplicatePrintServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,25 +36,15 @@ public class SearchServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		//RubricaManager rm = (RubricaManager)session.getAttribute("rubricaManager");
 		RubricaManager rm = new RubricaManager();
-		String name = request.getParameter("name");
-		String surname = request.getParameter("lname");
-		String tel = request.getParameter("tel");
-		String email = request.getParameter("email");
-		if(name == null || surname == null || tel == null || email == null) {
-			response.sendRedirect("./main");
-			return;
-		}
-		Contatto contatto = new Contatto();
-		contatto.setNome(name);
-		contatto.setCognome(surname);
-		contatto.setEmail(email);
-		contatto.setTelefono(tel);
-		contatto.setNote("");
+		List<Contatto> tmp = rm.TrovaContattiDuplicati(rm.getAllContatti());
+		List<Contatto> allContatti = rm.getAllContatti();
+		List<Contatto> ris = rm.UnisciContattiDuplicati(allContatti);
+		rm.setAllContatti(ris);
+		rm.writeRubricaOnDB(rm.getAllContatti());
 		
-		List<Contatto> ris = rm.cercaContatto(rm.getAllContatti(), contatto.getNome(), contatto.getCognome(), contatto.getTelefono(), contatto.getEmail());
-		session.setAttribute("contatto", contatto);
-		session.setAttribute("allContatti", ris);
-		response.sendRedirect("./search.jsp");
+		session.setAttribute("contattiDuplicati", tmp);
+		session.setAttribute("allContatti", rm.getAllContatti());
+		response.sendRedirect("./duplicate_print.jsp");
 	}
 
 	/**
