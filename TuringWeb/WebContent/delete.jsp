@@ -26,6 +26,23 @@
 			table {
 				width:100%;
 			}
+			table{
+				width:100%;
+				background-color:lightgray;
+			}
+			
+			th {
+				background-color:rgb(229,228,226);
+			}
+			
+			td {
+				padding: 5px 0;
+				background-color:white;
+			}
+			
+			table, th, td {
+			  	border: 1px solid gray;
+			}
 			input {
 				display:block;
 				text-align:center;
@@ -47,13 +64,12 @@
 	<head>
 	<body>
 	
-		<%int id = Integer.parseInt((String)request.getParameter("id"));
-		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
-		Contatto contatto = entityManager.find(Contatto.class, id);%>
+		<%int id = Integer.parseInt((String) session.getAttribute("id"));
+		Contatto contatto = (Contatto) session.getAttribute("contatto");%>
 		
-		<h1>Sei sicuro di voler eliminare questo contatto?</h1>
 		
 		<%if(contatto != null) {%>
+			<h1>Sei sicuro di voler eliminare questo contatto?</h1>
 			<div class="container">
 				<table>
 					<tr>
@@ -83,19 +99,21 @@
 					<input type="hidden" id="id" name="id" value="<%= id%>">
 					<input type="submit" class="esc" value="Si">
 				</form>
-				<form action="./index.jsp" method="post">
+				<form action="./index" method="post">
 					<input type="submit" class="esc" value="No">
 				</form>
 			</div>
 		<%} else {%>
 			<h3>Nessun contatto con id <%=id%> e' stato trovato nella rubrica.</h3>
 			<div class="container">	
-				<form action="./index.jsp" method="post">
+				<form action="./index" method="post">
 					<input type="submit" class="esc" value="Torna alla home">
 				</form>
 			</div>
 		<%}%>
 		
+		<%request.getSession().setAttribute("contatto", null);
+		request.getSession().setAttribute("id", null);%>
 		
 	</body>
 </html>

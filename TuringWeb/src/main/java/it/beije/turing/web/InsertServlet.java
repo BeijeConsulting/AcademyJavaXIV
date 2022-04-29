@@ -39,20 +39,20 @@ public class InsertServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Contatto contatto = new Contatto();
 		
-		contatto.setNome(request.getParameter("name"));
-		contatto.setCognome(request.getParameter("surname"));
-		contatto.setIndirizzo(request.getParameter("address"));
-		contatto.setDataDiNascita(request.getParameter("birthday"));
-		contatto.setEmail(request.getParameter("email"));
-		contatto.setTelefono(request.getParameter("phone"));
-		contatto.setNote(request.getParameter("notes"));
+		contatto.setNome(request.getParameter("name").trim());
+		contatto.setCognome(request.getParameter("surname").trim());
+		contatto.setIndirizzo(request.getParameter("address").trim());
+		contatto.setDataDiNascita(request.getParameter("birthday").trim());
+		contatto.setEmail(request.getParameter("email").trim());
+		contatto.setTelefono(request.getParameter("phone").trim());
+		contatto.setNote(request.getParameter("notes").trim());
 		
 		if(contatto.getNome().equals("") && contatto.getCognome().equals("") && contatto.getTelefono().equals("") && contatto.getEmail().equals("") && contatto.getDataDiNascita().equals("") && contatto.getIndirizzo().equals("") && contatto.getNote().equals("")) {
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("index");
 		} else {			
 			JPAmanager.insertToRubrica(contatto);
 			
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("index");
 		}
 	}
 

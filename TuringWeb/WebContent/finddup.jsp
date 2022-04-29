@@ -26,6 +26,23 @@
 			table {
 				width:100%;
 			}
+			table{
+				width:100%;
+				background-color:lightgray;
+			}
+			
+			th {
+				background-color:rgb(229,228,226);
+			}
+			
+			td {
+				padding: 5px 0;
+				background-color:white;
+			}
+			
+			table, th, td {
+			  	border: 1px solid gray;
+			}
 			input {
 				display:block;
 				width:200px;
@@ -46,10 +63,10 @@
 	<head>
 	<body>
 		<h1>Contatti duplicati</h1>
+	
+		<%List<Contatto> contattiDup = (ArrayList<Contatto>) session.getAttribute("contattiDup");%>
 		
-		<%List<Contatto> contatti = GestoreFunction.trovaContattiDuplicati();%>
-		
-		<%if(contatti.size() > 0) {%>
+		<%if(contattiDup.size() > 0) {%>
 			<div class="container">
 				<table>
 					<tr>
@@ -62,7 +79,7 @@
 						<th>Telefono</th>
 						<th>Note</th>
 					</tr>
-					<%for(Contatto contatto : contatti) { %>
+					<%for(Contatto contatto : contattiDup) { %>
 						<tr>
 							<td><%=contatto.getId()%></td>
 							<td><%=contatto.getNome()%></td>
@@ -80,8 +97,11 @@
 		<%} else {%>
 			<h3>Nessun contatto e' stato duplicato nella rubrica.</h3>
 		<%}%>
+		
+		<%request.getSession().setAttribute("contattiDup", null);%>
+		
 		<div class="container">	
-			<form action="./index.jsp" method="post">
+			<form action="./index" method="post">
 				<input type="submit" class="esc" value="Torna alla home">
 			</form>
 		</div>

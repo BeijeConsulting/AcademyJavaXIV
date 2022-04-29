@@ -26,6 +26,23 @@
 			table {
 				width:100%;
 			}
+			table{
+				width:100%;
+				background-color:lightgray;
+			}
+			
+			th {
+				background-color:rgb(229,228,226);
+			}
+			
+			td {
+				padding: 5px 0;
+				background-color:white;
+			}
+			
+			table, th, td {
+			  	border: 1px solid gray;
+			}
 			input {
 				display:block;
 				width:200px;
@@ -45,9 +62,9 @@
 		</style>
 	<head>
 	<body>
-		<%List<Contatto> contatti = GestoreFunction.trovaContattiDuplicati();%>
+		<% List<Contatto> contattiDup = (ArrayList<Contatto>) session.getAttribute("contattiDup");%>
 		
-		<%if(contatti.size() > 0) {%>
+		<%if(contattiDup.size() > 0) {%>
 			<h1>Sei sicuro di voler unire questi due contatti?</h1>
 			<div class="container">
 				<table>
@@ -61,7 +78,7 @@
 						<th>Telefono</th>
 						<th>Note</th>
 					</tr>
-					<%for(Contatto contatto : contatti) { %>
+					<%for(Contatto contatto : contattiDup) { %>
 						<tr>
 							<td><%=contatto.getId()%></td>
 							<td><%=contatto.getNome()%></td>
@@ -80,14 +97,15 @@
 				<form action="./mergedup" method="post">
 					<input type="submit" class="esc" value="Si">
 				</form>
-				<form action="./index.jsp" method="post">
+				<form action="./index" method="post">
 					<input type="submit" class="esc" value="No">
 				</form>
 			</div>
+			<%request.getSession().setAttribute("contattiDup", null);%>
 		<%} else {%>
 			<h3>Nessun contatto e' stato duplicato nella rubrica.</h3>
 			<div class="container">	
-				<form action="./index.jsp" method="post">
+				<form action="./index" method="post">
 					<input type="submit" class="esc" value="Torna alla home">
 				</form>
 			</div>

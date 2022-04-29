@@ -69,7 +69,7 @@
   			
 			<input type="submit" class="esc" value="Inserisci contatto">
 		</form>
-		<form action="./index.jsp" method="post">
+		<form action="./index" method="post">
 			<input type="submit" class="esc" value="Torna alla home">
 		</form>
 	</body>

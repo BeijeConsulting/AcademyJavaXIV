@@ -25,6 +25,25 @@
 			table {
 				width:100%;
 			}
+			
+			table{
+				width:100%;
+				background-color:lightgray;
+			}
+			
+			th {
+				background-color:rgb(229,228,226);
+			}
+			
+			td {
+				padding: 5px 0;
+				background-color:white;
+			}
+			
+			table, th, td {
+			  	border: 1px solid gray;
+			}
+			
 			input {
 				display:block;
 				width:200px;
@@ -46,17 +65,7 @@
 	<body>
 		<h1>Contatti trovati</h1>
 		
-		<%String name = (String)request.getParameter("name");
-		String surname = (String)request.getParameter("surname");
-		
-		List<Contatto> contatti = JPAcriteriaManager.getRubrica();
-		List<Contatto> contattiTrovati = new ArrayList<>();
-		
-		for(Contatto contatto : contatti) {
-			if(name.equals(contatto.getNome()) && surname.equals(contatto.getCognome())) {
-				contattiTrovati.add(contatto);
-			}
-		}%>
+		<%List<Contatto> contattiTrovati = (ArrayList<Contatto>) session.getAttribute("contattiTrovati");%>
 		
 		<%if(contattiTrovati.size() >= 1) {%>
 			<div class="container">
@@ -87,11 +96,12 @@
 				</table>
 			</div>
 		<%} else {%>
-			<h3>Nessun <%= name %> <%= surname %> e' stato trovato nella rubrica.</h3>
+			<h3>Nessun contatto con i dati precedentemente inseriti e' stato trovato nella rubrica.</h3>
 		<%}%>
 		
+		<%request.getSession().setAttribute("contattiTrovati", null);%>
 		
-		<form action="./index.jsp" method="post">
+		<form action="./index" method="post">
 			<input type="submit" class="esc" value="Torna alla home">
 		</form>
 	</body>

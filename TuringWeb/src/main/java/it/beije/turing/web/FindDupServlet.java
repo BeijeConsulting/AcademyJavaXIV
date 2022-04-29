@@ -11,19 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import it.beije.turing.web.rubrica.Contatto;
 import it.beije.turing.web.rubrica.GestoreFunction;
-import it.beije.turing.web.rubrica.JPAmanager;
 
 /**
- * Servlet implementation class MergeDupServlet
+ * Servlet implementation class FindDup
  */
-@WebServlet("/mergedup")
-public class MergeDupServlet extends HttpServlet {
+@WebServlet("/finddup")
+public class FindDupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MergeDupServlet() {
+    public FindDupServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +31,12 @@ public class MergeDupServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		List<Contatto> contattiDup = GestoreFunction.trovaContattiDuplicati();
 		
 		request.getSession().setAttribute("contattiDup", contattiDup);
 		
-		response.sendRedirect("mergedup.jsp");
+		response.sendRedirect("finddup.jsp");
 	}
 
 	/**
@@ -44,14 +44,7 @@ public class MergeDupServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		List<Contatto> contattiDup = GestoreFunction.trovaContattiDuplicati();
-		
-		while(contattiDup.size() > 1) {
-			JPAmanager.deleteContattoRubrica(contattiDup.get(0).getId());
-			contattiDup.remove(0);
-		}
-		
-		response.sendRedirect("index");
+		doGet(request, response);
 	}
 
 }

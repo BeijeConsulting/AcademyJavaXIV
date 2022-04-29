@@ -1,6 +1,7 @@
 package it.beije.turing.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,20 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import it.beije.turing.web.rubrica.Contatto;
-import it.beije.turing.web.rubrica.GestoreFunction;
-import it.beije.turing.web.rubrica.JPAmanager;
+import it.beije.turing.web.rubrica.JPAcriteriaManager;
 
 /**
- * Servlet implementation class MergeDupServlet
+ * Servlet implementation class IndexServlet
  */
-@WebServlet("/mergedup")
-public class MergeDupServlet extends HttpServlet {
+@WebServlet("/index")
+public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MergeDupServlet() {
+    public IndexServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +32,21 @@ public class MergeDupServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Contatto> contattiDup = GestoreFunction.trovaContattiDuplicati();
+		// TODO Auto-generated method stub
+		String order = (String)request.getParameter("order");
+		List<Contatto> contatti = new ArrayList<>();
 		
-		request.getSession().setAttribute("contattiDup", contattiDup);
+		if(order != null && order.equals("nome")) {
+			contatti = JPAcriteriaManager.getOrderedByNameRubrica();
+		} else if(order != null && order.equals("cognome")) {
+			contatti = JPAcriteriaManager.getOrderedByCognomeRubrica();
+		} else {
+			contatti = JPAcriteriaManager.getRubrica();
+		}
 		
-		response.sendRedirect("mergedup.jsp");
+		request.getSession().setAttribute("contatti", contatti);
+		
+		response.sendRedirect("home.jsp");
 	}
 
 	/**
@@ -44,14 +54,7 @@ public class MergeDupServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		List<Contatto> contattiDup = GestoreFunction.trovaContattiDuplicati();
-		
-		while(contattiDup.size() > 1) {
-			JPAmanager.deleteContattoRubrica(contattiDup.get(0).getId());
-			contattiDup.remove(0);
-		}
-		
-		response.sendRedirect("index");
+		doGet(request, response);
 	}
 
 }

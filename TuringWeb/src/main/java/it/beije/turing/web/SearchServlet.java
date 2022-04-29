@@ -1,6 +1,7 @@
 package it.beije.turing.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,20 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import it.beije.turing.web.rubrica.Contatto;
-import it.beije.turing.web.rubrica.GestoreFunction;
-import it.beije.turing.web.rubrica.JPAmanager;
+import it.beije.turing.web.rubrica.JPAcriteriaManager;
 
 /**
- * Servlet implementation class MergeDupServlet
+ * Servlet implementation class SearchServlet
  */
-@WebServlet("/mergedup")
-public class MergeDupServlet extends HttpServlet {
+@WebServlet("/search")
+public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MergeDupServlet() {
+    public SearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +32,8 @@ public class MergeDupServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Contatto> contattiDup = GestoreFunction.trovaContattiDuplicati();
-		
-		request.getSession().setAttribute("contattiDup", contattiDup);
-		
-		response.sendRedirect("mergedup.jsp");
+		// TODO Auto-generated method stub
+		response.sendRedirect("search.jsp");
 	}
 
 	/**
@@ -44,14 +41,21 @@ public class MergeDupServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		List<Contatto> contattiDup = GestoreFunction.trovaContattiDuplicati();
+		String name = (String)request.getParameter("name");
+		String surname = (String)request.getParameter("surname");
 		
-		while(contattiDup.size() > 1) {
-			JPAmanager.deleteContattoRubrica(contattiDup.get(0).getId());
-			contattiDup.remove(0);
+		List<Contatto> contatti = JPAcriteriaManager.getRubrica();
+		List<Contatto> contattiTrovati = new ArrayList<>();
+		
+		for(Contatto contatto : contatti) {
+			if(name.equals(contatto.getNome()) && surname.equals(contatto.getCognome())) {
+				contattiTrovati.add(contatto);
+			}
 		}
 		
-		response.sendRedirect("index");
+		request.getSession().setAttribute("contattiTrovati", contattiTrovati);
+		
+		response.sendRedirect("searched.jsp");
 	}
 
 }

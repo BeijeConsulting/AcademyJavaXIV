@@ -1,12 +1,16 @@
 package it.beije.turing.web;
 
 import java.io.IOException;
+
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.beije.turing.web.rubrica.Contatto;
+import it.beije.turing.web.rubrica.JPAentityManagerFactory;
 import it.beije.turing.web.rubrica.JPAmanager;
 
 /**
@@ -28,7 +32,14 @@ public class DeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		int id = Integer.parseInt((String)request.getParameter("id"));
+		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
+		Contatto contatto = entityManager.find(Contatto.class, id);
+		
+		request.getSession().setAttribute("contatto", contatto);
+		request.getSession().setAttribute("id", Integer.toString(id));
+		
+		response.sendRedirect("delete.jsp");
 	}
 
 	/**
@@ -40,7 +51,7 @@ public class DeleteServlet extends HttpServlet {
 		
 		JPAmanager.deleteContattoRubrica(id);
 		
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("home.jsp");
 	}
 
 }

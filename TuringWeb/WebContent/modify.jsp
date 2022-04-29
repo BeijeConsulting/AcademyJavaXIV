@@ -47,10 +47,11 @@
 	<head>
 	<body>
 	
-		<%int id = Integer.parseInt((String)request.getParameter("id"));
-		EntityManager entityManager = JPAentityManagerFactory.openEntityManager();
-		Contatto contatto = entityManager.find(Contatto.class, id);
-		%>
+		<%int id = Integer.parseInt((String) session.getAttribute("id"));
+		Contatto contatto = (Contatto) session.getAttribute("contatto");
+		if(contatto == null) {
+			contatto = new Contatto();
+		}%>
 		<h1>Modifica contatto</h1>
 		<form action="./modify" method="post">
 			<div class="container">					
@@ -81,7 +82,11 @@
   			<input type="hidden" id="id" name="id" value="<%= id%>">
 			<input type="submit" class="esc" value="Conferma le modifiche">
 		</form>
-		<form action="./index.jsp" method="post">
+		
+		<%request.getSession().setAttribute("contatto", null);
+		request.getSession().setAttribute("id", null);%>
+		
+		<form action="./index" method="post">
 			<input type="submit" class="esc" value="Torna alla home">
 		</form>
 	</body>

@@ -40,7 +40,7 @@
 	<head>
 	<body>
 		<h1>Inserisci dati del contatto da cercare</h1>
-		<form action="./searched.jsp" method="post">
+		<form action="./search" method="post">
 			<div class="container">					
 				<label for="name">Nome:</label><br>
 	  			<input type="text" id="name" name="name" value=""><br>
@@ -50,7 +50,7 @@
 			</div>
 			<input type="submit" class="esc" value="Cerca contatto">
 		</form>
-		<form action="./index.jsp" method="post">
+		<form action="./index" method="post">
 			<input type="submit" class="esc" value="Torna alla home">
 		</form>
 	</body>
