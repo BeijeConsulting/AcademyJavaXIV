@@ -35,39 +35,43 @@ public class UtilServlet extends HttpServlet
 	{
 		System.out.println("ContactServlet doGet");
 		
-		StringBuilder lista = new StringBuilder();
+		//StringBuilder lista = new StringBuilder();
 		
 		switch(request.getParameter("post"))
 		{
+			default:
 			case "getRubrica":
 				System.out.println("GET RUBRICA");
-				for(Contatto c : getRubrica())
+				request.getSession().setAttribute("contatti", getRubrica());
+				
+				/*for(Contatto c : getRubrica())
 				{
 					lista.append(c.toString() + "\n");
-				}
+				}*/
 				break;
 				
 			case "findContact":
 				System.out.println("FIND CONTATTO");
-				for(Contatto c : findContact(request))
+				request.getSession().setAttribute("contatti", findContact(request));
+				
+				/*for(Contatto c : findContact(request))
 				{
 					lista.append(c.toString() + "\n");
-				}
+				}*/
 				break;
 				
 			case "findDuplicates":
 				System.out.println("FIND DUPLICATES");
-				for(Contatto c : findDuplicates())
+				request.getSession().setAttribute("contatti", findDuplicates());
+				
+				/*for(Contatto c : findDuplicates())
 				{
 					lista.append(c.toString() + "\n");
-				}
-				break;
-				
-			default:
+				}*/
 				break;
 		}
 		
-		response.getWriter().append(lista);
+		response.sendRedirect("index.jsp");
 	}
 
 	/**
@@ -107,7 +111,7 @@ public class UtilServlet extends HttpServlet
 				break;
 		}
 		
-		response.sendRedirect("index.html");
+		doGet(request, response);
 	}
 	
 	private List<Contatto> getRubrica()

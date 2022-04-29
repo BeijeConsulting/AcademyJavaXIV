@@ -1,3 +1,7 @@
+<%@page import="it.beije.turing.web.Contatto"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,7 +9,25 @@
 <title>Rubrica Pagani</title>
 </head>
 <body>
+
 <h1>HOMEPAGE RUBRICA</h1>
+
+
+<label for="contacts">Contatti:</label>
+<br>
+<textarea id="contacts" name="contacts" rows="10" cols="100" readonly>
+<%
+List<Contatto> contatti = (List<Contatto>)session.getAttribute("contatti");
+
+if (contatti == null) contatti = new ArrayList<>();
+
+for (Contatto c : contatti)
+{
+	%><%= c + "\n"%><%
+}
+%>
+</textarea>
+<br>
 
 <form action="./util" id="getRubrica" method="post">
 <input type="hidden" name="post" value="getRubrica"/>
@@ -106,5 +128,6 @@
 		</tr>
 	</table>
 </form>
+
 </body>
 </html>
