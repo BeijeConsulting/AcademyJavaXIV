@@ -9,7 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import it.beije.turing.web.rubrica.Contatto;
+import it.beije.turing.web.rubrica.mvc.Contatto;
 
 
 public class JPARubricaManager {

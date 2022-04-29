@@ -1,4 +1,4 @@
-package it.beije.turing.web.rubrica;
+package it.beije.turing.web.rubrica.mvc;
 
 
 

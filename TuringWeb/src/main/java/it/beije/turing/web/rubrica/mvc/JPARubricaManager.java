@@ -1,4 +1,4 @@
-package it.beije.turing.web;
+package it.beije.turing.web.rubrica.mvc;
 
 
 import java.util.List;
@@ -9,7 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import it.beije.turing.web.rubrica.Contatto;
+import it.beije.turing.web.rubrica.mvc.Contatto;
 
 
 public class JPARubricaManager {
@@ -30,7 +30,25 @@ public class JPARubricaManager {
 
 	}
 
-
+	public static void select(String query) {
+		
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		
+		Query q = entityManager.createQuery(query);
+		
+		
+		
+		 List<Contatto> contatti = q.getResultList();
+		 
+		 for(Contatto c : contatti) {
+			 System.out.println(c);
+		 }
+		  
+		 entityManager.close();
+		
+		
+	}
 
 		public static void main(String[] args) {
 
@@ -74,7 +92,7 @@ public class JPARubricaManager {
 			List<Contatto> contatti = query.getResultList();
 
 			for (Contatto c : contatti) {
-				System.out.println(c);
+				System.out.println(c); 
 			}
 			
 			entityManager.close();
