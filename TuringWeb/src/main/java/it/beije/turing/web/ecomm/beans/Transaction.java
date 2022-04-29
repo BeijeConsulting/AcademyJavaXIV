@@ -11,7 +11,7 @@ public class Transaction {
     private int idAcquisto;
     @ManyToOne
     @JoinColumn(name = "idOrdine")
-    private int idOrdine;
+    private Order idOrdine;
     @Column(name = "idProdotto")
     private int idProdotto;
     @Column(name = "quantita")
@@ -34,11 +34,11 @@ public class Transaction {
         this.idAcquisto = idAcquisto;
     }
 
-    public int getIdOrdine() {
+    public Order getIdOrdine() {
         return idOrdine;
     }
 
-    public void setIdOrdine(int idOrdine) {
+    public void setIdOrdine(Order idOrdine) {
         this.idOrdine = idOrdine;
     }
 

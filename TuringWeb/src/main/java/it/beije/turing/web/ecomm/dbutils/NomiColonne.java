@@ -1,4 +1,4 @@
-package it.beije.turing.Ecomm.DBUtils;
+package it.beije.turing.web.ecomm.dbutils;
 
 public class NomiColonne {
 

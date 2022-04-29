@@ -11,7 +11,7 @@ import it.beije.turing.web.ecomm.beans.Good;
 public interface CommandInterface {
 	
 	public static CommandInterface getInstance() {
-		return null;
+		return new EcommManager();
 		}
 	
 	//public void importCSV(String fileName, boolean apici);

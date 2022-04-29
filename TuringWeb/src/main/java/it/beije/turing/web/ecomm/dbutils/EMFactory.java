@@ -1,27 +1,23 @@
-package it.beije.turing.Ecomm.DBUtils;
+package it.beije.turing.web.ecomm.dbutils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class EMFactory {
+	private static EntityManagerFactory em;
+private EMFactory()
+{
 	
-	private static EntityManager em;
-	
-	private EMFactory() 
+}
+public static EntityManager getInstance()
+{
+	if(em!=null&&em.isOpen())
+	return em.createEntityManager();
+	else
 	{
-		
+		em = Persistence.createEntityManagerFactory("turing");
+		return getInstance();
 	}
-	public static EntityManager getInstance()
-	{
-		if(em!=null)
-		return em;
-		else
-		{
-			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("turing");
-			em = entityManagerFactory.createEntityManager();
-			return em;
-		}
-	}
-
+}
 }

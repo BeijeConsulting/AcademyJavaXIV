@@ -27,7 +27,9 @@ public class EcommServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CommandInterface link;
 	private final String jsp = "EUI.jsp";
-	private final String fjsp = "EForm.jsp";
+	private final String fjsp = "Eform.jsp";
+	private final String orderHistory="OrdH.jsp";
+	private final String ofjsp ="OrderForm.jsp";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -66,7 +68,7 @@ public class EcommServlet extends HttpServlet {
 		case "new":
 			if(request.getParameter("flag2")==null)
 			{
-				request.getSession().setAttribute("contatto", new Client());
+				request.getSession().setAttribute("client", new Client());
 				request.getSession().setAttribute("type", "new");
 				response.sendRedirect(fjsp);
 			}
@@ -148,6 +150,48 @@ public class EcommServlet extends HttpServlet {
 		
 			break;
 			
+		case "orders":
+			request.getSession().setAttribute("olist", link.getOrdersList());
+			response.sendRedirect(orderHistory);
+			break;
+			
+		case "showOrders":
+			if(request.getParameter("flag")!=null) {
+			List<Order> olist = link.searchCliente("id", (String)request.getParameter("id")).get(0).getOrdini();
+			request.getSession().setAttribute("olist",olist);
+			response.sendRedirect(orderHistory);
+			}
+			else 
+			{
+				request.getSession().setAttribute("mode", "showOrders");
+				response.sendRedirect(jsp);
+			}
+			break;
+			
+		case "addOrder":
+			if(request.getParameter("flag")!=null&&request.getParameter("flag2")==null)
+			{
+				request.getSession().setAttribute("order", new Order());
+				request.getSession().setAttribute("type", "new");
+				response.sendRedirect(ofjsp);
+			}
+			else if(request.getParameter("flag2")!=null)
+				{
+				Client c = link.searchCliente("id", (String)request.getParameter("id")).get(0);
+				c.getOrdini().add((Order)request.getSession().getAttribute("order"));
+					link.modifyC(c);
+					request.getSession().setAttribute("mode", "main");
+					doGet(request, response);
+				}
+			else {
+				request.getSession().setAttribute("mode", "addOrder");
+				response.sendRedirect(jsp);
+				}
+		
+			break;
+			
+			
+		
 			
 		default:
 			break;

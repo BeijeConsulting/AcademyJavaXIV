@@ -1,15 +1,18 @@
-package it.beije.turing.Ecomm.DBUtils;
+package it.beije.turing.web.ecomm.dbutils;
 
 import java.util.List;
 
-import it.beije.turing.Ecomm.Beans.*;
+import it.beije.turing.web.ecomm.beans.*;
 
 public interface DBInterface {
 	
 	//Selects
-	List<Cliente> getClienti();
-	List<Ordine> getOrderHistory();
-	List<Prodotto> getInventory();
+	List<Client> getClientList();
+	List<Order> getOrderHistory();
+	List<Good> getInventory();
+	List<Client> search(String fields);
+	void add(Client c);
+	
 	
 	
 }
