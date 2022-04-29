@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<h1>HOMEPAGE RUBRICA</h1>
+<h1>RUBRICA</h1>
 
 <label for="contacts">Contatti:</label>
 <br>
