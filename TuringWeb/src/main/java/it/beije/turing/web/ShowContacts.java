@@ -1,23 +1,24 @@
 package main.java.it.beije.turing.web;
 
-import java.io.IOException;
+import main.java.it.beije.turing.JPAContactsManager.ContactDBManager;
+import main.java.it.beije.turing.JPAContactsManager.Contatto;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 
-/**
- * Servlet implementation class MyServlet
- */
-@WebServlet("/servlet")
-public class MyServlet extends HttpServlet {
+@WebServlet("/show")
+public class ShowContacts extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyServlet() {
+    public ShowContacts() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,9 +28,9 @@ public class MyServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        System.out.println("MyServlet doGet");
 
-        response.sendRedirect("index.html");
+        List<Contatto> contattoList = ContactDBManager.ShowContacts();
+        response.sendRedirect("show.jsp");
     }
 
     /**
@@ -39,5 +40,4 @@ public class MyServlet extends HttpServlet {
         // TODO Auto-generated method stub
         doGet(request, response);
     }
-
 }

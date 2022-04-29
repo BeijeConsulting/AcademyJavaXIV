@@ -1,4 +1,4 @@
-package it.beije.turing.JPAContactsManager;
+package main.java.it.beije.turing.JPAContactsManager;
 
 import javax.persistence.*;
 import java.util.ArrayList;

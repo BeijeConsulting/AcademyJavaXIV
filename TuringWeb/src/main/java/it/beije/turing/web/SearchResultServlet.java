@@ -1,8 +1,9 @@
-package it.beije.turing.web;
+package main.java.it.beije.turing.web;
 
 
-import it.beije.turing.JPAContactsManager.ContactDBManager;
-import it.beije.turing.JPAContactsManager.Contatto;
+import main.java.it.beije.turing.JPAContactsManager.ContactDBManager;
+import main.java.it.beije.turing.JPAContactsManager.Contatto;
+
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -13,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet("/search_result")
-public class search_result_servlet extends HttpServlet {
+public class SearchResultServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public search_result_servlet() {
+	public SearchResultServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

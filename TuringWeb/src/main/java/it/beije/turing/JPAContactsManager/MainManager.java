@@ -1,4 +1,4 @@
-package it.beije.turing.JPAContactsManager;
+package main.java.it.beije.turing.JPAContactsManager;
 
 import java.time.LocalDate;
 import java.time.Period;

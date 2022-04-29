@@ -1,4 +1,4 @@
-package it.beije.turing.web;
+package main.java.it.beije.turing.web;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
