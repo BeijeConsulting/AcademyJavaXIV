@@ -1,4 +1,4 @@
-package it.beije.xiv.esercizi;
+/**package it.beije.xiv.esercizi;
 import org.apache.commons.lang3.ArrayUtils;
 
 /*
@@ -10,7 +10,7 @@ import org.apache.commons.lang3.ArrayUtils;
 /**
  *
  * @author 39346
- */
+
 public class ArrayExe {
     
     public static void findMax(int arr[]){
@@ -129,7 +129,7 @@ public class ArrayExe {
     }
     /**
      * @param args the command line arguments
-     */
+
     public static void main(String[] args) {
         String[] arrStr= {"ciao", "sono", "Giuseppe"};
         String s= "Sancesario";
@@ -152,3 +152,4 @@ public class ArrayExe {
     }
     //
 }
+**/

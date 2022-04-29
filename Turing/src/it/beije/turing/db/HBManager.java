@@ -13,6 +13,10 @@ import it.beije.turing.rubrica.Contatto;
 
 
 public class HBManager {
+
+	public int a=0;
+	 protected int b=3;
+
 	
 //	public static Session openHBSession() {
 //		Configuration configuration = new Configuration().configure()

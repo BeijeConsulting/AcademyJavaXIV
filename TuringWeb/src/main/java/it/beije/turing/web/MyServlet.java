@@ -1,4 +1,4 @@
-package it.beije.turing.web;
+package main.java.it.beije.turing.web;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/servlet")
 public class MyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MyServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public MyServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -36,6 +36,7 @@ public class MyServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("enrro");
 		doGet(request, response);
 	}
 
