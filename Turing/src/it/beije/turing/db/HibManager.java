@@ -25,15 +25,7 @@ public class HibManager {
 			Configuration configuration = new Configuration().configure()
 					.addAnnotatedClass(Contatto.class);
 			SessionFactory sf = configuration.buildSessionFactory();
-			List<SessionFactory> ls = new ArrayList<>();
-			int counter = 0; 
-			while (true) {
-	
-				ls.add(configuration.buildSessionFactory());
-				TimeUnit.SECONDS.sleep(15);
-				ls.get(0).openSession();
-				System.out.println(++counter);
-			}
+			session = sf.openSession();
 			
 			//INSERT
 //		Transaction transaction = session.beginTransaction();
@@ -85,8 +77,8 @@ public class HibManager {
 		} catch (HibernateException hbmEx) {
 			hbmEx.printStackTrace();
 			throw hbmEx;
-		}catch (InterruptedException iEx) {
-				iEx.printStackTrace();
+//		}catch (InterruptedException iEx) {
+//				iEx.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

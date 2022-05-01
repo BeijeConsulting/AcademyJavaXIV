@@ -6,13 +6,20 @@ import java.util.Scanner;
 
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 
-public class PERSDuplicate {
+public class RCDuplicate {
 	public static List<Contatto> findDuplicates(EntityManager entityManager) {
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM contatti
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();		//SELECT * FROM contatti
+		CriteriaQuery<Contatto> q = cb.createQuery(Contatto.class);
+		Root<Contatto> c = q.from(Contatto.class);
+		q.select(c);
+
+		Query query = entityManager.createQuery(q);
 		List<Contatto> contatti = query.getResultList();
 		String s1;
 		String s2;
@@ -31,18 +38,19 @@ public class PERSDuplicate {
 			System.out.println("No duplicate contacts!");
 		} else {
 			System.out.println("Found "+duplicates.size()+" duplicate contacts.");
-			System.out.println(duplicates);
+			//System.out.println(duplicates);
 		}
 		return duplicates;
 	}
-	
+
 	public static void mergeDuplicates(EntityManager entityManager) {
 		List<Contatto> duplicates = findDuplicates(entityManager);
 		Scanner s = new Scanner(System.in);
 		while (duplicates.size()>0) {
 
 			System.out.println("Here are the duplicate contacts:");
-			System.out.println(duplicates);
+			for (Contatto c:duplicates) System.out.println(c);
+			
 			System.out.println("Enter the id of the contact to merge (type exit to leave):");
 			String st = s.next();
 			if (st.equals("exit")) { break;}
@@ -57,11 +65,11 @@ public class PERSDuplicate {
 				System.out.println("Invalid id");
 				continue;
 			}
-			PERSDelete.delete(entityManager, dup);
-			
+			RCDelete.delete(entityManager, dup);
+
 			duplicates = findDuplicates(entityManager);
 		}
-		s.close();
 		
+
 	}
 }

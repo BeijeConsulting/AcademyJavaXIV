@@ -2,11 +2,12 @@ package it.beije.turing.rubrica;
 
 import java.util.Scanner;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
-public class HibDelete {
-	public static void delete (Session session, Contatto contatto) {
+
+public class RCDelete {
+	public static void delete (EntityManager entityManager, Contatto contatto) {
 		Scanner s = new Scanner(System.in);
 		System.out.println("Are you sure (Y/n) you want to delete Contact?:");
 		System.out.println(contatto);
@@ -15,16 +16,14 @@ public class HibDelete {
 			System.out.println("Please enter Y (delete) or n (don't delete)");
 			st = s.next();
 		}
-		if (st.equals("Y")) {
-			Transaction transaction = session.beginTransaction();	
-			session.remove(contatto);
-			transaction.commit();
+		if (st.equals("Y")){
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			entityTransaction.begin();
+			entityManager.remove(contatto);
+			entityTransaction.commit();
 			System.out.println("Contact removed.");
-
-			s.close();
 		} else { 
 			System.out.println("Contact not removed.");
-			s.close();
 		}
 	}
 }
