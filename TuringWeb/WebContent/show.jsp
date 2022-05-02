@@ -15,7 +15,7 @@
 <body>
 <%
 
-
+response.getWriter();
 List<Contatto> cont = new ArrayList<>();
 
 for(Contatto contatto : cont){

@@ -8,8 +8,11 @@
 </head>
 <body>
 
-USERNAME: ${username}
-PASSWORD: ${password}
+NOME: ${nome} <br/>
+COGNOME: ${telefono} <br/>
+TELEFONO: ${TELEFONO} <br/>
+EMAIL: ${email} <br/>
+PASSWORD: ${passord} <br/>
 
 </body>
 </html>
