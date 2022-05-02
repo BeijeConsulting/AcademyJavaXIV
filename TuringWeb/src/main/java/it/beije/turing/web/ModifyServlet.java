@@ -61,7 +61,7 @@ public class ModifyServlet extends HttpServlet {
 		
 		JPAmanager.updateContattoRubrica(contatto, id);
 		
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("index");
 	}
 
 }
