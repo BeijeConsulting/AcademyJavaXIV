@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.beije.turing.Contatto;
 import it.beije.turing.service.JPAhandler;
 
-
 @Controller
 public class HomeController {
 	
