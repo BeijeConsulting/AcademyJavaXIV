@@ -17,15 +17,11 @@
     Rubrica Web
   </h1>
 </header>
-
 <form action="./viewer" method="GET">
   <input type="submit" name="submit" value="View">
 </form>
 <form action="./inserter" method="GET">
   <input type="submit" name="submit" value="Insert">
-</form>
-<form action="./editor" method="GET">
-  <input type="submit" name="submit" value="Edit">
 </form>
 
 <!--<form action="./test" method="post">-->

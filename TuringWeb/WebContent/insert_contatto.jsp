@@ -8,25 +8,14 @@
 <title>Insert Contatto</title>
 </head>
 <body>
+inserito nuovo contatto<br>
+<% out.println((Contatto)request.getAttribute("contatto"));
 
-<jsp:useBean id="contatto" class="it.beije.turing.web.Contatto"></jsp:useBean>
-<%--
-Contatto contatto = (Contatto) session.getAttribute("contatto");
-if (contatto == null) {
-	contatto = new Contatto();
-	session.setAttribute("contatto", contatto);
-}
---%>
 
-<jsp:setProperty property="nome" name="contatto" param="name"/>
-<%--
-String nome = request.getParameter("name");
-if (nome != null) contatto.setNome(nome);
---%>
-<jsp:setProperty property="cognome" name="contatto" param="cognome"/>
-
-NOME : <jsp:getProperty name="contatto" property="nome"/><br>
-COGNOME : <jsp:getProperty name="contatto" property="cognome"/>
-
+%>
+<form action="./index.jsp" method="GET">
+<br>
+    <input type="submit" name="submit" value="Back to home page">
+</form>
 </body>
 </html>

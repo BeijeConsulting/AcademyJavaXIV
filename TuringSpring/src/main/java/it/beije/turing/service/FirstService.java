@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import it.beije.turing.Contatto;
-
 
 @Service
 public class FirstService {
