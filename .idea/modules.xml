@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/AcademyJavaXIV.iml" filepath="$PROJECT_DIR$/.idea/AcademyJavaXIV.iml" />
       <module fileurl="file://$PROJECT_DIR$/Esercizi/Esercizi.iml" filepath="$PROJECT_DIR$/Esercizi/Esercizi.iml" />
       <module fileurl="file://$PROJECT_DIR$/Turing/Turing.iml" filepath="$PROJECT_DIR$/Turing/Turing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TuringSpring/TuringSpring.iml" filepath="$PROJECT_DIR$/TuringSpring/TuringSpring.iml" />
       <module fileurl="file://$PROJECT_DIR$/TuringWeb/TuringWeb.iml" filepath="$PROJECT_DIR$/TuringWeb/TuringWeb.iml" />
     </modules>
   </component>

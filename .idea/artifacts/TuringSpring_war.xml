@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TuringSpring:war">
+    <output-path>$PROJECT_DIR$/TuringSpring/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>TuringSpring</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="TuringSpring-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="TuringSpring:war exploded" />
+    </root>
+  </artifact>
+</component>
