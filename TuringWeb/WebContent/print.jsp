@@ -64,36 +64,6 @@
 
     }
   </style>
-
-  <%--  <style>--%>
-<%--    * {--%>
-<%--      padding: 0;--%>
-<%--      margin: 0;--%>
-<%--      box-sizing: border-box;--%>
-<%--    }--%>
-<%--    body {--%>
-<%--      font-family: Helvetica, sans-serif;--%>
-<%--      background-color: #23272e;--%>
-<%--      color: black;--%>
-<%--    }--%>
-<%--    body {--%>
-<%--      font-family: Helvetica, "Times New Roman";--%>
-<%--      background-color: dodgerblue;--%>
-<%--      color: black;--%>
-<%--    }--%>
-<%--    a {--%>
-<%--      text-decoration: chartreuse;--%>
-<%--      color: red;--%>
-<%--    }--%>
-<%--    a:hover {--%>
-<%--      text-decoration: none;--%>
-<%--    }--%>
-<%--    h1 {--%>
-<%--      text-align: center;--%>
-<%--      padding: 30px 0;--%>
-<%--    }--%>
-
-<%--  </style>--%>
   <title>Contatti</title>
 </head>
 <body>
@@ -109,7 +79,7 @@
   </tr>
   </thead>
   <tbody>
-<%--  <%PrintWriter out = new PrintWriter (response.getOutputStream ());%>--%>
+
   <% for (Contatto contatto : JPACriteriaManager.getRubrica()) { %>
   <tr>
     <th scope="row"><% out.print(contatto.getId());%></th>

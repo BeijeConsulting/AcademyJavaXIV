@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: aless_in4zoow
-  Date: 28/04/2022
-  Time: 16:06
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -67,36 +60,6 @@
 
   }
 </style>
-<%--<style>--%>
-<%--  * {--%>
-<%--      padding: 0;--%>
-<%--      margin: 0;--%>
-<%--      box-sizing: border-box;--%>
-<%--  }--%>
-<%--  body {--%>
-<%--    font-family: Helvetica, Tahoma, Arial, sans-serif;--%>
-<%--    background-color: dodgerblue;--%>
-<%--    color: black;--%>
-<%--  }--%>
-<%--  a {--%>
-<%--      text-decoration: none;--%>
-<%--      color: black;--%>
-<%--  }--%>
-<%--  a:hover {--%>
-<%--      text-decoration: none;--%>
-<%--  }--%>
-
-<%--  h1 {--%>
-<%--      text-align: center;--%>
-<%--      padding: 30px 0;--%>
-<%--  }--%>
-<%--  .container {--%>
-<%--    margin: auto 0;--%>
-<%--    display: flex;--%>
-<%--    justify-content: center;--%>
-<%--  }--%>
-
-<%--</style>--%>
 <body>
 <div class="container">
   <form action="./delete" method="post">
