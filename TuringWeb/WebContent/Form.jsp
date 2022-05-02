@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@page import ="it.beije.turing.web.rubrica.bean.Contatto" %>
+    <%@page import ="it.beije.turing.rubrica.bean.Contatto" %>
 <!DOCTYPE html>
 <html>
 <head>

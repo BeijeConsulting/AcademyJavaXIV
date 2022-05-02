@@ -1,6 +1,6 @@
-<%@page import="it.beije.turing.web.ecomm.beans.Transaction"%>
+<%@page import="it.beije.turing.ecomm.beans.Transaction"%>
 <%@page import="java.util.List"%>
-<%@page import="it.beije.turing.web.ecomm.beans.Order"%>
+<%@page import="it.beije.turing.ecomm.beans.Order"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>

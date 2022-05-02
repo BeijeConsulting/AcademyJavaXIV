@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@page import ="it.beije.turing.web.rubrica.CommandInterface" %>
-<%@page import ="it.beije.turing.web.ecomm.beans.Client" %>
+<%@page import ="it.beije.turing.rubrica.CommandInterface" %>
+<%@page import ="it.beije.turing.ecomm.beans.Client" %>
 <%@page import = "java.util.List" %>
 <!DOCTYPE html>
 <html>
