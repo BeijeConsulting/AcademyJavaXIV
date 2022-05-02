@@ -27,6 +27,8 @@ import it.beije.turing.rubrica.Contatto;
 
 import it.beije.turing.rubrica.Contatto;
 
+import it.beije.turing.rubrica.Contatto;
+
 
 public class JDBCmanager {
 	
@@ -81,6 +83,19 @@ public class JDBCmanager {
 //			insertPrepStatement.setString(5, contatto.getNote());
 //			insertPrepStatement.executeUpdate();
 
+
+//			Contatto contatto = new Contatto();
+//			contatto.setCognome("Leopardi");
+//			contatto.setNome("Giacomo");
+//			contatto.setEmail("g.leopardi@poeti.it");
+//			statement.executeUpdate("INSERT INTO rubrica VALUES (null, '" + contatto.getNome() + "', '" + contatto.getCognome() + "', '" + contatto.getEmail() + "', '" + contatto.getTelefono() + "', " + contatto.getNote() + ")");
+//			insertPrepStatement = connection.prepareStatement("INSERT INTO rubrica VALUES (null, ?, ?, ?, ?, ?)");
+//			insertPrepStatement.setString(1, contatto.getNome());
+//			insertPrepStatement.setString(2, contatto.getCognome());
+//			insertPrepStatement.setString(3, contatto.getEmail());
+//			insertPrepStatement.setString(4, contatto.getTelefono());
+//			insertPrepStatement.setString(5, contatto.getNote());
+//			insertPrepStatement.executeUpdate();
 
 //			Contatto contatto = new Contatto();
 //			contatto.setCognome("Leopardi");
