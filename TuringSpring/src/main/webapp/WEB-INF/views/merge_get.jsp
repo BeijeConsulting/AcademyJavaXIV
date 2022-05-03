@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>RUBRICA</title>
+</head>
+<body>
+<b>Contatti Duplicati:</b><br/>
+<c:if test="${empty contattiDuplicate}">NESSUN CONTATTO<br/></c:if>
+<c:forEach items="${contattiDuplicate}" var="contatto">
+${contatto.toString()}<br/>
+</c:forEach>
+
+<b>Contatti Duplicati Merge:</b><br/>
+<c:if test="${empty contattiMerge}">NESSUN CONTATTO<br/></c:if>
+<c:forEach items="${contattiMerge}" var="contatto">
+${contatto.toString()}<br/>
+</c:forEach>
+
+<form action="./" method="get">
+ 		<label for="merge">Torna alla Home:     </label>
+  		<input type="submit" id="merge" name="type" value="Submit"><br>
+</form>
+
+</body>
+</html>

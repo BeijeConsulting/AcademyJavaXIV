@@ -41,7 +41,7 @@
   <input type="submit" id="modify" name="type" value="Modifica contatto"><br>
   <br>
  </form>
- <form action="./duplicate" method="get">
+ <form action="./merge" method="get">
 <label for="merge">Unisci contatti duplicati:     </label>
   <input type="submit" id="merge" name="type" value="Unisci contatti duplicati"><br>
   <br>

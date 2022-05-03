@@ -43,7 +43,15 @@ public class MyController {
 		return "search_get";
 	}
 	@RequestMapping(value = "search", method = RequestMethod.POST)
-	public String searchPost() {
+	public String searchPost(@RequestParam(name="name", required=false) String name,@RequestParam(name="lname", required=false) String lname,
+			@RequestParam(name="tel", required=false) String tel, @RequestParam(name="email", required=false) String email, Model model) {
+		if(name == null || lname == null || tel == null || email == null) {
+			return "/";
+		}
+		List<Contatto> c = rm.cercaContatto(name,lname,email,tel);
+		if(c == null)
+			return "/";
+		model.addAttribute("contatti", c);
 		return "search_post";
 	}
 	
@@ -63,11 +71,21 @@ public class MyController {
 	}
 	
 	@RequestMapping(value = "remove", method = RequestMethod.GET)
-	public String removeGet() {
+	public String removeGet(Model model) {
+		List<Contatto> list = rm.printAllContatti();
+		model.addAttribute("contatti",list);
 		return "remove_get";
 	}
 	@RequestMapping(value = "remove", method = RequestMethod.POST)
-	public String removePost() {
+	public String removePost(@RequestParam(name="id", required=false) String id, Model model) {
+		int _id = -1;
+		try {
+			_id = Integer.parseInt(id);
+		}catch(NumberFormatException nfEx) {
+			return "remove_get";
+		}
+		Contatto c = rm.EliminaContatto(_id);
+		model.addAttribute("contatto",c);
 		return "remove_post";
 	}
 	
@@ -99,8 +117,12 @@ public class MyController {
 		return "modify_post";
 	}
 	
-	@RequestMapping(value = "duplicate", method = RequestMethod.GET)
-	public String duplicate() {
-		return "duplicate";
+	@RequestMapping(value = "merge", method = RequestMethod.GET)
+	public String duplicate(Model model) {
+		List<Contatto> duplicati = rm.findDuplicate();
+		List<Contatto> merge = rm.mergeDuplicate();
+		model.addAttribute("contattiDuplicate",duplicati);
+		model.addAttribute("contattiMerge",merge);
+		return "merge_get";
 	}
 }
