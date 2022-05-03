@@ -21,8 +21,6 @@ public class FirstController {
 		System.out.println("GET / " + this.toString());
 		//...
 		
-		service.leggiRubrica();
-		
 		return "index";
 	}
 

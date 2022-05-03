@@ -1,19 +1,56 @@
 package it.beije.turing;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "rubrica")
 public class Contatto {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private int id;
 	
+	@Column(name = "nome")
 	private String nome;
 	
+	@Column(name = "cognome")
 	private String cognome;
 	
+	@Column(name = "telefono")
 	private String telefono;
 	
+	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "note")
 	private String note;
 	
+	@Column(name = "indirizzo")
+	private String indirizzo;
+
+	@Column(name = "dataDiNascita")
+	private String dataDiNascita;
+
+	public String getIndirizzo() {
+		return indirizzo;
+	}
+	public void setIndirizzo(String indirizzo) {
+		this.indirizzo = indirizzo;
+	}
+	
+	public String getDataDiNascita() {
+		return dataDiNascita;
+	}
+	public void setDataDiNascita(String dataDiNascita) {
+		this.dataDiNascita = dataDiNascita;
+	}
 	
 	public int getId() {
 		return id;
@@ -64,9 +101,10 @@ public class Contatto {
 				.append(", nome : ").append(this.nome)
 				.append(", telefono : ").append(this.telefono)
 				.append(", email : ").append(this.email)
+				.append(", email : ").append(this.indirizzo)
+				.append(", email : ").append(this.dataDiNascita)
 				.append(", note : ").append(this.note).append(" }");
 		
 		return builder.toString();
 	}
-
 }
