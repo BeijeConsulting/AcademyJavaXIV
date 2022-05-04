@@ -34,8 +34,7 @@ public class FirstController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginPost(Model model, @RequestParam(name = "username") String username,
-			@RequestParam(name = "password", required = false) String password) {
+	public String loginPost(Model model, @RequestParam(name = "username") String username, @RequestParam(name = "password", required = false) String password) {
 		System.out.println("POST /login");
 		
 		//String username = request.getParameter("username");

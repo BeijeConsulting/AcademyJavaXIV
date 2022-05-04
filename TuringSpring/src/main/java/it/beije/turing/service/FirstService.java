@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import it.beije.turing.Contatto;
 
-
 @Service
 public class FirstService {
 	
@@ -25,7 +24,7 @@ public class FirstService {
 		c2.setNome("Marco");
 		c2.setTelefono("1234568");
 		
-		List<Contatto> list = new ArrayList<Contatto>();
+		List<Contatto> list = new ArrayList<>();
 		list.add(c1);
 		list.add(c2);
 
