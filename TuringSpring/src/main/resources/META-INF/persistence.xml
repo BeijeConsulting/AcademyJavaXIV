@@ -3,6 +3,7 @@
 	<persistence-unit name="turing">
 	
 		<class>it.beije.turing.Contatto</class>
+		<class>it.beije.turing.example.RiferimentiContatto</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

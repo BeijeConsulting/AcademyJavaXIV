@@ -1,10 +1,5 @@
 package it.beije.turing.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import it.beije.turing.example.Contatto;
 import it.beije.turing.repository.ContattoRepository;
+
 
 @Service
 public class FirstService {
@@ -39,7 +35,12 @@ public class FirstService {
 //		list.add(c2);
 		
 //		List<Contatto> list = contattoRepository.findByCognomeAndNome("Verde", "Piero");
-		List<Contatto> list = contattoRepository.searchByEmail("m.rossi@beije.it");
+//		List<Contatto> list = contattoRepository.searchByEmail("m.rossi@beije.it");
+		List<Contatto> list = contattoRepository.findAll();
+//		for (Contatto c : list) {
+//			System.out.println(c);
+//		}
+
 		return list;
 	}
 
