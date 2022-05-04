@@ -1,7 +1,6 @@
 package it.beije.turing.utenti;
 
 import java.sql.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "messaggi")
-public class Messaggi {
+public class Messaggio {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,18 +24,17 @@ public class Messaggi {
 	private String testo;
 	
 	@Column(name = "reciver_id")
-	private int reciverId;
+	private Integer reciverId;
 	
 	@Column(name="data_ora")
 	private Date dataOra;
 	
 	@Column(name = "sender_id")
-	private int senderId;
+	private Integer senderId;
 
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -44,15 +42,13 @@ public class Messaggi {
 	public String getTesto() {
 		return testo;
 	}
-
 	public void setTesto(String testo) {
 		this.testo = testo;
 	}
 
-	public int getReciverId() {
+	public Integer getReciverId() {
 		return reciverId;
 	}
-
 	public void setReciverId(int reciverId) {
 		this.reciverId = reciverId;
 	}
@@ -60,15 +56,13 @@ public class Messaggi {
 	public Date getDataOra() {
 		return dataOra;
 	}
-
 	public void setDataOra(Date dataOra) {
 		this.dataOra = dataOra;
 	}
 
-	public int getSenderId() {
+	public Integer getSenderId() {
 		return senderId;
 	}
-
 	public void setSenderId(int senderId) {
 		this.senderId = senderId;
 	}
@@ -79,7 +73,9 @@ public class Messaggi {
 				.append(", testo : ").append(this.testo)
 				.append(", reciverId : ").append(this.reciverId)
 				.append(", dataOra : ").append(this.dataOra)
-				.append(", senderId : ").append(this.senderId).append(" }");
+				.append(", senderId : ").append(this.senderId)
+				.append(" }")
+		;
 		
 		
 		return builder.toString();
