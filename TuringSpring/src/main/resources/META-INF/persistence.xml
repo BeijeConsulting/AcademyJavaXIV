@@ -4,6 +4,7 @@
 
 		<class>it.beije.turing.Struttura</class>
 		<class>it.beije.turing.TipoStruttura</class>
+		<class>it.beije.turing.Indirizzo</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
