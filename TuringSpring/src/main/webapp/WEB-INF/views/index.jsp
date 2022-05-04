@@ -7,6 +7,12 @@
 <title>INDEX TURING SPRING</title>
 </head>
 <body>
-Ciao Turing :-)
+Gestione rubrica
+<form action="contattoForm" method="post">
+    <label for="username">Tuo nome:</label><br>
+    <input type="text" id="username" name="username" value=""><br>
+    <input type="submit" value="Submit">
+</form>
+
 </body>
 </html>

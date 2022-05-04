@@ -21,10 +21,22 @@ public class FirstController {
 		System.out.println("GET / " + this.toString());
 		//...
 		
-		service.leggiRubrica();
+		//service.leggiRubrica();
 		
 		return "index";
 	}
+
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public String indexPost() {
+		System.out.println("nel post");
+		//...
+
+		//service.leggiRubrica();
+
+		return "index";
+	}
+
+
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginGet() {
@@ -32,21 +44,41 @@ public class FirstController {
 		//...
 		return "login";
 	}
-	
+
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginPost(Model model, @RequestParam(name = "username") String username,
-			@RequestParam(name = "password", required = false) String password) {
+							@RequestParam(name = "password", required = false) String password) {
 		System.out.println("POST /login");
-		
+		System.out.println("enro qui");
+
 		//String username = request.getParameter("username");
 		//String password = request.getParameter("password");
 		System.out.println("username: " + username);
 		System.out.println("password: " + password);
-		
+
 		model.addAttribute("username", username);
 		model.addAttribute("password", password);
-		
+
 		return "myprofile";
 	}
+
+	@RequestMapping(value = "/contattoForm", method = RequestMethod.GET)
+	public String contattoForm() {
+		System.out.println(" in metofo contatto form get");
+		System.out.println("pagina contatto");
+		//...
+		return "contattoForm";
+	}
+
+	@RequestMapping(value = "/contattoForm", method = RequestMethod.POST)
+	public String contattoFormPost() {
+		System.out.println(" in metofo contatto form post");
+		System.out.println("pagina contatto");
+		//...
+		return "contattoForm";
+	}
+
+
 	
 }

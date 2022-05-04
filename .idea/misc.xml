@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/TuringSpring" />
     <file type="web" url="file://$PROJECT_DIR$/TuringWeb" />
   </component>
   <component name="MavenProjectsManager">
@@ -8,6 +9,7 @@
       <list>
         <option value="$PROJECT_DIR$/Turing/pom.xml" />
         <option value="$PROJECT_DIR$/TuringWeb/pom.xml" />
+        <option value="$PROJECT_DIR$/TuringSpring/pom.xml" />
       </list>
     </option>
   </component>
