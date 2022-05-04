@@ -10,8 +10,8 @@ public class Struttura {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "tipo")
-    private String tipo;
+    // @Column(name = "tipo")
+    // private String tipo;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
     @JoinColumn(name="tipologia_struttura_id")
