@@ -26,7 +26,7 @@ public class HomeController {
 	@RequestMapping(value = "/getRubrica", method = RequestMethod.POST)
 	public String getRubrica(Model model)
 	{
-		model.addAttribute("contatti", jpaHandler.getRubrica(""));
+		model.addAttribute("contatti", jpaHandler.getRubrica());
 		
 		return "index";
 	}
@@ -43,7 +43,7 @@ public class HomeController {
 	public String uniteDuplicates(Model model)
 	{
 		jpaHandler.uniteDuplicates();
-		model.addAttribute("contatti", jpaHandler.getRubrica(""));
+		model.addAttribute("contatti", jpaHandler.getRubrica());
 		
 		return "index";
 	}
@@ -69,7 +69,7 @@ public class HomeController {
 		
 		jpaHandler.modifyContatto(Integer.parseInt(request.getParameter("indice")), contatto);
 		
-		model.addAttribute("contatti", jpaHandler.getRubrica(""));
+		model.addAttribute("contatti", jpaHandler.getRubrica());
 		
 		return "index";
 	}
@@ -79,7 +79,7 @@ public class HomeController {
 	{
 		jpaHandler.deleteContatto(Integer.parseInt(request.getParameter("indice")));
 		
-		model.addAttribute("contatti", jpaHandler.getRubrica(""));
+		model.addAttribute("contatti", jpaHandler.getRubrica());
 		
 		return "index";
 	}
@@ -96,7 +96,7 @@ public class HomeController {
 		Contatto newContatto = new Contatto(nome, cognome, email, telefono, note);
 		jpaHandler.addContatto(newContatto);
 		
-		model.addAttribute("contatti", jpaHandler.getRubrica(""));
+		model.addAttribute("contatti", jpaHandler.getRubrica());
 		
 		return "index";
 	}
