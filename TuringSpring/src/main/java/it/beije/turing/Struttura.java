@@ -44,13 +44,13 @@ public class Struttura {
         this.id = id;
     }
 
-    public String getTipo() {
+    /*public String getTipo() {
         return tipo;
     }
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
+    }*/
 
     public TipoStruttura getTipologiaStrutturaId() {
         return tipologiaStrutturaId;
