@@ -9,7 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.beije.turing.Contatto;
+
+import it.beije.turing.example.Contatto;
 import it.beije.turing.service.FirstService;
 
 
@@ -23,9 +24,9 @@ public class SecondController {
 	public String elenco(Model model) {
 		System.out.println("GET /elenco " + this.toString());
 		
-		List<Contatto> rubrica = service.leggiRubrica();
+		//List<Contatto> rubrica = service.leggiRubrica();
 		
-		model.addAttribute("contatti", rubrica);
+		//model.addAttribute("contatti", rubrica);
 		
 		return "elenco";
 	}

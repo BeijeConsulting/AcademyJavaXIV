@@ -21,6 +21,11 @@ public class FirstController {
 		System.out.println("GET / " + this.toString());
 		//...
 		
+<<<<<<< HEAD
+=======
+		service.leggiRubrica();
+		
+>>>>>>> refs/remotes/origin/main
 		return "index";
 	}
 
