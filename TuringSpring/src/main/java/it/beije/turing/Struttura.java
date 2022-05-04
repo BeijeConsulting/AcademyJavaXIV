@@ -80,7 +80,7 @@ public class Struttura {
     public String toString() {
         return "Struttura{" +
                 "id=" + id +
-                ", tipo='" + tipo + '\'' +
+               // ", tipo='" + tipo + '\'' +
                 ", tipologiaStrutturaId=" + tipologiaStrutturaId +
                 ", descrizione='" + descrizione + '\'' +
                 ", indirizzo=" + indirizzo +
