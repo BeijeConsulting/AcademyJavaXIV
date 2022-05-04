@@ -19,6 +19,7 @@ public class FirstController
 	public String index() {
 		System.out.println("GET / " + this.toString());
 		//...
+		
 		service.leggiAnnunci();
 		return "index";
 	}

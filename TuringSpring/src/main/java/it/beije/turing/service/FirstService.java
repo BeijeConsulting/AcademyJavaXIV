@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.beije.turing.beans.Annuncio;
+import it.beije.turing.beans.ListaRegole;
 import it.beije.turing.repository.AnnuncioRepository;
+import it.beije.turing.repository.ListaRegoleRepository;
 
 
 @Service
@@ -14,6 +16,9 @@ public class FirstService {
 	
 	@Autowired
 	private AnnuncioRepository annuncioRepository;
+	
+	@Autowired
+	private ListaRegoleRepository listaRegoleRepository;
 	
 	
 	public List<Annuncio> leggiAnnunci() {
@@ -36,7 +41,15 @@ public class FirstService {
 		
 //		List<Contatto> list = contattoRepository.findByCognomeAndNome("Verde", "Piero");
 //		List<Contatto> list = contattoRepository.searchByEmail("m.rossi@beije.it");
+		List<ListaRegole> listaRegole = listaRegoleRepository.findAll();
+		for (ListaRegole re : listaRegole) {
+			System.out.println(re);
+			System.out.println(re.getRegolaId());
+		}
+		
+		
 		List<Annuncio> list = annuncioRepository.findAll();
+		
 		for (Annuncio a : list) {
 			System.out.println(a);
 		}

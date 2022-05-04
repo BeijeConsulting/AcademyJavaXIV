@@ -45,4 +45,9 @@ public class Regola
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "Regola [id=" + id + ", titolo=" + titolo + ", descrizione=" + descrizione + "]";
+	}
 }

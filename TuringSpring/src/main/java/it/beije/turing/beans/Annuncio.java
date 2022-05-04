@@ -84,4 +84,16 @@ public class Annuncio
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder()
+				.append("{ id : ").append(this.id)
+				.append(", titolo : ").append(this.titolo)
+				.append(", descrizione : ").append(this.descrizione)
+				.append(", num_posti_letto : ").append(this.numPostiLetto)
+				.append(", prezzo : ").append(this.prezzo)
+				.append(", struttura_id : ").append(this.strutturaId).append(" }");
+		
+		return builder.toString();
+	}
 }

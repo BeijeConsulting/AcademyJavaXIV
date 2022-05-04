@@ -4,6 +4,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,6 +16,10 @@ import javax.persistence.Table;
 public class ListaRegole
 {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private Integer id;
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="annuncio_id")
 	private Annuncio annuncioId;
@@ -47,5 +53,11 @@ public class ListaRegole
 
 	public void setCompletamento(String completamento) {
 		this.completamento = completamento;
+	}
+
+	@Override
+	public String toString() {
+		return "ListaRegole [id=" + id + ", annuncioId=" + annuncioId + ", regolaId=" + regolaId + ", completamento="
+				+ completamento + "]";
 	}
 }
