@@ -64,6 +64,10 @@ public class Utente {
     @JoinColumn(name = "sender_id")
     private List<Messaggio> messaggiInviati;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "reviewer_id")
+    private List<Recensione> recensione;
+
     public Integer getId() {
         return id;
     }
@@ -148,4 +152,45 @@ public class Utente {
         this.livello = livello;
     }
 
+    public List<Messaggio> getMessaggiRicevuti() {
+        return messaggiRicevuti;
+    }
+    public void setMessaggiRicevuti(List<Messaggio> messaggiRicevuti) {
+        this.messaggiRicevuti = messaggiRicevuti;
+    }
+
+    public List<Messaggio> getMessaggiInviati() {
+        return messaggiInviati;
+    }
+    public void setMessaggiInviati(List<Messaggio> messaggiInviati) {
+        this.messaggiInviati = messaggiInviati;
+    }
+
+    public List<Recensione> getRecensione() {
+        return recensione;
+    }
+    public void setRecensione(List<Recensione> recensione) {
+        this.recensione = recensione;
+    }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", dataNascita=" + dataNascita +
+                ", codiceDocumento='" + codiceDocumento + '\'' +
+                ", indirizzoId=" + indirizzoId +
+                ", telefono='" + telefono + '\'' +
+                ", contattoEmergenza='" + contattoEmergenza + '\'' +
+                ", tipoUtente='" + tipoUtente + '\'' +
+                ", livello=" + livello +
+                ", messaggiRicevuti=" + messaggiRicevuti +
+                ", messaggiInviati=" + messaggiInviati +
+                ", recensione=" + recensione +
+                '}';
+    }
 }
