@@ -26,7 +26,17 @@ public class Struttura {
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
     @JoinColumn(name="host_id")
-    private Utente utenti;
+    private Utente utente;
+
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
+
 
     public Integer getId() {
         return id;
@@ -68,13 +78,7 @@ public class Struttura {
         this.indirizzo = indirizzo;
     }
 
-    public Utenti getUtenti() {
-        return utenti;
-    }
 
-    public void setUtenti(Utenti utenti) {
-        this.utenti = utenti;
-    }
 
     @Override
     public String toString() {
@@ -84,7 +88,7 @@ public class Struttura {
                 ", tipologiaStrutturaId=" + tipologiaStrutturaId +
                 ", descrizione='" + descrizione + '\'' +
                 ", indirizzo=" + indirizzo +
-                ", utenti=" + utenti +
+                ", utenti=" + utente +
                 '}';
     }
 }
