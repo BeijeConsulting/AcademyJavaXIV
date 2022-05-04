@@ -6,14 +6,13 @@ import javax.persistence.Persistence;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.*;
-@Component
+
 public class EMFactory {
 	private static EntityManagerFactory em;
 private EMFactory()
 {
 	
 }
-@Bean(name="EM")
 public static EntityManager getInstance()
 {
 	if(em!=null&&em.isOpen())

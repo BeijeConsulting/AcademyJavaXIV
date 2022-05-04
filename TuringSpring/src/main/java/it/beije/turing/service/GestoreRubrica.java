@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import javax.naming.directory.ModificationItem;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.beije.turing.repository.ContattoRepository;
@@ -22,12 +23,14 @@ private List<Contatto> newEntries;
 private List<Contatto> modifiedEntries;
 private static GestoreRubrica self;
 private DbInterface db;
+@Autowired
 private ContattoRepository cr;
 private GestoreRubrica()
 {
 	db=new JPA_Manager();
 	newEntries=new ArrayList<Contatto>();
 	modifiedEntries=new ArrayList<>();
+	
 	/*File file = new File(BASE_RUBRIC);
 	if(file.exists()&&file.isFile())
 	{
