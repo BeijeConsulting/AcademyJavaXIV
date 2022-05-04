@@ -1,10 +1,16 @@
 package it.beije.turing.example;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -23,11 +29,16 @@ public class Contatto {
 	@Column(name = "cognome")
 	private String cognome;
 	
-	@Column(name = "telefono")
-	private String telefono;
+//	@Column(name = "telefono")
+//	private String telefono;
+//	
+//	@Column(name = "email")
+//	private String email;
 	
-	@Column(name = "email")
-	private String email;
+	//SELECT * FROM rubrica r JOIN rubrica_contatti rc ON r.id = rc.rubrica_id WHERE id = X
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@JoinColumn(name="rubrica_id")
+	private List<RiferimentiContatto> riferimenti;
 	
 	@Column(name = "note")
 	private String note;
@@ -54,20 +65,27 @@ public class Contatto {
 		this.cognome = cognome;
 	}
 	
-	public String getTelefono() {
-		return telefono;
-	}
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
+//	public String getTelefono() {
+//		return telefono;
+//	}
+//	public void setTelefono(String telefono) {
+//		this.telefono = telefono;
+//	}
+//	
+//	public String getEmail() {
+//		return email;
+//	}
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
 	
-	public String getEmail() {
-		return email;
+	public List<RiferimentiContatto> getRiferimenti() {
+		return riferimenti;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setRiferimenti(List<RiferimentiContatto> riferimenti) {
+		this.riferimenti = riferimenti;
 	}
-	
+
 	public String getNote() {
 		return note;
 	}
@@ -80,8 +98,9 @@ public class Contatto {
 				.append("{ id : ").append(this.id)
 				.append(", cognome : ").append(this.cognome)
 				.append(", nome : ").append(this.nome)
-				.append(", telefono : ").append(this.telefono)
-				.append(", email : ").append(this.email)
+//				.append(", telefono : ").append(this.telefono)
+//				.append(", email : ").append(this.email)
+				.append(", riferimenti : ").append(this.riferimenti)
 				.append(", note : ").append(this.note).append(" }");
 		
 		return builder.toString();
