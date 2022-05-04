@@ -17,8 +17,11 @@
 <c:forEach items="${contatti}" var="contatto">
 COGNOME: ${contatto.cognome}<br/>
 NOME: ${contatto.nome}<br/>
-TELEFONO: ${contatto.telefono}<br/>
-EMAIL: ${contatto.email}<br/>
+<c:forEach items="${contatto.riferimenti}" var="riferimenti">
+RIF: ${riferimenti.riferimento} (${riferimenti.tipoRiferimento} ${riferimenti.tipologia})<br/>
+</c:forEach><br/>
+<%-- TELEFONO: ${contatto.telefono}<br/>
+EMAIL: ${contatto.email}<br/>--%>
 </c:forEach>
 
 
