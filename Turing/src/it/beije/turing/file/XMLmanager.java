@@ -192,8 +192,8 @@ public class XMLmanager {
 	}
 
 	public static void main(String[] args) throws Exception {
-		//readXML("/temp/rubrica.xml");
-		writeXML("/temp/new_rubrica.xml");
+		readXML("/temp/new_rubrica.xml");
+		//writeXML("/temp/new_rubrica.xml");
 	}
 
 }

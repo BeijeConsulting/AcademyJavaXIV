@@ -1,4 +1,4 @@
-package it.beije.turing.web;
+package it.beije.turing.web.rubrica;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,45 +6,42 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class MyServlet
+ * Servlet implementation class ServletRubrica
  */
-@WebServlet("/servlet")
-public class MyServlet extends HttpServlet {
+@WebServlet("/ServletAggiungi")
+public class ServletAggiungi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyServlet() {
+    public ServletAggiungi() {
         super();
-        System.out.println("prova");
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("MyServlet doGet");
-		
-//		Contatto contatto = new Contatto();
-//		contatto.setNome("Pippo");
-//		contatto.setCognome("Rossi");
-//		
-//		request.getSession().setAttribute("contatto", contatto);
-		
-		response.sendRedirect("insert_contatto.jsp");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		Contatto contatto = new Contatto();
+		contatto.setCognome(request.getParameter("cognome"));
+		contatto.setNome(request.getParameter("nome"));
+		contatto.setEmail(request.getParameter("email"));
+		contatto.setTelefono(request.getParameter("telefono"));
+		contatto.setNote(request.getParameter("note"));
+		JpaManager.addContatti(contatto);
+		request.setAttribute("contatto", contatto);
+		System.out.println("Nuovo contatto inserito:");
+		System.out.print(contatto);
+		request.getRequestDispatcher("/contatto_inserito.jsp").forward(request, response);	
 	}
 
 }

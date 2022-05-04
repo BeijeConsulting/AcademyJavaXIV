@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<jsp:useBean id="contatto" class="it.beije.turing.web.Contatto"></jsp:useBean>
+<jsp:useBean id="contatto" class="it.beije.turing.web.Contatto" scope = "session"></jsp:useBean>
 <%--
 Contatto contatto = (Contatto) session.getAttribute("contatto");
 if (contatto == null) {

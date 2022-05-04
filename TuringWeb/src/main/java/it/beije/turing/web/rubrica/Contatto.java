@@ -1,4 +1,4 @@
-package it.beije.turing.rubrica;
+package it.beije.turing.web.rubrica;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

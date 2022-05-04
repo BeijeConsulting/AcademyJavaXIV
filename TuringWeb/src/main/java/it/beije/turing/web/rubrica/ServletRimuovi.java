@@ -1,6 +1,8 @@
-package it.beije.turing.web;
+package it.beije.turing.web.rubrica;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,43 +10,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MyServlet
+ * Servlet implementation class ServletRimuovi
  */
-@WebServlet("/servlet")
-public class MyServlet extends HttpServlet {
+@WebServlet("/ServletRimuovi")
+public class ServletRimuovi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyServlet() {
+    public ServletRimuovi() {
         super();
-        System.out.println("prova");
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("MyServlet doGet");
 		
-//		Contatto contatto = new Contatto();
-//		contatto.setNome("Pippo");
-//		contatto.setCognome("Rossi");
-//		
-//		request.getSession().setAttribute("contatto", contatto);
-		
-		response.sendRedirect("insert_contatto.jsp");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		List<Contatto> contatti = JPACriteria.findContatto(Integer.parseInt(request.getParameter("id")), EntityManagerSingleton.createEntityManager());
+		if(contatti != null && contatti.size() > 0) {
+			for(Contatto c : contatti)
+				JpaManager.deleteContatto(c, EntityManagerSingleton.createEntityManager());
+			response.sendRedirect("http://localhost:8080/turing/conferma_eliminazione.jsp");
+		}
+		
+		else
+			response.sendRedirect("http://localhost:8080/turing/contatto_not_found.jsp");
 	}
 
 }

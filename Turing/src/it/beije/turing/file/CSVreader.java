@@ -25,7 +25,7 @@ public class CSVreader {
 			Contatto contatto = null;
 			while (bufferedReader.ready()) {
 				String row = bufferedReader.readLine();
-				System.out.println(++c + " " + row);
+				//System.out.println(++c + " " + row);
 				
 				row = row.substring(1, row.length()-1);
 				String[] columns = row.split("\";\"");
