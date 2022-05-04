@@ -7,6 +7,7 @@ import javax.persistence.EntityTransaction;
 
 
 public class RCDelete {
+
 	public static void delete (EntityManager entityManager, Contatto contatto) {
 		Scanner s = new Scanner(System.in);
 		System.out.println("Are you sure (Y/n) you want to delete Contact?:");
