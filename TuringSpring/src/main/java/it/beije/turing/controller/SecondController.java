@@ -24,9 +24,9 @@ public class SecondController {
 	public String elenco(Model model) {
 		System.out.println("GET /elenco " + this.toString());
 		
-		//List<Contatto> rubrica = service.leggiRubrica();
+		List<Contatto> rubrica = service.leggiRubrica();
 		
-		//model.addAttribute("contatti", rubrica);
+		model.addAttribute("contatti", rubrica);
 		
 		return "elenco";
 	}
