@@ -16,11 +16,11 @@ public class StrutturaImmagini {
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
     @JoinColumn(name="id")
-    private Struttura strutturaId;
+    private Struttura struttura;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
     @JoinColumn(name="id")
-    private List<Immagine> immagineId;
+    private List<Immagine> immagine;
 
     public Integer getId() {
         return id;
@@ -30,20 +30,20 @@ public class StrutturaImmagini {
         this.id = id;
     }
 
-    public Integer getStrutturaId() {
-        return strutturaId;
+    public Struttura getStruttura() {
+        return struttura;
     }
 
-    public void setStrutturaId(Integer strutturaId) {
-        this.strutturaId = strutturaId;
+    public void setStruttura(Struttura struttura) {
+        this.struttura = struttura;
     }
 
-    public List<Immagine> getImmagineId() {
-        return immagineId;
+    public List<Immagine> getImmagine() {
+        return immagine;
     }
 
-    public void setImmagineId(List<Immagine> immagineId) {
-        this.immagineId = immagineId;
+    public void setImmagine(List<Immagine> immagine) {
+        this.immagine = immagine;
     }
 
 

@@ -4,12 +4,11 @@
 
 		<class>it.beije.turing.Struttura</class>
 		<class>it.beije.turing.TipoStruttura</class>
-<<<<<<< HEAD
 		<class>it.beije.turing.Servizio</class>
 		<class>it.beije.turing.ListaServizio</class>
-=======
 		<class>it.beije.turing.Indirizzo</class>
->>>>>>> branch 'team2_struttura' of git@github.com:BeijeConsulting/AcademyJavaXIV.git
+		<class>it.beije.turing.Immagine</class>
+		<class>it.beije.turing.StrutturaImmagini</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

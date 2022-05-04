@@ -19,6 +19,10 @@ import javax.persistence.Table;
 @Table(name = "lista_servizi")
 public class ListaServizio {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private Integer id;
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "struttura_id")
 	private Struttura strutturaId;
