@@ -1,6 +1,7 @@
 package it.beije.turing.controller;
 
-import it.beije.turing.Contatto;
+
+import it.beije.turing.example.Contatto;
 import it.beije.turing.service.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,9 +40,9 @@ public class MyController {
                 contatto.setId(i);
                 contatto.setNome(utils.genName());
                 contatto.setCognome(utils.getSuranme());
-                contatto.setEmail(utils.genEmail());
+               // contatto.setEmail(utils.genEmail());
                 contatto.setNote(utils.genNote());
-                contatto.setTelefono(utils.getTel());
+               // contatto.setTelefono(utils.getTel());
                 list.add(contatto);
                 System.out.println(contatto);
             }
