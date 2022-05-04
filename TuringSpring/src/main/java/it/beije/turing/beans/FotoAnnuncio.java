@@ -1,8 +1,11 @@
 package it.beije.turing.beans;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -10,10 +13,12 @@ import javax.persistence.Table;
 public class FotoAnnuncio
 {
 	@Id
-	@Column(name = "annuncio_id")
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@JoinColumn(name="annuncio_id")
 	private Annuncio annuncio;
 	
-	@Column(name = "immagine_id")
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@JoinColumn(name="immagine_id")
 	private Immagine immagineId;
 	
 	public Annuncio getAnnuncio() {

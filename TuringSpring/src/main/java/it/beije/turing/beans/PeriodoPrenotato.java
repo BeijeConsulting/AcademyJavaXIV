@@ -2,11 +2,15 @@ package it.beije.turing.beans;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +22,8 @@ public class PeriodoPrenotato
 	@Column(name="id")
 	private Integer id;
 	
-	@Column(name = "annuncio_id")
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@JoinColumn(name="annuncio_id")
 	private Annuncio annuncio;
 	
 	@Column(name = "data_inizio")
@@ -27,7 +32,8 @@ public class PeriodoPrenotato
 	@Column(name = "data_fine")
 	private LocalDate dataFine;
 	
-	@Column(name = "ospite_id")
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@JoinColumn(name="ospite_id")
 	private Utente ospiteId;
 	
 	@Column(name = "stato_pagamento")

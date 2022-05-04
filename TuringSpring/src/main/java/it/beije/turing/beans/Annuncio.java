@@ -1,10 +1,14 @@
 package it.beije.turing.beans;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,7 +32,8 @@ public class Annuncio
 	@Column(name = "prezzo")
 	private Double prezzo;
 	
-	@Column(name = "struttura_id")					//TODO CAMBIARE IN STRUTTURA
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@JoinColumn(name="struttura_id")
 	private Struttura strutturaId;
 
 	
