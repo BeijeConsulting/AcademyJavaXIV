@@ -4,11 +4,13 @@
 
 		<class>it.beije.turing.Struttura</class>
 		<class>it.beije.turing.TipoStruttura</class>
+		<class>it.beije.turing.Servizio</class>
+		<class>it.beije.turing.ListaServizio</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/turing"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/beijebnb"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
 			<property name="javax.persistence.jdbc.password" value="rootroot"/>
 		</properties>
