@@ -9,6 +9,7 @@ import javax.naming.directory.ModificationItem;
 
 import org.springframework.stereotype.Service;
 
+import it.beije.turing.repository.ContattoRepository;
 import it.beije.turing.rubrica.CommandInterface;
 import it.beije.turing.rubrica.bean.Contatto;
 import it.beije.turing.rubrica.db.DbInterface;
@@ -21,7 +22,7 @@ private List<Contatto> newEntries;
 private List<Contatto> modifiedEntries;
 private static GestoreRubrica self;
 private DbInterface db;
-
+private ContattoRepository cr;
 private GestoreRubrica()
 {
 	db=new JPA_Manager();
@@ -55,12 +56,13 @@ public static GestoreRubrica getInstance()
 
 public List<Contatto> getList()
 {
-	List<Contatto> tmp = new ArrayList<>();
-	for(Contatto c:db.getContatti())
-	{
-		tmp.add(c);
-	}
-	return tmp;
+//	List<Contatto> tmp = new ArrayList<>();
+//	for(Contatto c:db.getContatti())
+//	{
+//		tmp.add(c);
+//	}
+//	return tmp;
+	return cr.findAll();
 }
 
 
