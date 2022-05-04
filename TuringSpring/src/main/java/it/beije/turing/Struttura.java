@@ -13,19 +13,19 @@ public class Struttura {
     @Column(name = "tipo")
     private String tipo;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
     @JoinColumn(name="tipologia_struttura_id")
     private TipoStruttura tipologiaStrutturaId;
 
     @Column(name = "descrizione")
     private String descrizione;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
-    @JoinColumn(name="indirizzo_id")
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="id")
     private Indirizzo indirizzo;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
-    @JoinColumn(name="host_id")
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="id")
     private Utente utente;
 
     public Utente getUtente() {
@@ -35,8 +35,6 @@ public class Struttura {
     public void setUtente(Utente utente) {
         this.utente = utente;
     }
-
-
 
     public Integer getId() {
         return id;
@@ -77,8 +75,6 @@ public class Struttura {
     public void setIndirizzo(Indirizzo indirizzo) {
         this.indirizzo = indirizzo;
     }
-
-
 
     @Override
     public String toString() {
