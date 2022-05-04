@@ -3,7 +3,7 @@ package it.beije.turing;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Indirizzo" )
+@Table(name = "indirizzo" )
 public class Indirizzo {
 
     @Id
