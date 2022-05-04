@@ -3,14 +3,14 @@
 	<persistence-unit name="TuringSpring">
 
 		<class>it.beije.turing.example.Contatto</class>
-		<class>it.beije.turing.example.RiferimentiContatto</class>
+		 <class>it.beije.turing.example.RiferimentiContatto</class> 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/turing"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="beije"/>
+			<property name="javax.persistence.jdbc.password" value="provezza"/>
 		</properties>
 
 	</persistence-unit>

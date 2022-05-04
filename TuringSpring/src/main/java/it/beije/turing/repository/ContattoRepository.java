@@ -21,4 +21,7 @@ public interface ContattoRepository extends JpaRepository<Contatto, Integer> {
 //	@Query(nativeQuery = true, value = "SELECT * FROM rubrica WHERE email = :email")
 	public List<Contatto> searchByEmail(@Param("email") String email);
 	
+
+	
+	
 }

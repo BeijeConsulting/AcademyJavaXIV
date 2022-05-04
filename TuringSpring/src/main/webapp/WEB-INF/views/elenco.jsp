@@ -15,14 +15,18 @@
 </c:choose --%>
 
 <c:forEach items="${contatti}" var="contatto">
-COGNOME: ${contatto.cognome}<br/>
+ID: ${contatto.id}<br/>
 NOME: ${contatto.nome}<br/>
+COGNOME: ${contatto.cognome}<br/>
+
 <c:forEach items="${contatto.riferimenti}" var="riferimenti">
 RIF: ${riferimenti.riferimento} (${riferimenti.tipoRiferimento} ${riferimenti.tipologia})<br/>
+</c:forEach>
+NOTE: ${contatto.note}<br/><br/>
 </c:forEach><br/>
 <%-- TELEFONO: ${contatto.telefono}<br/>
-EMAIL: ${contatto.email}<br/>--%>
-</c:forEach>
+EMAIL: ${contatto.email}<br/>--%
+</c:forEach> --%>
 
 
 

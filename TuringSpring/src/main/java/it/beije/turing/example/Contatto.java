@@ -36,10 +36,10 @@ public class Contatto {
 //	private String email;
 	
 	//SELECT * FROM rubrica r JOIN rubrica_contatti rc ON r.id = rc.rubrica_id WHERE id = X
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="rubrica_id")
 	private List<RiferimentiContatto> riferimenti;
-	
+//	
 	@Column(name = "note")
 	private String note;
 	
