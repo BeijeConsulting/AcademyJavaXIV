@@ -18,6 +18,7 @@
 COGNOME: ${contatto.cognome}<br/>
 NOME: ${contatto.nome}<br/>
 TELEFONO: ${contatto.telefono}<br/>
+EMAIL: ${contatto.email}<br/>
 </c:forEach>
 
 
