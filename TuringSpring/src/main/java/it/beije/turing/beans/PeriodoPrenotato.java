@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -33,7 +34,7 @@ public class PeriodoPrenotato
 	private LocalDate dataFine;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
-	@JoinColumn(name="ospite_id")
+	@JoinColumn(name="utente_id")
 	private Utente ospiteId;
 	
 	@Column(name = "stato_pagamento")
@@ -96,5 +97,12 @@ public class PeriodoPrenotato
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	@Override
+	public String toString() {
+		return "PeriodoPrenotato [id=" + id + ", annuncio=" + annuncio + ", dataInizio=" + dataInizio + ", dataFine="
+				+ dataFine + ", ospiteId=" + ospiteId + ", statoPagamento=" + statoPagamento + ", statoAccettazione="
+				+ statoAccettazione + "]";
 	}
 }

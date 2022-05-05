@@ -1,47 +1,53 @@
 package it.beije.turing.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import it.beije.turing.example.Contatto;
-//import it.beije.turing.repository.ContattoRepository;
-
+import it.beije.turing.beans.PeriodoPrenotato;
+import it.beije.turing.repository.PeriodoPrenotatoRepository;
 
 @Service
 public class FirstService {
 	
-//	@Autowired
-//	private ContattoRepository contattoRepository;
+	@Autowired
+	private PeriodoPrenotatoRepository periodoPrenotatoRepository;
 	
+	public List<PeriodoPrenotato>  getPeriodiPrenotati() {
+		return (List<PeriodoPrenotato>) periodoPrenotatoRepository.findAll();
+	}
 	
-//	public List<Contatto> leggiRubrica() {
-//
-//		System.out.println("leggiRubrica..." + this.toString());
-//
-////		Contatto c1 = new Contatto();
-////		c1.setCognome("Rossi");
-////		c1.setNome("Mario");
-////		c1.setTelefono("1234566");
-////
-////		Contatto c2 = new Contatto();
-////		c2.setCognome("Bianchi");
-////		c2.setNome("Marco");
-////		c2.setTelefono("1234568");
-//
-////		List<Contatto> list = new ArrayList<Contatto>();
-////		list.add(c1);
-////		list.add(c2);
-//
-////		List<Contatto> list = contattoRepository.findByCognomeAndNome("Verde", "Piero");
-////		List<Contatto> list = contattoRepository.searchByEmail("m.rossi@beije.it");
-//		List<Contatto> list = contattoRepository.findAll();
-////		for (Contatto c : list) {
-////			System.out.println(c);
-////		}
-//
-//		return list;
-//	}
-
+	public PeriodoPrenotato newPeriodoPrenotato(PeriodoPrenotato periodoPrenotato, Integer periodoPrenotatoId) {
+		
+		PeriodoPrenotato periodoPrenotatoDB = periodoPrenotatoRepository.findById(periodoPrenotatoId).get();
+		
+		if (Objects.nonNull(periodoPrenotato.getDataInizio()) && !"".equalsIgnoreCase(periodoPrenotato.getDataInizio().toString())) {
+			periodoPrenotatoDB.setDataInizio(periodoPrenotato.getDataInizio());
+		}
+		
+		if (Objects.nonNull(periodoPrenotato.getDataFine()) && !"".equalsIgnoreCase(periodoPrenotato.getDataFine().toString())) {
+			periodoPrenotatoDB.setDataFine(periodoPrenotato.getDataFine());
+		}
+		
+		if (Objects.nonNull(periodoPrenotato.getStatoPagamento()) && !"".equalsIgnoreCase(periodoPrenotato.getStatoPagamento())) {
+			periodoPrenotatoDB.setStatoPagamento(periodoPrenotato.getStatoPagamento());
+		}
+		
+		if (Objects.nonNull(periodoPrenotato.getStatoAccettazione()) && !"".equalsIgnoreCase(periodoPrenotato.getStatoAccettazione())) {
+			periodoPrenotatoDB.setStatoAccettazione(periodoPrenotato.getStatoAccettazione());
+		}
+		
+		return periodoPrenotatoRepository.save(periodoPrenotatoDB);
+	}
+	
+	public PeriodoPrenotato updatePeriodoPrenotato(PeriodoPrenotato periodoPrenotato) {
+		return periodoPrenotatoRepository.save(periodoPrenotato);
+	}
+	
+	public void deletePeriodoPrenotato(Integer id) {
+		periodoPrenotatoRepository.deleteById(id);
+	}
 }
