@@ -2,13 +2,13 @@ package it.beije.turing.repository;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import it.beije.turing.beans.Carta;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public interface CartaRepository extends JpaRepository<Carta, Integer>{
 
-	List<Carta> findByUtenteId(Integer utente_id);
+	List<Carta> findByUtenteId(Integer utenteId);
 
 }
