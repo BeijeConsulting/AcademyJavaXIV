@@ -20,4 +20,20 @@ public class ServiceCarta {
 	public List<Carta> getByUtenteId(Integer utente_id){
 		return cartaRepository.findByUtenteId(utente_id);
 	}
+	
+	public Carta addCarta(Carta carta) {
+		if(cartaRepository.existsById(carta.getId())) {
+			return null;
+		}
+		cartaRepository.saveAndFlush(carta);
+		return carta;
+	}
+	
+	public Carta removeCarta(Carta carta) {
+		if(!cartaRepository.existsById(carta.getId())) {
+			return null;
+		}
+		cartaRepository.delete(carta);
+		return carta;
+	}
 }
