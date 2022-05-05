@@ -1,47 +1,187 @@
 package it.beije.turing.service;
 
+import java.util.Objects;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
-//import it.beije.turing.example.Contatto;
-//import it.beije.turing.repository.ContattoRepository;
+import it.beije.turing.beans.FotoAnnuncio;
+import it.beije.turing.beans.ListaRegole;
+import it.beije.turing.beans.Annuncio;
+import it.beije.turing.beans.Regola;
+import it.beije.turing.beans.PeriodoPrenotato;
 
+import it.beije.turing.repository.AnnuncioRepository;
+import it.beije.turing.repository.FotoAnnuncioRepository;
+import it.beije.turing.repository.ListaRegoleRepository;
+import it.beije.turing.repository.RegolaRepository;
+import it.beije.turing.repository.PeriodoPrenotatoRepository;
 
 @Service
-public class FirstService {
+public class FirstService
+{
+	@Autowired
+	private AnnuncioRepository ar;
 	
-//	@Autowired
-//	private ContattoRepository contattoRepository;
+	@Autowired
+	private FotoAnnuncioRepository fotoAnnuncioRepository;
 	
-	
-//	public List<Contatto> leggiRubrica() {
-//
-//		System.out.println("leggiRubrica..." + this.toString());
-//
-////		Contatto c1 = new Contatto();
-////		c1.setCognome("Rossi");
-////		c1.setNome("Mario");
-////		c1.setTelefono("1234566");
-////
-////		Contatto c2 = new Contatto();
-////		c2.setCognome("Bianchi");
-////		c2.setNome("Marco");
-////		c2.setTelefono("1234568");
-//
-////		List<Contatto> list = new ArrayList<Contatto>();
-////		list.add(c1);
-////		list.add(c2);
-//
-////		List<Contatto> list = contattoRepository.findByCognomeAndNome("Verde", "Piero");
-////		List<Contatto> list = contattoRepository.searchByEmail("m.rossi@beije.it");
-//			List<Contatto> list = contattoRepository.findAll();
-////		for (Contatto c : list) {
-////			System.out.println(c);
-////		}
-//
-//		return list;
-//	}
+	@Autowired
+	private PeriodoPrenotatoRepository periodoPrenotatoRepository;
 
+	@Autowired
+	private RegolaRepository regolaRepository;
+	
+	@Autowired
+	private ListaRegoleRepository listaRegoleRepository;
+	
+	public List<Annuncio> getAnnuncio()
+	{
+		return ar.findAll();
+	}
+	
+	public Annuncio newAnnuncio(Annuncio newAnnuncio)
+	{
+		return ar.save(newAnnuncio);
+	}
+	
+	public Annuncio updateAnnuncio(Annuncio newAnnuncio, Integer annuncioId)
+	{
+		Annuncio oldAnnuncio = ar.findById(annuncioId).get();
+		
+		if (newAnnuncio.getTitolo() != null && !newAnnuncio.getTitolo().equals("") && !newAnnuncio.getTitolo().equalsIgnoreCase(oldAnnuncio.getTitolo())) oldAnnuncio.setTitolo(newAnnuncio.getTitolo());
+		if (newAnnuncio.getDescrizione() != null && !newAnnuncio.getDescrizione().equals("") && !newAnnuncio.getDescrizione().equalsIgnoreCase(oldAnnuncio.getDescrizione())) oldAnnuncio.setDescrizione(newAnnuncio.getDescrizione());
+		if (newAnnuncio.getNumPostiLetto() > 0 &&  newAnnuncio.getNumPostiLetto() != oldAnnuncio.getNumPostiLetto()) oldAnnuncio.setNumPostiLetto(newAnnuncio.getNumPostiLetto());
+		if (newAnnuncio.getPrezzo() > 0 && newAnnuncio.getPrezzo() != oldAnnuncio.getPrezzo()) oldAnnuncio.setPrezzo(newAnnuncio.getPrezzo());
+		
+		return ar.save(oldAnnuncio);
+	}
+	
+	public void deleteAnnuncio(Integer annuncioId)
+	{
+		ar.deleteById(annuncioId);
+	}
+
+    public List<FotoAnnuncio> getFotoAnnuncio()
+    {
+        return fotoAnnuncioRepository.findAll();
+    }
+    
+    public FotoAnnuncio newFotoAnnuncio(FotoAnnuncio fotoAnnuncio)
+    {
+        return fotoAnnuncioRepository.save(fotoAnnuncio);
+    }
+
+    public  FotoAnnuncio updateFotoAnnuncio(FotoAnnuncio newFotoAnnuncio, Integer fotoAnnuncioId)
+    {
+        FotoAnnuncio oldFotoAnnuncio = fotoAnnuncioRepository.findById(fotoAnnuncioId).get();
+        
+        if(newFotoAnnuncio.getAnnuncio() != null) oldFotoAnnuncio.setAnnuncio(newFotoAnnuncio.getAnnuncio());
+
+        if(newFotoAnnuncio.getImmagineId() != null) oldFotoAnnuncio.setImmagineId(newFotoAnnuncio.getImmagineId());
+
+        return fotoAnnuncioRepository.save(oldFotoAnnuncio);
+    }
+
+    public void deleteFotoAnnuncio(Integer fotoAnnuncioId)
+    {
+        fotoAnnuncioRepository.deleteById(fotoAnnuncioId);
+    }
+    public List<Regola> getRegola()
+	{
+    	return regolaRepository.findAll();
+	}
+	
+	public Regola newRegola(Regola regola)
+	{
+		return regolaRepository.save(regola);
+	}
+		 
+	public Regola updateRegola(Regola regola)
+	{
+		Regola tmp = regolaRepository.findById(regola.getId()).get();
+			 
+		if (regola.getTitolo() != null && !"".equals(regola.getTitolo()))
+		{
+			tmp.setTitolo(regola.getTitolo());
+		}
+			 
+		if (regola.getDescrizione() != null && !"".equals(regola.getDescrizione()))
+		{
+			tmp.setDescrizione(regola.getDescrizione());
+		} 
+		
+		return regolaRepository.save(tmp);
+	}
+	
+	public void deleteRegola(Regola regola)
+	{
+		regolaRepository.deleteById(regola.getId());
+	}
+		 
+	public List<PeriodoPrenotato>  getPeriodiPrenotati()
+	{
+		return (List<PeriodoPrenotato>) periodoPrenotatoRepository.findAll();
+	}
+	 
+	public PeriodoPrenotato newPeriodoPrenotato(PeriodoPrenotato periodoPrenotato, Integer periodoPrenotatoId)
+	{
+		PeriodoPrenotato periodoPrenotatoDB = periodoPrenotatoRepository.findById(periodoPrenotatoId).get();
+		
+		if (Objects.nonNull(periodoPrenotato.getDataInizio()) && !"".equalsIgnoreCase(periodoPrenotato.getDataInizio().toString()))
+		{
+			periodoPrenotatoDB.setDataInizio(periodoPrenotato.getDataInizio());
+		}
+		
+		if (Objects.nonNull(periodoPrenotato.getDataFine()) && !"".equalsIgnoreCase(periodoPrenotato.getDataFine().toString()))
+		{
+			periodoPrenotatoDB.setDataFine(periodoPrenotato.getDataFine());
+		}
+		
+		if (Objects.nonNull(periodoPrenotato.getStatoPagamento()) && !"".equalsIgnoreCase(periodoPrenotato.getStatoPagamento()))
+		{
+			periodoPrenotatoDB.setStatoPagamento(periodoPrenotato.getStatoPagamento());
+		}
+		
+		if (Objects.nonNull(periodoPrenotato.getStatoAccettazione()) && !"".equalsIgnoreCase(periodoPrenotato.getStatoAccettazione()))
+		{
+			periodoPrenotatoDB.setStatoAccettazione(periodoPrenotato.getStatoAccettazione());
+		}
+
+		return periodoPrenotatoRepository.save(periodoPrenotatoDB);
+	}
+	
+	public PeriodoPrenotato updatePeriodoPrenotato(PeriodoPrenotato periodoPrenotato)
+	{
+		return periodoPrenotatoRepository.save(periodoPrenotato);
+	}
+	
+	public void deletePeriodoPrenotato(Integer id)
+	{
+		periodoPrenotatoRepository.deleteById(id);
+	}
+	
+	public List<ListaRegole> getListaRegole()
+	{
+		return listaRegoleRepository.findAll();
+	}
+	
+	public ListaRegole newListaRegole(ListaRegole newListaRegole)
+	{
+		return listaRegoleRepository.save(newListaRegole);
+	}
+	
+	public ListaRegole updateListaRegole(ListaRegole newListaRegole, Integer listaRegoleId)
+	{
+		ListaRegole oldListaRegole = listaRegoleRepository.findById(listaRegoleId).get();
+		
+		if (newListaRegole.getCompletamento() != null && !newListaRegole.getCompletamento().equals("") && !newListaRegole.getCompletamento().equalsIgnoreCase(oldListaRegole.getCompletamento())) oldListaRegole.setCompletamento(newListaRegole.getCompletamento());
+		
+		return listaRegoleRepository.save(oldListaRegole);
+	}
+	
+	public void deleteListaRegole(Integer listaRegoleId)
+	{
+		listaRegoleRepository.deleteById(listaRegoleId);
+	}
 }

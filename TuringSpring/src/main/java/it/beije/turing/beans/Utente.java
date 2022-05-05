@@ -2,6 +2,7 @@ package it.beije.turing.beans;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +33,7 @@ public class Utente {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "pwd")
+    @Column(name = "psw")
     private String password;
 
     @Column(name = "data_nascita")
@@ -56,21 +57,21 @@ public class Utente {
     @Column(name = "livello")
     private Integer livello;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "receiver_id")
-    private List<Messaggio> messaggiRicevuti;
+    private Set<Messaggio> messaggiRicevuti;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "sender_id")
-    private List<Messaggio> messaggiInviati;
+    private Set<Messaggio> messaggiInviati;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "utente_id")
-    private List<Recensione> recensione;
+    private Set<Recensione> recensione;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "utente_id")
-    private List<Carta> carte;
+    private Set<Carta> carte;
 
     public Integer getId() {
         return id;
@@ -156,31 +157,31 @@ public class Utente {
         this.livello = livello;
     }
 
-    public List<Messaggio> getMessaggiRicevuti() {
+    public Set<Messaggio> getMessaggiRicevuti() {
         return messaggiRicevuti;
     }
-    public void setMessaggiRicevuti(List<Messaggio> messaggiRicevuti) {
+    public void setMessaggiRicevuti(Set<Messaggio> messaggiRicevuti) {
         this.messaggiRicevuti = messaggiRicevuti;
     }
 
-    public List<Messaggio> getMessaggiInviati() {
+    public Set<Messaggio> getMessaggiInviati() {
         return messaggiInviati;
     }
-    public void setMessaggiInviati(List<Messaggio> messaggiInviati) {
+    public void setMessaggiInviati(Set<Messaggio> messaggiInviati) {
         this.messaggiInviati = messaggiInviati;
     }
 
-    public List<Recensione> getRecensione() {
+    public Set<Recensione> getRecensione() {
         return recensione;
     }
-    public void setRecensione(List<Recensione> recensione) {
+    public void setRecensione(Set<Recensione> recensione) {
         this.recensione = recensione;
     }
 
-    public List<Carta> getCarte() {
+    public Set<Carta> getCarte() {
         return carte;
     }
-    public void setCarte(List<Carta> carte) {
+    public void setCarte(Set<Carta> carte) {
         this.carte = carte;
     }
 
