@@ -10,9 +10,17 @@ public class TipoStruttura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
     @Column(name = "tipo")
     private String tipo;
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+
 
     public Integer getId() {
         return id;

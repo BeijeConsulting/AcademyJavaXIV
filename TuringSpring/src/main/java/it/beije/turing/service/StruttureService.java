@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ServiceStrutture {
+public class StruttureService {
     @Autowired
     private StrutturaRepository strutturaRepository;
+
+
 
     public List<Struttura> getAll(){
         return strutturaRepository.findAll();
     }
+
 
 }
