@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>mostralistaservizio</title>
 </head>
 <body>
 <table>
@@ -14,12 +14,10 @@
     </tr>
     <c:forEach items="${listaservizi}" var="listser">
         <tr>
-            <td>${listser.id}</td>
+        	<td>${listser.id}</td>
             <td>${listser.strutturaId}</td>
-            
-            <c:forEach items="${listser.servizioId}" var="ser">
-            <td>${ser.id}</td>
-            </c:forEach>
+            <td>${listser.servizioId}</td>
+   
         </tr>
     </c:forEach>
 </table>
