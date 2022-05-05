@@ -7,5 +7,4 @@ import it.beije.turing.beans.ListaRegole;
 
 
 @Repository
-public interface ListaRegoleRepository extends JpaRepository<ListaRegole, Integer> {
-}
+public interface ListaRegoleRepository extends JpaRepository<ListaRegole, Integer> {}

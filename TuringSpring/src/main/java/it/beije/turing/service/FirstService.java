@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import it.beije.turing.beans.FotoAnnuncio;
+import it.beije.turing.beans.ListaRegole;
 import it.beije.turing.beans.Annuncio;
 import it.beije.turing.beans.Regola;
 import it.beije.turing.beans.PeriodoPrenotato;
 
 import it.beije.turing.repository.AnnuncioRepository;
 import it.beije.turing.repository.FotoAnnuncioRepository;
+import it.beije.turing.repository.ListaRegoleRepository;
 import it.beije.turing.repository.RegolaRepository;
 import it.beije.turing.repository.PeriodoPrenotatoRepository;
 
@@ -26,6 +28,12 @@ public class FirstService
 	
 	@Autowired
 	private PeriodoPrenotatoRepository periodoPrenotatoRepository;
+
+	@Autowired
+	private RegolaRepository regolaRepository;
+	
+	@Autowired
+	private ListaRegoleRepository listaRegoleRepository;
 	
 	public List<Annuncio> getAnnuncio()
 	{
@@ -79,49 +87,45 @@ public class FirstService
     {
         fotoAnnuncioRepository.deleteById(fotoAnnuncioId);
     }
-    
-	@Autowired
-	private RegolaRepository regolaRepository;
-
-	 public List<Regola> getRegola()
-	 {
-		return regolaRepository.findAll();
-	 }
+    public List<Regola> getRegola()
+	{
+    	return regolaRepository.findAll();
+	}
 	
-	 public Regola newRegola(Regola regola)
-	 {
-		 return regolaRepository.save(regola);
-	 }
-	 
-	 public Regola updateRegola(Regola regola)
-	 {
-		 Regola tmp = regolaRepository.findById(regola.getId()).get();
+	public Regola newRegola(Regola regola)
+	{
+		return regolaRepository.save(regola);
+	}
 		 
-		 if (regola.getTitolo() != null && !"".equals(regola.getTitolo()))
-		 {
-			 tmp.setTitolo(regola.getTitolo());
-		 }
+	public Regola updateRegola(Regola regola)
+	{
+		Regola tmp = regolaRepository.findById(regola.getId()).get();
+			 
+		if (regola.getTitolo() != null && !"".equals(regola.getTitolo()))
+		{
+			tmp.setTitolo(regola.getTitolo());
+		}
+			 
+		if (regola.getDescrizione() != null && !"".equals(regola.getDescrizione()))
+		{
+			tmp.setDescrizione(regola.getDescrizione());
+		} 
+		
+		return regolaRepository.save(tmp);
+	}
+	
+	public void deleteRegola(Regola regola)
+	{
+		regolaRepository.deleteById(regola.getId());
+	}
 		 
-		 if (regola.getDescrizione() != null && !"".equals(regola.getDescrizione()))
-		 {
-			 tmp.setDescrizione(regola.getDescrizione());
-		 }
-		 
-		 return regolaRepository.save(tmp);
-	 }
+	public List<PeriodoPrenotato>  getPeriodiPrenotati()
+	{
+		return (List<PeriodoPrenotato>) periodoPrenotatoRepository.findAll();
+	}
 	 
-	 public void deleteRegola(Regola regola)
-	 {
-		 regolaRepository.deleteById(regola.getId());
-	 }
-	 
-	 public List<PeriodoPrenotato>  getPeriodiPrenotati()
-	 {
-		 return (List<PeriodoPrenotato>) periodoPrenotatoRepository.findAll();
-	 }
-	 
-	 public PeriodoPrenotato newPeriodoPrenotato(PeriodoPrenotato periodoPrenotato, Integer periodoPrenotatoId)
-	 {
+	public PeriodoPrenotato newPeriodoPrenotato(PeriodoPrenotato periodoPrenotato, Integer periodoPrenotatoId)
+	{
 		PeriodoPrenotato periodoPrenotatoDB = periodoPrenotatoRepository.findById(periodoPrenotatoId).get();
 		
 		if (Objects.nonNull(periodoPrenotato.getDataInizio()) && !"".equalsIgnoreCase(periodoPrenotato.getDataInizio().toString()))
@@ -143,7 +147,7 @@ public class FirstService
 		{
 			periodoPrenotatoDB.setStatoAccettazione(periodoPrenotato.getStatoAccettazione());
 		}
-		
+
 		return periodoPrenotatoRepository.save(periodoPrenotatoDB);
 	}
 	
@@ -155,5 +159,29 @@ public class FirstService
 	public void deletePeriodoPrenotato(Integer id)
 	{
 		periodoPrenotatoRepository.deleteById(id);
+	}
+	
+	public List<ListaRegole> getListaRegole()
+	{
+		return listaRegoleRepository.findAll();
+	}
+	
+	public ListaRegole newListaRegole(ListaRegole newListaRegole)
+	{
+		return listaRegoleRepository.save(newListaRegole);
+	}
+	
+	public ListaRegole updateListaRegole(ListaRegole newListaRegole, Integer listaRegoleId)
+	{
+		ListaRegole oldListaRegole = listaRegoleRepository.findById(listaRegoleId).get();
+		
+		if (newListaRegole.getCompletamento() != null && !newListaRegole.getCompletamento().equals("") && !newListaRegole.getCompletamento().equalsIgnoreCase(oldListaRegole.getCompletamento())) oldListaRegole.setCompletamento(newListaRegole.getCompletamento());
+		
+		return listaRegoleRepository.save(oldListaRegole);
+	}
+	
+	public void deleteListaRegole(Integer listaRegoleId)
+	{
+		listaRegoleRepository.deleteById(listaRegoleId);
 	}
 }
