@@ -41,7 +41,7 @@ public class Servizio {
 	public String getUrl_img() {
 		return urlImg;
 	}
-	public void setUrl_img(String nome) {
+	public void setUrl_img(String urlImg) {
 		this.urlImg = urlImg;
 	}
 	

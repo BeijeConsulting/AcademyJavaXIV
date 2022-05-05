@@ -5,43 +5,42 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import it.beije.turing.example.Contatto;
-//import it.beije.turing.repository.ContattoRepository;
+import it.beije.turing.beans.Annuncio;
+import it.beije.turing.repository.AnnuncioRepository;
 
+
+//Lettura scrittura modifica cancella
 
 @Service
-public class FirstService {
+public class FirstService
+{
+	@Autowired
+	private AnnuncioRepository ar;
 	
-//	@Autowired
-//	private ContattoRepository contattoRepository;
+	public List<Annuncio> getAnnuncio()
+	{
+		return ar.findAll();
+	}
 	
+	public Annuncio newAnnuncio(Annuncio newAnnuncio)
+	{
+		return ar.save(newAnnuncio);
+	}
 	
-//	public List<Contatto> leggiRubrica() {
-//
-//		System.out.println("leggiRubrica..." + this.toString());
-//
-////		Contatto c1 = new Contatto();
-////		c1.setCognome("Rossi");
-////		c1.setNome("Mario");
-////		c1.setTelefono("1234566");
-////
-////		Contatto c2 = new Contatto();
-////		c2.setCognome("Bianchi");
-////		c2.setNome("Marco");
-////		c2.setTelefono("1234568");
-//
-////		List<Contatto> list = new ArrayList<Contatto>();
-////		list.add(c1);
-////		list.add(c2);
-//
-////		List<Contatto> list = contattoRepository.findByCognomeAndNome("Verde", "Piero");
-////		List<Contatto> list = contattoRepository.searchByEmail("m.rossi@beije.it");
-//		List<Contatto> list = contattoRepository.findAll();
-////		for (Contatto c : list) {
-////			System.out.println(c);
-////		}
-//
-//		return list;
-//	}
-
+	public Annuncio updateAnnuncio(Annuncio newAnnuncio, Integer annuncioId)
+	{
+		Annuncio oldAnnuncio = ar.findById(annuncioId).get();
+		
+		if (newAnnuncio.getTitolo() != null && !newAnnuncio.getTitolo().equals("") && !newAnnuncio.getTitolo().equalsIgnoreCase(oldAnnuncio.getTitolo())) oldAnnuncio.setTitolo(newAnnuncio.getTitolo());
+		if (newAnnuncio.getDescrizione() != null && !newAnnuncio.getDescrizione().equals("") && !newAnnuncio.getDescrizione().equalsIgnoreCase(oldAnnuncio.getDescrizione())) oldAnnuncio.setDescrizione(newAnnuncio.getDescrizione());
+		if (newAnnuncio.getNumPostiLetto() > 0 &&  newAnnuncio.getNumPostiLetto() != oldAnnuncio.getNumPostiLetto()) oldAnnuncio.setNumPostiLetto(newAnnuncio.getNumPostiLetto());
+		if (newAnnuncio.getPrezzo() > 0 && newAnnuncio.getPrezzo() != oldAnnuncio.getPrezzo()) oldAnnuncio.setPrezzo(newAnnuncio.getPrezzo());
+		
+		return ar.save(oldAnnuncio);
+	}
+	
+	public void deleteAnnuncio(Integer annuncioId)
+	{
+		ar.deleteById(annuncioId);
+	}
 }
