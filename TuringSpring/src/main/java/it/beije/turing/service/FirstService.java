@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.beije.turing.beans.Annuncio;
+import it.beije.turing.beans.Regola;
+import it.beije.turing.repository.RegolaRepository;
 
 @Service
 public class FirstService
@@ -45,16 +47,20 @@ public class FirstService
 		ar.deleteById(annuncioId);
 	}
 
-   
-    public List<FotoAnnuncio> getFotoAnnuncio(){
+    public List<FotoAnnuncio> getFotoAnnuncio()
+    {
         return fotoAnnuncioRepository.findAll();
     }
-    public FotoAnnuncio newFotoAnnuncio(FotoAnnuncio fotoAnnuncio){
+    
+    public FotoAnnuncio newFotoAnnuncio(FotoAnnuncio fotoAnnuncio)
+    {
         return fotoAnnuncioRepository.save(fotoAnnuncio);
     }
 
-    public  FotoAnnuncio updateFotoAnnuncio(FotoAnnuncio newFotoAnnuncio, Integer fotoAnnuncioId){
+    public  FotoAnnuncio updateFotoAnnuncio(FotoAnnuncio newFotoAnnuncio, Integer fotoAnnuncioId)
+    {
         FotoAnnuncio oldFotoAnnuncio = fotoAnnuncioRepository.findById(fotoAnnuncioId).get();
+        
         if(newFotoAnnuncio.getAnnuncio() != null  ) oldFotoAnnuncio.setAnnuncio(newFotoAnnuncio.getAnnuncio());
 
         if(newFotoAnnuncio.getImmagineId()!= null) oldFotoAnnuncio.setImmagineId(newFotoAnnuncio.getImmagineId());
@@ -62,7 +68,43 @@ public class FirstService
         return fotoAnnuncioRepository.save(oldFotoAnnuncio);
     }
 
-    public void deleteFotoAnnuncio(Integer fotoAnnuncioId){
+    public void deleteFotoAnnuncio(Integer fotoAnnuncioId)
+    {
         fotoAnnuncioRepository.deleteById(fotoAnnuncioId);
     }
+    
+	@Autowired
+	private RegolaRepository regolaRepository;
+
+	 public List<Regola> getRegola()
+	 {
+		return regolaRepository.findAll();
+	 }
+	
+	 public Regola newRegola(Regola regola)
+	 {
+		 return regolaRepository.save(regola);
+	 }
+	 
+	 public Regola updateRegola(Regola regola)
+	 {
+		 Regola tmp = regolaRepository.findById(regola.getId()).get();
+		 
+		 if (regola.getTitolo()!=null && !"".equals(regola.getTitolo()))
+		 {
+			 tmp.setTitolo(regola.getTitolo());
+		 }
+		 
+		 if (regola.getDescrizione()!=null && !"".equals(regola.getDescrizione()))
+		 {
+			 tmp.setDescrizione(regola.getDescrizione());
+		 }
+		 
+		 return regolaRepository.save(tmp);
+	 }
+	 
+	 public void deleteRegola(Regola regola)
+	 {
+		 regolaRepository.deleteById(regola.getId());
+	 }
 }
