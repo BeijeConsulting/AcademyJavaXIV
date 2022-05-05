@@ -20,7 +20,7 @@ public class FirstController
 		System.out.println("GET / " + this.toString());
 		//...
 		
-		service.leggiAnnunci();
+		//service.leggiAnnunci();
 		return "index";
 	}
 }

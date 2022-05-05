@@ -22,8 +22,8 @@ public class Struttura {
     @JoinColumn(name="indirizzo_id")
     private Indirizzo indirizzo;
 
-  /*  @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="host_id")
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="utente_id")
     private Utente utente;
 
     public Utente getUtente() {
@@ -33,7 +33,7 @@ public class Struttura {
     public void setUtente(Utente utente) {
         this.utente = utente;
     }
-*/
+
     public Integer getId() {
         return id;
     }
@@ -74,7 +74,7 @@ public class Struttura {
                 ", tipologiaStrutturaId=" + tipologiaStrutturaId +
                 ", descrizione='" + descrizione + '\'' +
                 ", indirizzo=" + indirizzo +
-              //  ", utenti=" + utente +
+                ", utenti=" + utente +
                 '}';
     }
 }

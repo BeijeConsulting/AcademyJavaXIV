@@ -9,13 +9,21 @@
 		<class>it.beije.turing.beans.Utente</class>
 		<class>it.beije.turing.beans.Struttura</class>
 		<class>it.beije.turing.beans.Immagine</class>
+		<class>it.beije.turing.beans.Carta</class>
+		<class>it.beije.turing.beans.Indirizzo</class>
+		<class>it.beije.turing.beans.ListaServizio</class>
+		<class>it.beije.turing.beans.Messaggio</class>
+		<class>it.beije.turing.beans.Recensione</class>
+		<class>it.beije.turing.beans.Servizio</class>
+		<class>it.beije.turing.beans.StrutturaImmagini</class>
+		<class>it.beije.turing.beans.TipoStruttura</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/beijebnb"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="MattiaPagani"/>
+			<property name="javax.persistence.jdbc.password" value="1234"/>
 		</properties>
 
 	</persistence-unit>

@@ -15,11 +15,11 @@ public class StrutturaImmagini {
     private Integer id;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
-    @JoinColumn(name="id")
+    @JoinColumn(name="struttura_id")
     private Struttura struttura;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
-    @JoinColumn(name="id")
+    @JoinColumn(name="immagine_id")
     private List<Immagine> immagine;
 
     public Integer getId() {
