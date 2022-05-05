@@ -47,7 +47,7 @@ public class ListaServizio {
 	}
 
 	public String toString() {
-		StringBuilder builder = new StringBuilder().append("{ Struttura id : ").append(this.strutturaId)
+		StringBuilder builder = new StringBuilder().append("Id: " + this.id).append("{ Struttura id : ").append(this.strutturaId)
 				.append("{ Servizio id : ").append(this.servizioId);
 		return builder.toString();
 	}

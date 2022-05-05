@@ -23,7 +23,7 @@ public class Messaggio {
 	@Column(name = "testo")
 	private String testo;
 	
-	@Column(name = "reciver_id")
+	@Column(name = "receiver_id")
 	private Integer reciverId;
 	
 	@Column(name="data_ora")
