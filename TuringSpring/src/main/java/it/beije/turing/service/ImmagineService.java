@@ -4,6 +4,7 @@ import it.beije.turing.beans.Immagine;
 import it.beije.turing.repository.ImmagineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -16,5 +17,8 @@ public class ImmagineService {
         return immagineRepository.findAll();
     }
 
+    public void addImage(Model m){
+        //immagineRepository.save();
+    }
 
 }

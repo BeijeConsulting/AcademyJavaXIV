@@ -18,13 +18,13 @@ public class StrutturaImmaginiController {
     @Autowired
     private StrutturaImmaginiService strutturaImmaginiService;
 
-    @RequestMapping(value = "/showAllStrutture", method = RequestMethod.GET)
-    public String showAllStrutture(Model model) {
+    @RequestMapping(value = "/showAllStruttureImmagini", method = RequestMethod.GET)
+    public String showAllStruttureImmagini(Model model) {
         System.out.println("HELLO");
         List<StrutturaImmagini> strutturasImmagini=strutturaImmaginiService.getAllStrutturaImmagini();
         strutturasImmagini.forEach(System.out::println);
-        model.addAttribute("strutture",strutturasImmagini);
-        return "mostrastrutture";
+        model.addAttribute("strutturaImmagini",strutturasImmagini);
+        return "mostrastruttureimmagini";
     }
 
 }
