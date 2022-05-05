@@ -1,15 +1,19 @@
 package it.beije.turing.service;
 
+import java.util.Objects;
 import java.util.List;
-import it.beije.turing.beans.FotoAnnuncio;
-import it.beije.turing.repository.AnnuncioRepository;
-import it.beije.turing.repository.FotoAnnuncioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import it.beije.turing.beans.FotoAnnuncio;
 import it.beije.turing.beans.Annuncio;
 import it.beije.turing.beans.Regola;
+import it.beije.turing.beans.PeriodoPrenotato;
+
+import it.beije.turing.repository.AnnuncioRepository;
+import it.beije.turing.repository.FotoAnnuncioRepository;
 import it.beije.turing.repository.RegolaRepository;
+import it.beije.turing.repository.PeriodoPrenotatoRepository;
 
 @Service
 public class FirstService
@@ -19,6 +23,9 @@ public class FirstService
 	
 	@Autowired
 	private FotoAnnuncioRepository fotoAnnuncioRepository;
+	
+	@Autowired
+	private PeriodoPrenotatoRepository periodoPrenotatoRepository;
 	
 	public List<Annuncio> getAnnuncio()
 	{
@@ -61,9 +68,9 @@ public class FirstService
     {
         FotoAnnuncio oldFotoAnnuncio = fotoAnnuncioRepository.findById(fotoAnnuncioId).get();
         
-        if(newFotoAnnuncio.getAnnuncio() != null  ) oldFotoAnnuncio.setAnnuncio(newFotoAnnuncio.getAnnuncio());
+        if(newFotoAnnuncio.getAnnuncio() != null) oldFotoAnnuncio.setAnnuncio(newFotoAnnuncio.getAnnuncio());
 
-        if(newFotoAnnuncio.getImmagineId()!= null) oldFotoAnnuncio.setImmagineId(newFotoAnnuncio.getImmagineId());
+        if(newFotoAnnuncio.getImmagineId() != null) oldFotoAnnuncio.setImmagineId(newFotoAnnuncio.getImmagineId());
 
         return fotoAnnuncioRepository.save(oldFotoAnnuncio);
     }
@@ -90,12 +97,12 @@ public class FirstService
 	 {
 		 Regola tmp = regolaRepository.findById(regola.getId()).get();
 		 
-		 if (regola.getTitolo()!=null && !"".equals(regola.getTitolo()))
+		 if (regola.getTitolo() != null && !"".equals(regola.getTitolo()))
 		 {
 			 tmp.setTitolo(regola.getTitolo());
 		 }
 		 
-		 if (regola.getDescrizione()!=null && !"".equals(regola.getDescrizione()))
+		 if (regola.getDescrizione() != null && !"".equals(regola.getDescrizione()))
 		 {
 			 tmp.setDescrizione(regola.getDescrizione());
 		 }
@@ -107,4 +114,46 @@ public class FirstService
 	 {
 		 regolaRepository.deleteById(regola.getId());
 	 }
+	 
+	 public List<PeriodoPrenotato>  getPeriodiPrenotati()
+	 {
+		 return (List<PeriodoPrenotato>) periodoPrenotatoRepository.findAll();
+	 }
+	 
+	 public PeriodoPrenotato newPeriodoPrenotato(PeriodoPrenotato periodoPrenotato, Integer periodoPrenotatoId)
+	 {
+		PeriodoPrenotato periodoPrenotatoDB = periodoPrenotatoRepository.findById(periodoPrenotatoId).get();
+		
+		if (Objects.nonNull(periodoPrenotato.getDataInizio()) && !"".equalsIgnoreCase(periodoPrenotato.getDataInizio().toString()))
+		{
+			periodoPrenotatoDB.setDataInizio(periodoPrenotato.getDataInizio());
+		}
+		
+		if (Objects.nonNull(periodoPrenotato.getDataFine()) && !"".equalsIgnoreCase(periodoPrenotato.getDataFine().toString()))
+		{
+			periodoPrenotatoDB.setDataFine(periodoPrenotato.getDataFine());
+		}
+		
+		if (Objects.nonNull(periodoPrenotato.getStatoPagamento()) && !"".equalsIgnoreCase(periodoPrenotato.getStatoPagamento()))
+		{
+			periodoPrenotatoDB.setStatoPagamento(periodoPrenotato.getStatoPagamento());
+		}
+		
+		if (Objects.nonNull(periodoPrenotato.getStatoAccettazione()) && !"".equalsIgnoreCase(periodoPrenotato.getStatoAccettazione()))
+		{
+			periodoPrenotatoDB.setStatoAccettazione(periodoPrenotato.getStatoAccettazione());
+		}
+		
+		return periodoPrenotatoRepository.save(periodoPrenotatoDB);
+	}
+	
+	public PeriodoPrenotato updatePeriodoPrenotato(PeriodoPrenotato periodoPrenotato)
+	{
+		return periodoPrenotatoRepository.save(periodoPrenotato);
+	}
+	
+	public void deletePeriodoPrenotato(Integer id)
+	{
+		periodoPrenotatoRepository.deleteById(id);
+	}
 }
