@@ -17,7 +17,7 @@ public class StrutturaController {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public String loginGet() {
-
+        System.out.println("HELLO");
         serviceStrutture.getAll().forEach(System.out::println);
 
         return "index";
