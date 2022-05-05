@@ -14,7 +14,7 @@ public class StruttureService {
 
 
 
-    public List<Struttura> getAll(){
+    public List<Struttura> getAllStruttura(){
         return strutturaRepository.findAll();
     }
 

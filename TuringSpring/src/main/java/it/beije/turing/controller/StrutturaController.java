@@ -18,9 +18,7 @@ public class StrutturaController {
 
     @RequestMapping(value = "/showAllStrutture", method = RequestMethod.GET)
     public String showAllStrutture(Model model) {
-        System.out.println("HELLO");
-        List<Struttura> strutturas=struttureService.getAll();
-        strutturas.forEach(System.out::println);
+        List<Struttura> strutturas=struttureService.getAllStruttura();
         model.addAttribute("strutture",strutturas);
         return "mostrastrutture";
     }
