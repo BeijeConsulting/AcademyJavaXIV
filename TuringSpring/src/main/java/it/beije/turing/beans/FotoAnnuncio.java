@@ -25,9 +25,22 @@ public class FotoAnnuncio
 	@PrimaryKeyJoinColumn(name="annuncio_id")
 	private Annuncio annuncio;
 	
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="immagine_id")
 	private Immagine immagineId;
+	
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	
 	
 	public Annuncio getAnnuncio() {
 		return annuncio;

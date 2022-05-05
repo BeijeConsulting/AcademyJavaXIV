@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.beije.turing.beans.FotoAnnuncio;
 import it.beije.turing.beans.Regola;
+import it.beije.turing.repository.FotoAnnuncioRepository;
 import it.beije.turing.repository.RegolaRepository;
 
 //import it.beije.turing.example.Contatto;
@@ -47,4 +49,22 @@ RegolaRepository regolaRepository;
 	 regolaRepository.deleteById(regola.getId());
  }
 
+ 
+ @Autowired
+ FotoAnnuncioRepository fotoAnnuncioRepository;
+
+  public List<FotoAnnuncio> getFotoAnnuncio()
+  {
+ 	return fotoAnnuncioRepository.findAll();
+  }
+
+  public FotoAnnuncio newFotoAnnuncio(FotoAnnuncio fotoAnnuncio)
+  {
+ 	 return fotoAnnuncioRepository.save(fotoAnnuncio);
+  }
+  
+  public void deleteFotoAnnuncio(FotoAnnuncio fotoAnnuncio)
+  {
+ 	 regolaRepository.deleteById(fotoAnnuncio.getId());
+  }
 }
