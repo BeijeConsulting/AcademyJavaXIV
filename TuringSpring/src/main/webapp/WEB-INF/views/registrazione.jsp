@@ -16,11 +16,15 @@
         <input type="text" id="lname" name="lname" placeholder="Inserisci nome"><br><br>
         <label for="email">Email:</label><br>
         <input type="email" id="email" name="email" placeholder="Inserisci email"><br><br>
-        <label for="email">Password:</label><br>
+        <label for="password">Password:</label><br>
         <input type="password" id="password" name="password" placeholder="Inserisci password"><br><br>
         <label for="date">Data nascita:</label><br>
         <input type="date" id="date" name="date"><br><br>
-        <input type="submit" value="Submit">
+        <label for="cod_documenti">Codice documento:</label><br>
+        <input type="cod_documenti" id="cod_documenti" name="cod_documenti" placeholder="Inserisci codice documento"><br><br>
+        <label for="telefono">Telefono:</label><br>
+        <input type="text" id="telefono" name="telefono" placeholder="Inserisci codice documento"><br><br>
+        <input type="text" value="Submit">
     </form>
 
 </body>
