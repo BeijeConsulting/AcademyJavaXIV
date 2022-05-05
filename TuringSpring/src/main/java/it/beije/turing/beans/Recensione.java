@@ -25,7 +25,7 @@ public class Recensione {
     @Column(name = "utente_id")
     private Integer reviewerId;
 
-    @Column(name = "periodo_prenotazione_id")
+    @Column(name = "periodo_prenotato_id")
     private Integer prenotazioneId;
 
     public Integer getId() {

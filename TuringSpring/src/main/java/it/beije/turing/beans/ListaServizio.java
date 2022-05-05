@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,14 +23,24 @@ public class ListaServizio {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "struttura_id")
 	private Struttura strutturaId;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "servizio_id")
-	private List<Servizio> servizioId;
+	private Servizio servizioId;
 
+	
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	public Struttura getStrutturaId() {
 		return strutturaId;
 	}
@@ -38,16 +49,16 @@ public class ListaServizio {
 		this.strutturaId = strutturaId;
 	}
 
-	public List<Servizio> getServizioId() {
+	public Servizio getServizioId() {
 		return servizioId;
 	}
 
-	public void setServizioId(List<Servizio> servizioId) {
+	public void setServizioId(Servizio servizioId) {
 		this.servizioId = servizioId;
 	}
 
 	public String toString() {
-		StringBuilder builder = new StringBuilder().append("{ Struttura id : ").append(this.strutturaId)
+		StringBuilder builder = new StringBuilder().append("Id: " + this.id).append("{ Struttura id : ").append(this.strutturaId)
 				.append("{ Servizio id : ").append(this.servizioId);
 		return builder.toString();
 	}

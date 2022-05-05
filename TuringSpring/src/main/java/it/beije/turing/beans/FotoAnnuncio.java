@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -22,12 +21,25 @@ public class FotoAnnuncio
 	private Integer id;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
-	@PrimaryKeyJoinColumn(name="annuncio_id")
+	@JoinColumn(name="annuncio_id")
 	private Annuncio annuncio;
+	
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="immagine_id")
 	private Immagine immagineId;
+	
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	
 	
 	public Annuncio getAnnuncio() {
 		return annuncio;

@@ -38,17 +38,17 @@ public class Servizio {
 		this.nome = nome;
 	}
 	
-	public String getUrl_img() {
+	public String getUrlImg() {
 		return urlImg;
 	}
-	public void setUrl_img(String nome) {
-		this.urlImg = urlImg;
+	public void setUrlImg(String nome) {
+		this.urlImg = nome;
 	}
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 				.append("{ id : ").append(this.id)
-				.append(", cognome : ").append(this.urlImg)
+				.append(", urlImg : ").append(this.urlImg)
 				.append(", nome : ").append(this.nome);
 		return builder.toString();
 	}
