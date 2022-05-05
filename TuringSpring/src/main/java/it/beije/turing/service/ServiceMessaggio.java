@@ -18,8 +18,8 @@ public class ServiceMessaggio {
 	}
 	
 	
-	public List<Messaggio> getbyUtenteId(Integer utente_id){
-		return messaggioRepository.findByUtendeId(utente_id);
+	public List<Messaggio> getByReceiverId(Integer receiverId){
+		return messaggioRepository.findByReceiverId(receiverId);
 	}
 	
 	

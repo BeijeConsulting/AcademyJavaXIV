@@ -24,7 +24,7 @@ public class Messaggio {
 	private String testo;
 	
 	@Column(name = "receiver_id")
-	private Integer reciverId;
+	private Integer receiverId;
 	
 	@Column(name="data_ora")
 	private Date dataOra;
@@ -46,11 +46,11 @@ public class Messaggio {
 		this.testo = testo;
 	}
 
-	public Integer getReciverId() {
-		return reciverId;
+	public Integer getReceiverId() {
+		return receiverId;
 	}
-	public void setReciverId(int reciverId) {
-		this.reciverId = reciverId;
+	public void setReceiverId(Integer receiverId) {
+		this.receiverId = receiverId;
 	}
 
 	public Date getDataOra() {
@@ -71,7 +71,7 @@ public class Messaggio {
 		StringBuilder builder = new StringBuilder()
 				.append("{ id : ").append(this.id)
 				.append(", testo : ").append(this.testo)
-				.append(", reciverId : ").append(this.reciverId)
+				.append(", receiverId : ").append(this.receiverId)
 				.append(", dataOra : ").append(this.dataOra)
 				.append(", senderId : ").append(this.senderId)
 				.append(" }")
