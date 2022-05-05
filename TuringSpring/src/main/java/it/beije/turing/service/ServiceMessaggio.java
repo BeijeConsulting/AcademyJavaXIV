@@ -21,15 +21,5 @@ public class ServiceMessaggio {
 	public List<Messaggio> getByReceiverId(Integer receiverId){
 		return messaggioRepository.findByReceiverId(receiverId);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
