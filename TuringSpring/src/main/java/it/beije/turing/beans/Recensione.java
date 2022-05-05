@@ -1,17 +1,12 @@
-package it.beije.turing.utenti;
+package it.beije.turing.beans;
 
 import java.sql.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,15 +22,15 @@ public class Recensione {
     private String testo;
 
     @Column(name = "punteggio")
-    private Double punteggio;
+    private Integer punteggio;
 
     @Column(name = "data")
     private Date data;
 
-    @Column(name = "reviewer_id")
+    @Column(name = "utente_id")
     private Integer reviewerId;
 
-    @Column(name = "prenotazione_id")
+    @Column(name = "periodo_prenotazione_id")
     private Integer prenotazioneId;
 
     public Integer getId() {
@@ -52,10 +47,10 @@ public class Recensione {
         this.testo = testo;
     }
 
-    public Double getPunteggio() {
+    public Integer getPunteggio() {
         return punteggio;
     }
-    public void setPunteggio(Double punteggio) {
+    public void setPunteggio(Integer punteggio) {
         this.punteggio = punteggio;
     }
 

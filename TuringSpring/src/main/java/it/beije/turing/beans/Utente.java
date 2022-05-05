@@ -1,4 +1,4 @@
-package it.beije.turing.utenti;
+package it.beije.turing.beans;
 
 import java.sql.Date;
 import java.util.List;
@@ -65,8 +65,12 @@ public class Utente {
     private List<Messaggio> messaggiInviati;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "reviewer_id")
+    @JoinColumn(name = "utente_id", referencedColumnName = "recensioni")
     private List<Recensione> recensione;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "utente_id", referencedColumnName = "carte")
+    private List<Carta> carte;
 
     public Integer getId() {
         return id;
@@ -173,6 +177,13 @@ public class Utente {
         this.recensione = recensione;
     }
 
+    public List<Carta> getCarte() {
+        return carte;
+    }
+    public void setCarte(List<Carta> carte) {
+        this.carte = carte;
+    }
+
     @Override
     public String toString() {
         return "Utente{" +
@@ -191,6 +202,7 @@ public class Utente {
                 ", messaggiRicevuti=" + messaggiRicevuti +
                 ", messaggiInviati=" + messaggiInviati +
                 ", recensione=" + recensione +
+                ", carte=" + carte +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
-package it.beije.turing.utenti;
+package it.beije.turing.beans;
 
 import java.sql.Date;
 
@@ -33,7 +33,6 @@ public class Carta {
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -41,7 +40,6 @@ public class Carta {
 	public Integer getUtenteId() {
 		return utenteId;
 	}
-
 	public void setUtenteId(Integer utenteId) {
 		this.utenteId = utenteId;
 	}
@@ -49,7 +47,6 @@ public class Carta {
 	public String getNumero_carta() {
 		return numeroCarta;
 	}
-
 	public void setNumero_carta(String numero_carta) {
 		this.numeroCarta = numero_carta;
 	}
@@ -57,7 +54,6 @@ public class Carta {
 	public Date getDataScadenza() {
 		return dataScadenza;
 	}
-
 	public void setDataScadenza(Date dataScadenza) {
 		this.dataScadenza = dataScadenza;
 	}
@@ -65,7 +61,6 @@ public class Carta {
 	public String getCcv() {
 		return ccv;
 	}
-
 	public void setCcv(String ccv) {
 		this.ccv = ccv;
 	}

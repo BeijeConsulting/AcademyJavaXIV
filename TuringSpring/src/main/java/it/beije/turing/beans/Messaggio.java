@@ -1,4 +1,4 @@
-package it.beije.turing.utenti;
+package it.beije.turing.beans;
 
 import java.sql.Date;
 
