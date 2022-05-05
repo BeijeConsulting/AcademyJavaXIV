@@ -1,4 +1,4 @@
-package it.beije.turing;
+package it.beije.turing.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

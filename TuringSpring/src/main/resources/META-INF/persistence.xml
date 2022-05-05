@@ -2,13 +2,13 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="TuringSpring">
 
-		<class>it.beije.turing.Struttura</class>
-		<class>it.beije.turing.TipoStruttura</class>
-		<class>it.beije.turing.Servizio</class>
-		<class>it.beije.turing.ListaServizio</class>
-		<class>it.beije.turing.Indirizzo</class>
-		<class>it.beije.turing.Immagine</class>
-		<class>it.beije.turing.StrutturaImmagini</class>
+		<class>it.beije.turing.beans.Struttura</class>
+		<class>it.beije.turing.beans.TipoStruttura</class>
+		<class>it.beije.turing.beans.Servizio</class>
+		<class>it.beije.turing.beans.ListaServizio</class>
+		<class>it.beije.turing.beans.Indirizzo</class>
+		<class>it.beije.turing.beans.Immagine</class>
+		<class>it.beije.turing.beans.StrutturaImmagini</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

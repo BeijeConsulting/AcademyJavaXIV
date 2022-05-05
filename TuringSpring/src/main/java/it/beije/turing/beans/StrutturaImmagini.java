@@ -1,4 +1,4 @@
-package it.beije.turing;
+package it.beije.turing.beans;
 
 import java.util.List;
 

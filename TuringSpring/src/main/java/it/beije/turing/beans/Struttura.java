@@ -1,4 +1,4 @@
-package it.beije.turing;
+package it.beije.turing.beans;
 
 import javax.persistence.*;
 
@@ -10,8 +10,6 @@ public class Struttura {
     @Column(name = "id")
     private Integer id;
 
-    // @Column(name = "tipo")
-    // private String tipo;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
     @JoinColumn(name="tipologia_struttura_id")
@@ -21,7 +19,7 @@ public class Struttura {
     private String descrizione;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="id", referencedColumnName = "host_id")
+    @JoinColumn(name="indirizzo_id")
     private Indirizzo indirizzo;
 
   /*  @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
@@ -44,13 +42,6 @@ public class Struttura {
         this.id = id;
     }
 
-    /*public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }*/
 
     public TipoStruttura getTipologiaStrutturaId() {
         return tipologiaStrutturaId;
@@ -80,7 +71,6 @@ public class Struttura {
     public String toString() {
         return "Struttura{" +
                 "id=" + id +
-               // ", tipo='" + tipo + '\'' +
                 ", tipologiaStrutturaId=" + tipologiaStrutturaId +
                 ", descrizione='" + descrizione + '\'' +
                 ", indirizzo=" + indirizzo +
