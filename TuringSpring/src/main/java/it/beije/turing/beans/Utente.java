@@ -56,20 +56,20 @@ public class Utente {
     @Column(name = "livello")
     private Integer livello;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id")
     private List<Messaggio> messaggiRicevuti;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
     private List<Messaggio> messaggiInviati;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "utente_id", referencedColumnName = "recensioni")
+    @JoinColumn(name = "utente_id")
     private List<Recensione> recensione;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "utente_id", referencedColumnName = "carte")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "utente_id")
     private List<Carta> carte;
 
     public Integer getId() {

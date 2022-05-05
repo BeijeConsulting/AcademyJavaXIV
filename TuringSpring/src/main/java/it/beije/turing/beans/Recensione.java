@@ -2,12 +2,7 @@ package it.beije.turing.beans;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "recensioni")
@@ -26,7 +21,7 @@ public class Recensione {
 
     @Column(name = "data")
     private Date data;
-
+//    @ManyToOne()
     @Column(name = "utente_id")
     private Integer reviewerId;
 

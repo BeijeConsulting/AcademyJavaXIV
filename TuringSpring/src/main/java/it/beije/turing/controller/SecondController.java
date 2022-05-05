@@ -1,43 +1,43 @@
-package it.beije.turing.controller;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import it.beije.turing.example.Contatto;
-import it.beije.turing.service.FirstService;
-
-
-@Controller
-public class SecondController {
-	
-	@Autowired
-	private FirstService service;
-
-	@RequestMapping(value = "/elenco", method = RequestMethod.GET)
-	public String elenco(Model model) {
-		System.out.println("GET /elenco " + this.toString());
-		
-		List<Contatto> rubrica = service.leggiRubrica();
-		
-		model.addAttribute("contatti", rubrica);
-		
-		return "elenco";
-	}
-	
-	@RequestMapping(value = "/elenco_mail", method = RequestMethod.GET)
-	public String elencoMail(Model model) {
-		System.out.println("GET /elenco_mail");
-		
-		service.leggiRubrica();
-		model.addAttribute("contatti", new ArrayList());
-				
-		return "elenco";
-	}
-
-}
+//package it.beije.turing.controller;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestMethod;
+//
+//import it.beije.turing.example.Contatto;
+//import it.beije.turing.service.FirstService;
+//
+//
+//@Controller
+//public class SecondController {
+//
+//	@Autowired
+//	private FirstService service;
+//
+//	@RequestMapping(value = "/elenco", method = RequestMethod.GET)
+//	public String elenco(Model model) {
+//		System.out.println("GET /elenco " + this.toString());
+//
+//		List<Contatto> rubrica = service.leggiRubrica();
+//
+//		model.addAttribute("contatti", rubrica);
+//
+//		return "elenco";
+//	}
+//
+//	@RequestMapping(value = "/elenco_mail", method = RequestMethod.GET)
+//	public String elencoMail(Model model) {
+//		System.out.println("GET /elenco_mail");
+//
+//		service.leggiRubrica();
+//		model.addAttribute("contatti", new ArrayList());
+//
+//		return "elenco";
+//	}
+//
+//}

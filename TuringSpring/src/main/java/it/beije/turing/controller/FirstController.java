@@ -12,17 +12,17 @@ import it.beije.turing.service.FirstService;
 
 @Controller
 public class FirstController {
-	
+
 	@Autowired
 	private FirstService service;
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index() {
 		System.out.println("GET / " + this.toString());
 		//...
-		
-		service.leggiRubrica();
-		
+
+//		service.leggiRubrica();
+
 		return "index";
 	}
 
@@ -32,21 +32,21 @@ public class FirstController {
 		//...
 		return "login";
 	}
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginPost(Model model, @RequestParam(name = "username") String username,
 			@RequestParam(name = "password", required = false) String password) {
 		System.out.println("POST /login");
-		
+
 		//String username = request.getParameter("username");
 		//String password = request.getParameter("password");
 		System.out.println("username: " + username);
 		System.out.println("password: " + password);
-		
+
 		model.addAttribute("username", username);
 		model.addAttribute("password", password);
-		
+
 		return "myprofile";
 	}
-	
+
 }
