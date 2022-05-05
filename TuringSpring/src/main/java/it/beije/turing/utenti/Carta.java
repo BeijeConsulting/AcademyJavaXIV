@@ -17,7 +17,10 @@ public class Carta {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
-
+	
+	@Column(name="utente_id")
+	private Integer utenteId;
+	
 	@Column(name = "numero_carta")	
 	private String numeroCarta;
 	
@@ -33,6 +36,14 @@ public class Carta {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Integer getUtenteId() {
+		return utenteId;
+	}
+
+	public void setUtenteId(Integer utenteId) {
+		this.utenteId = utenteId;
 	}
 
 	public String getNumero_carta() {
