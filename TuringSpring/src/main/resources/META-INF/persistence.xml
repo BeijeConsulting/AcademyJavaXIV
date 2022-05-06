@@ -17,6 +17,8 @@
 		<class>it.beije.turing.beans.Servizio</class>
 		<class>it.beije.turing.beans.StrutturaImmagini</class>
 		<class>it.beije.turing.beans.TipoStruttura</class>
+		<class>it.beije.turing.beans.Admin</class>
+		<class>it.beije.turing.beans.Host</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
