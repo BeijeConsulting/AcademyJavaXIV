@@ -34,12 +34,9 @@ public class StrutturaService {
 
             Struttura struttura = new Struttura();
             struttura.setDescrizione(descrizione);
-
             struttura.setTipologiaStrutturaId(tipoStrutturaResult);
-
             struttura.setIndirizzo(indirizzo);
-            //struttura.setUtente(utente);
-
+            //struttura.setUtente(utente);//TODO
             strutturaRepository.save(struttura);
             System.out.println(struttura);
         }
@@ -69,8 +66,7 @@ public class StrutturaService {
             struttura.setDescrizione(descrizione);
             struttura.setIndirizzo(indirizzoService.findIndirizzoByID(id_indirizzo));
             struttura.setTipologiaStrutturaId(tipoStrutturaService.getTipoStrutturaById(id_stru));
-            //struttura.setUtente(id_utente);
+            //struttura.setUtente(id_utente);//TODO
             strutturaRepository.save(struttura);
-
     }
 }
