@@ -16,12 +16,13 @@ import it.beije.turing.beans.PeriodoPrenotato;
 import it.beije.turing.repository.AnnuncioRepository;
 import it.beije.turing.repository.PeriodoPrenotatoRepository;
 import it.beije.turing.service.FirstService;
+import it.beije.turing.service.ServicePeriodoPrenotato;
 
 @Controller
 public class PeriodoPrenotatoController 
 {
 	@Autowired
-	private FirstService service;
+	private ServicePeriodoPrenotato service;
 	
 	@Autowired
 	private PeriodoPrenotatoRepository periodoPrenotatoRepository;
