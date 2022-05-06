@@ -17,20 +17,20 @@ public class ServiceCarta {
 	public List<Carta> getAll(){
 		return cartaRepository.findAll();
 	}
-//
-//	public Carta addCarta(Carta carta) {
-//		if(cartaRepository.existsById(carta.getId())) {
-//			return null;
-//		}
-//		cartaRepository.saveAndFlush(carta);
-//		return carta;
-//	}
-//
-//	public Carta removeCarta(Carta carta) {
-//		if(!cartaRepository.existsById(carta.getId())) {
-//			return null;
-//		}
-//		cartaRepository.delete(carta);
-//		return carta;
-//	}
+
+	public Carta addCarta(Carta carta) {
+		if(cartaRepository.existsById(carta.getId())) {
+			return null;
+		}
+		cartaRepository.saveAndFlush(carta);
+		return carta;
+	}
+
+	public Carta removeCarta(Carta carta) {
+		if(!cartaRepository.existsById(carta.getId())) {
+			return null;
+		}
+		cartaRepository.delete(carta);
+		return carta;
+	}
 }

@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CartaRepository extends JpaRepository<Carta, Integer>{
 
-//	public List<Carta> findAll();
+	public List<Carta> findAllByUtenteId(Integer utenteId);
 
 }
