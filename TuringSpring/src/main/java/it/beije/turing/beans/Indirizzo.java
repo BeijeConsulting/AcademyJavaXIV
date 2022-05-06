@@ -28,7 +28,7 @@ public class Indirizzo {
         return id;
     }
 
-    public void setId(int id) {
+        public void setId(Integer id) {
         this.id = id;
     }
 
@@ -88,9 +88,6 @@ public class Indirizzo {
         this.coordinate = coordinate;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {

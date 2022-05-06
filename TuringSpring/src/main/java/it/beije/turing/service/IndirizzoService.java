@@ -24,15 +24,19 @@ public class IndirizzoService {
 
     /**
      * Inserisce un nuovo indirzzo
-     * @param indirizzo descrizione dell'indirizzo
+     * @param cap, citta, coordinate, numeroCivico, stato, provincia, via descrizione dell'indirizzo
      * @return true se è stato inserito, false se non è stato inserito
      *
      */
-    public Boolean insertNewIndirizzo(String indirizzo) {
+    public Boolean insertNewIndirizzo(String cap, String citta, String coordinate, String numeroCivico, String stato, String via, String provincia) {
         Indirizzo indirizzo= new Indirizzo();
-        indirizzo.setCap();
-        indirizzo.setCitta();
-        indirizzo.
+        indirizzo.setCap(cap);
+        indirizzo.setCitta(citta);
+        indirizzo.setCoordinate(coordinate);
+        indirizzo.setNumeroCivico(numeroCivico);
+        indirizzo.setStato(stato);
+        indirizzo.setVia(via);
+        indirizzo.setProvincia(provincia);
 
         Indirizzo result = indirizzoRepository.save(indirizzo);
 
