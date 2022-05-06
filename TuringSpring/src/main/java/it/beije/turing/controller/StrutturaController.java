@@ -87,14 +87,22 @@ public class StrutturaController {
         model.addAttribute("lista_strutture", strutturaService.getAllStruttura());
         model.addAttribute("struttura", strutturaService.findStrutturaById(idStruttura));
         model.addAttribute("listatipostruttura",tipoStrutturaService.getAllTipoStruttura());
-        model.addAttribute("lista_indirizzio",indirizzoService.getAllIndirizzi());
+        model.addAttribute("lista_indirizzio_u",indirizzoService.getAllIndirizzi());
         return "updatestruttura";
     }
 
 
     @RequestMapping(value = "/updateStruttura",method = RequestMethod.POST)
-    public String updateStruttura(Model model,Integer i){
+    public String updateStruttura(Model model, @RequestParam(value = "id_struttura") Integer id_stru,@RequestParam(value = "descrizione") String descrizione, @RequestParam(value = "tipo-strutture") Integer idTipoStrutture, @RequestParam(value = "lista_indirizzio") Integer id_indirizzo, @RequestParam(value = "id_utente" ,required = false) Integer id_utente){
 
+        System.out.println(
+                "\nid struttura: "+id_stru+
+                "Descrizione: " +descrizione+
+                "\ntipo-strutture: "+idTipoStrutture+
+                "\nid indirizzo: "+id_indirizzo+
+
+                "\nid_utente: "+id_utente);
+        strutturaService.updateStructure(id_stru,descrizione,id_indirizzo,idTipoStrutture,id_utente);
 
         return "updatestruttura";
     }

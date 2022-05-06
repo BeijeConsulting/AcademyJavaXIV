@@ -20,18 +20,19 @@ public class StrutturaService {
 
     @Autowired
     private IndirizzoService indirizzoService;
-    public List<Struttura> getAllStruttura(){
+
+    public List<Struttura> getAllStruttura() {
         return strutturaRepository.findAll();
     }
 
 
     public void insertNewTipoStruttura(String descrizione, Integer idTipoStrutture, Integer idIndirizzo, Integer idUtente) {
-        TipoStruttura tipoStrutturaResult= tipoStrutturaService.getTipoStrutturaById(idTipoStrutture);
+        TipoStruttura tipoStrutturaResult = tipoStrutturaService.getTipoStrutturaById(idTipoStrutture);
         Indirizzo indirizzo = indirizzoService.findIndirizzoByID(idIndirizzo);
 
-        if(tipoStrutturaResult!=null && indirizzo!=null){
+        if (tipoStrutturaResult != null && indirizzo != null) {
 
-            Struttura struttura= new Struttura();
+            Struttura struttura = new Struttura();
             struttura.setDescrizione(descrizione);
 
             struttura.setTipologiaStrutturaId(tipoStrutturaResult);
@@ -47,18 +48,29 @@ public class StrutturaService {
     public boolean deleteStruttura(Integer idStruttura) {
         strutturaRepository.deleteById(idStruttura);
 
-        if( !strutturaRepository.existsById(idStruttura)){
+        if (!strutturaRepository.existsById(idStruttura)) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
     public Struttura findStrutturaById(Integer idStruttura) {
-        if(  strutturaRepository.existsById(idStruttura)  ){
+        if (strutturaRepository.existsById(idStruttura)) {
             return strutturaRepository.findById(idStruttura).get();
-        }else {
+        } else {
             return null;
         }
+    }
+
+    public void updateStructure(Integer id_stru, String descrizione, Integer id_indirizzo, Integer idTipoStrutture, Integer id_utente) {
+
+            Struttura struttura= strutturaRepository.findById(id_stru).get();
+            struttura.setDescrizione(descrizione);
+            struttura.setIndirizzo(indirizzoService.findIndirizzoByID(id_indirizzo));
+            struttura.setTipologiaStrutturaId(tipoStrutturaService.getTipoStrutturaById(id_stru));
+            //struttura.setUtente(id_utente);
+            strutturaRepository.save(struttura);
+
     }
 }

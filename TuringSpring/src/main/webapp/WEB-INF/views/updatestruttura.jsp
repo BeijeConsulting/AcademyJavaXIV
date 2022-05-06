@@ -28,10 +28,10 @@
 </form>
 
 
-<form action="u" method="post">
+<form action="updateStruttura" method="post">
     <label for="descrizione">Inserisci descrizione Struttura:</label><br>
     <input type="text" id="descrizione" name="descrizione" value="${struttura.descrizione}"><br>
-
+    <input type="text" name="id_struttura" value="${struttura.id}" hidden><br>
     <label for="tipo-strutture">Tipo di struttura disponibile: </label><br>
     <select name="tipo-strutture" id="tipo-strutture">
         <c:forEach items="${listatipostruttura}" var="tstr" >
@@ -45,12 +45,12 @@
     <br>
     <label for="lista_indirizzio">Scegli indirizzo:</label><br>
     <select name="lista_indirizzio" id="lista_indirizzio">
-        <c:forEach items="${lista_indirizzio}" var="lista_indirizzi">
+        <c:forEach items="${lista_indirizzio_u}" var="l_indirizzo">
             <option
                     <c:choose>
-                        <c:when test="${ struttura.indirizzo.id==lista_indirizzi.id}"> selected </c:when>
+                        <c:when test="${ struttura.indirizzo.id==l_indirizzo.id}"> selected </c:when>
                     </c:choose>
-                    value="${lista_indirizzi.id}">${lista_indirizzi.toString()}</option>
+                    value="${l_indirizzo.id}">${l_indirizzo.toString()}</option>
         </c:forEach>
     </select>
     <br>

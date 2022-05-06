@@ -29,8 +29,8 @@
     <br>
     <label for="lista_indirizzio">Scegli indirizzo:</label><br>
     <select name="lista_indirizzio" id="lista_indirizzio">
-        <c:forEach items="${lista_indirizzio}" var="lista_indirizzi">
-            <option value="${lista_indirizzi.id}">${lista_indirizzi.via} ${lista_indirizzi.citta} ${lista_indirizzi.provincia} ${lista_indirizzi.cap}${lista_indirizzi.stato}${lista_indirizzi.coordinate}</option>
+        <c:forEach items="${lista_indirizzio}" var="l_indirizzo">
+            <option value="${l_indirizzo.id}">${l_indirizzo.via} ${l_indirizzo.citta} ${l_indirizzo.provincia} ${l_indirizzo.cap}${l_indirizzo.stato}${l_indirizzo.coordinate}</option>
         </c:forEach>
     </select>
     <br>
