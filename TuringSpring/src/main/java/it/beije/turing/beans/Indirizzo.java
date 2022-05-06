@@ -22,12 +22,13 @@ public class Indirizzo {
     private String stato;
     @Column(name="numero_civico")
     private String numeroCivico;
-
-    public int getId() {
+    @Column(name="coordinate")
+    private String coordinate;
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+        public void setId(Integer id) {
         this.id = id;
     }
 
@@ -78,6 +79,15 @@ public class Indirizzo {
     public void setNumeroCivico(String numeroCivico) {
         this.numeroCivico = numeroCivico;
     }
+
+    public String getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(String coordinate) {
+        this.coordinate = coordinate;
+    }
+
 
     @Override
     public String toString() {

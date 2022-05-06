@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="inserisciImmagine" method="post">
+<form action="addImmagePost" method="post">
     <label for="urlImage">Inserisci url:</label><br>
     <input type="text" id="urlImage" name="urlImage" value=""><br>
     <input type="submit" value="Submit">
