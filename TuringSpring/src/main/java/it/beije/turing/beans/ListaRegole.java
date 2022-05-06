@@ -20,7 +20,7 @@ public class ListaRegole
 	@Column(name="id")
 	private Integer id;
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@ManyToOne(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="annuncio_id")
 	private Annuncio annuncioId;
 	
@@ -49,6 +49,14 @@ public class ListaRegole
 
 	public String getCompletamento() {
 		return completamento;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setCompletamento(String completamento) {
