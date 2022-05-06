@@ -106,4 +106,15 @@ public class IndirizzoService {
             return false;
         }
     }
+
+    public Indirizzo findIndirizzoByID(Integer idIndirizzo) {
+
+        if(indirizzoRepository.existsById(idIndirizzo)) {
+            Optional<Indirizzo> result = indirizzoRepository.findById(idIndirizzo);
+            Indirizzo t = result.get();
+            return t;
+        }else {
+            return null;
+        }
+    }
 }

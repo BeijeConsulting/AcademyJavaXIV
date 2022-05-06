@@ -27,9 +27,13 @@
         </c:forEach>
     </select>
     <br>
-    <label for="id_indirizzo">Inserisci ID indirizzo:</label><br>
-    <input type="text" id="id_indirizzo" name="id_indirizzo" value=""><br>
-
+    <label for="lista_indirizzio">Scegli indirizzo:</label><br>
+    <select name="lista_indirizzio" id="lista_indirizzio">
+        <c:forEach items="${lista_indirizzio}" var="lista_indirizzi">
+            <option value="${lista_indirizzi.id}">${lista_indirizzi.via} ${lista_indirizzi.citta} ${lista_indirizzi.provincia} ${lista_indirizzi.cap}${lista_indirizzi.stato}${lista_indirizzi.coordinate}</option>
+        </c:forEach>
+    </select>
+    <br>
     <label for="id_utente">Inserisci ID Utente:</label><br>
     <input type="text" id="id_utente" name="id_utente" value=""><br>
 

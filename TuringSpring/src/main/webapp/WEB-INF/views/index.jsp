@@ -66,7 +66,10 @@
         <td>Inserisci struttura</td>
         <td><a href="http://localhost:8080/TuringSpring/insertStruttura">/insertStruttura</a></td>
     </tr>
-
+    <tr>
+        <td>Modifica struttura</td>
+        <td><a href="http://localhost:8080/TuringSpring/updateStruttura">/updateStruttura</a></td>
+    </tr>
 </table>
 </body>
 </html>
