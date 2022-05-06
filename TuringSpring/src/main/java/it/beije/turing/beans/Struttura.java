@@ -11,7 +11,7 @@ public class Struttura {
     private Integer id;
 
 
-    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+    @ManyToOne(cascade=CascadeType.DETACH, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
     @JoinColumn(name="tipologia_struttura_id")
     private TipoStruttura tipologiaStrutturaId;
 
@@ -23,7 +23,7 @@ public class Struttura {
     private Indirizzo indirizzo;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="utente_id")
+    @JoinColumn(name="host_id")
     private Utente utente;
 
     public Utente getUtente() {

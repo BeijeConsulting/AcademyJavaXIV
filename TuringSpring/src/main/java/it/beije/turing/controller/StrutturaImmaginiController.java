@@ -1,9 +1,7 @@
 package it.beije.turing.controller;
 
-import it.beije.turing.beans.Struttura;
 import it.beije.turing.beans.StrutturaImmagini;
 import it.beije.turing.service.StrutturaImmaginiService;
-import it.beije.turing.service.StruttureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

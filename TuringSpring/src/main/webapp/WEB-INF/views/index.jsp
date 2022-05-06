@@ -56,6 +56,17 @@
         <td>Mostra tutte strutture</td>
         <td><a href="http://localhost:8080/TuringSpring/showAllStrutture">/showAllStrutture</a></td>
     </tr>
+    <tr>
+        <td>Cancella struttura</td>
+        <td><a href="http://localhost:8080/TuringSpring/deleteStruttura">/deleteStruttura</a></td>
+    </tr>
+
+
+    <tr>
+        <td>Inserisci struttura</td>
+        <td><a href="http://localhost:8080/TuringSpring/insertStruttura">/insertStruttura</a></td>
+    </tr>
+
 </table>
 </body>
 </html>

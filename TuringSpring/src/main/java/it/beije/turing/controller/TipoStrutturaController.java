@@ -17,8 +17,6 @@ public class TipoStrutturaController {
     @Autowired
     private TipoStrutturaService tipoStrutturaService;
 
-
-
     @RequestMapping(value = "/showAllTipoStruttura", method = RequestMethod.GET)
     public String showAllTipoStrutture(Model model) {
         List<TipoStruttura> tipoStrutturas=tipoStrutturaService.getAllTipoStruttura();
@@ -26,7 +24,6 @@ public class TipoStrutturaController {
         model.addAttribute("tipostrutture",tipoStrutturas);
         return "mostratipostruttura";
     }
-
 
     @RequestMapping(value = "/insertTipoStruttura",method = RequestMethod.GET)
     public String insertNewTipoStruttura(){

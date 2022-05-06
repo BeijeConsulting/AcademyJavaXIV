@@ -87,4 +87,20 @@ public class TipoStrutturaService {
     public List<TipoStruttura> searchTipoStruttura(String tipo) {
         return tipoStrutturaRepository.searchByTipo(tipo);
     }
+
+    /**
+     * Cerca la struttura in base all'id
+     * @param id codice identificativo
+     * @return oggetto del tipo struttura
+     */
+    public TipoStruttura getTipoStrutturaById(Integer id) {
+
+        if(tipoStrutturaRepository.existsById(id)) {
+            Optional<TipoStruttura> result = tipoStrutturaRepository.findById(id);
+            TipoStruttura t = result.get();
+            return t;
+        }else {
+            return null;
+        }
+    }
 }
