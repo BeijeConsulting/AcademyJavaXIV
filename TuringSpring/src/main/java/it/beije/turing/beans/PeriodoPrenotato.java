@@ -1,6 +1,7 @@
 package it.beije.turing.beans;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,10 +29,10 @@ public class PeriodoPrenotato
 	private Annuncio annuncio;
 	
 	@Column(name = "data_inizio")
-	private LocalDate dataInizio;
+	private LocalDateTime dataInizio;
 	
 	@Column(name = "data_fine")
-	private LocalDate dataFine;
+	private LocalDateTime dataFine;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="utente_id")
@@ -51,19 +52,19 @@ public class PeriodoPrenotato
 		this.annuncio = annuncio;
 	}
 
-	public LocalDate getDataInizio() {
+	public LocalDateTime getDataInizio() {
 		return dataInizio;
 	}
 
-	public void setDataInizio(LocalDate dataInizio) {
+	public void setDataInizio(LocalDateTime dataInizio) {
 		this.dataInizio = dataInizio;
 	}
 
-	public LocalDate getDataFine() {
+	public LocalDateTime getDataFine() {
 		return dataFine;
 	}
 
-	public void setDataFine(LocalDate dataFine) {
+	public void setDataFine(LocalDateTime dataFine) {
 		this.dataFine = dataFine;
 	}
 

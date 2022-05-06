@@ -124,7 +124,7 @@ public class FirstService
 		return (List<PeriodoPrenotato>) periodoPrenotatoRepository.findAll();
 	}
 	 
-	public PeriodoPrenotato newPeriodoPrenotato(PeriodoPrenotato periodoPrenotato, Integer periodoPrenotatoId)
+	public PeriodoPrenotato updatePeriodoPrenotato(PeriodoPrenotato periodoPrenotato, Integer periodoPrenotatoId)
 	{
 		PeriodoPrenotato periodoPrenotatoDB = periodoPrenotatoRepository.findById(periodoPrenotatoId).get();
 		
@@ -151,7 +151,7 @@ public class FirstService
 		return periodoPrenotatoRepository.save(periodoPrenotatoDB);
 	}
 	
-	public PeriodoPrenotato updatePeriodoPrenotato(PeriodoPrenotato periodoPrenotato)
+	public PeriodoPrenotato newPeriodoPrenotato(PeriodoPrenotato periodoPrenotato)
 	{
 		return periodoPrenotatoRepository.save(periodoPrenotato);
 	}
