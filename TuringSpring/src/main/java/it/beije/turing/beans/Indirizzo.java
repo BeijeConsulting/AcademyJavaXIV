@@ -1,6 +1,7 @@
 package it.beije.turing.beans;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "indirizzo" )
@@ -100,5 +101,13 @@ public class Indirizzo {
                 ", stato='" + stato + '\'' +
                 ", numeroCivico='" + numeroCivico + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Indirizzo indirizzo = (Indirizzo) o;
+        return Objects.equals(id, indirizzo.id) && Objects.equals(cap, indirizzo.cap) && Objects.equals(citta, indirizzo.citta) && Objects.equals(provincia, indirizzo.provincia) && Objects.equals(via, indirizzo.via) && Objects.equals(stato, indirizzo.stato) && Objects.equals(numeroCivico, indirizzo.numeroCivico) && Objects.equals(coordinate, indirizzo.coordinate);
     }
 }
