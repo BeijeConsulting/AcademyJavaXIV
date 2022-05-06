@@ -18,8 +18,8 @@ public class ServiceCarta {
 		return cartaRepository.findAll();
 	}
 	
-	public List<Carta> findByUtenteId(Integer utenteId) {
-		return cartaRepository.findAllByUtenteId(utenteId);
+	public List<Carta> getByUtenteId(Integer utenteId) {
+		return cartaRepository.findByUtenteId(utenteId);
 	}
 	
 	public Carta addCarta(Carta carta) {
