@@ -22,7 +22,6 @@ public class ServizioController {
 		List<Servizio> servizi = serviceServizio.getAllServizio();
 		servizi.forEach(System.out::println);
 		model.addAttribute("servizi", servizi);
-		
 		return "mostraservizio";
 	}
 	

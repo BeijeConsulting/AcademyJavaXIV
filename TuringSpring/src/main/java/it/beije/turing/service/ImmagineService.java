@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.awt.*;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImmagineService {
@@ -17,8 +19,14 @@ public class ImmagineService {
         return immagineRepository.findAll();
     }
 
-    public void addImage(Model m){
-        //immagineRepository.save();
+    public void addImage(String url){
+        Immagine immagine = new Immagine();
+        immagine.setUrlImage(url);
+        immagineRepository.save(immagine);
     }
 
+    public void delateImmagine(int imageId) {
+        Optional<Immagine> i= immagineRepository.findById(imageId);
+        immagineRepository.delete(i.get());
+    }
 }

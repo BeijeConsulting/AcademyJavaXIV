@@ -25,12 +25,25 @@ public class ImmagineController {
         return "mostraimmagini";
     }
 
-    @RequestMapping(value = "addImmagePost", method = RequestMethod.POST)
+    @RequestMapping(value = "/addImmagePost", method = RequestMethod.POST)
     public String addImmagePost(Model model, @RequestParam(name = "urlImage") String urlImage) {
-        System.out.println("POST /login");
-
-        model.addAttribute("url image", urlImage);
-        return "aggiungi immagine";
+        immagineService.addImage(urlImage);
+        return "inserisciImmagine";
     }
 
+    @RequestMapping(value = "/addImmagePost", method = RequestMethod.GET)
+    public String addImmagePost() {
+        return "inserisciImmagine";
+    }
+
+    @RequestMapping(value = "/delateImmagePost", method = RequestMethod.POST)
+    public String delateImmagePost(Model model, @RequestParam(name = "structureImageId") int structureImageId) {
+        immagineService.delateImmagine(structureImageId);
+        return "eliminaImmagine";
+    }
+
+    @RequestMapping(value = "/delateImmagePost", method = RequestMethod.GET)
+    public String delateImmagePost() {
+        return "eliminaImmagine";
+    }
 }

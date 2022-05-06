@@ -1,5 +1,6 @@
 package it.beije.turing.controller;
 
+import it.beije.turing.beans.Immagine;
 import it.beije.turing.beans.Struttura;
 import it.beije.turing.beans.StrutturaImmagini;
 import it.beije.turing.service.StrutturaImmaginiService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -25,6 +27,28 @@ public class StrutturaImmaginiController {
         strutturasImmagini.forEach(System.out::println);
         model.addAttribute("strutturaImmagini",strutturasImmagini);
         return "mostrastruttureimmagini";
+    }
+
+    @RequestMapping(value = "/addStructureImmagePost", method = RequestMethod.POST)
+    public String addImmagePost(Model model, @RequestParam(name = "strutturaId") Struttura strutturaId,  @RequestParam(name = "strutturaId") Immagine immagineId) {
+        strutturaImmaginiService.addStructureImage(strutturaId, immagineId);
+        return "inserisciStrutturaImmagini";
+    }
+
+    @RequestMapping(value = "/addStructureImmagePost", method = RequestMethod.GET)
+    public String addStructureImmagePost() {
+        return "inserisciStrutturaImmagini";
+    }
+
+    @RequestMapping(value = "/delateImmageStructurePost", method = RequestMethod.POST)
+    public String delateImmageStructurePost(Model model, @RequestParam(name = "imageId") int imageId) {
+        strutturaImmaginiService.delateImageStructure(imageId);
+        return "eliminaStrutturaImmagini";
+    }
+
+    @RequestMapping(value = "/delateImmageStructurePost", method = RequestMethod.GET)
+    public String delateImmageStructurePost() {
+        return "eliminaStrutturaImmagini";
     }
 
 }
