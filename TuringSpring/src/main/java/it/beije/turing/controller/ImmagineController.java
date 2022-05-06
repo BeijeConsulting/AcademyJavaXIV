@@ -46,4 +46,16 @@ public class ImmagineController {
     public String delateImmagePost() {
         return "eliminaImmagine";
     }
+
+    @RequestMapping(value = "/updateImmagine",method = RequestMethod.GET)
+    public String updateImmagine(){
+        return "updatetipostruttura";
+    }
+
+    @RequestMapping(value = "/updateImmagine",method = RequestMethod.POST)
+    public String updateImmagine(Model model, @RequestParam(value = "idImmagine") Integer idImmagine ,@RequestParam(value = "urlImage") String urlImage){
+        boolean result= immagineService.updateTipoStruttura(idImmagine,urlImage);
+        model.addAttribute("risultato", result);
+        return "updatetipostruttura";
+    }
 }

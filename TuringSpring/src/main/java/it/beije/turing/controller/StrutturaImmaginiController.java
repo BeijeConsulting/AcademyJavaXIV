@@ -51,4 +51,15 @@ public class StrutturaImmaginiController {
         return "eliminaStrutturaImmagini";
     }
 
+    @RequestMapping(value = "/updateStrutturaImmagine", method = RequestMethod.GET)
+    public String updateStrutturaImmagine() {
+        return "modificaStrutturaImmagini";
+    }
+
+    @RequestMapping(value = "/updateStrutturaImmagine", method = RequestMethod.POST)
+    public String updateImmagine(Model model, @RequestParam(value = "idStrutturaImmagine") Integer idStrutturaImmagine, @RequestParam(value = "strutturaId") String strutturaId, @RequestParam(value = "immagineId") String immagineId) {
+        //boolean result = strutturaImmaginiService.updateStrutturaImmagine(idStrutturaImmagine, strutturaId, immagineId);
+        //model.addAttribute("risultato", result);
+        return "modificaStrutturaImmagini";
+    }
 }

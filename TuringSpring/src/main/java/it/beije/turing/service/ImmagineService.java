@@ -1,6 +1,7 @@
 package it.beije.turing.service;
 
 import it.beije.turing.beans.Immagine;
+import it.beije.turing.beans.TipoStruttura;
 import it.beije.turing.repository.ImmagineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,4 +30,21 @@ public class ImmagineService {
         Optional<Immagine> i= immagineRepository.findById(imageId);
         immagineRepository.delete(i.get());
     }
+
+    public boolean updateTipoStruttura(int id,String urlImage) {
+
+        Optional<Immagine> t = immagineRepository.findById(id);
+
+        if( immagineRepository.existsById(id)){
+            Immagine result=t.get();
+            result.setUrlImage(urlImage);
+            immagineRepository.save(result);
+        }
+        if((immagineRepository.findById(id).get().getUrlImage().equals(urlImage))){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

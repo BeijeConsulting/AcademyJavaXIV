@@ -50,4 +50,6 @@ public class Immagine {
                 ", urlImage='" + urlImage + '\'' +
                 '}';
     }
+
+
 }

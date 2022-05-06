@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title>Delate</title>
+    <title>Elimina struttura immagini</title>
 </head>
 <body>
 
