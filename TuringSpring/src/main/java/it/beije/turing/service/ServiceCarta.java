@@ -17,7 +17,11 @@ public class ServiceCarta {
 	public List<Carta> getAll(){
 		return cartaRepository.findAll();
 	}
-
+	
+	public List<Carta> findByUtenteId(Integer utenteId) {
+		return cartaRepository.findAllByUtenteId(utenteId);
+	}
+	
 	public Carta addCarta(Carta carta) {
 		if(cartaRepository.existsById(carta.getId())) {
 			return null;
