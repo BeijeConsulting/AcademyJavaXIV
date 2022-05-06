@@ -24,7 +24,7 @@ public class Indirizzo {
     private String numeroCivico;
     @Column(name="coordinate")
     private String coordinate;
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
