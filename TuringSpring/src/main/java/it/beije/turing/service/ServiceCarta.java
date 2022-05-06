@@ -18,9 +18,9 @@ public class ServiceCarta {
 //		return cartaRepository.findAll();
 //	}
 	
-	public List<Carta> getByUtenteId(Integer utenteId) {
-		return cartaRepository.findByUtenteId(utenteId);
-	}
+//	public List<Carta> getByUtenteId(Integer utenteId) {
+//		return cartaRepository.findByUtenteId(utenteId);
+//	}
 	
 //	public Carta addCarta(Carta carta) {
 //		if(cartaRepository.existsById(carta.getId())) {

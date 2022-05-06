@@ -56,7 +56,7 @@ public class PeriodoPrenotatoController
 	}
 	
 	@RequestMapping(value = "/modifica-prenotazioni", method = RequestMethod.POST)
-	public String modificaPost(@RequestParam String id, @RequestParam LocalDateTime data_inizio, @RequestParam LocalDateTime data_fine, @RequestParam String stato_pagamento, @RequestParam String stato_accetazione) 
+	public String modificaPost(@RequestParam String id, @RequestParam String data_inizio, @RequestParam String data_fine, @RequestParam String stato_pagamento, @RequestParam String stato_accetazione) 
 	{
 		PeriodoPrenotato pp = new PeriodoPrenotato();
 
@@ -86,7 +86,7 @@ public class PeriodoPrenotatoController
 	}
 	
 	@RequestMapping(value = "/inserisci-prenotazione", method = RequestMethod.POST)
-	public String inserisciPost(@RequestParam String annuncio_id, @RequestParam String utente_id, @RequestParam LocalDateTime data_inizio, @RequestParam LocalDateTime data_fine, @RequestParam String stato_pagamento, @RequestParam String stato_accettazione) 
+	public String inserisciPost(@RequestParam String annuncio_id, @RequestParam String utente_id, @RequestParam String data_inizio, @RequestParam String data_fine, @RequestParam String stato_pagamento, @RequestParam String stato_accettazione) 
 	{
 		PeriodoPrenotato pp = new PeriodoPrenotato();
 
