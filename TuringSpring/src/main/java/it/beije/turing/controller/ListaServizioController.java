@@ -19,7 +19,7 @@ public class ListaServizioController {
 	private ListaServizioService serviceListaServizio;
 	
 	@RequestMapping(value = "/mostra_lista_servizio" , method = RequestMethod.GET)
-	public String mostraServizi(Model model) {
+	public String mostraListaServizi(Model model) {
 		System.out.println("LISTA SERVIZIO");
 		List<ListaServizio> listaServizi = serviceListaServizio.getAllListaServizio();
 		listaServizi.forEach(System.out::println);

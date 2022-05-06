@@ -1,7 +1,6 @@
 package it.beije.turing.beans;
 
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "lista_servizi")
-public class ListaServizio {
+@Table(name = "lista_servizi_strutture")
+public class ListaServizioStruttura {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -27,8 +26,8 @@ public class ListaServizio {
 	private Servizio servizioId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "annuncio_id")
-	private Annuncio annuncioId;
+	@JoinColumn(name = "struttura_id")
+	private Struttura strutturaId;
 	
 	public Integer getId() {
 		return id;
@@ -42,8 +41,8 @@ public class ListaServizio {
 		return servizioId;
 	}
 	
-	public void setAnnuncioId(Annuncio annuncioId) {
-		this.annuncioId = annuncioId;
+	public void setAnnuncioId(Struttura strutturaId) {
+		this.strutturaId = strutturaId;
 	}
 
 	public Servizio getServizioId() {
@@ -55,7 +54,7 @@ public class ListaServizio {
 	}
 
 	public String toString() {
-		StringBuilder builder = new StringBuilder().append("Id: " + this.id).append("{ Annuncio id : ").append(this.annuncioId)
+		StringBuilder builder = new StringBuilder().append("Id: " + this.id).append("{ Struttura id : ").append(this.strutturaId)
 				.append("{ Servizio id : ").append(this.servizioId);
 		return builder.toString();
 	}
