@@ -4,7 +4,7 @@ import it.beije.turing.beans.Immagine;
 import it.beije.turing.beans.Struttura;
 import it.beije.turing.beans.StrutturaImmagini;
 import it.beije.turing.service.StrutturaImmaginiService;
-import it.beije.turing.service.StruttureService;
+import it.beije.turing.service.StrutturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
