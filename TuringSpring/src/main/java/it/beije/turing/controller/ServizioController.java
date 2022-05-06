@@ -38,7 +38,7 @@ public class ServizioController {
         return "eliminaservizio";
     }
 	
-	@RequestMapping(value = "/eliminaservizio", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateservizio", method = RequestMethod.POST)
     public String updateServizio(Model model, @RequestParam(name = "id") int servizioId, 
     		@RequestParam(name = "nome" ) String nome, @RequestParam(name = "urlImg") String urlImg ) {
 		Servizio servizio = new Servizio();

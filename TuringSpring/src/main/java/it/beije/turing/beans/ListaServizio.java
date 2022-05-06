@@ -32,6 +32,9 @@ public class ListaServizio {
 	@JoinColumn(name = "servizio_id")
 	private Servizio servizioId;
 
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "annuncio_id")
+	private Servizio annuncioId;
 	
 	public Integer getId() {
 		return id;
@@ -44,7 +47,15 @@ public class ListaServizio {
 	public Struttura getStrutturaId() {
 		return strutturaId;
 	}
+	
+	public void setAnnuncioId(Struttura strutturaId) {
+		this.strutturaId = strutturaId;
+	}
 
+	public Servizio getAnnuncioId() {
+		return servizioId;
+	}
+	
 	public void setStrutturaId(Struttura strutturaId) {
 		this.strutturaId = strutturaId;
 	}
