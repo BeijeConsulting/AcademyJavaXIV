@@ -2,6 +2,9 @@ package it.beije.turing.beans;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "strutture")
 public class Struttura {
@@ -11,9 +14,10 @@ public class Struttura {
     private Integer id;
 
 
+    
     @ManyToOne(cascade=CascadeType.DETACH, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
     @JoinColumn(name="tipologia_struttura_id")
-    private TipoStruttura tipologiaStrutturaId;
+    private TipoStruttura tipologiaStruttura;
 
     @Column(name = "descrizione")
     private String descrizione;
@@ -23,7 +27,7 @@ public class Struttura {
     private Indirizzo indirizzo;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="host_id")
+    @JoinColumn(name="utente_id")
     private Utente utente;
 
     public Utente getUtente() {
@@ -44,11 +48,11 @@ public class Struttura {
 
 
     public TipoStruttura getTipologiaStrutturaId() {
-        return tipologiaStrutturaId;
+        return tipologiaStruttura;
     }
 
     public void setTipologiaStrutturaId(TipoStruttura tipologiaStrutturaId) {
-        this.tipologiaStrutturaId = tipologiaStrutturaId;
+        this.tipologiaStruttura = tipologiaStrutturaId;
     }
 
     public String getDescrizione() {
@@ -71,7 +75,7 @@ public class Struttura {
     public String toString() {
         return "Struttura{" +
                 "id=" + id +
-                ", tipologiaStrutturaId=" + tipologiaStrutturaId +
+                ", tipologiaStrutturaId=" + tipologiaStruttura +
                 ", descrizione='" + descrizione + '\'' +
                 ", indirizzo=" + indirizzo +
                 ", utenti=" + utente +

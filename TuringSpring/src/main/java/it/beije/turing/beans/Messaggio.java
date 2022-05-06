@@ -24,13 +24,16 @@ public class Messaggio {
 	private String testo;
 	
 	@Column(name = "receiver_id")
-	private Integer reciverId;
+	private Integer receiverId;
 	
 	@Column(name="data_ora")
-	private Date dataOra;
+	private String dataOra;
 	
 	@Column(name = "sender_id")
 	private Integer senderId;
+
+	@Column(name = "annuncio_id")
+	private Integer annuncioId;
 
 	public Integer getId() {
 		return id;
@@ -46,34 +49,42 @@ public class Messaggio {
 		this.testo = testo;
 	}
 
-	public Integer getReciverId() {
-		return reciverId;
+	public Integer getReceiverId() {
+		return receiverId;
 	}
-	public void setReciverId(int reciverId) {
-		this.reciverId = reciverId;
+	public void setReceiverId(Integer receiverId) {
+		this.receiverId = receiverId;
 	}
 
-	public Date getDataOra() {
+	public String getDataOra() {
 		return dataOra;
 	}
-	public void setDataOra(Date dataOra) {
+	public void setDataOra(String dataOra) {
 		this.dataOra = dataOra;
 	}
 
 	public Integer getSenderId() {
 		return senderId;
 	}
-	public void setSenderId(int senderId) {
+	public void setSenderId(Integer senderId) {
 		this.senderId = senderId;
+	}
+
+	public Integer getAnnuncioId() {
+		return annuncioId;
+	}
+	public void setAnnuncioId(Integer annuncioId) {
+		this.annuncioId = annuncioId;
 	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 				.append("{ id : ").append(this.id)
 				.append(", testo : ").append(this.testo)
-				.append(", reciverId : ").append(this.reciverId)
+				.append(", receiverId : ").append(this.receiverId)
 				.append(", dataOra : ").append(this.dataOra)
 				.append(", senderId : ").append(this.senderId)
+				.append(", annuncioId : ").append(this.annuncioId)
 				.append(" }")
 		;
 		

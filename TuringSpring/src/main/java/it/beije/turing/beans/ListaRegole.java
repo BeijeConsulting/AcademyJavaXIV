@@ -24,7 +24,7 @@ public class ListaRegole
 	@JoinColumn(name="annuncio_id")
 	private Annuncio annuncioId;
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@ManyToOne(cascade=CascadeType.DETACH, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="regola_id")
 	private Regola regolaId;
 	

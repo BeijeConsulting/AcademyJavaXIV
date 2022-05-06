@@ -1,6 +1,5 @@
 package it.beije.turing.beans;
 
-import java.sql.Date;
 
 import javax.persistence.*;
 
@@ -21,7 +20,7 @@ public class Carta {
 	private String numeroCarta;
 	
 	@Column(name = "data_scadenza")
-	private Date dataScadenza;
+	private String dataScadenza;
 	
 	@Column(name = "ccv")
 	private String ccv;
@@ -47,10 +46,10 @@ public class Carta {
 		this.numeroCarta = numero_carta;
 	}
 
-	public Date getDataScadenza() {
+	public String getDataScadenza() {
 		return dataScadenza;
 	}
-	public void setDataScadenza(Date dataScadenza) {
+	public void setDataScadenza(String dataScadenza) {
 		this.dataScadenza = dataScadenza;
 	}
 

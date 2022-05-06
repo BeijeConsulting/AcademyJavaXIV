@@ -4,16 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "utenti")
@@ -51,8 +42,8 @@ public class Utente {
     @Column(name = "contatto_emergenza")
     private String contattoEmergenza;
 
-    @Column(name = "tipo_utente")
-    private String tipoUtente;
+    @Column(name = "url_immagine")
+    private String urlImmagine;
 
     @Column(name = "livello")
     private Integer livello;
@@ -72,6 +63,7 @@ public class Utente {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "utente_id")
     private Set<Carta> carte;
+
 
     public Integer getId() {
         return id;
@@ -143,11 +135,11 @@ public class Utente {
         this.contattoEmergenza = contattoEmergenza;
     }
 
-    public String getTipoUtente() {
-        return tipoUtente;
+    public String getUrlImmagine() {
+        return urlImmagine;
     }
-    public void setTipoUtente(String tipoUtente) {
-        this.tipoUtente = tipoUtente;
+    public void setUrlImmagine(String urlImmagine) {
+        this.urlImmagine = urlImmagine;
     }
 
     public Integer getLivello() {
@@ -185,6 +177,7 @@ public class Utente {
         this.carte = carte;
     }
 
+
     @Override
     public String toString() {
         return "Utente{" +
@@ -198,7 +191,7 @@ public class Utente {
                 ", indirizzoId=" + indirizzoId +
                 ", telefono='" + telefono + '\'' +
                 ", contattoEmergenza='" + contattoEmergenza + '\'' +
-                ", tipoUtente='" + tipoUtente + '\'' +
+                ", urlImmagine='" + urlImmagine + '\'' +
                 ", livello=" + livello +
                 ", messaggiRicevuti=" + messaggiRicevuti +
                 ", messaggiInviati=" + messaggiInviati +
