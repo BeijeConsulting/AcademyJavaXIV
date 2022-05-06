@@ -27,10 +27,13 @@ public class Messaggio {
 	private Integer receiverId;
 	
 	@Column(name="data_ora")
-	private Date dataOra;
+	private String dataOra;
 	
 	@Column(name = "sender_id")
 	private Integer senderId;
+
+	@Column(name = "annuncio_id")
+	private Integer annuncioId;
 
 	public Integer getId() {
 		return id;
@@ -53,18 +56,25 @@ public class Messaggio {
 		this.receiverId = receiverId;
 	}
 
-	public Date getDataOra() {
+	public String getDataOra() {
 		return dataOra;
 	}
-	public void setDataOra(Date dataOra) {
+	public void setDataOra(String dataOra) {
 		this.dataOra = dataOra;
 	}
 
 	public Integer getSenderId() {
 		return senderId;
 	}
-	public void setSenderId(int senderId) {
+	public void setSenderId(Integer senderId) {
 		this.senderId = senderId;
+	}
+
+	public Integer getAnnuncioId() {
+		return annuncioId;
+	}
+	public void setAnnuncioId(Integer annuncioId) {
+		this.annuncioId = annuncioId;
 	}
 
 	public String toString() {
@@ -74,6 +84,7 @@ public class Messaggio {
 				.append(", receiverId : ").append(this.receiverId)
 				.append(", dataOra : ").append(this.dataOra)
 				.append(", senderId : ").append(this.senderId)
+				.append(", annuncioId : ").append(this.annuncioId)
 				.append(" }")
 		;
 		

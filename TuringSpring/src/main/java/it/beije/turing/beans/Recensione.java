@@ -20,7 +20,7 @@ public class Recensione {
     private Integer punteggio;
 
     @Column(name = "data")
-    private Date data;
+    private String data;
 //    @ManyToOne()
     @Column(name = "utente_id")
     private Integer reviewerId;
@@ -49,10 +49,10 @@ public class Recensione {
         this.punteggio = punteggio;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
