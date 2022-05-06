@@ -15,7 +15,7 @@ public interface RecensioneRepository extends JpaRepository<Recensione, Integer>
 
 
     public List<Recensione> findByPunteggio(Integer punteggio);
-    public List<Recensione> findByUtenteId(Integer utenteId);
+    public List<Recensione> findByReviewerId(Integer reviewerId);
     public List<Recensione> findByPrenotazioneId(Integer prenotazioneId);
 
 

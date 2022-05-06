@@ -15,6 +15,10 @@ public interface UtenteRepository extends JpaRepository<Utente, Integer> {
 
     public List<Utente> findByEmail(String email);
 
+
+
+    public Utente findDistinctByEmail(String email);
+
     @Query(value = "SELECT u FROM Utente as u WHERE u.email = :email")
     public List<Utente> searchByEmail(@Param("email") String email);
 
