@@ -30,7 +30,7 @@ public class StrutturaImmaginiController {
     }
 
     @RequestMapping(value = "/addStructureImmagePost", method = RequestMethod.POST)
-    public String addImmagePost(Model model, @RequestParam(name = "strutturaId") Struttura strutturaId,  @RequestParam(name = "strutturaId") Immagine immagineId) {
+    public String addImmagePost(Model model, @RequestParam(name = "strutturaId") Struttura strutturaId,  @RequestParam(name = "immagineId") Immagine immagineId) {
         strutturaImmaginiService.addStructureImage(strutturaId, immagineId);
         return "inserisciStrutturaImmagini";
     }
