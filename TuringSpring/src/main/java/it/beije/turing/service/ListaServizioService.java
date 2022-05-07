@@ -15,7 +15,15 @@ public class ListaServizioService {
 		return listaServizioRepository.findAll();
 	}
 	
+	/***
+	 * 
+	 * @param listSer
+	 * @return null if the ListaServizio passed has both getAnnuncioId and getStrutturaId initialized
+	 */
 	public ListaServizio addListaServizio(ListaServizio listSer) {
+		if(listSer.getAnnuncioId() != null && listSer.getStrutturaId() != null)
+			return null;
+		
 		return listaServizioRepository.save(listSer);
 	}
 	
@@ -23,14 +31,21 @@ public class ListaServizioService {
 		listaServizioRepository.deleteById(listaSerId);
 	}
 	
+	/***
+	 * 
+	 * @param listSer
+	 * @param listSerId
+	 * @return false if the paramether listSer passed is null or has both getAnnuncioId and getStrutturaId initialized
+	 */
 	public boolean updateListaServizio(ListaServizio listSer, Integer listSerId) {
 		if(listSer == null)
 			return false;
-		
-		ListaServizio oldListSer = listaServizioRepository.findById(listSerId).get();
-		if(listSer.getId() == oldListSer.getId())
+		if(listSer.getAnnuncioId() != null && listSer.getStrutturaId() != null)
 			return false;
 		
+		ListaServizio oldListSer = listaServizioRepository.findById(listSerId).get();
+		oldListSer.setAnnuncioId(listSer.getAnnuncioId());
+		oldListSer.setStrutturaId(listSer.getStrutturaId());
 		listaServizioRepository.save(listSer);
 		return true;
 	}

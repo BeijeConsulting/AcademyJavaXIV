@@ -30,6 +30,10 @@ public class ListaServizio {
 	@JoinColumn(name = "annuncio_id")
 	private Annuncio annuncioId;
 	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "struttura_id")
+	private Struttura strutturaId;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -38,8 +42,15 @@ public class ListaServizio {
 		this.id = id;
 	}
 
-	public Servizio getAnnuncioId() {
-		return servizioId;
+	public Struttura getStrutturaId() {
+		return strutturaId;
+	}
+	
+	public void setStrutturaId(Struttura strutturaId) {
+		this.strutturaId = strutturaId;
+	}
+	public Annuncio getAnnuncioId() {
+		return annuncioId;
 	}
 	
 	public void setAnnuncioId(Annuncio annuncioId) {
@@ -56,7 +67,7 @@ public class ListaServizio {
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder().append("Id: " + this.id).append("{ Annuncio id : ").append(this.annuncioId)
-				.append("{ Servizio id : ").append(this.servizioId);
+				.append("{ Servizio id : ").append(this.servizioId).append("{ Struttura id : ").append(this.strutturaId);
 		return builder.toString();
 	}
 }
