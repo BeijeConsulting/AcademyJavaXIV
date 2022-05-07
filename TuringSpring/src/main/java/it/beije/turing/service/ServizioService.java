@@ -17,6 +17,10 @@ public class ServizioService {
 		return servizioRepository.findAll();
 	}
 	
+	public Servizio getById(int id) {
+		return servizioRepository.getOne(id);
+	}
+	
 	public Servizio addServizio(String urlImg, String nome) {
 		Servizio servizio = new Servizio();
 		servizio.setNome(nome);

@@ -28,17 +28,19 @@ public class ServizioController {
 	
 	@RequestMapping(value = "/aggiungiservizio", method = RequestMethod.GET)
     public String aggiungiServizio(Model model, @RequestParam(name = "nome" ) String nome, @RequestParam(name = "urlImg") String urlImg) {
+		nome = "ciao";
+		urlImg = "aggiunto";
 		serviceServizio.addServizio(urlImg, nome);
-        return "inserisciimmagine";
+        return "aggiungiservizio";
     }
 	
-	@RequestMapping(value = "/eliminaservizio", method = RequestMethod.POST)
+	@RequestMapping(value = "/eliminaservizio", method = RequestMethod.GET)
     public String eliminaServizio(Model model, @RequestParam(name = "id") int servizioId) {
         serviceServizio.removeServizio(servizioId);
         return "eliminaservizio";
     }
 	
-	@RequestMapping(value = "/updateservizio", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateservizio", method = RequestMethod.GET)
     public String updateServizio(Model model, @RequestParam(name = "id") int servizioId, 
     		@RequestParam(name = "nome" ) String nome, @RequestParam(name = "urlImg") String urlImg ) {
 		Servizio servizio = new Servizio();
