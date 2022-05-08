@@ -14,6 +14,7 @@ import it.beije.turing.beans.Servizio;
 import it.beije.turing.beans.Struttura;
 import it.beije.turing.service.ListaServizioService;
 import it.beije.turing.service.ServizioService;
+import it.beije.turing.service.StrutturaService;
 
 @Controller
 public class ListaServizioController {
@@ -23,6 +24,9 @@ public class ListaServizioController {
 	
 	@Autowired
 	private ServizioService serviceServizio;
+	
+	@Autowired
+	private StrutturaService str;
 	
 	@RequestMapping(value = "/mostra_lista_servizio" , method = RequestMethod.GET)
 	public String mostraListaServizi(Model model) {
@@ -34,48 +38,92 @@ public class ListaServizioController {
 		return "mostralistaservizio";
 	}
 	
+	/***
+	 * 
+	 * @param model
+	 * @param servizioId The object of type "Servizio" stored into the "ListaServizio" that we'll be adding into the database
+	 * @param idCollegato The object linked to the "Servizio", a check is occurred to understand if the one passed is one of type "Annuncio" or "Struttura"
+	 * @return
+	 */
 	@RequestMapping(value = "/aggiungilistaservizio", method = RequestMethod.GET)
-    public String aggiungiListaServizio(Model model) {
-//		ListaServizio listSer = new ListaServizio();
-//		listSer.setServizioId(serviceServizio.getById(servizioId));
-//		Annuncio annuncio = null;
-//		Struttura struttura = null;
-//		
-//		if(o instanceof Annuncio) {
-//			annuncio = (Annuncio)o;
-//			listSer.setAnnuncioId(annuncio);
-//		}
-//			
-//		if(o instanceof Struttura) {
-//			struttura = (Struttura)o;
-//			listSer.setStrutturaId(struttura);
-//		}
+    public String aggiungiListaServizio(Model model, @RequestParam(name = "servizioId") Integer servizioId , @RequestParam(name = "idCollegato") Object idCollegato) {
 		ListaServizio listSer = new ListaServizio();
-		Annuncio annuncio = new Annuncio();
-		annuncio.setId(7);
-		Servizio servizio = serviceServizio.getById(1);
-		listSer.setServizioId(servizio);
-		listSer.setAnnuncioId(annuncio);
-		//TODO prendere servizio/annuncio/struttura tramite i loro service
+		listSer.setServizioId(serviceServizio.getById(servizioId));
+		Annuncio annuncio = null;
+		Struttura struttura = null;
+		
+		if(idCollegato instanceof Annuncio) {
+			annuncio = (Annuncio)idCollegato;
+			listSer.setAnnuncioId(annuncio);
+		}
+			
+		if(idCollegato instanceof Struttura) {
+			struttura = (Struttura)idCollegato;
+			listSer.setStrutturaId(struttura);
+		}
 		serviceListaServizio.addListaServizio(listSer);
         return "mostralistaservizio";
     }
+	
+	@RequestMapping(value = "/eliminalistaservizio", method = RequestMethod.GET)
+    public String eliminaListaServizio(Model model, @RequestParam(name = "id") Integer servizioId) {
+        serviceServizio.removeServizio(servizioId);
+        return "eliminaservizio";
+    }
+	
+	@RequestMapping(value = "/updatelistaservizio", method = RequestMethod.GET)
+    public String updateListaServizio(Model model, @RequestParam(name = "id") Integer listSerId, 
+    		@RequestParam(name = "idCollegato" ) Object idCollegato) {
+		ListaServizio listSer = new ListaServizio();
+		Annuncio annuncio = null;
+		Struttura struttura = null;
+		
+		if(idCollegato instanceof Annuncio) {
+			annuncio = (Annuncio)idCollegato;
+			listSer.setAnnuncioId(annuncio);
+		}
+			
+		if(idCollegato instanceof Struttura) {
+			struttura = (Struttura)idCollegato;
+			listSer.setStrutturaId(struttura);
+		}
+		serviceListaServizio.updateListaServizio(listSer, listSerId);
+		
+        return "updatelistaservizio";
+    }
+	
+	
+	//TESTING
+//	@RequestMapping(value ="/test", method = RequestMethod.GET)
+//	public String testing() {
+//		this.stampa();
+//		System.out.println("LISTA SERVIZIO");
+//		
+//        ListaServizio listSer = new ListaServizio();
+//        Struttura struttura = str.findStrutturaById(1);
+//        listSer.setServizioId(serviceServizio.getById(1));
+//        listSer.setStrutturaId(struttura);
+//        
+//        System.out.println("AGGIUNGI");
+//        serviceListaServizio.addListaServizio(listSer);
+//        stampa();
+//        
+//        System.out.println("MODIFICA");
+//        listSer.setStrutturaId(str.findStrutturaById(2));
+//        serviceListaServizio.updateListaServizio(listSer, listSer.getId());
+//        this.stampa();
+//        
+//        System.out.println("DELETE");
+//        serviceListaServizio.removeListaServizio(listSer.getId());
+//        this.stampa();
+//		return "index";
+//	}
 //	
-//	@RequestMapping(value = "/eliminalistaservizio", method = RequestMethod.POST)
-//    public String eliminaListaServizio(Model model, @RequestParam(name = "id") int servizioId) {
-//        serviceServizio.removeServizio(servizioId);
-//        return "eliminaservizio";
-//    }
-//	
-//	@RequestMapping(value = "/eliminalistaservizio", method = RequestMethod.POST)
-//    public String updateListaServizio(Model model, @RequestParam(name = "id") int servizioId, 
-//    		@RequestParam(name = "nome" ) String nome, @RequestParam(name = "urlImg") String urlImg ) {
-//		Servizio servizio = new Servizio();
-//		servizio.setNome(nome);
-//		servizio.setUrlImg(urlImg);
-//        serviceServizio.updateServizio(servizio, servizioId);
-//        return "updateservizio";
-//    }
+//	public void stampa() {
+//		List<ListaServizio> lista = serviceListaServizio.getAllListaServizio();
+//		for(ListaServizio s : lista)
+//			System.out.println(s);
+//	}
 	
 	
 }

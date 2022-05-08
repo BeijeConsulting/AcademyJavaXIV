@@ -18,7 +18,7 @@ public class ListaServizioService {
 	/***
 	 * 
 	 * @param listSer
-	 * @return null if the ListaServizio passed has both getAnnuncioId and getStrutturaId initialized
+	 * @return The new added object ListaServizio or null if the ListaServizio passed has both getAnnuncioId and getStrutturaId initialized
 	 */
 	public ListaServizio addListaServizio(ListaServizio listSer) {
 		if(listSer.getAnnuncioId() != null && listSer.getStrutturaId() != null)
@@ -27,7 +27,11 @@ public class ListaServizioService {
 		return listaServizioRepository.save(listSer);
 	}
 	
-	public void removeListaServizio(Integer listaSerId) {
+	/***
+	 * Removes the ListaServizio in the database with the same id passed
+	 * @param listaSerId
+	 */
+	public void removeListaServizio(int listaSerId) {
 		listaServizioRepository.deleteById(listaSerId);
 	}
 	
