@@ -1,5 +1,7 @@
 package it.beije.turing.beans;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,6 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "immagini")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Immagine {
 
     @Id
