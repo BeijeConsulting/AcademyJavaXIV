@@ -70,6 +70,35 @@
         <td>Modifica struttura</td>
         <td><a href="http://localhost:8080/TuringSpring/updateStruttura">/updateStruttura</a></td>
     </tr>
+
+    <tr>
+        <th colspan="2"><h3>Indirizzo</h3></th>
+    </tr>
+    <tr>
+        <th>Operation</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td>Mostra tutti gli indirizzi</td>
+        <td><a href="http://localhost:8080/TuringSpring/showAllIndirizzi">/showAllIndirizzi</a></td>
+    </tr>
+    <tr>
+        <td>Inserimento nuovo indirizzo</td>
+        <td><a href="http://localhost:8080/TuringSpring/insertTipoStruttura">/insertTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Cancella indirizzo</td>
+        <td><a href="http://localhost:8080/TuringSpring/deleteTipoStruttura">/deleteTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Aggiorna indirizzo</td>
+        <td><a href="http://localhost:8080/TuringSpring/updateTipoStruttura">/updateTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Trova indirizzo</td>
+        <td><a href="http://localhost:8080/TuringSpring/searchTipoStruttura">/searchTipoStruttura</a></td>
+    </tr>
+
 </table>
 </body>
 </html>

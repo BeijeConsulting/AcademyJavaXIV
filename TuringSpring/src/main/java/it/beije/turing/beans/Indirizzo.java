@@ -100,6 +100,7 @@ public class Indirizzo {
                 ", via='" + via + '\'' +
                 ", stato='" + stato + '\'' +
                 ", numeroCivico='" + numeroCivico + '\'' +
+                ", coordinate='" + coordinate + '\'' +
                 '}';
     }
 
