@@ -1,10 +1,13 @@
 package it.beije.turing.beans;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "indirizzo" )
+@JsonInclude
 public class Indirizzo {
 
     @Id
