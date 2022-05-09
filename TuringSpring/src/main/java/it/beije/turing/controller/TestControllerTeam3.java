@@ -93,10 +93,10 @@ import it.beije.turing.service.ServiceStrutture;
 	         System.out.println("MODIFICA");
 	         regola=servicereg.getRegola().get(0);
 	         regola.setDescrizione("MODIFICA!");
-	         servicereg.updateRegola(regola);
+	         //servicereg.updateRegola(regola);
 	         servicereg.getRegola().forEach(System.out::println);
 	         System.out.println("DELETE");
-	         servicereg.deleteRegola(regola);
+	        // servicereg.deleteRegola(regola);
 	         servicereg.getRegola().forEach(System.out::println);
 	         
 	       System.out.println("LISTA REGOLE");
