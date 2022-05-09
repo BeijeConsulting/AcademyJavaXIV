@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,13 +18,13 @@ public class ServizioController {
 	@Autowired
 	private ServizioService serviceServizio;
 	
-	@RequestMapping(value = "/mostraservizio" , method = RequestMethod.GET)
-	public String mostraServizi(Model model) {
+	
+	@GetMapping(value = "/services")
+	public List<Servizio> mostraServizi() {
 		System.out.println("SERVIZIO");
-		List<Servizio> servizi = serviceServizio.getAllServizio();
-		servizi.forEach(System.out::println);
-		model.addAttribute("servizi", servizi);
-		return "mostraservizio";
+		List<Servizio> services = serviceServizio.getAllServizio();
+		System.out.println(services);
+		return services;
 	}
 	
 	@RequestMapping(value = "/aggiungiservizio", method = RequestMethod.GET)
