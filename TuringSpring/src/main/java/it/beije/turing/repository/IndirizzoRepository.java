@@ -14,4 +14,5 @@ public interface IndirizzoRepository extends JpaRepository<Indirizzo,Integer> {
 
     @Query(value = "SELECT i FROM Indirizzo as i WHERE i.citta  = :citta")
     public List<Indirizzo> searchByTipo(@Param("citta") String citta);
+
 }
