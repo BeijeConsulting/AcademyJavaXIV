@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.beije.turing.beans.Annuncio;
 import it.beije.turing.service.FirstService;
+import it.beije.turing.service.ServiceAnnuncio;
 
 
 @Controller
@@ -16,12 +17,12 @@ public class FirstController
 {
 	
 	@Autowired
-	private FirstService service;
+	private ServiceAnnuncio serviceAnnuncio;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index() {
 
-		List<Annuncio> annunci = service.getAnnuncio();
+		List<Annuncio> annunci = serviceAnnuncio.getAnnuncio();
 		
 		for(Annuncio a : annunci)
 		{

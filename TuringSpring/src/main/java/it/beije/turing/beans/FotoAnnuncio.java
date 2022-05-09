@@ -56,4 +56,11 @@ public class FotoAnnuncio
 	public void setImmagineId(Immagine immagineId) {
 		this.immagineId = immagineId;
 	}
+
+	@Override
+	public String toString() {
+		return "FotoAnnuncio [id=" + id + ", annuncio=" + annuncio + ", immagineId=" + immagineId + "]";
+	}
+	
+	
 }
