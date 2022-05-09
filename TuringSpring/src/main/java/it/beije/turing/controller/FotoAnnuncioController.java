@@ -31,16 +31,16 @@ public class FotoAnnuncioController {
         return list;
     }
 
-    @GetMapping(value = "/foto_annuncio/{id}")
+    @GetMapping(value = "/foto_annunci/{id}")
     public Optional<FotoAnnuncio> contact(@PathVariable(name = "id") Integer id) {
-        System.out.println("GET /foto_annuncio/" + id);
+        System.out.println("GET /foto_annunci/" + id);
 
         return service.getFotoAnnuncioById(id);
     }
 
-    @PostMapping(value = "/foto_annuncio")
+    @PostMapping(value = "/foto_annunci")
     public FotoAnnuncio contact(@RequestBody FotoAnnuncio fotoAnnuncio) {
-        System.out.println("POST /foto_annuncio -> " + fotoAnnuncio);
+        System.out.println("POST /foto_annunci -> " + fotoAnnuncio);
 
         if (fotoAnnuncio.getAnnuncio() != null || fotoAnnuncio.getImmagineId() != null) {
             service.newFotoAnnuncio(fotoAnnuncio);
@@ -49,9 +49,9 @@ public class FotoAnnuncioController {
         return fotoAnnuncio;
     }
 
-    @PutMapping(value = "/foto_annuncio/{id}")
+    @PutMapping(value = "/foto_annunci/{id}")
     public FotoAnnuncio contact(@PathVariable(name = "id") Integer id, @RequestBody FotoAnnuncio fotoAnnuncio) {
-        System.out.println("PUT /foto_annuncio/ " + id + " -> " + fotoAnnuncio);
+        System.out.println("PUT /foto_annunci/ " + id + " -> " + fotoAnnuncio);
 
         if (fotoAnnuncio.getId().compareTo(id) == 0) {
             service.updateFotoAnnuncio(fotoAnnuncio,id);
