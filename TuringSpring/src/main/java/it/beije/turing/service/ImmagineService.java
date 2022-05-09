@@ -1,13 +1,9 @@
 package it.beije.turing.service;
-
 import it.beije.turing.beans.Immagine;
-import it.beije.turing.beans.TipoStruttura;
 import it.beije.turing.repository.ImmagineRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
-import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,31 +16,29 @@ public class ImmagineService {
         return immagineRepository.findAll();
     }
 
-    public void addImage(String url){
-        Immagine immagine = new Immagine();
-        immagine.setUrlImage(url);
-        immagineRepository.save(immagine);
+    public Immagine findContatto(Integer id) {
+        Optional<Immagine> c = immagineRepository.findById(id);
+        return c.isPresent() ? c.get() : null;
     }
 
-    public void delateImmagine(int imageId) {
-        Optional<Immagine> i= immagineRepository.findById(imageId);
-        immagineRepository.delete(i.get());
+    public Immagine insertImmagine(Immagine immagine) {
+        return immagineRepository.save(immagine);
     }
 
-    public boolean updateTipoStruttura(int id,String urlImage) {
+    public Immagine updateImmagine(Integer id, Immagine immagine) {
+        Immagine oldImmagine = findContatto(id);
 
-        Optional<Immagine> t = immagineRepository.findById(id);
+        if (oldImmagine != null) {
+            BeanUtils.copyProperties(immagine, oldImmagine);
+            immagineRepository.save(oldImmagine);
 
-        if( immagineRepository.existsById(id)){
-            Immagine result=t.get();
-            result.setUrlImage(urlImage);
-            immagineRepository.save(result);
+            return oldImmagine;
         }
-        if((immagineRepository.findById(id).get().getUrlImage().equals(urlImage))){
-            return true;
-        }else{
-            return false;
-        }
+
+        return null;
     }
 
+    public void deleteImmagine(Integer id) {
+        immagineRepository.deleteById(id);
+    }
 }

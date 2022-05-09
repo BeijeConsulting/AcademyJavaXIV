@@ -17,10 +17,6 @@ public interface TipoStrutturaRepository extends JpaRepository<TipoStruttura,Int
     @Query(value = "SELECT t FROM TipoStruttura as t WHERE t.tipo = :tipo")
     public List<TipoStruttura> searchByTipo(@Param("tipo") String tipo);
 
-   /* static final String INSERT_QUERY="INSERT INTO tipologia_struttura (tipo) VALUES (':tipo');";
-    //CREATE
-    @Query(nativeQuery = true ,value = INSERT_QUERY)
-    void insertNewTipoStruttura(@Param("tipo") String tipo);
-    */
+
 
 }

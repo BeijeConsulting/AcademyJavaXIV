@@ -3,59 +3,61 @@ package it.beije.turing.controller;
 import it.beije.turing.beans.Immagine;
 import it.beije.turing.service.ImmagineService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 public class ImmagineController {
 
     @Autowired
     private ImmagineService immagineService;
 
-    @RequestMapping(value = "/showAllImmagini", method = RequestMethod.GET)
-    public String showAllImmagini(Model model) {
-        List<Immagine> immagines=immagineService.getAllImmagine();
-        immagines.forEach(System.out::println);
-        model.addAttribute("immagini",immagines);
-        return "mostraimmagini";
+    @GetMapping(value = "/images")
+    public List<Immagine> showAllImmagini() {
+        List<Immagine> images = immagineService.getAllImmagine();
+        images.forEach(System.out::println);
+        return images;
     }
 
-    @RequestMapping(value = "/addImmagePost", method = RequestMethod.POST)
-    public String addImmagePost(Model model, @RequestParam(name = "urlImage") String urlImage) {
-        immagineService.addImage(urlImage);
-        return "inserisciImmagine";
+    @GetMapping(value = "/image/{id}")
+    public Immagine showImmagine(@PathVariable(name = "id") Integer id) {
+        System.out.println("GET /contact/" + id);
+        return immagineService.findContatto(id);
     }
 
-    @RequestMapping(value = "/addImmagePost", method = RequestMethod.GET)
-    public String addImmagePost() {
-        return "inserisciImmagine";
+    @PostMapping(value = "/image")
+    public Immagine insertImmagine(@RequestBody Immagine immagine) {
+        System.out.println("POST /contact -> " + immagine);
+
+        if (immagine.getUrlImage() != null ) {
+            immagineService.insertImmagine(immagine);
+        }
+
+        return immagine;
     }
 
-    @RequestMapping(value = "/delateImmagePost", method = RequestMethod.POST)
-    public String delateImmagePost(Model model, @RequestParam(name = "structureImageId") int structureImageId) {
-        immagineService.delateImmagine(structureImageId);
-        return "eliminaImmagine";
+
+    @PutMapping(value = "/image/{id}")
+    public Immagine updateImmagine(@PathVariable(name = "id") Integer id, @RequestBody Immagine immagine) {
+        if (immagine.getId().compareTo(id) == 0) {
+            immagineService.updateImmagine(id, immagine);
+        }
+        return immagine;
     }
 
-    @RequestMapping(value = "/delateImmagePost", method = RequestMethod.GET)
-    public String delateImmagePost() {
-        return "eliminaImmagine";
-    }
+    @DeleteMapping(value = "/image/{id}")
+    public Map<String, Boolean> delImmagine(@PathVariable(name = "id") Integer id) {
+        System.out.println("DELETE /contact/" + id);
 
-    @RequestMapping(value = "/updateImmagine",method = RequestMethod.GET)
-    public String updateImmagine(){
-        return "updatetipostruttura";
-    }
+        immagineService.deleteImmagine(id);
 
-    @RequestMapping(value = "/updateImmagine",method = RequestMethod.POST)
-    public String updateImmagine(Model model, @RequestParam(value = "idImmagine") Integer idImmagine ,@RequestParam(value = "urlImage") String urlImage){
-        boolean result= immagineService.updateTipoStruttura(idImmagine,urlImage);
-        model.addAttribute("risultato", result);
-        return "updatetipostruttura";
+        Map map = new HashMap<String, Boolean>();
+        map.put("esito", Boolean.TRUE);
+
+        return map;
     }
 }

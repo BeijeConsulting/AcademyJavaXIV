@@ -1,8 +1,11 @@
 package it.beije.turing.beans;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "tipologia_struttura")
 public class TipoStruttura {
 
@@ -19,7 +22,6 @@ public class TipoStruttura {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
 
 
     public Integer getId() {

@@ -1,8 +1,11 @@
 package it.beije.turing.beans;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "strutture")
 public class Struttura {
     @Id

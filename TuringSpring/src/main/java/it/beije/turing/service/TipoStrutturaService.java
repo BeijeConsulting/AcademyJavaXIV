@@ -2,6 +2,7 @@ package it.beije.turing.service;
 
 import it.beije.turing.beans.TipoStruttura;
 import it.beije.turing.repository.TipoStrutturaRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,38 +14,18 @@ public class TipoStrutturaService {
     @Autowired
     private TipoStrutturaRepository tipoStrutturaRepository;
 
-    /**
-     * Restituisce una lista di tutti i tipo di struttura
-     * @return lista di tipi struttura
-     */
+
     public List<TipoStruttura> getAllTipoStruttura(){
         return tipoStrutturaRepository.findAll();
     }
-    /**
-     * Inserisce un nuovo tipo struttura con la sua
-     * @param tipo descrizione del tipo della struttura
-     * @return true se è stato inserito false se non è stato inserito
-     *
-     */
-    public Boolean insertNewTipoStruttura(String tipo) {
-        TipoStruttura tipoStruttura= new TipoStruttura();
-        tipoStruttura.setTipo(tipo);
 
-        TipoStruttura result = tipoStrutturaRepository.save(tipoStruttura);
+    public TipoStruttura insertNewTipoStruttura( TipoStruttura tipo) {
+        TipoStruttura result = tipoStrutturaRepository.save(tipo);
 
-        if(result.getId()==null){
-            return false;
-        }else {
-            return true;
-        }
+        return result;
     }
 
-    /**
-     * Cancella un tipo struttura tramite l' ID di riferimento
-     * @param id id della struttura da cancellare
-     * @return true se è stato cancellato false se non è stato cancellato
-     *
-     */
+
     public boolean deleteTipoStruttura(Integer id) {
 
         Optional<TipoStruttura> t = tipoStrutturaRepository.findById(id);
@@ -57,50 +38,37 @@ public class TipoStrutturaService {
         }
     }
 
-    /**
-     * Modifica tipo di struttura
-     * @param id id del tipo di struttura da modificare
-     * @param nuovoTipo nuovo valore
-     * @return true se la modifica è avvenuta con successo false altrimenti
-     */
-    public boolean updateTipoStruttura(Integer id,String nuovoTipo) {
 
-        Optional<TipoStruttura> t = tipoStrutturaRepository.findById(id);
+    public TipoStruttura updateTipoStruttura(Integer id, TipoStruttura nuovoTipo) {
 
-        if( tipoStrutturaRepository.existsById(id)){
-            TipoStruttura result=t.get();
-            result.setTipo(nuovoTipo);
-            tipoStrutturaRepository.save(result);
+       TipoStruttura t = getTipoStrutturaById(id);
+
+        if( t!=null){
+            nuovoTipo.setId(id);
+            BeanUtils.copyProperties(nuovoTipo,t);
+            tipoStrutturaRepository.save(t);
+            return nuovoTipo;
         }
-        if((tipoStrutturaRepository.findById(id).get().getTipo().equals(nuovoTipo))){
-            return true;
-        }else{
-            return false;
-        }
+        return null;
     }
 
-    /**
-     * Cerca una determinato tipo struttura
-     * @param tipo di struttura da ricercare
-     * @return lista di tutti gli elementi che hanno quella nomenclatura
-     */
+
     public List<TipoStruttura> searchTipoStruttura(String tipo) {
         return tipoStrutturaRepository.searchByTipo(tipo);
     }
 
-    /**
-     * Cerca la struttura in base all'id
-     * @param id codice identificativo
-     * @return oggetto del tipo struttura
-     */
-    public TipoStruttura getTipoStrutturaById(Integer id) {
 
+    public TipoStruttura getTipoStrutturaById(Integer id) {
+        System.out.println(tipoStrutturaRepository.existsById(id));
         if(tipoStrutturaRepository.existsById(id)) {
+
             Optional<TipoStruttura> result = tipoStrutturaRepository.findById(id);
-            TipoStruttura t = result.get();
-            return t;
+            System.out.println(result.get());
+            return result.get();
         }else {
             return null;
         }
     }
+
+
 }

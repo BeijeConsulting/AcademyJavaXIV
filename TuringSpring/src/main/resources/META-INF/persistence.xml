@@ -25,7 +25,7 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/beijebnb"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="nardella"/>
+			<property name="javax.persistence.jdbc.password" value="rootroot"/>
 		</properties>
 
 	</persistence-unit>

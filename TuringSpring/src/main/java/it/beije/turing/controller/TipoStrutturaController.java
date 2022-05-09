@@ -6,69 +6,67 @@ import it.beije.turing.service.TipoStrutturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 public class TipoStrutturaController {
     @Autowired
     private TipoStrutturaService tipoStrutturaService;
 
-    @RequestMapping(value = "/showAllTipoStruttura", method = RequestMethod.GET)
-    public String showAllTipoStrutture(Model model) {
+    @GetMapping(value = "/showAllTipoStruttura")
+    public List<TipoStruttura> showAllTipoStrutture() {
         List<TipoStruttura> tipoStrutturas=tipoStrutturaService.getAllTipoStruttura();
-      //  tipoStrutturas.forEach(System.out::println);
-        model.addAttribute("tipostrutture",tipoStrutturas);
-        return "mostratipostruttura";
+        return tipoStrutturas;
     }
 
-    @RequestMapping(value = "/insertTipoStruttura",method = RequestMethod.GET)
+   /* @RequestMapping(value = "/insertTipoStruttura",method = RequestMethod.GET)
     public String insertNewTipoStruttura(){
         return "inserttipostruttura";
+    }*/
+
+    @PostMapping(value = "/insertTipoStruttura")
+    public TipoStruttura insertNewTipoStruttura(@RequestBody TipoStruttura tipo){
+        TipoStruttura ntipo=tipoStrutturaService.insertNewTipoStruttura(tipo);
+        return ntipo;
     }
 
-    @RequestMapping(value = "/insertTipoStruttura",method = RequestMethod.POST)
-    public String insertNewTipoStruttura(Model model, @RequestParam(value = "tipo") String tipo){
-        boolean execute=tipoStrutturaService.insertNewTipoStruttura(tipo);
-        model.addAttribute("risultato", execute);
-        return "inserttipostruttura";
-    }
-
-    @RequestMapping(value = "/deleteTipoStruttura",method = RequestMethod.GET)
+   /* @RequestMapping(value = "/deleteTipoStruttura",method = RequestMethod.GET)
     public String deleteTipoStruttura(){
         return "deletetipostruttura";
-    }
+    }*/
 
-    @RequestMapping(value = "/deleteTipoStruttura",method = RequestMethod.POST)
-    public String deleteTipoStruttura(Model model, @RequestParam(value = "id_tipo") Integer idtipo){
-        boolean execute=tipoStrutturaService.deleteTipoStruttura(idtipo);
-        model.addAttribute("risultato", execute);
-        return "deletetipostruttura";
+    @DeleteMapping(value = "/deleteTipoStruttura/{id}")
+    public Map<String, Boolean> deleteTipoStruttura(@PathVariable(name = "id") Integer id){
+        boolean execute=tipoStrutturaService.deleteTipoStruttura(id);
+        Map map = new HashMap<String, Boolean>();
+        map.put("esito", execute);
+        return map;
     }
-    @RequestMapping(value = "/updateTipoStruttura",method = RequestMethod.GET)
+  /*  @RequestMapping(value = "/updateTipoStruttura",method = RequestMethod.GET)
     public String updateTipoStruttura(){
         return "updatetipostruttura";
+    }*/
+
+    @PutMapping(value = "/updateTipoStruttura/{id}")
+    public TipoStruttura updateTipoStruttura(@PathVariable(name = "id") Integer id, @RequestBody TipoStruttura tipoStruttura){
+
+        TipoStruttura execute= tipoStrutturaService.updateTipoStruttura(id,tipoStruttura);
+
+        return execute;
     }
 
-    @RequestMapping(value = "/updateTipoStruttura",method = RequestMethod.POST)
-    public String updateTipoStruttura(Model model, @RequestParam(value = "id_tipo") Integer idtipo,@RequestParam(value = "tipo") String tipo){
-        boolean execute= tipoStrutturaService.updateTipoStruttura(idtipo,tipo);
-        model.addAttribute("risultato", execute);
-        return "updatetipostruttura";
-    }
-
-    @RequestMapping(value = "/searchTipoStruttura",method = RequestMethod.GET)
+   /* @RequestMapping(value = "/searchTipoStruttura",method = RequestMethod.GET)
     public String searchTipoStruttura(){
         return "searchtipostruttura";
-    }
+    }*/
 
-    @RequestMapping(value = "/searchTipoStruttura",method = RequestMethod.POST)
-    public String searchTipoStruttura(Model model,@RequestParam(value = "tipo") String tipo){
-        List<TipoStruttura> execute= tipoStrutturaService.searchTipoStruttura(tipo);
-        model.addAttribute("lista", execute);
-        return "searchtipostruttura";
+    @GetMapping (value = "/searchTipoStruttura/search/{str}")
+    public List<TipoStruttura> searchTipoStruttura( @PathVariable(name = "str") String tipoStruttura){
+        List<TipoStruttura> execute= tipoStrutturaService.searchTipoStruttura(tipoStruttura);
+        return execute;
     }
 }
