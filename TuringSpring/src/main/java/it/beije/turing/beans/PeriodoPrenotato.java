@@ -28,12 +28,12 @@ public class PeriodoPrenotato
 	private Annuncio annuncio;
 	
 	@Column(name = "data_inizio")
-	private LocalDate dataInizio;
+	private String dataInizio;
 	
 	@Column(name = "data_fine")
-	private LocalDate dataFine;
+	private String dataFine;
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@ManyToOne(cascade=CascadeType.DETACH, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="utente_id")
 	private Utente ospiteId;
 	
@@ -51,19 +51,19 @@ public class PeriodoPrenotato
 		this.annuncio = annuncio;
 	}
 
-	public LocalDate getDataInizio() {
+	public String getDataInizio() {
 		return dataInizio;
 	}
 
-	public void setDataInizio(LocalDate dataInizio) {
+	public void setDataInizio(String dataInizio) {
 		this.dataInizio = dataInizio;
 	}
 
-	public LocalDate getDataFine() {
+	public String getDataFine() {
 		return dataFine;
 	}
 
-	public void setDataFine(LocalDate dataFine) {
+	public void setDataFine(String dataFine) {
 		this.dataFine = dataFine;
 	}
 
