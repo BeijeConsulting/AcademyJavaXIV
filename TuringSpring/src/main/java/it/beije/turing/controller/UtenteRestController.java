@@ -10,7 +10,7 @@ import java.util.List;
 
 @RequestMapping(value = "api")
 @RestController
-public class UtenteController
+public class UtenteRestController
 {
 	
 	@Autowired
