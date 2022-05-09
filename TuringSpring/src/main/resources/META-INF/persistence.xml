@@ -19,13 +19,15 @@
 		<class>it.beije.turing.beans.TipoStruttura</class>
 		<class>it.beije.turing.beans.Admin</class>
 		<class>it.beije.turing.beans.Host</class>
+		<class>org.springframework.data.jpa.domain.AbstractPersistable</class>
+		<class>org.springframework.data.jpa.domain.AbstractAuditable</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/beijebnb"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="nardella"/>
+			<property name="javax.persistence.jdbc.password" value="rootroot"/>
 		</properties>
 
 	</persistence-unit>

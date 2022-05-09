@@ -9,78 +9,65 @@ import it.beije.turing.service.TipoStrutturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 public class StrutturaController {
 
     @Autowired
     private StrutturaService strutturaService;
-    @Autowired
+ /*   @Autowired
     private TipoStrutturaService tipoStrutturaService;
     @Autowired
     private IndirizzoService indirizzoService;
-
-    @RequestMapping(value = "/showAllStrutture", method = RequestMethod.GET)
-    public String showAllStrutture(Model model) {
+*/
+    @GetMapping(value = "/showAllStrutture")
+    public List<Struttura> showAllStrutture() {
         List<Struttura> strutturas= strutturaService.getAllStruttura();
-        model.addAttribute("strutture",strutturas);
-
-
-        return "mostrastrutture";
+        return strutturas;
     }
 
-
-
-
-    @RequestMapping(value = "/insertStruttura",method = RequestMethod.GET)
+   /* @RequestMapping(value = "/insertStruttura",method = RequestMethod.GET)
     public String insertNewStruttura(Model model){
-
         model.addAttribute("listatipostruttura", tipoStrutturaService.getAllTipoStruttura());
-
         model.addAttribute("lista_indirizzio",indirizzoService.getAllIndirizzi());
-
         return "insertstruttura";
-    }
-    @RequestMapping(value = "/insertStruttura",method = RequestMethod.POST)
-    public String insertNewStruttura(Model model, @RequestParam(value = "descrizione") String descrizione, @RequestParam(value = "tipo-strutture") Integer idTipoStrutture, @RequestParam(value = "lista_indirizzio") Integer id_indirizzo, @RequestParam(value = "id_utente" ,required = false) Integer id_utente){
+    }*/
 
-        System.out.println( "Descrizione: " +descrizione+
-                            "\ntipo-strutture: "+idTipoStrutture+
-                            "\nid indirizzo: "+id_indirizzo+
-                            "\nid_utente: "+id_utente);
+    @PostMapping(value = "/insertStruttura")
+    public Struttura insertNewStruttura(@RequestBody Struttura struttura){
 
-        strutturaService.insertNewTipoStruttura(descrizione,idTipoStrutture,id_indirizzo,null);
-        model.addAttribute("listatipostruttura",tipoStrutturaService.getAllTipoStruttura());
+       Struttura struttura_new= strutturaService.insertNewTipoStruttura(struttura);
 
-        return "insertstruttura";
+        return struttura_new;
     }
 
-
+    /*
     @RequestMapping(value = "/deleteStruttura",method = RequestMethod.GET)
     public String deleteStruttura(){
         return "deletestruttura";
-    }
+    }*/
 
-    @RequestMapping(value = "/deleteStruttura",method = RequestMethod.POST)
-    public String deleteStruttura(Model model, @RequestParam(value = "id_struttura") Integer idStruttura){
+    @DeleteMapping(value = "/deleteStruttura/{id}")
+    public Map<String, Boolean> deleteStruttura(@PathVariable(name = "id") Integer idStruttura){
         boolean execute=strutturaService.deleteStruttura(idStruttura);
-        model.addAttribute("risultato", execute);
-        return "deletestruttura";
+        Map map = new HashMap<String, Boolean>();
+        map.put("esito", execute);
+        return map;
     }
 
-    @RequestMapping(value = "/updateStruttura",method = RequestMethod.GET)
+    /*@RequestMapping(value = "/updateStruttura",method = RequestMethod.GET)
     public String updateStruttura(Model model){
         model.addAttribute("lista_strutture", strutturaService.getAllStruttura());
         return "updatestruttura";
-    }
+    }*/
 
-    @RequestMapping(value = "/loadStruttura",method = RequestMethod.POST)
+   /* @RequestMapping(value = "/loadStruttura",method = RequestMethod.POST)
     public String loadStruttura(Model model,@RequestParam(value = "id_struttura") Integer idStruttura){
         System.out.println(idStruttura);
 
@@ -89,21 +76,12 @@ public class StrutturaController {
         model.addAttribute("listatipostruttura",tipoStrutturaService.getAllTipoStruttura());
         model.addAttribute("lista_indirizzio_u",indirizzoService.getAllIndirizzi());
         return "updatestruttura";
-    }
+    }*/
 
 
-    @RequestMapping(value = "/updateStruttura",method = RequestMethod.POST)
-    public String updateStruttura(Model model, @RequestParam(value = "id_struttura") Integer id_stru,@RequestParam(value = "descrizione") String descrizione, @RequestParam(value = "tipo-strutture") Integer idTipoStrutture, @RequestParam(value = "lista_indirizzio") Integer id_indirizzo, @RequestParam(value = "id_utente" ,required = false) Integer id_utente){
-
-        System.out.println(
-                "\nid struttura: "+id_stru+
-                "Descrizione: " +descrizione+
-                "\ntipo-strutture: "+idTipoStrutture+
-                "\nid indirizzo: "+id_indirizzo+
-
-                "\nid_utente: "+id_utente);
-        strutturaService.updateStructure(id_stru,descrizione,id_indirizzo,idTipoStrutture,id_utente);
-
-        return "updatestruttura";
+    @PutMapping(value = "/updateStruttura/{id}")
+    public Struttura updateStruttura( @PathVariable(name = "id") Integer id_stru, @RequestBody Struttura struttura){
+        Struttura s=strutturaService.updateStructure(id_stru,struttura);
+        return s;
     }
 }

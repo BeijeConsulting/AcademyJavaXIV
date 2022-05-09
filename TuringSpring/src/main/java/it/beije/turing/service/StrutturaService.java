@@ -1,10 +1,9 @@
 package it.beije.turing.service;
 
 
-import it.beije.turing.beans.Indirizzo;
 import it.beije.turing.beans.Struttura;
-import it.beije.turing.beans.TipoStruttura;
 import it.beije.turing.repository.StrutturaRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,20 +25,9 @@ public class StrutturaService {
     }
 
 
-    public void insertNewTipoStruttura(String descrizione, Integer idTipoStrutture, Integer idIndirizzo, Integer idUtente) {
-        TipoStruttura tipoStrutturaResult = tipoStrutturaService.getTipoStrutturaById(idTipoStrutture);
-        Indirizzo indirizzo = indirizzoService.findIndirizzoByID(idIndirizzo);
+    public Struttura insertNewTipoStruttura(Struttura struttura) {
+        return  strutturaRepository.save(struttura);
 
-        if (tipoStrutturaResult != null && indirizzo != null) {
-
-            Struttura struttura = new Struttura();
-            struttura.setDescrizione(descrizione);
-            struttura.setTipologiaStrutturaId(tipoStrutturaResult);
-            struttura.setIndirizzo(indirizzo);
-            //struttura.setUtente(utente);//TODO
-            strutturaRepository.save(struttura);
-            System.out.println(struttura);
-        }
     }
 
     public boolean deleteStruttura(Integer idStruttura) {
@@ -60,13 +48,14 @@ public class StrutturaService {
         }
     }
 
-    public void updateStructure(Integer id_stru, String descrizione, Integer id_indirizzo, Integer idTipoStrutture, Integer id_utente) {
+    public Struttura updateStructure(Integer id_stru, Struttura struttura) {
 
-            Struttura struttura= strutturaRepository.findById(id_stru).get();
-            struttura.setDescrizione(descrizione);
-            struttura.setIndirizzo(indirizzoService.findIndirizzoByID(id_indirizzo));
-            struttura.setTipologiaStrutturaId(tipoStrutturaService.getTipoStrutturaById(id_stru));
-            //struttura.setUtente(id_utente);//TODO
-            strutturaRepository.save(struttura);
+           if(strutturaRepository.existsById(id_stru)){
+              Struttura result= strutturaRepository.findById(id_stru).get();
+              struttura.setId(id_stru);
+              BeanUtils.copyProperties(struttura,result);
+              return strutturaRepository.save(result);
+           }
+           return null;
     }
 }
