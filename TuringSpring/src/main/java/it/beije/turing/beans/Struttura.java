@@ -27,7 +27,7 @@ public class Struttura {
     private Indirizzo indirizzo;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="utente_id")
+    @JoinColumn(name="host_id")
     private Utente utente;
 
     public Utente getUtente() {
