@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import it.beije.turing.beans.PeriodoPrenotato;
 import it.beije.turing.repository.PeriodoPrenotatoRepository;
-import org.springframework.stereotype.Service;
+
 
 @Service
 public class ServicePeriodoPrenotato 

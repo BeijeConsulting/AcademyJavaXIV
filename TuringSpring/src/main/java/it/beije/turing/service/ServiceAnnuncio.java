@@ -3,6 +3,7 @@ package it.beije.turing.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import it.beije.turing.beans.Annuncio;
 import it.beije.turing.repository.AnnuncioRepository;
