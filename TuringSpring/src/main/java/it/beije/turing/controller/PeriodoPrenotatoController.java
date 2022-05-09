@@ -61,8 +61,8 @@ public class PeriodoPrenotatoController
 		PeriodoPrenotato pp = new PeriodoPrenotato();
 
 		pp.setId(Integer.getInteger(id));
-		pp.setDataInizio(data_inizio);
-		pp.setDataFine(data_fine);
+		pp.setDataInizio(LocalDate.from(data_inizio));
+		pp.setDataFine(LocalDate.from(data_fine));
 		pp.setStatoPagamento(stato_pagamento);
 		pp.setStatoAccettazione(stato_accetazione);
 		
@@ -93,8 +93,8 @@ public class PeriodoPrenotatoController
 		Annuncio annuncio =  annuncioRepository.findById(Integer.getInteger(annuncio_id)).get();
 		
 		pp.setAnnuncio(annuncio);
-		pp.setDataInizio(data_inizio);
-		pp.setDataFine(data_fine);
+		pp.setDataInizio(LocalDate.from(data_inizio));
+		pp.setDataFine(LocalDate.from(data_fine));
 		pp.setStatoPagamento(stato_pagamento);
 		pp.setStatoAccettazione(stato_accettazione);
 		
