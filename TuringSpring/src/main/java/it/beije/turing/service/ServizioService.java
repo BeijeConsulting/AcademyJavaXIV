@@ -21,16 +21,13 @@ public class ServizioService {
 		return servizioRepository.getOne(id);
 	}
 	
-	public Servizio addServizio(String urlImg, String nome) {
-		Servizio servizio = new Servizio();
-		servizio.setNome(nome);
-		servizio.setUrlImg(urlImg);
-		return servizioRepository.save(servizio);
+	public Servizio addServizio(Servizio servizio) {
+		servizioRepository.save(servizio);
+		return servizio;
 	}
 	
 	public void removeServizio(Integer servizioId) {
 		servizioRepository.deleteById(servizioId);
-		
 	}
 	
 	public Servizio updateServizio(Servizio servizio, Integer servizioId) {

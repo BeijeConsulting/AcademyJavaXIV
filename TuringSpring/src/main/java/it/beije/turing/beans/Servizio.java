@@ -7,9 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 @Entity
 @Table(name = "servizi")
+@JsonInclude(Include.NON_NULL)
 public class Servizio {
 	
 	@Id
@@ -17,9 +22,11 @@ public class Servizio {
 	@Column(name="id")
 	private int id;
 	
+	@JsonProperty("nome")
 	@Column(name = "nome")
 	private String nome;
 	
+	@JsonProperty("url_img")
 	@Column(name = "url_img")
 	private String urlImg;
 
