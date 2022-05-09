@@ -17,8 +17,8 @@ public interface ContattoRepository extends JpaRepository<Contatto, Integer> {
 	
 	public List<Contatto> findByCognomeAndNome(String cognome, String nome);
 	
-	@Query(value = "SELECT c FROM Contatto as c WHERE email = :email")
+//	@Query(value = "SELECT c FROM Contatto as c WHERE email = :email")
 //	@Query(nativeQuery = true, value = "SELECT * FROM rubrica WHERE email = :email")
-	public List<Contatto> searchByEmail(@Param("email") String email);
+//	public List<Contatto> searchByEmail(@Param("email") String email);
 	
 }
