@@ -1,5 +1,7 @@
 package it.beije.turing.example;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,10 +14,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
 @Table(name = "rubrica")
+@JsonInclude(Include.NON_NULL)
 public class Contatto {
 
 	@Id
@@ -23,6 +34,7 @@ public class Contatto {
 	@Column(name="id")
 	private Integer id;
 	
+	@JsonProperty("name")
 	@Column(name = "nome")
 	private String nome;
 	
@@ -38,10 +50,14 @@ public class Contatto {
 	//SELECT * FROM rubrica r JOIN rubrica_contatti rc ON r.id = rc.rubrica_id WHERE id = X
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="rubrica_id")
+	@JsonIgnore
 	private List<RiferimentiContatto> riferimenti;
 	
-	@Column(name = "note")
+	@Column
 	private String note;
+
+	@Transient
+	private LocalDate dataNascita = LocalDate.now(); 
 	
 	
 	public Integer getId() {
@@ -92,6 +108,27 @@ public class Contatto {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	
+	
+	public LocalDate getDataNascita() {
+		return dataNascita;
+	}
+	
+	@JsonGetter(value = "data_nascita")
+	public String getDataNascitaAsString() {
+		return dataNascita.toString();
+	}
+	
+	public void setDataNascita(LocalDate dataNascita) {
+		this.dataNascita = dataNascita;
+	}
+
+	@JsonSetter(value = "data_nascita")
+	public void setDataNascita(String dataNascita) {
+		this.dataNascita = LocalDate.parse(dataNascita);
+	}
+
+	
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()

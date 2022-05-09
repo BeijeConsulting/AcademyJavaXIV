@@ -2,9 +2,13 @@ package it.beije.turing.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.util.BeanUtil;
 
 import it.beije.turing.example.Contatto;
 import it.beije.turing.repository.ContattoRepository;
@@ -44,5 +48,32 @@ public class FirstService {
 
 		return list;
 	}
+	
+	public Contatto findContatto(Integer id) {
+		Optional<Contatto> c = contattoRepository.findById(id);
+		return c.isPresent() ? c.get() : null; 
+	}
+	
+	public Contatto insertContatto(Contatto contatto) {
+		return contattoRepository.save(contatto);
+	}
+
+	public Contatto updateContatto(Integer id, Contatto contatto) {
+		Contatto old = findContatto(id);
+		
+		if (old != null) {
+			BeanUtils.copyProperties(contatto, old);
+			contattoRepository.save(old);
+			
+			return old;
+		}
+		
+		return null;
+	}
+	
+	public void deleteContatto(Integer id) {
+		contattoRepository.deleteById(id);
+	}
+	
 
 }
