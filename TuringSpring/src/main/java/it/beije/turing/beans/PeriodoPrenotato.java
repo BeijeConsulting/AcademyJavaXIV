@@ -23,7 +23,7 @@ public class PeriodoPrenotato
 	@Column(name="id")
 	private Integer id;
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@ManyToOne(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="annuncio_id")
 	private Annuncio annuncio;
 	
