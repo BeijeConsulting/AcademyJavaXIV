@@ -26,33 +26,33 @@ public class ServiceMessaggio {
 		return messaggioRepository.findBySenderId(senderId);
 	}
 	
-	public List<Messaggio> annuncioId(Integer annuncioId){
+	public List<Messaggio> getByAnnuncioId(Integer annuncioId){
 		return messaggioRepository.findByAnnuncioId(annuncioId);
 	}
 	
-	
-	public Messaggio CreateMessaggio(String testo, 
-			 String dataOra){
-		
-		Messaggio messaggio = new Messaggio();
-		
-		if(testo != null && dataOra != null) { 
-			messaggio.setTesto(testo);
-			messaggio.setDataOra(dataOra);
-			
-			return messaggioRepository.saveAndFlush(messaggio);
-		}
-		
-		return null;
+	public Messaggio getByMessaggioId(Integer messaggioId){
+		return messaggioRepository.findById(messaggioId).get();
 	}
 	
 	
+	public Messaggio createMessaggio(Messaggio messaggio){
+		
+		
+			
+			return messaggioRepository.saveAndFlush(messaggio);
+		
+		
 	
+	}
 	
+
 	
-	public void DeleteMessaggio(Integer messaggioId) {
-		messaggioRepository.deleteById(messaggioId);
-		}
+	public void deleteMessaggio(Messaggio messaggio) {
+		if(messaggioRepository.existsById(messaggio.getId()))
+		
+		messaggioRepository.delete(messaggio);
+	
+	}
 	
 
 }
