@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import it.beije.turing.example.Contatto;
-import it.beije.turing.service.FirstService;
+import it.beije.turing.rubrica.bean.Contatto;
+import it.beije.turing.service.GestoreRubrica;
 
 
 @Controller
 public class SecondController {
 	
 	@Autowired
-	private FirstService service;
+	private GestoreRubrica service;
 
 	@RequestMapping(value = "/elenco", method = RequestMethod.GET)
 	public String elenco(Model model) {
 		System.out.println("GET /elenco " + this.toString());
 		
-		List<Contatto> rubrica = service.leggiRubrica();
+		List<Contatto> rubrica = service.getList();
 		
 		model.addAttribute("contatti", rubrica);
 		
@@ -48,7 +48,7 @@ public class SecondController {
 	public String elencoMail(Model model) {
 		System.out.println("GET /elenco_mail");
 		
-		service.leggiRubrica();
+		service.getList();
 		model.addAttribute("contatti", new ArrayList());
 				
 		return "elenco";
