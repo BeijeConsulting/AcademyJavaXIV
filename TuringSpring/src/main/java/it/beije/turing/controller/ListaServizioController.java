@@ -93,37 +93,37 @@ public class ListaServizioController {
     }
 	
 	
-	//TESTING
-//	@RequestMapping(value ="/test", method = RequestMethod.GET)
-//	public String testing() {
-//		this.stampa();
-//		System.out.println("LISTA SERVIZIO");
-//		
-//        ListaServizio listSer = new ListaServizio();
-//        Struttura struttura = str.findStrutturaById(1);
-//        listSer.setServizioId(serviceServizio.getById(1));
-//        listSer.setStrutturaId(struttura);
-//        
-//        System.out.println("AGGIUNGI");
-//        serviceListaServizio.addListaServizio(listSer);
-//        stampa();
-//        
-//        System.out.println("MODIFICA");
-//        listSer.setStrutturaId(str.findStrutturaById(2));
-//        serviceListaServizio.updateListaServizio(listSer, listSer.getId());
-//        this.stampa();
-//        
-//        System.out.println("DELETE");
-//        serviceListaServizio.removeListaServizio(listSer.getId());
-//        this.stampa();
-//		return "index";
-//	}
-//	
-//	public void stampa() {
-//		List<ListaServizio> lista = serviceListaServizio.getAllListaServizio();
-//		for(ListaServizio s : lista)
-//			System.out.println(s);
-//	}
+	
+	@RequestMapping(value ="/test", method = RequestMethod.GET)
+	public String testing() {
+		this.stampa();
+		System.out.println("LISTA SERVIZIO");
+		
+        ListaServizio listSer = new ListaServizio();
+        Struttura struttura = str.findStrutturaById(1);
+        listSer.setServizioId(serviceServizio.getById(1));
+        listSer.setStrutturaId(struttura);
+        
+        System.out.println("AGGIUNGI");
+        serviceListaServizio.addListaServizio(listSer);
+        stampa();
+        
+        System.out.println("MODIFICA");
+        listSer.setStrutturaId(str.findStrutturaById(2));
+        serviceListaServizio.updateListaServizio(listSer, listSer.getId());
+        this.stampa();
+        
+        System.out.println("DELETE");
+        serviceListaServizio.removeListaServizio(listSer.getId());
+        this.stampa();
+		return "index";
+	}
+	
+	public void stampa() {
+		List<ListaServizio> lista = serviceListaServizio.getAllListaServizio();
+		for(ListaServizio s : lista)
+			System.out.println(s);
+	}
 	
 	
 }
