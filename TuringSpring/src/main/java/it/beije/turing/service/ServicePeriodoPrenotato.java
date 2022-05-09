@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import it.beije.turing.beans.PeriodoPrenotato;
 import it.beije.turing.repository.PeriodoPrenotatoRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ServicePeriodoPrenotato 
 {
 	@Autowired

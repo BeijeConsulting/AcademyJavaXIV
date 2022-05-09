@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import it.beije.turing.beans.Regola;
 import it.beije.turing.repository.RegolaRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ServiceRegola 
 {
 	@Autowired

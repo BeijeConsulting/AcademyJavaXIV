@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import it.beije.turing.beans.FotoAnnuncio;
 import it.beije.turing.repository.FotoAnnuncioRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ServiceFotoAnnuncio 
 {
 	@Autowired
