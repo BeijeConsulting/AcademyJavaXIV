@@ -81,8 +81,9 @@ public class Carta {
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 				.append("{ id : ").append(this.id)
+				.append(", id_utente : ").append(this.utenteId)
 				.append(", numero_carta : ").append(this.numeroCarta)
-				.append(", data scadenza : ").append(this.dataScadenza)
+				.append(", data_scadenza : ").append(this.dataScadenza)
 				.append(", ccv : ").append(this.ccv)
 				.append(" }")
 		;
