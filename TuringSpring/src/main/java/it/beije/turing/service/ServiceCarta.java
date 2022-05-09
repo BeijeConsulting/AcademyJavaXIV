@@ -1,7 +1,9 @@
 package it.beije.turing.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +28,8 @@ public class ServiceCarta {
 		if(cartaRepository.existsById(carta.getId())) {
 			return null;
 		}
-		cartaRepository.saveAndFlush(carta);
-		return carta;
+		Carta c = cartaRepository.saveAndFlush(carta);
+		return c;
 	}
 
 	public Carta removeCarta(Carta carta) {
@@ -36,5 +38,23 @@ public class ServiceCarta {
 		}
 		cartaRepository.delete(carta);
 		return carta;
+	}
+	
+	public Carta findCarta(Integer id) {
+		Optional<Carta> c = cartaRepository.findById(id);
+		return c.isPresent() ? c.get() : null; 
+	}
+	
+	public Carta updateCarta(Integer IdCarta, Carta carta) {
+		Carta old = findCarta(IdCarta);
+		
+		if(old != null) {
+			BeanUtils.copyProperties(carta, old);
+			old = cartaRepository.saveAndFlush(old);
+			
+			return old;
+		}
+		
+		return null;
 	}
 }
