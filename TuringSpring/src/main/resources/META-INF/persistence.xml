@@ -19,8 +19,6 @@
 		<class>it.beije.turing.beans.TipoStruttura</class>
 		<class>it.beije.turing.beans.Admin</class>
 		<class>it.beije.turing.beans.Host</class>
-		<class>org.springframework.data.jpa.domain.AbstractPersistable</class>
-		<class>org.springframework.data.jpa.domain.AbstractAuditable</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
