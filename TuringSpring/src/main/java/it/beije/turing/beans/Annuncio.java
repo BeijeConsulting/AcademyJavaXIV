@@ -32,7 +32,7 @@ public class Annuncio
 	@Column(name = "prezzo")
 	private Double prezzo;
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@ManyToOne(cascade=CascadeType.DETACH, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="struttura_id")
 	private Struttura strutturaId;
 

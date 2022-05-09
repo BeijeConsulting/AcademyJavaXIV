@@ -1,6 +1,7 @@
 package it.beije.turing.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,29 @@ public class ServiceAnnuncio
 	}
 	
 	/**
+     * Restituisce l'annuncio via l'id
+     * @return annuncio
+     */
+	public Optional<Annuncio> findAnnuncio(Integer id)
+	{
+		return annuncioRepository.findById(id);
+	}
+	
+	/**
      * Inserisce un nuovo annuncio
      * @param newAnnuncio nuovo annuncio da inserire
      * @return Oggetto annuncio inserito
      */
 	public Annuncio newAnnuncio(Annuncio newAnnuncio)
 	{
-		return annuncioRepository.save(newAnnuncio);
+		if (newAnnuncio.getTitolo() != null && !newAnnuncio.getTitolo().equals("")
+		&& newAnnuncio.getDescrizione() != null && !newAnnuncio.getDescrizione().equals("")
+		&& newAnnuncio.getNumPostiLetto() > 0
+		&& newAnnuncio.getPrezzo() > 0
+		&& newAnnuncio.getStrutturaId() != null)
+			return annuncioRepository.save(newAnnuncio);
+		
+		return null;
 	}
 	
 	/**
