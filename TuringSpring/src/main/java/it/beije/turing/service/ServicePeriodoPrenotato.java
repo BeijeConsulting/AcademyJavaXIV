@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import it.beije.turing.beans.PeriodoPrenotato;
 import it.beije.turing.repository.PeriodoPrenotatoRepository;
 
-
 @Service
 public class ServicePeriodoPrenotato 
 {
@@ -24,6 +23,16 @@ public class ServicePeriodoPrenotato
 	{
 		return (List<PeriodoPrenotato>) periodoPrenotatoRepository.findAll();
 	}
+	
+	/**
+     * Restituisce un periodo prenotato tramite l' ID di riferimento
+     * @param periodoPrenotatoId id del periodo prenotato da trovare
+     * @return periodo prenotato trovato
+     */
+	public PeriodoPrenotato  findPeriodoPrenotato(Integer periodoPrenotatoId)
+	{
+		return periodoPrenotatoRepository.findById(periodoPrenotatoId).get();
+	}
 	 
 	/**
      * Modifica un periodo prenotato tramite l' ID di riferimento
@@ -33,7 +42,7 @@ public class ServicePeriodoPrenotato
      */
 	public PeriodoPrenotato updatePeriodoPrenotato(PeriodoPrenotato periodoPrenotato, Integer periodoPrenotatoId)
 	{
-		PeriodoPrenotato periodoPrenotatoDB = periodoPrenotatoRepository.findById(periodoPrenotatoId).get();
+		PeriodoPrenotato periodoPrenotatoDB = findPeriodoPrenotato(periodoPrenotatoId);
 		
 		if (Objects.nonNull(periodoPrenotato.getDataInizio()) && !"".equalsIgnoreCase(periodoPrenotato.getDataInizio().toString()))
 		{
@@ -65,7 +74,11 @@ public class ServicePeriodoPrenotato
      */
 	public PeriodoPrenotato newPeriodoPrenotato(PeriodoPrenotato periodoPrenotato)
 	{
-		return periodoPrenotatoRepository.save(periodoPrenotato);
+		if(Objects.nonNull(periodoPrenotato.getDataInizio()) && Objects.nonNull(periodoPrenotato.getDataFine()) && Objects.nonNull(periodoPrenotato.getStatoPagamento()) && Objects.nonNull(periodoPrenotato.getStatoAccettazione()) ) {			
+			return periodoPrenotatoRepository.save(periodoPrenotato);
+		} else {
+			return null;
+		}
 	}
 	
 	 /**

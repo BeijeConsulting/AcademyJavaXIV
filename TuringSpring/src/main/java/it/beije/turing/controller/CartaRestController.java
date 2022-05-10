@@ -24,10 +24,10 @@ public class CartaRestController {
 	
 	
 	@GetMapping(value="/cards/{id}")
-	public List<Carta> cards(@PathVariable(name = "id") Integer id){
+	public Carta cards(@PathVariable(name = "id") Integer id){
 		System.out.println("GET /cards " + this.toString());
 		
-		List<Carta> carte = serviceCarta.getByUtenteId(id);
+		Carta carte = serviceCarta.findCarta(id);
 		
 		System.out.println(carte);
 		

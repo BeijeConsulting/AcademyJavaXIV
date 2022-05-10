@@ -1,6 +1,7 @@
 package it.beije.turing.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,13 @@ public class ServiceFotoAnnuncio
 	public List<FotoAnnuncio> getFotoAnnuncio()
     {
         return fotoAnnuncioRepository.findAll();
+    }
+
+    public Optional<FotoAnnuncio> getFotoAnnuncioById(Integer id) {
+        if (fotoAnnuncioRepository.findById(id) != null){
+            return fotoAnnuncioRepository.findById(id);
+        }
+        return null;
     }
     
 	/**
