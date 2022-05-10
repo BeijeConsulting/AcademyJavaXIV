@@ -44,7 +44,7 @@ public class Utente {
     @Column(name = "cod_documenti")
     private String codiceDocumento;
 
-    @JsonIgnore
+    @JsonProperty("address")
     @Column(name = "indirizzo_id")
     private Integer indirizzoId;
 
