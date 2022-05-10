@@ -21,5 +21,40 @@ public class ServiceMessaggio {
 	public List<Messaggio> getByReceiverId(Integer receiverId){
 		return messaggioRepository.findByReceiverId(receiverId);
 	}
+	
+	public List<Messaggio> getBySenderId(Integer senderId){
+		return messaggioRepository.findBySenderId(senderId);
+	}
+	
+	public List<Messaggio> getByAnnuncioId(Integer annuncioId){
+		return messaggioRepository.findByAnnuncioId(annuncioId);
+	}
+	
+	public Messaggio getByMessaggioId(Integer messaggioId){
+		return messaggioRepository.findById(messaggioId).get();
+	}
+	
+	
+	public Messaggio createMessaggio(Messaggio messaggio){
+		
+		
+			
+			return messaggioRepository.saveAndFlush(messaggio);
+		
+		
+	
+	}
+	
+
+	
+	public void deleteMessaggio(Messaggio messaggio) {
+		if(messaggioRepository.existsById(messaggio.getId()))
+		
+		messaggioRepository.delete(messaggio);
+	
+	}
+	
 
 }
+
+

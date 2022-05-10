@@ -3,4 +3,4 @@
 /.classpath
 /.project
 /bin/
-/src/main/resources/META-INF/persistence.xml
+persistence.xml

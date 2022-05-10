@@ -11,5 +11,10 @@ import it.beije.turing.beans.Messaggio;
 public interface MessaggioRepository extends JpaRepository<Messaggio, Integer>{
 	
 	List<Messaggio> findByReceiverId(Integer receiverId);
+	
+	List<Messaggio> findBySenderId(Integer senderId);
+
+	List<Messaggio> findByAnnuncioId(Integer annuncioId);
+
 
 }

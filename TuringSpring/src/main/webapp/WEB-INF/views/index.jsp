@@ -8,6 +8,9 @@
 <title>INDEX TURING SPRING</title>
 </head>
 <body>
-Ciao Turing :-)
+Ciao Turing :-)<br>
+<a href="http://localhost:8080/TuringSpring/register">REGISTRAZIONE</a><br>
+<a href="http://localhost:8080/TuringSpring/cerca">MODIFICA CONTATTO</a><br>
+<a href="http://localhost:8080/TuringSpring/cerca_delete">ELIMINA CONTATTO</a><br>
 </body>
 </html>

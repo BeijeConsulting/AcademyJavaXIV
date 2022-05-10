@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Registrazione | Beijebnb</title>
+<title>Esito | Beijebnb</title>
 </head>
 <body>
 
-    <h1>REGISTRATO!</h1>
+    <h1>${messaggio}!</h1>
 
 </body>
 </html>

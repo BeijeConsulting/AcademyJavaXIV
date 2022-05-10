@@ -1,13 +1,19 @@
 package it.beije.turing.beans;
 
-import java.sql.Date;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "utenti")
+@JsonInclude(Include.NON_NULL)
 public class Utente {
 
     @Id
@@ -15,51 +21,65 @@ public class Utente {
     @Column(name = "id")
     private Integer id;
 
+    @JsonProperty("name")
     @Column(name = "nome")
     private String nome;
 
+    @JsonProperty("surname")
     @Column(name = "cognome")
     private String cognome;
 
     @Column(name = "email")
     private String email;
 
+//    @JsonIgnore
     @Column(name = "psw")
     private String password;
 
+    @JsonProperty("date_of_birth")
     @Column(name = "data_nascita")
-    private Date dataNascita;
+    private String dataNascita;
 
+    @JsonProperty("document_code")
     @Column(name = "cod_documenti")
     private String codiceDocumento;
 
+    @JsonIgnore
     @Column(name = "indirizzo_id")
     private Integer indirizzoId;
 
+    @JsonProperty("telephone_number")
     @Column(name = "telefono")
     private String telefono;
 
+    @JsonProperty("emergency_contact")
     @Column(name = "contatto_emergenza")
     private String contattoEmergenza;
 
+    @JsonProperty("url_image")
     @Column(name = "url_immagine")
     private String urlImmagine;
 
+    @JsonProperty("level")
     @Column(name = "livello")
     private Integer livello;
 
+    @JsonProperty("received_messages")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "receiver_id")
     private Set<Messaggio> messaggiRicevuti;
 
+    @JsonProperty("sent_messages")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "sender_id")
     private Set<Messaggio> messaggiInviati;
 
+    @JsonProperty("reviews")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "utente_id")
-    private Set<Recensione> recensione;
+    private Set<Recensione> recensioni;
 
+    @JsonProperty("credit_cars")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "utente_id")
     private Set<Carta> carte;
@@ -100,11 +120,16 @@ public class Utente {
         this.password = password;
     }
 
-    public Date getDataNascita() {
+    public String getDataNascita() {
         return dataNascita;
     }
-    public void setDataNascita(Date dataNascita) {
+    public void setDataNascita(String dataNascita) {
         this.dataNascita = dataNascita;
+    }
+
+    @JsonIgnore
+    public LocalDate getLocalDateNascita() {
+        return LocalDate.parse(dataNascita);
     }
 
     public String getCodiceDocumento() {
@@ -163,11 +188,11 @@ public class Utente {
         this.messaggiInviati = messaggiInviati;
     }
 
-    public Set<Recensione> getRecensione() {
-        return recensione;
+    public Set<Recensione> getRecensioni() {
+        return recensioni;
     }
-    public void setRecensione(Set<Recensione> recensione) {
-        this.recensione = recensione;
+    public void setRecensioni(Set<Recensione> recensione) {
+        this.recensioni = recensione;
     }
 
     public Set<Carta> getCarte() {
@@ -195,7 +220,7 @@ public class Utente {
                 ", livello=" + livello +
                 ", messaggiRicevuti=" + messaggiRicevuti +
                 ", messaggiInviati=" + messaggiInviati +
-                ", recensione=" + recensione +
+                ", recensione=" + recensioni +
                 ", carte=" + carte +
                 '}';
     }
