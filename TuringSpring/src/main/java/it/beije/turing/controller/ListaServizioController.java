@@ -1,12 +1,21 @@
 package it.beije.turing.controller;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import it.beije.turing.beans.Annuncio;
 import it.beije.turing.beans.ListaServizio;
@@ -16,7 +25,7 @@ import it.beije.turing.service.ListaServizioService;
 import it.beije.turing.service.ServizioService;
 import it.beije.turing.service.StrutturaService;
 
-@Controller
+@RestController
 public class ListaServizioController {
 	
 	@Autowired
@@ -28,14 +37,12 @@ public class ListaServizioController {
 	@Autowired
 	private StrutturaService str;
 	
-	@RequestMapping(value = "/mostra_lista_servizio" , method = RequestMethod.GET)
-	public String mostraListaServizi(Model model) {
-		System.out.println("LISTA SERVIZIO");
-		List<ListaServizio> listaServizi = serviceListaServizio.getAllListaServizio();
-		listaServizi.forEach(System.out::println);
-		model.addAttribute("listaservizi", listaServizi);
-		
-		return "mostralistaservizio";
+	@GetMapping(value = "/servicelists")
+	public List<ListaServizio> mostraListaServizi() {
+		System.out.println("LISTA SERVIZI");
+		List<ListaServizio> serviceList = serviceListaServizio.getAllListaServizio();
+		System.out.println(serviceList);
+		return serviceList;
 	}
 	
 	/***
@@ -45,85 +52,23 @@ public class ListaServizioController {
 	 * @param idCollegato The object linked to the "Servizio", a check is occurred to understand if the one passed is one of type "Annuncio" or "Struttura"
 	 * @return
 	 */
-	@RequestMapping(value = "/aggiungilistaservizio", method = RequestMethod.GET)
-    public String aggiungiListaServizio(Model model, @RequestParam(name = "servizioId") Integer servizioId , @RequestParam(name = "idCollegato") Object idCollegato) {
-		ListaServizio listSer = new ListaServizio();
-		listSer.setServizioId(serviceServizio.getById(servizioId));
-		Annuncio annuncio = null;
-		Struttura struttura = null;
-		
-		if(idCollegato instanceof Annuncio) {
-			annuncio = (Annuncio)idCollegato;
-			listSer.setAnnuncioId(annuncio);
-		}
-			
-		if(idCollegato instanceof Struttura) {
-			struttura = (Struttura)idCollegato;
-			listSer.setStrutturaId(struttura);
-		}
-		serviceListaServizio.addListaServizio(listSer);
-        return "mostralistaservizio";
+	@PostMapping(value = "/addservicelist")
+    public ListaServizio aggiungiListaServizio(@RequestBody ListaServizio serList) {
+		serviceListaServizio.addListaServizio(serList);
+        return serList;
     }
 	
-	@RequestMapping(value = "/eliminalistaservizio", method = RequestMethod.GET)
-    public String eliminaListaServizio(Model model, @RequestParam(name = "id") Integer servizioId) {
-        serviceServizio.removeServizio(servizioId);
-        return "eliminaservizio";
+	@DeleteMapping(value = "/deletelistser/{id}")
+    public  Map<String, Boolean> eliminaListaServizio(@PathVariable(name = "id") Integer id) {
+		Map map = new HashMap<String, Boolean>();
+        serviceListaServizio.removeListaServizio(id);
+        map.put("esito", Boolean.TRUE);
+        return map;
     }
 	
-	@RequestMapping(value = "/updatelistaservizio", method = RequestMethod.GET)
-    public String updateListaServizio(Model model, @RequestParam(name = "id") Integer listSerId, 
-    		@RequestParam(name = "idCollegato" ) Object idCollegato) {
-		ListaServizio listSer = new ListaServizio();
-		Annuncio annuncio = null;
-		Struttura struttura = null;
-		
-		if(idCollegato instanceof Annuncio) {
-			annuncio = (Annuncio)idCollegato;
-			listSer.setAnnuncioId(annuncio);
-		}
-			
-		if(idCollegato instanceof Struttura) {
-			struttura = (Struttura)idCollegato;
-			listSer.setStrutturaId(struttura);
-		}
-		serviceListaServizio.updateListaServizio(listSer, listSerId);
-		
-        return "updatelistaservizio";
+	@PutMapping(value = "/updatelistaservizio/{id}")
+    public ListaServizio updateListaServizio(@PathVariable(name = "id") Integer id, @RequestBody ListaServizio listSer) {
+		serviceListaServizio.updateListaServizio(listSer, id);
+        return listSer;
     }
-	
-	
-	
-	@RequestMapping(value ="/test", method = RequestMethod.GET)
-	public String testing() {
-		this.stampa();
-		System.out.println("LISTA SERVIZIO");
-		
-        ListaServizio listSer = new ListaServizio();
-        Struttura struttura = str.findStrutturaById(1);
-        listSer.setServizioId(serviceServizio.getById(1));
-        listSer.setStrutturaId(struttura);
-        
-        System.out.println("AGGIUNGI");
-        serviceListaServizio.addListaServizio(listSer);
-        stampa();
-        
-        System.out.println("MODIFICA");
-        listSer.setStrutturaId(str.findStrutturaById(2));
-        serviceListaServizio.updateListaServizio(listSer, listSer.getId());
-        this.stampa();
-        
-        System.out.println("DELETE");
-        serviceListaServizio.removeListaServizio(listSer.getId());
-        this.stampa();
-		return "index";
-	}
-	
-	public void stampa() {
-		List<ListaServizio> lista = serviceListaServizio.getAllListaServizio();
-		for(ListaServizio s : lista)
-			System.out.println(s);
-	}
-	
-	
 }

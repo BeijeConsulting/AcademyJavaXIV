@@ -52,7 +52,7 @@ public class ServizioController {
         return map;
     }
 	
-	@PutMapping(value = "/updateservice{id}")
+	@PutMapping(value = "/updateservice/{id}")
     public Servizio updateServizio(@PathVariable(name = "id") Integer id, @RequestBody Servizio servizio) {
         return serviceServizio.updateServizio(servizio, id);
     }

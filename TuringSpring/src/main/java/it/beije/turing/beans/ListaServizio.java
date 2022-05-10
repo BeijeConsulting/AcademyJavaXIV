@@ -13,8 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
 @Table(name = "lista_servizi")
+@JsonInclude(Include.NON_NULL)
 public class ListaServizio {
 
 	@Id
@@ -22,14 +27,17 @@ public class ListaServizio {
 	@Column(name="id")
 	private Integer id;
 
+	@JsonProperty("servizioId")
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "servizio_id")
 	private Servizio servizioId;
 
+	@JsonProperty("annuncioId")
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "annuncio_id")
 	private Annuncio annuncioId;
 	
+	@JsonProperty("strutturaId")
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "struttura_id")
 	private Struttura strutturaId;

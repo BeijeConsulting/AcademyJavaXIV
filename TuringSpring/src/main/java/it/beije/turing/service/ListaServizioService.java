@@ -46,11 +46,14 @@ public class ListaServizioService {
 			return false;
 		if(listSer.getAnnuncioId() != null && listSer.getStrutturaId() != null)
 			return false;
+		if(listSer.getServizioId() == null)
+			return false;
 		
 		ListaServizio oldListSer = listaServizioRepository.findById(listSerId).get();
 		oldListSer.setAnnuncioId(listSer.getAnnuncioId());
 		oldListSer.setStrutturaId(listSer.getStrutturaId());
-		listaServizioRepository.save(listSer);
+		oldListSer.setServizioId(listSer.getServizioId());
+		listaServizioRepository.save(oldListSer);
 		return true;
 	}
 	
