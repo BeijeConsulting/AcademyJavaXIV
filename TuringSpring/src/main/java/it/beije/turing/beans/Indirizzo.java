@@ -1,9 +1,14 @@
 package it.beije.turing.beans;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "indirizzo" )
+@JsonInclude(Include.NON_NULL)
 public class Indirizzo {
 
     @Id
@@ -22,12 +27,13 @@ public class Indirizzo {
     private String stato;
     @Column(name="numero_civico")
     private String numeroCivico;
-
-    public int getId() {
+    @Column(name="coordinate")
+    private String coordinate;
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+        public void setId(Integer id) {
         this.id = id;
     }
 
@@ -79,6 +85,15 @@ public class Indirizzo {
         this.numeroCivico = numeroCivico;
     }
 
+    public String getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(String coordinate) {
+        this.coordinate = coordinate;
+    }
+
+
     @Override
     public String toString() {
         return "Indirizzo{" +
@@ -89,6 +104,15 @@ public class Indirizzo {
                 ", via='" + via + '\'' +
                 ", stato='" + stato + '\'' +
                 ", numeroCivico='" + numeroCivico + '\'' +
+                ", coordinate='" + coordinate + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Indirizzo indirizzo = (Indirizzo) o;
+        return Objects.equals(id, indirizzo.id) && Objects.equals(cap, indirizzo.cap) && Objects.equals(citta, indirizzo.citta) && Objects.equals(provincia, indirizzo.provincia) && Objects.equals(via, indirizzo.via) && Objects.equals(stato, indirizzo.stato) && Objects.equals(numeroCivico, indirizzo.numeroCivico) && Objects.equals(coordinate, indirizzo.coordinate);
     }
 }

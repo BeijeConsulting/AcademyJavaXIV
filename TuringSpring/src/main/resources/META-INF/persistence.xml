@@ -23,9 +23,9 @@
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/beijebnb"/>
-			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="1234"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://reservation.cvzu4xrxvkdz.eu-south-1.rds.amazonaws.com:3306/beijebnb"/>
+			<property name="javax.persistence.jdbc.user" value="admin"/>
+			<property name="javax.persistence.jdbc.password" value="B0RRr8rymdk9D7cF5s64"/>
 		</properties>
 
 	</persistence-unit>
