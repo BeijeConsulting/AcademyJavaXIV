@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 @Entity
 @Table(name = "admins")
@@ -15,6 +17,7 @@ public class Admin {
     @Column(name = "id")
     private Integer id;
 
+    @JsonProperty("user")
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "utente_id")
     private Utente utente;
