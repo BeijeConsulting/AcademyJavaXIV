@@ -22,7 +22,7 @@ public class Host {
     @JoinColumn(name = "utente_id")
     private Utente utente;
 
-    @JsonProperty("PIVA")
+    @JsonProperty("VAT_number")
     @Column(name = "partita_iva")
     private String partitaIva;
 
