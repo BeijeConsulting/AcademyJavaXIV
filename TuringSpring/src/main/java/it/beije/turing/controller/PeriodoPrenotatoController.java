@@ -1,105 +1,69 @@
 package it.beije.turing.controller;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import it.beije.turing.beans.Annuncio;
 import it.beije.turing.beans.PeriodoPrenotato;
-import it.beije.turing.repository.AnnuncioRepository;
-import it.beije.turing.repository.PeriodoPrenotatoRepository;
-import it.beije.turing.service.FirstService;
 import it.beije.turing.service.ServicePeriodoPrenotato;
 
-@Controller
+@RestController
 public class PeriodoPrenotatoController 
 {
 	@Autowired
-	private ServicePeriodoPrenotato service;
+	private ServicePeriodoPrenotato servicePp;
 	
-	@Autowired
-	private PeriodoPrenotatoRepository periodoPrenotatoRepository;
-	
-	@Autowired
-	private AnnuncioRepository annuncioRepository;
-	
-	@RequestMapping(value = "/stampa-prenotazioni", method = RequestMethod.GET)
-	public String index(Model model) 
-	{
-		List<PeriodoPrenotato> periodiPrenotati = service.getPeriodiPrenotati();
+	@GetMapping(value = "/periodi_prenotati")
+	public List<PeriodoPrenotato> contacts() {
+		System.out.println("GET /periodi_prenotati " + this.toString());
 		
-		for(PeriodoPrenotato pp : periodiPrenotati)
-		{
-			System.out.println(pp);
+		List<PeriodoPrenotato> periodiPrenotati = servicePp.getPeriodiPrenotati();
+		
+		return periodiPrenotati;
+	}
+	
+	@GetMapping(value = "/periodo_prenotato/{id}")
+	public PeriodoPrenotato contact(@PathVariable(name = "id") Integer id) {
+		System.out.println("GET /periodo_prenotato/" + id);
+		
+		return servicePp.findPeriodoPrenotato(id);
+	}
+
+	@PostMapping(value = "/periodo_prenotato")
+	public PeriodoPrenotato contact(@RequestBody PeriodoPrenotato periodoPrenotato) {
+		System.out.println("POST /periodo_prenotato -> " + periodoPrenotato);
+		
+		return servicePp.newPeriodoPrenotato(periodoPrenotato);
+	}
+
+	@PutMapping(value = "/periodo_prenotato/{id}")
+	public PeriodoPrenotato contact(@PathVariable(name = "id") Integer id, @RequestBody PeriodoPrenotato periodoPrenotato) {
+		System.out.println("PUT /periodo_prenotato/ " + id + " -> " + periodoPrenotato);
+		
+		return servicePp.updatePeriodoPrenotato(periodoPrenotato, id);
+	}
+	
+	@DeleteMapping(value = "/periodo_prenotato/{id}")
+	public Map<String, Boolean> delContact(@PathVariable(name = "id") Integer id) {
+		System.out.println("DELETE /periodo_prenotato/" + id);
+		
+		servicePp.deletePeriodoPrenotato(id);
+		
+		Map map = new HashMap<String, Boolean>();
+		
+		if(servicePp.findPeriodoPrenotato(id) == null) {			
+			return (Map<String, Boolean>) map.put("esito", Boolean.TRUE);
+		} else {
+			return (Map<String, Boolean>) map.put("esito", Boolean.FALSE);
 		}
-		
-		model.addAttribute("periodiPrenotati", periodiPrenotati);
-		
-		return "PeriodoPrenotatoStampa";
-	}
-	
-	@RequestMapping(value = "/modifica-prenotazioni", method = RequestMethod.GET)
-	public String modifica(Model model, @RequestParam String id) 
-	{
-		PeriodoPrenotato pp = periodoPrenotatoRepository.findById(Integer.getInteger(id)).get();
-		
-		model.addAttribute("PeriodoPrenotato", pp);
-		
-		return "PeriodoPrenotatoModifica";
-	}
-	
-	@RequestMapping(value = "/modifica-prenotazioni", method = RequestMethod.POST)
-	public String modificaPost(@RequestParam String id, @RequestParam LocalDate data_inizio, @RequestParam LocalDate data_fine, @RequestParam String stato_pagamento, @RequestParam String stato_accetazione) 
-	{
-		PeriodoPrenotato pp = new PeriodoPrenotato();
-
-		pp.setId(Integer.getInteger(id));
-		pp.setDataInizio(data_inizio);
-		pp.setDataFine(data_fine);
-		pp.setStatoPagamento(stato_pagamento);
-		pp.setStatoAccettazione(stato_accetazione);
-		
-		service.updatePeriodoPrenotato(pp, Integer.getInteger(id));
-		
-		return "PeriodoPrenotatoStampa";
-	}
-	
-	@RequestMapping(value = "/elimina-prenotazioni", method = RequestMethod.GET)
-	public String elimina(Model model, @RequestParam String id) 
-	{
-		service.deletePeriodoPrenotato(Integer.getInteger(id));
-		
-		return "PeriodoPrenotatoStampa";
-	}
-	
-	@RequestMapping(value = "/inserisci-prenotazione", method = RequestMethod.GET)
-	public String inserisci(Model model) 
-	{
-		return "PeriodoPrenotatoInserisci";
-	}
-	
-	@RequestMapping(value = "/inserisci-prenotazione", method = RequestMethod.POST)
-	public String inserisciPost(@RequestParam String annuncio_id, @RequestParam String utente_id, @RequestParam LocalDate data_inizio, @RequestParam LocalDate data_fine, @RequestParam String stato_pagamento, @RequestParam String stato_accettazione) 
-	{
-		PeriodoPrenotato pp = new PeriodoPrenotato();
-
-		Annuncio annuncio =  annuncioRepository.findById(Integer.getInteger(annuncio_id)).get();
-		
-		pp.setAnnuncio(annuncio);
-		pp.setDataInizio(data_inizio);
-		pp.setDataFine(data_fine);
-		pp.setStatoPagamento(stato_pagamento);
-		pp.setStatoAccettazione(stato_accettazione);
-		
-		service.newPeriodoPrenotato(pp);
-		
-		return "PeriodoPrenotatoStampa";
 	}
 }

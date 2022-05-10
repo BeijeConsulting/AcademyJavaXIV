@@ -20,12 +20,12 @@ public class FotoAnnuncio
 	@Column(name="id")
 	private Integer id;
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@ManyToOne(cascade=CascadeType.DETACH, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="annuncio_id")
 	private Annuncio annuncio;
 	
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+	@ManyToOne(cascade=CascadeType.DETACH, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
 	@JoinColumn(name="immagine_id")
 	private Immagine immagineId;
 	

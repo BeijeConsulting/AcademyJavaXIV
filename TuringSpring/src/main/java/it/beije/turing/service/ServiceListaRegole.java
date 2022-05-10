@@ -1,6 +1,7 @@
 package it.beije.turing.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,18 @@ public class ServiceListaRegole
 	{
 		return listaRegoleRepository.findAll();
 	}
+	
+	/*
+     * Restituisce le regole collegate ad un annuncio
+     * @return lista di regole all'annuncio
+     */
+	public ListaRegole getListaRegole(Integer id)
+	{
+		Optional<ListaRegole> opt = listaRegoleRepository.findById(id);
+		return opt.isPresent() ? opt.get() : null;
+	}
+	
+	
 	
 	/**
      * Inserisce un nuovo valore lista regole

@@ -1,10 +1,12 @@
 package it.beije.turing.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.beije.turing.beans.ListaRegole;
 import it.beije.turing.beans.Regola;
 import it.beije.turing.repository.RegolaRepository;
 @Service
@@ -35,11 +37,12 @@ public class ServiceRegola
 	/**
      * Modifica una regola tramite l' ID di riferimento
      * @param regola nuova regola da inserire
+	 * @param id 
      * @return Oggetto foto annuncio inserito
      */
-	public Regola updateRegola(Regola regola)
+	public Regola updateRegola(Regola regola, Integer id)
 	{
-		Regola tmp = regolaRepository.findById(regola.getId()).get();
+		Regola tmp = regolaRepository.findById(id).get();
 			 
 		if (regola.getTitolo() != null && !"".equals(regola.getTitolo()))
 		{
@@ -56,10 +59,15 @@ public class ServiceRegola
 	
 	/**
      * Cancella una regola tramite l' ID di riferimento
-     * @param regola regola da cancellare
+     * @param id regola da cancellare
      */
-	public void deleteRegola(Regola regola)
+	public void deleteRegola(Integer id)
 	{
-		regolaRepository.deleteById(regola.getId());
+		regolaRepository.deleteById(id);
+	}
+
+	public Regola getRegola(Integer id) {
+			Optional<Regola> opt = regolaRepository.findById(id);
+			return opt.isPresent() ? opt.get() : null;
 	}
 }
