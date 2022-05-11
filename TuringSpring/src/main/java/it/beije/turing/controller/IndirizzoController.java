@@ -25,6 +25,14 @@ public class IndirizzoController {
         return indirizzoList;
     }
 
+    @GetMapping(value = "/show_indirizzo")
+    public Indirizzo showIndirizzo(@PathVariable(name = "id") Integer id) {
+
+        Indirizzo indirizzo = indirizzoService.findIndirizzoByID(id);
+
+        return indirizzo;
+    }
+
     @PostMapping(value = "/insert_indirizzo")
     public Indirizzo insertNewIndirizzi(@RequestBody Indirizzo indirizzo) {
 
