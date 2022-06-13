@@ -1,18 +1,24 @@
 <script>
 import LoginPopup from "./components/Pop-Up_Login.vue"
 import RegistrationFormVue from "./components/RegistrationForm.vue";
+import Welcome from "./components/Welcome.vue";
 export default{
   name:"App",
   components:{
     LoginPopup,
     RegistrationFormVue,
-  },
+    Welcome
+},
   data(){
     return{
       LoginPopup,
       RegistrationFormVue,
       login:true,
       register:false,
+      url:"http://reservation-test.eba-6qvkzxjp.eu-south-1.elasticbeanstalk.com/",
+      fields:null,
+      logged:false,
+      regSucc:false,
     }
   },
   methods:{
@@ -25,7 +31,23 @@ export default{
     {
       this.login=true;
       this.register=false;
+      this.logged=false;
     },
+  logOn(dto)
+    {
+      this.login=false;
+      this.logged=true;
+      this.fields={
+       name:dto.name,
+       auth: dto.auth,
+       token: dto.token,
+      };
+    },
+    regFlip()
+    {
+      console.log("bug")
+      this.regSucc=true;
+    }
   },
 }
 
@@ -34,8 +56,9 @@ export default{
 
 <template>
 <main>
-  <LoginPopup v-if="login"/>
-  <RegistrationFormVue v-if="register"/>
+  <LoginPopup v-if="login" :regSucc = "regSucc" />
+  <RegistrationFormVue v-if="register" @regSuccFlip="regFlip()"/>
+   <Welcome v-if="logged" :fields="fields" />
 </main>
   
 </template>

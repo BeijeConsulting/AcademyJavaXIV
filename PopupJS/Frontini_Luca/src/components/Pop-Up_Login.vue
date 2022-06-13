@@ -1,6 +1,7 @@
 <template>
   <div class="LoginPopUp">
     <div class="inner">
+        <p class="regmex" v-if="regSucc" >REGISTRATION SUCCESSFULL <br> YOU MAY NOW LOGIN</p>
      <input class="field" v-model="Email" placeholder="Email"/>
       <input class="field" v-model="Password" placeholder="Password"/>
       <p class="error" v-if="loginErrorMessage">{{loginErrorMessage}}</p>
@@ -13,9 +14,11 @@
 
 <script>
 import { isFunction } from '@vue/shared'
+import axios from "axios";
 
 export default {
     name: "LoginPopup",
+    prop:["regSucc"],
     data(){
         return{
         Email:'' ,
@@ -30,11 +33,45 @@ export default {
          {
             this.loginErrorMessage='email or password not provided'
          }
+         else{
+            let self=this;
+            if(this.loginErrorMessage)
+            {
+                this.loginErrorMessage=null;
+            }
+            let data = {
+                email: this.Email,
+                password: this.Password,
+            };
+            let headers={
+                'Content-Type': 'JSON'
+
+            }
+            axios.post(this.$parent.url+"signin",data,headers)
+            .then(function (response){
+                console.log(response)
+                self.$parent.logOn({
+                    name:response.data.email,
+                    auth:response.data.permission,
+                    token:response.data.token
+                });
+            })
+            .catch(function(error)
+            {
+                 self.setErrorMessage('Wrong Credentials',self);
+                console.log(error);
+               
+            });
+         }
         },
         Register(){
         this.$parent.registration()
 
         },
+        setErrorMessage(message,self)
+        {
+            self.loginErrorMessage=message;
+        }
     },
 
 }
@@ -48,7 +85,7 @@ top:50%;
 transform: translate(-50%,-50%);
 display: flex;
 align-items: center;
-
+/* border:2px solid  greenyellow; */
 justify-content: center;
 }
 
@@ -58,10 +95,10 @@ justify-content: center;
     flex-direction: column;
     display: flex;
     
-    border:4px solid  greenyellow;
+    
 }  
 .field{
-    border: 2px solid greenyellow;
+    /* border: 2px solid greenyellow; */
     padding:10px;
     margin:4px;
 }
@@ -73,7 +110,11 @@ justify-content: center;
     margin:4px;
     border: 2px solid white;
 }
-
+.regmex{
+    color:yellowgreen;
+    border: 2px solid yellowgreen;
+    margin: 4px
+}
 .error{
     color: red;
     border: 2px solid red;
