@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="popup">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="card">
+						<div id="title" class="card-header">Login</div>
+
+						<div class="card-body">
+							<div id="divName" class="form-group row mb-3 d-none">
+								<label for="name" class="col-md-4 col-form-label text-md-right">Name:</label>
+
+								<div class="col-md-6">
+									<input onchange="checkError()" id="name" type="text" class="form-control" name="name" placeholder="Insert name" required autocomplete="email" autofocus>
+								</div>
+							</div>
+
+							<div id="divSurname" class="form-group row mb-3 d-none">
+								<label for="surname" class="col-md-4 col-form-label text-md-right">Surname:</label>
+
+								<div class="col-md-6">
+									<input onchange="checkError()" id="surname" type="text" class="form-control" name="surname" placeholder="Insert surname" required autocomplete="email" autofocus>
+								</div>
+							</div>
+
+							<div id="divEmail" class="form-group row mb-3">
+								<label for="email" class="col-md-4 col-form-label text-md-right">Email address:</label>
+
+								<div class="col-md-6">
+									<input onchange="checkError()" id="email" type="email" class="form-control" name="email" placeholder="Insert email" required autocomplete="email" autofocus>
+								</div>
+							</div>
+
+							<div id="divConfirmEmail" class="form-group row mb-3 d-none">
+								<label for="confirmEmail" class="col-md-4 col-form-label text-md-right">Confirm email address:</label>
+
+								<div class="col-md-6">
+									<input onchange="checkError()" id="confirmEmail" type="email" class="form-control" name="confirmEmail" placeholder="Confirm email" required autocomplete="email" autofocus>
+								</div>
+							</div>
+
+							<div id="divPassword" class="form-group row mb-3">
+								<label for="password" class="col-md-4 col-form-label text-md-right">Password:</label>
+
+								<div class="col-md-6 d-flex justify-content-between align-items-center">
+									<input id="password" type="password" class="form-control me-3" onchange="checkPassword(), checkError()" name="password" placeholder="Insert password" required autocomplete="current-password">
+									<i id="viewPsw" onclick="viewPassword()" class="fa-solid fa-eye d-block"></i>
+									<i id="hidePsw" onclick="viewPassword()" class="fa-solid fa-eye-slash d-none"></i>
+								</div>
+
+								<div id="viewPswInfo" class="col-md-6 offset-md-4 mt-3 d-none">
+									<span>Password must have: 
+										<ul>
+											<li>Almost 8 characters</li>
+											<li>1 uppercase letter</li>
+											<li>1 lower case letter</li>
+											<li>1 number</li>
+											<li>1 special symbol (_, -, *, @, !, $, &, .)</li>
+										</ul>
+									</span>
+								</div>
+							</div>
+
+							<div id="errorMessage" class="form-group row mb-3 errorMessage d-none"></div>
+
+							<div class="form-group row mb-3">
+								<div id="viewLogBtn" class="col-md-12 d-flex justify-content-center">
+									<button onclick="login()" class="btn btn-primary">Login</button>
+								</div>
+
+								<div id="viewRegBtn" class="col-md-12 d-flex justify-content-center d-none">
+									<button onclick="register()" class="btn btn-primary">Register</button>
+								</div>
+
+								<div id="viewForBtn" class="col-md-12 d-flex justify-content-center d-none">
+									<button onclick="forgotPassword()" class="btn btn-primary">Send request</button>
+								</div>
+							</div>
+
+							<div class="form-group row mb-3">
+								<div class="col-md-6 text-center">
+									<p id="viewReg" onclick="viewRegister()">Register</p>
+									<p id="viewLog" class="d-none" onclick="viewLogin()">Login</p>
+								</div>
+
+								<div class="col-md-6 text-center">
+									<p onclick="viewForgotPsw()">Forgot password</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="App.js"></script>
+</html>
