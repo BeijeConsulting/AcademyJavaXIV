@@ -1,7 +1,6 @@
 package it.beije.turing.controller;
 
 import it.beije.turing.beans.Utente;
-import it.beije.turing.service.FirstService;
 import it.beije.turing.service.ServiceUtente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +9,8 @@ import java.util.List;
 
 @RequestMapping(value = "api")
 @RestController
-public class UtenteRestController
-{
+public class UtenteRestController {
 	
-	@Autowired
-	private FirstService service;
-
 	@Autowired
 	private ServiceUtente serviceUtente;
 
