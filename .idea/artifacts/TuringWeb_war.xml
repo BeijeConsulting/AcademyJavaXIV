@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TuringWeb:war">
+    <output-path>$PROJECT_DIR$/TuringWeb/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>TuringWeb</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="TuringWeb-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="TuringWeb:war exploded" />
+    </root>
+  </artifact>
+</component>

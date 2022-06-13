@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="it">
+
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Login and Register</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.css" rel="stylesheet" />
+
+</head>
+<style>
+  .classe {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  body {
+    background-color: #E6F4F1;
+  }
+
+  .form-control {
+    border: 0;
+  }
+
+</style>
+
+<body>
+
+<!---------------------MODAL-------------------------->
+<div class="modal top fade"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
+  <div class="modal-dialog modal-sm  modal-dialog-centered">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Password Dimenticata?</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="row modal-body d-flex justify-content-center line-items-center">
+        <div class="row m-3"><div class="fw-bold"><h2>Ora ti attacchi a...</h2></div></div>
+        <div class="row">
+          <video controls loop autoplay >
+            <source src="https://cdn-gif-l.facciabuco.com/156/hx6s1mm77h-buongiornooo-vaccata.mp4" type="video/mp4">
+            <source src="https://cdn-gif-l.facciabuco.com/156/hx6s1mm77h-buongiornooo-vaccata.mp4" type="video/ogg">
+            Your browser does not support the video tag.
+          </video >
+        </div>
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="classe">
+    
+    <div class="card border border-primary">
+      <div class="card-block p-4">
+        <div class="card-header d-flex flex-column justify-content-center align-items-center">
+          <img src="https://github.com/boyseez.png?size=200" class="rounded-circle mb-3 " style="width: 150px;"alt="Avatar" />
+
+            <h5 class="mb-2"><strong>Giuseppe Raddato</strong></h5>   
+            <p class="text-muted">Developer <span class="badge bg-primary">JAVA</span></p>
+          </div>
+    
+        
+        <div class="card-header">
+      
+          <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab"
+                aria-controls="pills-login" aria-selected="false">Login</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link " id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab"
+                aria-controls="pills-register" aria-selected="true">Registrati</a>
+            </li>
+          </ul>
+        </div>
+
+
+
+
+        
+        <div class="tab-content">
+          <!-------------------------------- LOGIN  -------------------------------->
+          <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+            <form id="signin">
+              <p class="text-center m-3 fw-bold">LOGIN</p>
+
+
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <input type="email" id="loginName" class="form-control" required
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Inserisci email"
+                  oninvalid="this.setCustomValidity('Inserisci email nel formato mail@mail.it')"
+                  oninput="this.setCustomValidity('')" 
+                  value="lpirandello@gmail.com"/>
+                <label class="form-label" for="loginName">Email</label>
+
+              </div>
+
+              <!-- Password input</i> -->
+              <div class="form-outline mb-4">
+                <i class="fas fa-solid fa-eye trailing pe-auto" id="icon_loginPassword" onclick="showPassword('loginPassword')"></i>
+
+                <input type="password" id="loginPassword" class="form-control form-icon-trailing" required value="lpira"  />
+                <label class="form-label" for="loginPassword">Password</label>
+              </div>
+
+              <div id="msgLogin" class="d-none">
+               
+              </div>
+              <!-- 2 column grid layout -->
+              <div class="row mb-4">
+
+                <div class="col-md d-flex justify-content-center">
+                  <a href="#"   data-mdb-toggle="modal" data-mdb-target="#exampleModal">Password dimenticata?</a>
+                </div>
+
+              </div>
+
+
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-lg btn-block mb-4 " onclick="signin()">Accedi</button>
+
+            </form>
+          </div>
+
+
+                <!-------------------------------- REGISTER  -------------------------------->
+          <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+            <form id="registration">
+
+              <p class="text-center m-3 fw-bold">REGISTRAZIONE</p>
+
+              <!-- Name input -->
+              <div class="form-outline mb-4">
+                <input type="text" id="registerName" class="form-control" required pattern="^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$"
+                placeholder="Inserisci Nome valido"
+                  oninvalid="this.setCustomValidity('I caratteri speciali e numeri non sono ammessi')"
+                  oninput="this.setCustomValidity('')" />
+                <label class="form-label" for="registerName">Nome</label>
+              </div>
+              <div class="form-outline mb-4">
+                <input type="text" id="registerSurame" class="form-control" required pattern="^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$"
+                placeholder="Inserisci Cognome valido"
+                  oninvalid="this.setCustomValidity('I caratteri speciali e numeri non sono ammessi')"
+                  oninput="this.setCustomValidity('')"/>
+                <label class="form-label" for="registerSurame">Cognome</label>
+              </div>
+
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <input type="email" id="registerEmail" class="form-control" required
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Inserisci email"
+                  oninvalid="this.setCustomValidity('Inserisci email nel formato mail@mail.it')"
+                  oninput="this.setCustomValidity('')" />
+                <label class="form-label" for="registerEmail">Email</label>
+              </div>
+
+              <!-- ReEmail input -->
+              <div class="form-outline mb-4">
+                <input type="email" id="registerRepeatEmail" class="form-control" required  />
+                <label class="form-label" for="registerRepeatEmail">Reinserisci l' email</label>
+              </div>
+
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <i class="fas fa-solid fa-eye trailing pe-auto" id="icon_registerPassword" onclick="showPassword('registerPassword')"></i>
+
+                <input type="password" id="registerPassword" class="form-control " required />
+                <label class="form-label" for="registerPassword">Password</label>
+              </div>
+
+
+              <ul class="list-group mb-4">
+                <li id="min" class="list-group-item list-group-item-light"><small>Minimo di 8 e un massimo di 255
+                    caratteri</small></li>
+                <li id="minmaius" class="list-group-item list-group-item-light"><small>Almeno una lettera maiuscola e
+                    una minuscola</small></li>
+                <li id="num" class="list-group-item list-group-item-light"><small>Deve contenere almeno un
+                    numero</small></li>
+                <li id="special" class="list-group-item list-group-item-light"><small>Deve contenere almeno un carattere
+                    speciale tra <br>`!@#$%^&*_+\-=;':"\\|,.<>\/?~</small></li>
+              </ul>
+
+
+              <!-- Repeat Password input -->
+              <div class="form-outline mb-4">
+                <i class="fas fa-solid fa-eye trailing pe-auto" id="icon_registerRepeatPassword" onclick="showPassword('registerRepeatPassword')"></i>
+
+                <input type="password" id="registerRepeatPassword" class="form-control form-icon-trailing" required  />
+                <label class="form-label" for="registerRepeatPassword">Reinserisci Password</label>
+              </div>
+
+
+                <div id="msgRegister" class="d-none">
+                
+                </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-lg btn-block mb-3" onclick="registration()">Registrati</button>
+            </form>
+          </div>
+        </div>
+        <!-- Pills content -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.js"></script>
+  <script>
+    let visivble = false;
+    
+    
+    function showPassword(parent) {
+      let login = document.getElementById(parent);
+      let icon = document.getElementById("icon_"+parent);
+
+  
+
+      if (login.getAttribute("type")==="password") {
+        console.log("if", visivble);
+        login.setAttribute("type", "text");
+        icon.setAttribute("class", "fas fa-solid fa-eye-slash trailing pe-auto");
+
+      } else {
+        console.log("else,", visivble);
+        login.setAttribute("type", "password");
+        icon.setAttribute("class", "fas fa-solid fa-eye trailing pe-auto");
+
+      }
+
+    }
+
+    function callSignin(email,psw,parent){
+      let url = 'https://reservation-api.beije.it/signin';
+      paramsLogin = {
+        "email": email,
+        "password": psw
+      }
+      
+      console.log(paramsLogin);
+
+			console.log(url);
+   
+			paramsLogin={
+				   "email":email,
+   				 "password":psw
+			}
+			
+			fetch(url,{
+				method:'POST',
+				headers: { 'Content-type': 'application/json; charset=UTF-8',},
+				body: JSON.stringify(paramsLogin),
+			})
+				.then((response) => { 
+						return response.json();
+				
+				}).then((json) => {
+				
+					console.log("JSOON",json);
+          if(json.message!=undefined){
+            showError(json.message,parent);
+          }else{
+            
+            //ACCESSO RIUSCITO
+            
+            showSuccess("Benvenuto: "+json.email+". Il tuo ID è: "+json.id,parent);
+          }
+				});
+
+    }
+
+    
+
+    function signin() {
+      //   error.setAttribute("class", "d-none");
+      let form = document.getElementById("signin");
+      let email = document.getElementById("loginName").value;
+      let psw = document.getElementById("loginPassword").value;
+      let parent=document.getElementById("msgLogin");
+
+      hideError(parent);
+      
+      console.log("Email: " + email, "PSW: " + psw);
+    
+
+      if (!form.checkValidity()) {
+        console.log("Form NON VALIDO");
+          showError("I dati inseriti non sono validi o mancanti",parent);
+        }else{
+
+          hideError(parent);
+          console.log("Form VALIDO");
+          callSignin(email,psw,parent)
+        }
+    }
+
+    function showSuccess(msg,parent){
+      let error = parent;
+      error.setAttribute("class", "d");
+
+      let errorTag="<ul id='errorLogin' class='list-group list-group-light'><li class='list-group-item px-3 border-0 rounded-3 list-group-item-success mb-2'>"+msg+"</li></ul>";
+      error.insertAdjacentHTML( 'beforeend',errorTag);
+      return true;
+    }
+
+    function showError(msg,parent){
+      let error = parent;
+      error.setAttribute("class", "d");
+
+      let errorTag="<ul id='errorLogin' class='list-group list-group-light'><li class='list-group-item px-3 border-0 rounded-3 list-group-item-danger mb-2'>"+msg+"</li></ul>";
+      error.insertAdjacentHTML( 'beforeend',errorTag);
+      return true;
+    }
+
+    function hideError(parent){
+      let error = parent;
+       let child=document.getElementById("errorLogin");
+   
+      if(child!=null || child!=undefined) error.innerHTML = '';;
+    
+      return false;
+    }
+
+    function forgotPassword() {
+      document.getElementById("errorLogin").modal("show");
+      console.log("dimenticato");
+    }
+
+
+
+    let psw = document.getElementById("registerPassword");
+    let minvalue = document.getElementById("min");
+    let minmaius = document.getElementById("minmaius");
+    let num = document.getElementById("num");
+    let special = document.getElementById("special");
+
+    let parent = document.getElementById("special");
+    psw.addEventListener('input', updateValue);
+
+    function updateValue(e) {
+      let light = "list-group-item list-group-item-light";
+      let green = "list-group-item list-group-item-success";
+
+      let value = e.target.value;
+
+      if (lengthCheck(value)) {
+        min.setAttribute("class", green);
+      } else {
+        min.setAttribute("class", light);
+      }
+
+      if (hasLowerCase(value) && hasUpperCase(value)) {
+        minmaius.setAttribute("class", green);
+      } else {
+        minmaius.setAttribute("class", light);
+      }
+
+      if (hasNumber(value)) {
+        num.setAttribute("class", green);
+      } else {
+        num.setAttribute("class", light);
+      }
+      if (hasSpecial(value)) {
+        special.setAttribute("class", green);
+      } else {
+        special.setAttribute("class", light);
+      }
+
+    }
+
+    function lengthCheck(str) {
+      return str.length >= 8 && str.length <= 255;
+    }
+
+    function hasSpecial(str) {
+      pattern = /[ `!@#$%^&*_+\-=;':"\\|,.<>\/?~]/;
+      return (pattern.test(str));
+    }
+    function hasNumber(str) {
+      return (/[0-9]/.test(str));
+    }
+    function hasLowerCase(str) {
+      return (/[a-z]/.test(str));
+    }
+
+    function hasUpperCase(str) {
+      return (/[A-Z]/.test(str));
+    }
+
+
+    function validatePSW(psw){
+      return lengthCheck(psw) && hasSpecial(psw) && hasNumber(psw) && hasLowerCase(psw) && hasUpperCase(psw);
+    }
+
+
+
+    function registration() {
+
+      let form = document.getElementById("registration");
+      let name = document.getElementById("registerName").value;
+      let surname = document.getElementById("registerSurame").value;
+      let email = document.getElementById("registerEmail").value;
+      let re_email = document.getElementById("registerRepeatEmail").value;
+      let psw = document.getElementById("registerPassword").value;
+      let re_psw = document.getElementById("registerRepeatPassword").value;
+      let parent=document.getElementById("msgRegister");
+      //console.log("Email: " + email, "PSW: " + psw , "validatePSW(psw)"+ validatePSW(psw))
+      hideError(parent);
+
+      if(email !== re_email){
+        console.log("Email non combaciano");
+        showError("le Email non combaciano",parent);
+
+      }
+      if(psw !== re_psw){
+        console.log("PSW non combaciano");
+        showError("le Password non combaciano",parent);
+      }
+
+
+      if (!form.checkValidity() || !validatePSW(psw) || email != re_email || psw != re_psw) {
+        console.log("non valido");
+        showError("I dati inseriti non sono validi o mancanti",parent);
+
+      }else{
+        hideError(parent);
+        console.log("valido");
+        callRegiter(email,psw,name,surname,parent);
+      }
+
+
+    }
+
+
+
+    function callRegiter(email,psw,nameRegister,surnameRegister,parent){
+      let url = 'https://reservation-api.beije.it/user/registration';
+      paramsRegister = {
+        "email": email,
+        "password": psw,
+        "name": nameRegister,
+        "surname": surnameRegister,
+      }
+      
+    
+      console.log(paramsRegister);
+			
+
+			fetch(url,{
+				method:'POST',
+				headers: { 'Content-type': 'application/json; charset=UTF-8',},
+				body: JSON.stringify(paramsRegister),
+			})
+				.then((response) => { 
+						return response.json();
+				
+				}).then((json) => {
+				
+					console.log("JSOON",json);
+          if(json.message!=undefined){
+              console.log(json.message);
+              showError(json.message,parent);
+          }else{
+            //ACCESSO RIUSCITO
+            console.log("registrato")
+            
+            showSuccess("Registrazione avvenuta con successo <br>Benvenuto: "+json.email+". Il tuo ID è: "+json.id, parent);
+          }
+				});
+
+    }
+  </script>
+</body>
+</html>
