@@ -4,50 +4,105 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Home Page</title>
+<title>INDEX TURING SPRING</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+    </style>
 </head>
-<body bgcolor="#0F0F0F">
+<body>
+Ciao Turing :-)<br>
+<a href="http://localhost:8080/TuringSpring/register">REGISTRAZIONE</a><br>
+<a href="http://localhost:8080/TuringSpring/cerca">MODIFICA CONTATTO</a><br>
+<a href="http://localhost:8080/TuringSpring/cerca_delete">ELIMINA CONTATTO</a><br>
+<table width="100%">
 
-<br>
-<br>
-<font color=#FFFFFF>
-<div align="center">
 
-<h1>Rubrica Tomcat<br></h1>
-<h3>Seleziona un'azione<br></h3>
-<br>
-<form action="./print" method="get">
-<label for="print">Stampa Tutti i contatti:     </label>
-  <input type="submit" id="print" name="type" value="Stampa Tutti i contatti"><br>
-  <br>
- </form>
- <form action="./search" method="get">
-<label for="search">Cerca contatto:     </label>
-  <input type="submit" id="search" name="type" value="Cerca contatto"><br>
-  <br>
- </form>
- <form action="./add" method="get">
-<label for="add">Aggiungi contatto:     </label>
-  <input type="submit" id="add" name="type" value="Aggiungi contatto"><br>
-  <br>
- </form>
- <form action="./remove" method="get">
-<label for="remove">Rimuovi contatto:     </label>
-  <input type="submit" id="remove" name="type" value="Rimuovi contatto"><br>
-  <br>
- </form>
- <form action="./modify" method="get">
-<label for="modify">Modifica contatto:     </label>
-  <input type="submit" id="modify" name="type" value="Modifica contatto"><br>
-  <br>
- </form>
- <form action="./merge" method="get">
-<label for="merge">Unisci contatti duplicati:     </label>
-  <input type="submit" id="merge" name="type" value="Unisci contatti duplicati"><br>
-  <br>
- </form>
-</div>
-</font>
+    <tr>
+        <th colspan="2"><h3>Tipo Struttura</h3></th>
+    </tr>
+    <tr>
+        <th>Operation</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td>Mostra tutti tipi strutture</td>
+        <td><a href="http://localhost:8080/TuringSpring/showAllTipoStruttura">/showAllTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Inserimento nuovo  tipi strutture</td>
+        <td><a href="http://localhost:8080/TuringSpring/insertTipoStruttura">/insertTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Cancella  tipi strutture</td>
+        <td><a href="http://localhost:8080/TuringSpring/deleteTipoStruttura">/deleteTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Aggiorna  tipo strutture</td>
+        <td><a href="http://localhost:8080/TuringSpring/updateTipoStruttura">/updateTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Trova  tipo strutture</td>
+        <td><a href="http://localhost:8080/TuringSpring/searchTipoStruttura">/searchTipoStruttura</a></td>
+    </tr>
 
+
+    <tr>
+        <th colspan="2"><H3>Struttura</H3></th>
+    </tr>
+    <tr>
+        <th>Operation</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td>Mostra tutte strutture</td>
+        <td><a href="http://localhost:8080/TuringSpring/showAllStrutture">/showAllStrutture</a></td>
+    </tr>
+    <tr>
+        <td>Cancella struttura</td>
+        <td><a href="http://localhost:8080/TuringSpring/deleteStruttura">/deleteStruttura</a></td>
+    </tr>
+
+
+    <tr>
+        <td>Inserisci struttura</td>
+        <td><a href="http://localhost:8080/TuringSpring/insertStruttura">/insertStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Modifica struttura</td>
+        <td><a href="http://localhost:8080/TuringSpring/updateStruttura">/updateStruttura</a></td>
+    </tr>
+
+    <tr>
+        <th colspan="2"><h3>Indirizzo</h3></th>
+    </tr>
+    <tr>
+        <th>Operation</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td>Mostra tutti gli indirizzi</td>
+        <td><a href="http://localhost:8080/TuringSpring/showAllIndirizzi">/showAllIndirizzi</a></td>
+    </tr>
+    <tr>
+        <td>Inserimento nuovo indirizzo</td>
+        <td><a href="http://localhost:8080/TuringSpring/insertTipoStruttura">/insertTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Cancella indirizzo</td>
+        <td><a href="http://localhost:8080/TuringSpring/deleteTipoStruttura">/deleteTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Aggiorna indirizzo</td>
+        <td><a href="http://localhost:8080/TuringSpring/updateTipoStruttura">/updateTipoStruttura</a></td>
+    </tr>
+    <tr>
+        <td>Trova indirizzo</td>
+        <td><a href="http://localhost:8080/TuringSpring/searchTipoStruttura">/searchTipoStruttura</a></td>
+    </tr>
+
+</table>
 </body>
 </html>
