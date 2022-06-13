@@ -1,0 +1,64 @@
+.container {
+    min-height: 100vh;
+}
+
+.formino {
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5); 
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5);
+    border-radius: 10px;
+    padding: 30px 10px;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.register {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.forgot {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+i {
+    cursor: pointer;
+}
+
+.clickable {
+    cursor: pointer;
+    color: blue;
+    transition-duration: 0.5;
+}
+
+.clickable:hover {
+    color: rgb(0, 0, 96);
+}
+
+.format {
+    display: flex;
+    flex-direction: column;
+}
+
+.passwordDiv {
+    width: 100%;
+    margin-right: 10px;
+}
+
+.passwordDivConfirm {
+    width: 100%;
+    margin-right: 28px;
+}
+
+ul {
+    margin-top: 10px !important;
+}

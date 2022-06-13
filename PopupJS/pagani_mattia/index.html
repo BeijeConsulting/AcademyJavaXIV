@@ -1,8 +1,88 @@
 <html>
-	<head>
-		<title>CIAO</title>
-	</head>
-	<body>
-	METTI QUI I TUOI FILES
-	</body>
+
+<head>
+	<title>Login Page</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+	<div class="container d-flex justify-content-center align-items-center flex-column">
+		<h2 id="loginTitle" class="p-4">Login</h2>
+		<h2 id="registerTitle" class="p-4">Register</h2>
+		<h2 id="forgotTitle" class="p-4">Forgot Password</h2>
+		<div class="formino w-25">
+			<div id="fieldEmail" class="mb-3 format">
+				<div>
+					<label for="inputFieldEmail" class="form-label">Email:</label>
+				</div>				
+				<div>
+					<input type="email" class="form-control" id="inputFieldEmail" aria-describedby="emailHelp">
+				</div>
+			</div>
+			<div id="confirmEmail" class="mb-3 format">
+				<div>
+					<label for="inputConfirmEmail" class="form-label">Confirm Email:</label>
+				</div>
+				<div>
+					<input type="email" class="form-control" id="inputConfirmEmail" aria-describedby="emailHelp">
+				</div>
+			</div>
+			<div id="nome" class="mb-3 format">
+				<div>
+					<label for="inputNome" class="form-label">Name:</label>
+				</div>
+				<div>
+					<input type="name" class="form-control" id="inputNome">
+				</div>
+			</div>
+			<div id="fieldPassword" class="mb-3 format">
+				<div>
+					<label for="fieldPasswordEye" class="form-label">Password:</label>
+				</div>
+				<div class="d-flex align-items-center">
+					<div class="passwordDiv">
+						<input id="fieldPasswordEye" type="password" class="form-control me-1" onkeyup="checkPassword()">
+					</div>
+					<i id="showFieldPassword" class="fa-solid fa-eye" onclick="showPassword()"></i>
+					<i id="hideFieldPassword" class="fa-solid fa-eye-slash" onclick="hidePassword()"></i>
+				</div>
+			</div>
+			<div id="confirmPassword" class="mb-3 format">
+				<div>
+					<label for="confirmPasswordEye" class="form-label">Confirm Password:</label>
+				</div>
+				<div class="d-flex align-items-center">
+					<div class="passwordDivConfirm">
+						<input id="confirmPasswordEye" type="password" class="form-control me-1" onkeyup="checkPassword()">
+					</div>
+				</div>
+				<div>
+					<ul id="passwordRules">
+						<li id="passwordMatching">Passwords are equal</li>
+						<li id="minCharacters">Minimum 8 characters</li>
+						<li id="minNumbers">Minimum 1 number</li>
+						<li id="minUppercase">Minimum 1 upper case letter</li>
+						<li id="minSpecial">Minimum 1 special character</li>
+					</ul>
+				</div>
+			</div>
+			<div>
+				<div class="d-flex justify-content-center">
+					<button id="loginButton" type="submit" class="btn btn-primary" onclick="login()">Login</button>
+					<button id="registerButton" type="submit" class="btn btn-primary" onclick="register()">Register</button>
+					<button id="forgotButton" type="submit" class="btn btn-primary" onclick="forgotPassword()">Forgot Password</button>
+				</div>
+				<div class="d-flex justify-content-between mt-3">
+					<label class="clickable" id="openLoginButton" onclick="openLogin()" class="form-label">Login</label>
+					<label class="clickable" id="openRegisterButton" onclick="openRegister()" class="form-label">Register</label>
+					<label class="clickable" id="openForgotButton" onclick="openForgotPassword()" class="form-label">Forgot Password</label>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
 </html>
