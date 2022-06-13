@@ -18,6 +18,10 @@ a:hover {
    text-decoration: none;
 }
 
+.invalid-feedback {
+   font-size: .7em !important;
+}
+
 .container {
    min-height: 100vh;
 }
@@ -46,6 +50,16 @@ span {
 }
 
 #submit_error {
+   position: fixed;
+   top: 30px;
+   left: 50%;
+   transform: translateX(-50%);
+   animation-name: submit_error;
+   animation-duration: 1s;
+   animation-iteration-count: 1;
+}
+
+#invalid_send {
    position: fixed;
    top: 30px;
    left: 50%;
