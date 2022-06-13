@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="login.css" rel="stylesheet" type="text/css"/>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<div class="center">
+    <button id="login">Login</button>
+</div>
+<div class="popup">
+    <div class="close-log"> &times; </div>
+    <div class="form">
+        <h2>Log in</h2>
+        <div class="form-element">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="inserire email">
+        </div>
+        <div class = "form-element">
+            <label for="password"> Password</label>
+            <input type="password" id="password" placeholder="inserire password">
+        </div>
+        <div class = "form-element">
+            <button> Accedi </button>
+        </div>
+        <div class = "form-element">
+            <button id="registrati"> Registrati </button>
+        </div>
+    </div>
+
+    <div class="popup-reg">
+        <div class="close-log-reg"> &times; </div>
+        <div class="form-reg">
+            <h2>Registrazione</h2>
+            <div class="form-element-reg">
+                <label for="nome">Nome</label>
+                <input type="nome" id="nome" placeholder="inserire nome">
+            </div>
+            <div class="form-element-reg">
+                <label for="cognome">Cognome</label>
+                <input type="cognome" id="cognome" placeholder="inserire cognome">
+            </div>
+            <div class="form-element-reg">
+                <label for="email">Email</label>
+                <input type="email" id="email-reg" placeholder="inserire email">
+            </div>
+            <div class = "form-element-reg">
+                <label for="password"> Password</label>
+                <input type="password" id="password-reg" placeholder="inserire password">
+            </div>
+            <div class = "form-element-reg">
+                <label for="confirm_password"> Conferma Password</label>
+                <input type="confirm_password" id="confirm_password" placeholder="confermare password">
+            </div>
+
+            <div class = "form-element-reg">
+                <button id="conf-reg" onclick="checkAllRight()"> Registrati </button>
+            </div>
+            <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+            <script src="login.js"></script>
+</body>

@@ -1,0 +1,154 @@
+
+*{
+    margin:0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(245,245,220);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+
+.center button{
+    padding: 15px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    color:rgb(0, 0, 0);
+    background:rgb(255, 255, 255);
+    cursor: pointer
+}
+
+.popup{
+    position: absolute;
+    top: -150%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    padding: 20px 30 px;
+    background: #fff;
+    box-shadow: 2px 2px 5px 5px rgb(0, 0, 0);
+}
+
+.popup .close-log{
+    position: absolute;
+    background-color: crimson;
+    width: 15px;
+    height: 15px;
+    border-radius: 15pc;
+    text-align: center;
+}
+
+.popup.active{
+    top :50%;
+    opacity: 1;
+    transform: translate(-50%,50%), scale(1);
+}
+
+.popup .form h2{
+    text-align: center;
+    color: black;
+    margin: 10px 10px 20px;
+    font-size: 30px;
+}
+.popup .form .form-element{
+    margin:30px 0px;
+
+}
+
+.popup .form .form-element label{
+    font-size: 14px;
+    color: black;
+
+}
+
+.popup .form .form-element input [type="email"],
+.popup .form .form-element input [type="password"]
+{
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border: 1px;
+    border-radius: 5px;
+}
+
+.popup .form .form-element button{
+    width: 100%;
+    height: 30px;
+    font-size: 15px;
+    background: #222;
+    color: #fff;
+    cursor: pointer;
+}
+
+.popup-reg{
+    position: absolute;
+    top: -150%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 400px;
+    padding: 20px 30 px;
+    background: #fff;
+    box-shadow: 2px 2px 5px 5px rgb(0, 0, 0);
+}
+
+.popup-reg .close-log-reg{
+    position: absolute;
+    background-color: crimson;
+    width: 15px;
+    height: 15px;
+    border-radius: 15pc;
+    text-align: center;
+}
+
+.popup-reg.active{
+    top :50%;
+    opacity: 1;
+    transform: translate(-50%,50%), scale(1);
+}
+
+.popup-reg .form-reg h2{
+    text-align: center;
+    color: black;
+    margin: 10px 10px 20px;
+    font-size: 30px;
+}
+.popup-reg .form-reg .form-element-reg{
+    margin:30px 0px;
+
+}
+
+.popup-reg .form.reg .form-element-reg label{
+    font-size: 14px;
+    color: black;
+
+}
+
+.popup-reg .form-reg .form-element-reg  input [type="nome"],
+.popup-reg .form-reg .form-element-reg  input [type="cognome"],
+.popup-reg .form-reg  .form-element-reg  input [type="email"],
+.popup-reg .form-reg  .form-element-reg  input [type="password"],
+.popup-reg .form-reg  .form-element-reg  input [type="confirm-password"]
+{
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border: 1px;
+    border-radius: 5px;
+}
+
+.popup-reg .form-reg  .form-element-reg  button{
+    width: 100%;
+    height: 30px;
+    font-size: 15px;
+    background: #222;
+    color: #fff;
+    cursor: pointer;
+}
