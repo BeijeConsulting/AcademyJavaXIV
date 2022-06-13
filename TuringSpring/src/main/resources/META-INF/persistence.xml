@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="TuringSpring">
-
-		<class>it.beije.turing.example.Contatto</class>
-		<class>it.beije.turing.example.RiferimentiContatto</class>
+	<persistence-unit name="beijebnb">
+		<class>it.beije.turing.beans.Annuncio</class>
+		<class>it.beije.turing.beans.FotoAnnuncio</class>
+		<class>it.beije.turing.beans.ListaRegole</class>
+		<class>it.beije.turing.beans.PeriodoPrenotato</class>
+		<class>it.beije.turing.beans.Regola</class>
+		<class>it.beije.turing.beans.Utente</class>
+		<class>it.beije.turing.beans.Struttura</class>
+		<class>it.beije.turing.beans.Immagine</class>
+		<class>it.beije.turing.beans.Carta</class>
+		<class>it.beije.turing.beans.Indirizzo</class>
+		<class>it.beije.turing.beans.ListaServizio</class>
+		<class>it.beije.turing.beans.Messaggio</class>
+		<class>it.beije.turing.beans.Recensione</class>
+		<class>it.beije.turing.beans.Servizio</class>
+		<class>it.beije.turing.beans.StrutturaImmagini</class>
+		<class>it.beije.turing.beans.TipoStruttura</class>
+		<class>it.beije.turing.beans.Admin</class>
+		<class>it.beije.turing.beans.Host</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/turing"/>
-			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="Marazzini"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://http://localhost:8080/TuringSpring/:3306/beijebnb"/>
+			<property name="javax.persistence.jdbc.user" value="admin"/>
+			<property name="javax.persistence.jdbc.password" value="verde"/>
 		</properties>
 
 	</persistence-unit>
