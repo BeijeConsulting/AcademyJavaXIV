@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<!-- Trigger/Open The Modal -->
+	<button id="myBtn" class="button-5">LOGIN</button>
+
+	<!-- Login -->
+	<div class="container">
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="field">
+					<h1 style="text-align: center;">LOGIN</h1>
+					<label for="email">Email</label>
+					<input type="text" id="email" name="email" placeholder="Enter your email address" />
+					<small></small>
+				</div>
+				<div class="field">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" placeholder="Enter your password" />
+					<small></small>
+					Show password:<input type="checkbox" id="showPsw-1" onchange="showPsw()">
+					<div class="button-container">
+						<button class="button-5" id="logBtn">Login</button>
+						<button class="button-8" id="subBtn">Registration</button>
+						<button class="button-8" id="forgotBtn">Forgotten password</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Subscribe -->
+		<div id="subModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div>
+					<h1>Sign Up</h1>
+					<div class="field">
+						<label for="name">Name</label>
+						<input type="text" id="name" name="name" placeholder="Enter your full name" />
+						<label for="surname">Surname</label>
+						<input type="text" id="surname" name="name" placeholder="Enter your full name" />
+						<label for="email">Email</label>
+						<input type="text" id="subMail" name="email" placeholder="Enter your email address" />
+						<small></small>
+					</div>
+					<div class="field">
+						<label for="emailConfirm">Conferma email</label>
+						<input type="text" id="subEmailConfirm" name="subEmailConfirm"
+							placeholder="Confirm your email" />
+						<small></small>
+					</div>
+					<div class="field">
+						<label for="password">Password</label>
+						<input type="password" id="subPassword" name="password" placeholder="Enter your password" />
+						<small></small>
+						Show password:<input type="checkbox" id="showPsw-3" onchange="showPsw()">
+					</div>
+					<div class="button-container">
+						<button class="button-5" type="submit" onclick="subscribe()">Conferma</button>
+						<button class="button-8" type="submit" onclick="returnToLogin()">Indietro</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="forgotPsw" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="field">
+					<label for="email">Email</label>
+					<input type="text" id="email" name="email" placeholder="Enter your email address" />
+					<small></small>
+				</div>
+				<div class="field">
+					<label for="password">Password</label>
+					<input type="password" id="oldPsw" name="password" placeholder="Enter your old password" />
+					<input type="password" id="newPsw" name="password" placeholder="Enter your new password" />
+					<small></small>
+					Show password:<input type="checkbox" id="showPsw-2" onchange="showPsw()">
+					<div class="button-container">
+						<button class="button-5" type="submit">Conferma</button>
+						<button class="button-8" type="submit" onclick="returnToLogin()">Indietro</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="popUp.js"></script>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</html>

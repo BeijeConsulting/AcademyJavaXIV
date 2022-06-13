@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Esercizi/src"/>
+	<classpathentry kind="src" path="Turing/src"/>
+	<classpathentry excluding="it/beije/turing/service/|it/beije/turing/example/|it/beije/turing/controller/" kind="src" path="TuringSpring/src/main/java"/>
+	<classpathentry kind="src" path="TuringSpring/src/main/java/it/beije/turing/controller"/>
+	<classpathentry kind="src" path="TuringSpring/src/main/java/it/beije/turing/example"/>
+	<classpathentry kind="src" path="TuringSpring/src/main/java/it/beije/turing/service"/>
+	<classpathentry kind="src" path="TuringWeb/src/main/java"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -33,3 +33,4 @@ Servers2/Tomcat v8.5 Server at localhost-config/tomcat-users.xml
 Servers2/Tomcat v8.5 Server at localhost-config/web.xml
 TuringSpring/src/main/java/it/beije/turing/service/FirstService.java
 TuringSpring/src/main/resources/META-INF/persistence.xml
+/bin/
