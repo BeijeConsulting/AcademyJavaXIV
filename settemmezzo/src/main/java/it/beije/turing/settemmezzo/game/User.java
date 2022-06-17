@@ -72,12 +72,10 @@ public class User
 	{
 		if (lobby != null) return false;
 		
-		Lobby newLobby = null;
+		if (idLobby <= -1) lobby = game.joinPublicLobby(this);
+		else lobby = game.joinPrivateLobby(this, idLobby);
 		
-		if (idLobby <= -1) newLobby = game.joinPublicLobby(this);
-		else newLobby = game.joinPrivateLobby(this, idLobby);
-		
-		if (newLobby != null) return true;
+		if (lobby != null) return true;
 		
 		return false;
 	}
@@ -86,7 +84,13 @@ public class User
 	{
 		if (lobby == null) return false;
 		
-		return lobby.quitLobby(this);
+		if (lobby.quitLobby(this))
+		{
+			lobby = null;
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public boolean resizeLobby(int userMax)
@@ -106,6 +110,8 @@ public class User
 	public boolean startMatch()
 	{
 		if (lobby == null) return false;
+		
+		//SET MATCH UTENTE?
 		
 		return lobby.startMatch(this);
 	}
