@@ -1,6 +1,9 @@
 var stompClientWs = null;
 var stompClientLol = null;
 
+let roomIdLol = 100
+let roomIdWs = 200
+
 function setConnectedWs(connected) {
     
     const connectWs = document.getElementById("connect-ws");
@@ -25,7 +28,7 @@ function connectWs() {
     stompClientWs.connect({}, function (frame) {
         setConnectedWs(true);
         console.log('Connected: ' + frame);
-        stompClientWs.subscribe('/greetings', function (greeting) {
+        stompClientWs.subscribe('/lobby/' + roomIdWs, function (greeting) {
             console.log(greeting);
             showGreetingWs(greeting);
         });
@@ -64,7 +67,7 @@ function connectLol() {
     stompClientLol.connect({}, function (frame) {
         setConnectedLol(true);
         console.log('Connected: ' + frame);
-        stompClientLol.subscribe('/greetings', function (greeting) {
+        stompClientLol.subscribe('/lobby/' + roomIdLol, function (greeting) {
             console.log(greeting); 
             showGreetingLol(greeting);
         });
@@ -80,10 +83,10 @@ function disconnectLol() {
 }
 
 function sendNameWs() {
-    stompClientWs.send("/app/hello", {}, document.getElementById("name-ws").value);
+    stompClientWs.send("/app/sock");
 }
 function sendNameLol() {
-    stompClientLol.send("/app/hello", {}, document.getElementById("name-lol").value);
+    stompClientLol.send("/app/room/" + roomIdLol, {}, document.getElementById("name-lol").value);
 }
 
 function showGreetingWs(message) {
