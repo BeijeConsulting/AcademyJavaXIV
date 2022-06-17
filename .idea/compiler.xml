@@ -6,15 +6,22 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="settemmezzo" />
         <module name="Turing" />
         <module name="TuringWeb" />
         <module name="TuringSpring" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="settemmezzo" target="1.8" />
       <module name="Turing" target="1.8" />
       <module name="TuringSpring" target="1.8" />
       <module name="TuringWeb" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="settemmezzo" options="-parameters" />
+    </option>
   </component>
 </project>
