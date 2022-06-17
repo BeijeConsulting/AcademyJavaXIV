@@ -12,8 +12,8 @@ function setConnected(connected) {
     $("#greetings").html("");
 }
 
-function connect() {
-   var socket = new SockJS('/ws');
+function connect(param) {
+   var socket = new SockJS(param);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
@@ -34,7 +34,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val(),
+    stompClient.send("/app/sock", {}, JSON.stringify({'name': $("#name").val(),
     'body': "ciao"}));
 }
 
@@ -47,7 +47,7 @@ $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#connect" ).click(function() { connect(); });
-    $( "#disconnect" ).click(function() { disconnect(); });
+    $( "#connect" ).click(function() { connect("/ws"); });
+    $( "#disconnect" ).click(function() { connect("/lol"); });
     $( "#send" ).click(function() { sendName(); });
 });
