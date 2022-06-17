@@ -22,3 +22,10 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /.DS_Store
+PopupJS/.DS_Store
+TuringSpring/.DS_Store
+TuringSpring/src/.DS_Store
+TuringSpring/src/main/.DS_Store
+TuringSpring/src/main/webapp/.DS_Store
+TuringSpring/src/main/webapp/WEB-INF/.DS_Store
+settemmezzo/.classpath
