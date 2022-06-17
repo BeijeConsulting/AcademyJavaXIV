@@ -1,5 +1,6 @@
 package it.beije.turing.settemmezzo.game;
 
+import it.beije.turing.settemmezzo.game.deck.Card;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 
 public class User
@@ -119,5 +120,21 @@ public class User
 	public Leaderboard getLeaderboard()
 	{
 		return game.getLeaderboard();
+	}
+
+	public boolean requestCard()
+	{
+		if (lobby == null) return false;
+		else if (lobby.getMatch() == null) return false;
+		
+		return lobby.getMatch().requestCard(this);
+	}
+	
+	public boolean stopPlaying()
+	{
+		if (lobby == null) return false;
+		else if (lobby.getMatch() == null) return false;
+		
+		return lobby.getMatch().stopPlaying(this);
 	}
 }
