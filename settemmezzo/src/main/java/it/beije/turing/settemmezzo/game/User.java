@@ -70,12 +70,14 @@ public class User
 	
 	public boolean joinLobby(int idLobby)
 	{
-		Lobby lobby = null;
+		if (lobby != null) return false;
 		
-		if (idLobby <= -1) lobby = game.joinPublicLobby(this);
-		else lobby = game.joinPrivateLobby(this, idLobby);
+		Lobby newLobby = null;
 		
-		if (lobby != null) return true;
+		if (idLobby <= -1) newLobby = game.joinPublicLobby(this);
+		else newLobby = game.joinPrivateLobby(this, idLobby);
+		
+		if (newLobby != null) return true;
 		
 		return false;
 	}
