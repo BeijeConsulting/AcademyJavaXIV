@@ -1,31 +1,33 @@
 package it.beije.turing.settemmezzo.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompBrokerRelayMessageHandler;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
+@Slf4j
 public class RegistryContainer {
 
 	private StompEndpointRegistry reg;
 	private static RegistryContainer cont;
 	
- private RegistryContainer() {}
- 
- public static RegistryContainer getInstance() {
-	 if(cont==null)
-	 {
-		 cont=new RegistryContainer();
+	private RegistryContainer() {}
+
+	public static RegistryContainer getInstance() {
+		 if(cont==null)
+		 {
+			 cont=new RegistryContainer();
+		 }
+		return cont;
 	 }
-	 return cont;
- }
 
-public StompEndpointRegistry getReg() {
+	public StompEndpointRegistry getReg() {
 	return reg;
-}
+	}
 
-public void setReg(StompEndpointRegistry reg) {
-	this.reg = reg;
-}
+	public void setReg(StompEndpointRegistry reg) {
+		this.reg = reg;
+	}
 
 
  

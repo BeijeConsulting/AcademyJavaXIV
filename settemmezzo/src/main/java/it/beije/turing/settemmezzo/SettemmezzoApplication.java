@@ -10,7 +10,6 @@ public class SettemmezzoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SettemmezzoApplication.class, args);
-		System.out.println("asdaddsaodijdsa");
 		
 	}
 
