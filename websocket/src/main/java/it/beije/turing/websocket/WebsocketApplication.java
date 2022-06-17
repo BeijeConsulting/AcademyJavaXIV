@@ -1,4 +1,4 @@
-package it.beije.tuing.websocket;
+package it.beije.turing.websocket;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
