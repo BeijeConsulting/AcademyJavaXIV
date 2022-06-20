@@ -3,29 +3,75 @@ package it.beije.turing.settemmezzo.login;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private UserAuthorityRepository userAuthorityRepository;
 
-	public UserDto login(String email, String password) {
-		System.out.print("Password inserita: " + passwordEncoder.encode(password));
-		System.out.print("Password inserita: " + passwordEncoder.encode(password));
-		//TODO buon lunedì owo
-		
-		User user = userRepository.findByEmailAndPassword(email, passwordEncoder.encode(password));
-		if (user == null) {
-			throw new RuntimeException("No user found.");// TODONoContentException();
+	private static final Integer DEFAULT_AUTHORITY = 1;
+	
+	private void setDefaultAuthority(User newUser) {
+
+        UserAuthority userAuthority = new UserAuthority();
+        userAuthority.setUserId(newUser.getId());
+        userAuthority.setAuthorityId(DEFAULT_AUTHORITY);
+        userAuthorityRepository.saveAndFlush(userAuthority);
+
+    }
+	
+	public void saveRegisteredUser(User user) {
+        userRepository.save(user);
+    }
+	
+	public User createUser(User user) {
+
+		if ((user.getUsername() != null && !user.getUsername().isEmpty()
+				&& user.getPassword() != null && !user.getPassword().isEmpty())
+				&& (user.getEmail() != null && !user.getEmail().isEmpty())) {
+
+			if (userRepository.findByEmail(user.getEmail()) == null) {
+
+				User newUser = userRepository.save(user);
+				setDefaultAuthority(newUser);
+
+				userRepository.flush();
+
+				return user;
+			} else {
+				throw new RuntimeException("Email giá presente nel database");
+			}
+		} else {
+			throw new RuntimeException("Nome, Cognome, Password o Email = null, o stringa vuota");
 		}
-		return new UserDto(user);
 	}
+
+//	public UserDto login(String email, String password) {
+//		System.out.print("Password inserita: " + passwordEncoder.encode(password));
+//		System.out.print("Password inserita: " + passwordEncoder.encode(password));
+//		// TODO buon lunedì owo
+//
+//		User user = userRepository.findByEmail(email);
+//		if (user == null) {
+//			throw new RuntimeException("No user found.");// TODONoContentException();
+//		}
+//		if (passwordEncoder.matches(password, user.getPassword())) {
+//			System.out.println("Password corretta");
+//		}
+//
+//		return new UserDto(user);
+//	}
 
 	public List<User> getAllUser() {
 		List<User> list = userRepository.findAll();
@@ -51,35 +97,48 @@ public class UserService {
 
 	}
 
-	public boolean removeUser(Integer id) {
-		User user;
-
-		user = userRepository.findById(id).get();
+	public boolean removeUser(User user) {
 
 		if (user == null) {
 			throw new RuntimeException("No user found with given id");
 		}
-		userRepository.deleteById(id);
+		userRepository.deleteById(user.getId());
 		return true;
 	}
-	
-	public User updateUser(User user, Integer id) {
-		User u = userRepository.findById(id).get();
-		if(u == null) {
-			throw new RuntimeException("User not found with given id");
-		}
-		if(user.getEmail() != null && user.getEmail() != "") {
-			u.setEmail(u.getEmail());
-		}
-		if(user.getPassword() != null&& user.getPassword() != "") {
-			u.setPassword(u.getPassword());
-		}
-		if(user.getUsername() != null && user.getEmail() != "") {
-			u.setUsername(u.getUsername());
-		}
+
+	public User updateUser(User user, UserDto newUser) {
 		
-		userRepository.save(u);
-		
-		return u;
+		if (newUser.getEmail() != null && newUser.getEmail() != "") {
+			user.setEmail(newUser.getEmail());
+		}
+		if (newUser.getPassword() != null && newUser.getPassword() != "") {
+			user.setPassword(newUser.getPassword());
+		}
+		if (newUser.getUsername() != null && newUser.getEmail() != "") {
+			user.setUsername(newUser.getUsername());
+		}
+
+		userRepository.save(user);
+
+		return user;
+	}
+
+	@Override
+	public User loadUserByUsername(String email) throws UsernameNotFoundException {
+
+		try {
+			User utente = userRepository.findByEmail(email);
+			if (utente == null) {
+
+				throw new UsernameNotFoundException("email: " + email + " not found");
+			}
+
+			return utente;
+		} catch (IllegalArgumentException iaEx) {
+			throw new RuntimeException("email = null");
+		}
+//        catch (Exception e) {
+//            throw e;
+//        }
 	}
 }
