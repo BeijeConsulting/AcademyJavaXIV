@@ -105,47 +105,33 @@ public class User
 		return false;
 	}
 	
-	public boolean resizeLobby(int userMax)
-	{
-		if (lobby == null) return false;
-		
-		return lobby.setUserMax(this, userMax);
-	}
+//	public boolean resizeLobby(int userMax)
+//	{
+//
+//	}
 	
-	public boolean privateLobby(boolean privateSession)
-	{
-		if (lobby == null) return false;
-		
-		return lobby.setPrivateSession(this, privateSession);
-	}
+//	public boolean privateLobby(boolean privateSession)
+//	{
+//
+//	}
 	
-	public boolean startMatch()
-	{
-		if (lobby == null) return false;
-		
-		//SET MATCH UTENTE?
-		
-		return lobby.startMatch(this);
-	}
+//	public boolean startMatch()
+//	{
+//
+//	}
 	
 	public Leaderboard getLeaderboard()
 	{
 		return game.getLeaderboard();
 	}
 
-	public boolean requestCard()
-	{
-		if (lobby == null) return false;
-		else if (lobby.getMatch() == null) return false;
-		
-		return lobby.getMatch().requestCard(this);
-	}
-	
-	public boolean stopPlaying()
-	{
-		if (lobby == null) return false;
-		else if (lobby.getMatch() == null) return false;
-		
-		return lobby.getMatch().stopPlaying(this);
-	}
+//	public boolean requestCard()
+//	{
+//
+//	}
+
+//	public boolean stopPlaying()
+//	{
+//
+//	}
 }

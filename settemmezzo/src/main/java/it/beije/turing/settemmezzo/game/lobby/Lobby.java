@@ -2,7 +2,6 @@ package it.beije.turing.settemmezzo.game.lobby;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
@@ -12,7 +11,7 @@ public class Lobby
 {
 	private List<User> users = null;
 	private int idLobby;
-	private boolean privateSession = true;
+	private boolean accessType = false;
 	private int userMax = 7;
 	private Match match;			//GET/SET IMPLEMENTAZIONE
 	
@@ -39,15 +38,15 @@ public class Lobby
 		return match;
 	}
 
-	public boolean isPrivateSession() {
-		return privateSession;
+	public boolean isAccessType() {
+		return accessType;
 	}
 
-	public boolean setPrivateSession(User user, boolean privateSession)		//SOLO HOST
+	public boolean changeLobbyAccess(User user, boolean accessType)		//SOLO HOST
 	{				
 		if (user != users.get(0)) return false;
 		
-		this.privateSession = privateSession;
+		this.accessType = accessType;
 		
 		return true;
 	}

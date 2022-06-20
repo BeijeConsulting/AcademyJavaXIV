@@ -20,13 +20,17 @@ public class Match
 		deck = new Deck();
 	}
 
+	public List<Hand> getHands() {
+		return hands;
+	}
+
 	public boolean start()
 	{
 		for (User user : users)
 		{
 			Hand hand = new Hand(user);
 			hands.add(hand);
-			user.requestCard();
+//			user.requestCard();
 		}
 		
 		return true;
@@ -67,7 +71,7 @@ public class Match
 		return deck.getCards().remove(0);
 	}
 
-	public boolean requestCard(User user) 
+	public boolean requestCard(User user)
 	{
 		//TODO IF MIO TURNO?
 		
@@ -111,16 +115,8 @@ public class Match
 		return false;
 	}
 	
-	public boolean checkEndMatch()			//TODO CALL A FINE DI OGNI TURNO
-	{
-		for (Hand hand : hands)
-		{
-			if (hand.getContinuePlaying())
-			{
-				return false;
-			}
-		}
-		
-		return true;
-	}
+//	public boolean checkEndMatch()			//TODO CALL A FINE DI OGNI TURNO
+//	{
+//
+//	}
 }

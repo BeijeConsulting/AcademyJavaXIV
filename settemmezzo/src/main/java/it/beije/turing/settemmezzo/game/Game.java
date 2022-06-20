@@ -26,7 +26,7 @@ public class Game
     }
 	
     
-    
+    //REST
 	public Lobby createLobby(User user)
 	{
 		Lobby lobby = new Lobby(user, idCount++);
@@ -34,14 +34,16 @@ public class Game
 		
 		return lobby;
 	}
-	
+
+	//REST
 	public Leaderboard getLeaderboard()
 	{
 		updateLeaderboard();
 		
 		return leaderboard;
 	}
-	
+
+
 	private void updateLeaderboard()
 	{
 		leaderboard.update();
@@ -65,7 +67,7 @@ public class Game
 	{
 		for (Lobby lobby : lobbies)
 		{
-			if (lobby.getUsersSize() < lobby.getUserMax() && !lobby.isPrivateSession())
+			if (lobby.getUsersSize() < lobby.getUserMax() && lobby.isAccessType())
 			{
 				lobby.joinLobby(user);
 				return lobby;
