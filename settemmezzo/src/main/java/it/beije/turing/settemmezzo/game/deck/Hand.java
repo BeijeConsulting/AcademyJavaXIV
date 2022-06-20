@@ -58,7 +58,8 @@ public class Hand
 		
 		boolean under = c <= 7.5f ? true : false;
 		
-		setContinuePlaying(under);
+		if (c == 7.5f) setContinuePlaying(false);
+		else setContinuePlaying(under);
 		
 		return under;
 	}
