@@ -16,6 +16,8 @@ public class Lobby
 	private int userMax = 7;
 	private Match match;			//GET/SET IMPLEMENTAZIONE
 	
+	//TODO INVITO PLAYER
+	
 	public Lobby(User host, int idLobby)
 	{
 		this.idLobby = idLobby;
@@ -56,11 +58,7 @@ public class Lobby
 
 	public boolean setUserMax(User user, int userMax)				//SOLO HOST
 	{
-		if (user != users.get(0)) return false;
-		
-		if (userMax < 2) userMax = 2;
-		else if (userMax > 7) userMax = 7;
-		else if (users.size() >= userMax) userMax = users.size();
+		if (user != users.get(0) || userMax < 2 || userMax > 7 || users.size() >= userMax) return false;
 		
 		this.userMax = userMax;
 		

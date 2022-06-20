@@ -37,7 +37,7 @@ public class Match
 	//TODO CHECK PER ASSO / RE DI DENARI CHE CAMBIANO VALORE
 	
 	
-	public List<User> end()				//TODO CHIAMARE QUANDO CHECKENDMATCH = TRUE;
+	public List<User> end()				//TODO CHIAMARE QUANDO CHECKENDMATCH = TRUE;  AGGIUNGERE PUNTI ALLO SCORE DEI PLAYER
 	{
 		List<User> winners = new ArrayList<>();
 		
