@@ -58,9 +58,7 @@ public class Lobby
 
 	public boolean setUserMax(User user, int userMax)				//SOLO HOST
 	{
-		if (user != users.get(0)) return false;
-		
-		if (userMax < 2 || userMax > 7 || users.size() >= userMax) return false;
+		if (user != users.get(0) || userMax < 2 || userMax > 7 || users.size() >= userMax) return false;
 		
 		this.userMax = userMax;
 		
