@@ -16,6 +16,8 @@ public class Lobby
 	private int userMax = 7;
 	private Match match;			//GET/SET IMPLEMENTAZIONE
 	
+	//TODO INVITO PLAYER
+	
 	public Lobby(User host, int idLobby)
 	{
 		this.idLobby = idLobby;

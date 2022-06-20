@@ -69,6 +69,17 @@ public class User
 		this.score = score;
 	}
 	
+	public boolean createLobby()
+	{
+		if (lobby != null) return false;
+		
+		game.createLobby(this);
+		
+		if (lobby != null) return true;
+		
+		return false;
+	}
+	
 	public boolean joinLobby(int idLobby)
 	{
 		if (lobby != null) return false;
