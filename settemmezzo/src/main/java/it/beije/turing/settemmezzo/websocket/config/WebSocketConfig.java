@@ -1,4 +1,4 @@
-package it.beije.turing.settemmezzo.config;
+package it.beije.turing.settemmezzo.websocket.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

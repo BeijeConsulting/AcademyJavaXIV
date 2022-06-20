@@ -1,4 +1,4 @@
-package it.beije.turing.settemmezzo.config;
+package it.beije.turing.settemmezzo.websocket.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

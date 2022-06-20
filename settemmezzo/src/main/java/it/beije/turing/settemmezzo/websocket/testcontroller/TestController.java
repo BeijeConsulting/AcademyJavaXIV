@@ -1,4 +1,4 @@
-package it.beije.turing.settemmezzo.testcontroller;
+package it.beije.turing.settemmezzo.websocket.testcontroller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
