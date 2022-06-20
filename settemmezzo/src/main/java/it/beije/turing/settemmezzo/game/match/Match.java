@@ -45,7 +45,7 @@ public class Match
 		
 		for (Hand hand : hands)
 		{
-			if (hand.getCardValue() >= win)
+			if (hand.getCardValue() >= win && hand.getCardValue() <= 7.5f)
 			{
 				win = hand.getCardValue();
 			}

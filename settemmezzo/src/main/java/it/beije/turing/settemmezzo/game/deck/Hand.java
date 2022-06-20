@@ -56,7 +56,7 @@ public class Hand
 		
 		cardValue = c;
 		
-		boolean under = c <= 7.5f ? true : false;
+		boolean under = c < 7.5f ? true : false;
 		
 		setContinuePlaying(under);
 		
