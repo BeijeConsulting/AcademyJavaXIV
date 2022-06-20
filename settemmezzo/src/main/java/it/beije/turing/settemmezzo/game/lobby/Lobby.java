@@ -60,9 +60,7 @@ public class Lobby
 	{
 		if (user != users.get(0)) return false;
 		
-		if (userMax < 2) userMax = 2;
-		else if (userMax > 7) userMax = 7;
-		else if (users.size() >= userMax) userMax = users.size();
+		if (userMax < 2 || userMax > 7 || users.size() >= userMax) return false;
 		
 		this.userMax = userMax;
 		
