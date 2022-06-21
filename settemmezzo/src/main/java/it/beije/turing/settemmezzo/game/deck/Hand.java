@@ -2,8 +2,6 @@ package it.beije.turing.settemmezzo.game.deck;
 
 import java.util.List;
 
-import it.beije.turing.settemmezzo.game.User;
-
 public class Hand
 {
 	private User user;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.beije.turing.settemmezzo.game.Game;
-import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.match.Match;
 
 public class Lobby

@@ -13,8 +13,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import it.beije.turing.settemmezzo.login.User;
-import it.beije.turing.settemmezzo.login.UserService;
+import it.beije.turing.settemmezzo.game.User;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 @Component

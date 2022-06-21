@@ -1,6 +1,5 @@
 package it.beije.turing.settemmezzo.websocket.controller;
 
-import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import it.beije.turing.settemmezzo.websocket.service.MatchService;
 import lombok.RequiredArgsConstructor;

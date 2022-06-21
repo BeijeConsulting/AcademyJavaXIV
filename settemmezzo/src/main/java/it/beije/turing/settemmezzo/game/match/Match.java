@@ -3,7 +3,6 @@ package it.beije.turing.settemmezzo.game.match;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.deck.Card;
 import it.beije.turing.settemmezzo.game.deck.Deck;
 import it.beije.turing.settemmezzo.game.deck.Hand;
