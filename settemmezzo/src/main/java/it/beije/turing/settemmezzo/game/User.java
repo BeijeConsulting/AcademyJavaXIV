@@ -1,4 +1,4 @@
-package it.beije.turing.settemmezzo.login;
+package it.beije.turing.settemmezzo.game;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,6 +20,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import it.beije.turing.settemmezzo.game.Game;
+import it.beije.turing.settemmezzo.game.Leaderboard;
+import it.beije.turing.settemmezzo.game.lobby.Lobby;
+import it.beije.turing.settemmezzo.login.Authority;
+import it.beije.turing.settemmezzo.login.RefreshToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -53,6 +58,31 @@ public class User implements Serializable, UserDetails {
 
 	@Transient
 	private RefreshToken refreshToken;
+
+	@Transient
+	private boolean online = false;
+
+	@Transient
+	private Game game = Game.getInstance();
+
+	@Transient
+	private Lobby lobby = null;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public boolean isOnline() {
+		return online;
+	}
+
+	public void setOnline(boolean online) {
+		this.online = online;
+	}
 
 	@JsonIgnore
 	@Override
@@ -110,6 +140,46 @@ public class User implements Serializable, UserDetails {
 		
 		return null;
 	}
-	
-	
+
+	public Leaderboard getLeaderboard()
+	{
+		return game.getLeaderboard();
+	}
+
+//	public boolean quitLobby()
+//	{
+//		if (lobby == null) return false;
+//
+//		if (lobby.quitLobby(this))
+//		{
+//			lobby = null;
+//			return true;
+//		}
+//
+//		return false;
+//	}
+//
+//	public boolean createLobby()
+//	{
+//		if (lobby != null) return false;
+//
+//		game.createLobby(this);
+//
+//		if (lobby != null) return true;
+//
+//		return false;
+//	}
+//
+//	public boolean joinLobby(int idLobby)
+//	{
+//		if (lobby != null) return false;
+//
+//		if (idLobby <= -1) lobby = game.joinPublicLobby(this);
+//		else lobby = game.joinPrivateLobby(this, idLobby);
+//
+//		if (lobby != null) return true;
+//
+//		return false;
+//	}
+//	
 }

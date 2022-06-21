@@ -3,6 +3,8 @@ package it.beije.turing.settemmezzo.login;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import it.beije.turing.settemmezzo.game.User;
+import it.beije.turing.settemmezzo.http.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class RefreshTokenService {
 	RefreshTokenRepository tokenRepository;
 	
 	@Autowired
-	UserRepository userRepository;
+    UserRepository userRepository;
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	

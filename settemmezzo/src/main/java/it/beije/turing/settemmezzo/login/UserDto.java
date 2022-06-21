@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import it.beije.turing.settemmezzo.game.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
