@@ -1,5 +1,6 @@
 package it.beije.turing.settemmezzo.websocket.controller;
 
+import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

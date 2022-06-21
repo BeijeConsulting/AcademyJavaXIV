@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
+import it.beije.turing.settemmezzo.websocket.service.UserService;
 
 
 @RestController
