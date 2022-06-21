@@ -47,7 +47,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
+	//commento
 	//Questi due metodi sono inutili li teniamo per ricordo <3
 //	@PostMapping(value = "/login")
 //	public UserDto login(@RequestBody UserDto userDto) {
