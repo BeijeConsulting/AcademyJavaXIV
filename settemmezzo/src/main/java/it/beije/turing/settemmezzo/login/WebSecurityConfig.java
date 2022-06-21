@@ -8,18 +8,32 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import it.beije.turing.settemmezzo.login.security.JwtConfigurer;
+import it.beije.turing.settemmezzo.login.security.JwtTokenFilter;
+import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+	
+	
+	
+	
+	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	
+        JwtTokenFilter customFilter = new JwtTokenFilter(new JwtTokenProvider());
+        
         //Disabling Cross-Site-Request-Forgery.
         http.csrf().disable();
        
@@ -30,9 +44,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //Spring security converts them automatically but watch out
 
         //Here you can apply different authorizations for different users/parts of the web app
-        http.authorizeRequests()
-
-        .anyRequest().permitAll();
+        http.cors().and()
+        .httpBasic().disable()
+        .csrf().disable()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .authorizeRequests()
+        .antMatchers("/test").permitAll()
+        .and()
+        .addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
@@ -45,5 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
+    
+    
 }

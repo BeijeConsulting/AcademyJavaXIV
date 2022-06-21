@@ -103,11 +103,17 @@ public class JwtTokenProvider {
 
 	public boolean validateToken(String token) {
 		try {
-			Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+			String fanbagnoaquestoprogetto = "reservation";
+			System.out.println("TOKEN:" + token);
+			Jws<Claims> claims = Jwts.parser().setSigningKey(fanbagnoaquestoprogetto).parseClaimsJws(token);
+			
             return !claims.getBody().getExpiration().before(new Date());
         } catch (ExpiredJwtException e) {
+        		System.out.println("Sono stato sopra");
 	           throw new InvalidJwtAuthenticationException("Expired JWT1 token", InvalidJwtAuthenticationException.EXPIRED);
 		} catch (JwtException | IllegalArgumentException e) {
+			System.out.println("Sono stato qui");
+			e.printStackTrace();
             throw new InvalidJwtAuthenticationException("Invalid JWT3 token", InvalidJwtAuthenticationException.FORBIDDEN);
 		}
 	}

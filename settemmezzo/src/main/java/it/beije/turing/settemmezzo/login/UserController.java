@@ -119,7 +119,7 @@ public class UserController {
 	@PreAuthorize("hasAuthority('USER')")
 	@PutMapping(value = "/user")
 	public  Map<String, Boolean> deleteUser(Authentication auth) {
-
+		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
 		if (auth.isAuthenticated()) {
 
 			User user = (User) auth.getPrincipal();

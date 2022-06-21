@@ -32,9 +32,7 @@ public class AuthenticationController {
 
 	@Autowired
 	RefreshTokenService refreshTokenService;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
+
 
 	@PostMapping("/signin")
 	public ResponseEntity<Map<String, Object>> signin(@RequestBody AuthCredentials credentials) {
@@ -43,13 +41,14 @@ public class AuthenticationController {
 			
 			String username = credentials.getEmail();
 			User user = userService.loadUserByUsername(username);
-			System.out.print("CREDENTIAL PASSWORD:::::: " + credentials.getPassword());
+			
 			authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(username, credentials.getPassword()));
-			System.out.print("CREDENTIAL PASSWORD:::::: " + credentials.getPassword());
+			
 			
 			String token = jwtTokenProvider.createToken(username, user.getAuthorityList());
 
+			System.out.println("TOKEN: ----------->" + token);
 			RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
 			Map<String, Object> res = new HashMap<>();
