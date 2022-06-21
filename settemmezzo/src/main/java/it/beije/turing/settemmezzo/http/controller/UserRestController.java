@@ -8,7 +8,7 @@ import java.util.Map;
 import it.beije.turing.settemmezzo.login.RefreshTokenService;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.login.UserDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -23,21 +23,17 @@ import it.beije.turing.settemmezzo.websocket.service.UserService;
 
 
 @RestController
-public class UserController {
-	@Autowired
-	private UserService userService;
+@RequiredArgsConstructor
+public class UserRestController {
+	private final UserService userService;
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
-	@Autowired
-	private JwtTokenProvider jwtTokenProvider;
+	private final JwtTokenProvider jwtTokenProvider;
 
-	@Autowired
-	private RefreshTokenService refreshTokenService;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final RefreshTokenService refreshTokenService;
+
+	private final PasswordEncoder passwordEncoder;
 
 	
 	//Questi due metodi sono inutili li teniamo per ricordo <3
