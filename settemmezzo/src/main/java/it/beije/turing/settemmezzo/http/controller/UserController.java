@@ -5,34 +5,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import it.beije.turing.settemmezzo.login.RefreshTokenService;
-import it.beije.turing.settemmezzo.game.User;
-import it.beije.turing.settemmezzo.login.UserDto;
-import lombok.RequiredArgsConstructor;
+import javax.annotation.security.PermitAll;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import it.beije.turing.settemmezzo.game.User;
+import it.beije.turing.settemmezzo.login.RefreshTokenService;
+import it.beije.turing.settemmezzo.login.UserDto;
 import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 
 
 @RestController
-@RequiredArgsConstructor
-public class UserRestController {
-	private final UserService userService;
+public class UserController {
+	@Autowired
+	private UserService userService;
 
-	private final AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-	private final JwtTokenProvider jwtTokenProvider;
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
 
-	private final RefreshTokenService refreshTokenService;
+	@Autowired
+	private RefreshTokenService refreshTokenService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
+	
 	//Questi due metodi sono inutili li teniamo per ricordo <3
 //	@PostMapping(value = "/login")
 //	public UserDto login(@RequestBody UserDto userDto) {
@@ -66,6 +81,7 @@ public class UserRestController {
 
 		try {
 			User utente = userService.createUser(user);
+			utente.setPassword(passwordEncoder.encode(utente.getPassword()));
 			String token = jwtTokenProvider.generateTokenRegistration(utente.getEmail(), LocalDateTime.now());
 //			mailUtil.senMail(token,utente);
 
@@ -108,7 +124,7 @@ public class UserRestController {
 	@PreAuthorize("hasAuthority('USER')")
 	@PutMapping(value = "/user")
 	public  Map<String, Boolean> deleteUser(Authentication auth) {
-
+		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
 		if (auth.isAuthenticated()) {
 
 			User user = (User) auth.getPrincipal();

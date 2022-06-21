@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class UserController {
+public class UserSocketController {
 
 
 
