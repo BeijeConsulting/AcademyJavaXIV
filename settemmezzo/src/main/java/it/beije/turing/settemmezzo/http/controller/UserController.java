@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 
+import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -131,6 +132,54 @@ public class UserController {
 			Map<String, Boolean> map = new HashMap<String, Boolean>();
 			map.put("Esito: ", Boolean.TRUE);
 			return map;
+		} else {
+			throw new RuntimeException("Autenticazione non valida -- 401");
+		}
+	}
+
+	@PreAuthorize("hasAuthority('USER')")
+	@PostMapping(value = "/lobby")
+	public Lobby createLobby(Authentication auth) {
+		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
+
+		if (auth.isAuthenticated()) {
+
+			User user = (User) auth.getPrincipal();
+
+			return userService.createLobby(user);
+
+		} else {
+			throw new RuntimeException("Autenticazione non valida -- 401");
+		}
+	}
+
+	@PreAuthorize("hasAuthority('USER')")
+	@PutMapping(value = "/lobby")
+	public Lobby joinLobby(Authentication auth) {
+		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
+
+		if (auth.isAuthenticated()) {
+
+			User user = (User) auth.getPrincipal();
+
+			return userService.joinLobby(user);
+
+		} else {
+			throw new RuntimeException("Autenticazione non valida -- 401");
+		}
+	}
+
+	@PreAuthorize("hasAuthority('USER')")
+	@DeleteMapping(value = "/lobby")
+	public Boolean quitLobby(Authentication auth) {
+		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
+
+		if (auth.isAuthenticated()) {
+
+			User user = (User) auth.getPrincipal();
+
+			return userService.quitLobby(user);
+
 		} else {
 			throw new RuntimeException("Autenticazione non valida -- 401");
 		}

@@ -1,6 +1,8 @@
 package it.beije.turing.settemmezzo.websocket.service;
 
+import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
+import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import it.beije.turing.settemmezzo.http.repository.UserAuthorityRepository;
 import it.beije.turing.settemmezzo.http.repository.UserRepository;
 import it.beije.turing.settemmezzo.login.UserAuthority;
@@ -175,5 +177,39 @@ public class UserService implements UserDetailsService{
 //        catch (Exception e) {
 //            throw e;
 //        }
+    }
+
+    public Lobby createLobby(User user) {
+        if (user.getLobby() != null) throw new RuntimeException("Already in a Lobby");
+
+        Lobby lobby = user.getGame().createLobby(user);
+        user.setLobby(lobby);
+
+		if (user.getLobby() != null) return lobby;
+
+        throw new RuntimeException("Error creating the Lobby");
+    }
+
+    public Lobby joinLobby(User user) {
+        if (user.getLobby() != null) throw new RuntimeException("Already in a Lobby");
+
+		if (user.getLobby().getIdLobby() <= -1) user.setLobby(user.getGame().joinPublicLobby(user));
+		else user.setLobby(user.getGame().joinPrivateLobby(user, user.getLobby().getIdLobby()));
+
+        if (user.getLobby() != null) return user.getLobby();
+
+        throw new RuntimeException("Error joining the Lobby");
+    }
+
+    public Boolean quitLobby(User user) {
+		if (user.getLobby() == null) throw new RuntimeException("Not in a Lobby");
+
+		if (user.getLobby().quitLobby(user))
+		{
+			user.setLobby(null);
+			return true;
+		}
+
+		return false;
     }
 }
