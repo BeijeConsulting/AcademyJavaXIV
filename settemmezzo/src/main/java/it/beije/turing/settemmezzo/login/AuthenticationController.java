@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
+import it.beije.turing.settemmezzo.websocket.service.UserService;
 
 @Controller
 public class AuthenticationController {
