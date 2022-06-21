@@ -33,9 +33,6 @@ public class UserRestController {
 
 	private final RefreshTokenService refreshTokenService;
 
-	private final PasswordEncoder passwordEncoder;
-
-	
 	//Questi due metodi sono inutili li teniamo per ricordo <3
 //	@PostMapping(value = "/login")
 //	public UserDto login(@RequestBody UserDto userDto) {
@@ -69,7 +66,6 @@ public class UserRestController {
 
 		try {
 			User utente = userService.createUser(user);
-			utente.setPassword(passwordEncoder.encode(utente.getPassword()));
 			String token = jwtTokenProvider.generateTokenRegistration(utente.getEmail(), LocalDateTime.now());
 //			mailUtil.senMail(token,utente);
 

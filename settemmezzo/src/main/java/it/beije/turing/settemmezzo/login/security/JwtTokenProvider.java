@@ -102,9 +102,9 @@ public class JwtTokenProvider {
 
 	public boolean validateToken(String token) {
 		try {
-			String pipo = "HRlELXqpSB";
+			String fanbagnoaquestoprogetto = "reservation";
 			System.out.println("TOKEN:" + token);
-			Jws<Claims> claims = Jwts.parser().setSigningKey(pipo).parseClaimsJws(token);
+			Jws<Claims> claims = Jwts.parser().setSigningKey(fanbagnoaquestoprogetto).parseClaimsJws(token);
 			
             return !claims.getBody().getExpiration().before(new Date());
         } catch (ExpiredJwtException e) {
