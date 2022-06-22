@@ -22,20 +22,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 /*	RIEPILOGO GESTIONE ECCEZIONI:
  *
- * NoContentException 					204
- * InvalidJSONException  				400
- * DBException 							503
- * ServiceException  					503
- * IllegalDateException 				400
- * NotExistPcException 					204
+ * IllegalHourException 				202
  * UpdateException 						202
+ * NoContentException 					204
+ * NotExistPcException 					204
+ * InvalidArgumentException				400
+ * IllegalDateException 				400
+ * InvalidJSONException  				400
  * UsernameNotFoundException 			401
  * InvalidJwtAuthenticationException  	401
  * BadCredentialsException  			401
- * IllegalHourException 				202
  * ForbiddenException					403
- * InvalidArgumentException				400
  * AlreadyExistException				406
+ * DBException 							503
+ * ServiceException  					503
  */
 
 
