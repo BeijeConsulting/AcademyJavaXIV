@@ -53,37 +53,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-<<<<<<< HEAD
-	
-	//Questi due metodi sono inutili li teniamo per ricordo <3
-//	@PostMapping(value = "/login")
-//	public UserDto login(@RequestBody UserDto userDto) {
-//		UserDto u = userService.login(userDto.getEmail(), userDto.getPassword());
-//
-//		// TODO online = true;
-//
-//		if (u == null) {
-//			throw new RuntimeException("");
-//		}
-//		return u;
-//	}
 
-//	@PostMapping(value = "/addUser")
-//	public UserDto addUser(@RequestBody User user) {
-//		if (user.getPassword() == null || user.getEmail() == null || user.getUsername() == null) {
-//			throw new RuntimeException("One or more fields missing for creating a user");
-//		}
-//		user.setScore(0);
-//
-//		userService.addUser(user);
-//		UserDto userDto = new UserDto(user);
-//
-//		return userDto;
-//
-//	}
-=======
-
->>>>>>> branch 'settemmezzo_websocket' of git@github.com:BeijeConsulting/AcademyJavaXIV.git
 
 	@PreAuthorize("permitAll()")
 	@PostMapping("/user/registration")
