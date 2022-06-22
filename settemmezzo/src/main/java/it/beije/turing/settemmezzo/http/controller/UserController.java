@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import io.swagger.v3.oas.annotations.tags.Tag;
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.login.RefreshTokenService;
@@ -61,7 +61,7 @@ public class UserController {
 	@PreAuthorize("permitAll()")
 	@PostMapping("/user/registration")
 	public User insertUser(@RequestBody User user) {
-
+		log.debug("//user//registration -> User: " + user);
 		try {
 			User utente = userService.createUser(user);
 			utente.setPassword(passwordEncoder.encode(utente.getPassword()));
@@ -80,19 +80,29 @@ public class UserController {
 //			throw new ServiceException("Error system");
 //		}
 	}
-
+	
+	
 	@PreAuthorize("permitAll()")
 	@GetMapping(value = "/users")
 	public List<User> getUsers() {
+		log.debug("//users");
 		List<User> users = userService.getAllUser();
 		return users;
 
+	}
+	
+	@PreAuthorize("hasAuthority('USER')")
+	@GetMapping(value = "/getuser")
+	public User getUser(@PathVariable("id") Integer id) {
+		log.debug("//users");
+		User user = userService.getUser(id);
+		return user;
 	}
 
 	@PreAuthorize("hasAuthority('USER')")
 	@PutMapping(value = "/editprofile")
 	public User updateUser(Authentication auth, @RequestBody UserDto userDto) {
-
+		log.debug("//user//registration -> UserDto: " + userDto + " Authentication: " + auth);
 		if (auth.isAuthenticated()) {
 
 			User orginUser = (User) auth.getPrincipal();
@@ -105,9 +115,9 @@ public class UserController {
 	}
 	
 	@PreAuthorize("hasAuthority('USER')")
-	@PutMapping(value = "/user")
+	@DeleteMapping(value = "/deleteuser")
 	public  Map<String, Boolean> deleteUser(Authentication auth) {
-		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
+		log.debug("/deleteuser -> Authentication: " + auth);
 		if (auth.isAuthenticated()) {
 
 			User user = (User) auth.getPrincipal();

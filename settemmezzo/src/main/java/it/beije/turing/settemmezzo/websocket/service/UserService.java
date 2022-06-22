@@ -1,6 +1,7 @@
 package it.beije.turing.settemmezzo.websocket.service;
 
 import it.beije.turing.settemmezzo.exception.GameActionException;
+import it.beije.turing.settemmezzo.exception.NoContentException;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import it.beije.turing.settemmezzo.http.repository.UserAuthorityRepository;
@@ -121,6 +122,17 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException("No users found.");// TODONoContentException();
         }
         return list;
+    }
+    
+    public User getUser(Integer id) {
+    	
+    	User user = userRepository.findById(id).get();
+    	
+    	if(user == null) {
+    		throw new NoContentException();
+    	}
+    	return user;
+    	
     }
 
     public User addUser(User user) {
