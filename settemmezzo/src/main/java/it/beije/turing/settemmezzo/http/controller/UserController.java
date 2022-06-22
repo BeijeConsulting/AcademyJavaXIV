@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 
+import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,6 +152,7 @@ public class UserController {
 
 //			User user = (User) auth.getPrincipal();
 			User user = getFakeUser();
+			if (user.getId() == null) throw new GameActionException(0+"% REST GAMEACTION");
 
 			return userService.createLobby(user);
 

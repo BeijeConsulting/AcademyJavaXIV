@@ -3,7 +3,9 @@ package it.beije.turing.settemmezzo.exception;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -40,8 +43,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 
 @ControllerAdvice
+@RequiredArgsConstructor
 @Slf4j
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @ExceptionHandler(value = {NoContentException.class})
     public ResponseEntity<ErrorMessage> ControllerExceptionHandler(NoContentException ex, WebRequest request) {
@@ -203,9 +209,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {GameActionException.class})
     public ResponseEntity<ErrorMessage> ControllerExceptionHandler(GameActionException ex, WebRequest request) {
+        log.debug("ControllerExceptionHandler ");
         int errorCode = 406;
         ErrorMessage re = new ErrorMessage();
-        re.setMessage(ex.getLocalizedMessage());
+        String[] str = ex.getLocalizedMessage().split("%");
+        re.setMessage(str[1]);
         re.setStatus(errorCode);
         re.setTime(LocalDateTime.now());
         StringWriter stringWriter = new StringWriter();
@@ -213,6 +221,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ex.printStackTrace(printWriter);
         log.error(stringWriter.toString());
         log.error(re.getMessage());
+        log.debug(str[0]);
         return ResponseEntity.status(errorCode).body(re);
     }
 

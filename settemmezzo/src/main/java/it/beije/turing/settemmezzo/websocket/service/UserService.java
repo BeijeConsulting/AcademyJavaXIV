@@ -1,5 +1,6 @@
 package it.beije.turing.settemmezzo.websocket.service;
 
+import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import it.beije.turing.settemmezzo.http.repository.UserAuthorityRepository;

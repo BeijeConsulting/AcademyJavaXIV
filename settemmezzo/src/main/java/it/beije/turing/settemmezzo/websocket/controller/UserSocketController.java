@@ -1,5 +1,6 @@
 package it.beije.turing.settemmezzo.websocket.controller;
 
+import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,14 @@ public class UserSocketController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-
+//    @MessageMapping("/room/{room_id}")
+//    public void prova(@DestinationVariable("room_id") Integer roomId) {
+//        //TODO Aggiungere Auth nel param. per prendere l'utente che richiede l'aizone
+//        //utente fittizio
+//        User user = createFINTOUser();
+//
+//        simpMessagingTemplate.convertAndSend("/lobby/" + roomId, true);
+//    }
 
     @MessageMapping("/room/{room_id}/stop_playing")
     public void stopPlaying(@DestinationVariable("room_id") Integer roomId) {
