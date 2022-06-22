@@ -1,4 +1,5 @@
 package it.beije.turing.settemmezzo.login;
+import it.beije.turing.settemmezzo.login.security.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import it.beije.turing.settemmezzo.login.security.JwtConfigurer;
 import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
 
@@ -31,7 +33,8 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
 
 	@Bean
 	@Override
@@ -60,17 +63,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	    @Override
 	    protected void configure(HttpSecurity http) throws Exception {
-	    	
-	        http
-	                .cors().and()
-	                .httpBasic().disable()
-	                .csrf().disable()
-	                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	                .and()
-	                .authorizeRequests()
-	                .antMatchers("/test").permitAll()
-	                .and()
-	                .apply(new JwtConfigurer(new JwtTokenProvider()));
+			http
+					.cors().and()
+					.httpBasic().disable()
+					.csrf().disable()
+					.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+					.and()
+					.authorizeRequests()
+					.antMatchers("/test").permitAll()
+					.and()
+					.apply(new JwtConfigurer(jwtTokenProvider));
 	    }
 
 	    @Override
