@@ -201,7 +201,20 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(errorCode).body(re);
     }
 
-
+    @ExceptionHandler(value = {GameActionException.class})
+    public ResponseEntity<ErrorMessage> ControllerExceptionHandler(GameActionException ex, WebRequest request) {
+        int errorCode = 406;
+        ErrorMessage re = new ErrorMessage();
+        re.setMessage(ex.getLocalizedMessage());
+        re.setStatus(errorCode);
+        re.setTime(LocalDateTime.now());
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        ex.printStackTrace(printWriter);
+        log.error(stringWriter.toString());
+        log.error(re.getMessage());
+        return ResponseEntity.status(errorCode).body(re);
+    }
 
     @ExceptionHandler(value = {AlreadyExistException.class})
     public ResponseEntity<ErrorMessage> ControllerExceptionHandler(AlreadyExistException ex, WebRequest request) {
