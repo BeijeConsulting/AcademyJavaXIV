@@ -1,5 +1,6 @@
 package it.beije.turing.settemmezzo.login.security;
 
+import it.beije.turing.settemmezzo.http.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,9 @@ public class JwtTokenProvider {
 	private long validityConfirmRegistrationInSecond; 
 	@Autowired
 	private UserService serviceUtente;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@PostConstruct
 	protected void init() {
@@ -102,9 +106,8 @@ public class JwtTokenProvider {
 
 	public boolean validateToken(String token) {
 		try {
-			String fanbagnoaquestoprogetto = "reservation";
 			System.out.println("TOKEN:" + token);
-			Jws<Claims> claims = Jwts.parser().setSigningKey(fanbagnoaquestoprogetto).parseClaimsJws(token);
+			Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
 			
             return !claims.getBody().getExpiration().before(new Date());
         } catch (ExpiredJwtException e) {

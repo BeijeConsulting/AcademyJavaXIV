@@ -53,6 +53,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+<<<<<<< HEAD
 	
 	//Questi due metodi sono inutili li teniamo per ricordo <3
 //	@PostMapping(value = "/login")
@@ -80,6 +81,9 @@ public class UserController {
 //		return userDto;
 //
 //	}
+=======
+
+>>>>>>> branch 'settemmezzo_websocket' of git@github.com:BeijeConsulting/AcademyJavaXIV.git
 
 	@PreAuthorize("permitAll()")
 	@PostMapping("/user/registration")
@@ -146,8 +150,6 @@ public class UserController {
 	@PostMapping(value = "/lobby")
 	public Lobby createLobby(Authentication auth) {
 		log.debug("createLobby");
-		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
-
 		if (auth.isAuthenticated()) {
 
 			User user = (User) auth.getPrincipal();
@@ -166,11 +168,13 @@ public class UserController {
 	@PutMapping(value = "/lobby/{room_id}")
 	public Lobby joinLobby(Authentication auth, @PathVariable("room_id") Integer roomId) {
 		log.debug("joinLobby");
-		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
-
+		
 		if (auth.isAuthenticated()) {
 
-			User user = Game.getInstance().getUser((User) auth.getPrincipal());
+			User user = (User) auth.getPrincipal();
+			
+			if (Game.getInstance().getUser(user) == null) Game.getInstance().addUser(user);
+			user = Game.getInstance().getUser(user);
 
 			return userService.joinLobby(user, roomId);
 
@@ -183,11 +187,13 @@ public class UserController {
 	@DeleteMapping(value = "/lobby")
 	public Map<String, Boolean> quitLobby(Authentication auth) {
 		log.debug("quitLobby");
-		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
 
 		if (auth.isAuthenticated()) {
-
-			User user = Game.getInstance().getUser((User) auth.getPrincipal());
+			
+			User user = (User) auth.getPrincipal();
+			
+			if (Game.getInstance().getUser(user) == null) Game.getInstance().addUser(user);
+			user = Game.getInstance().getUser(user);
 
 			return userService.quitLobby(user);
 
