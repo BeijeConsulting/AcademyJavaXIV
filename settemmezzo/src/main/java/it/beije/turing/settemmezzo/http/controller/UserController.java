@@ -7,7 +7,13 @@ import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 
+import it.beije.turing.settemmezzo.exception.ForbiddenException;
+import it.beije.turing.settemmezzo.exception.GameActionException;
+import it.beije.turing.settemmezzo.game.lobby.Lobby;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,6 +29,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.login.RefreshTokenService;
 import it.beije.turing.settemmezzo.login.UserDto;
@@ -31,6 +38,8 @@ import it.beije.turing.settemmezzo.websocket.service.UserService;
 
 
 @RestController
+@RequiredArgsConstructor
+@Slf4j
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -47,33 +56,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	//commento
-	//Questi due metodi sono inutili li teniamo per ricordo <3
-//	@PostMapping(value = "/login")
-//	public UserDto login(@RequestBody UserDto userDto) {
-//		UserDto u = userService.login(userDto.getEmail(), userDto.getPassword());
-//
-//		// TODO online = true;
-//
-//		if (u == null) {
-//			throw new RuntimeException("");
-//		}
-//		return u;
-//	}
-
-//	@PostMapping(value = "/addUser")
-//	public UserDto addUser(@RequestBody User user) {
-//		if (user.getPassword() == null || user.getEmail() == null || user.getUsername() == null) {
-//			throw new RuntimeException("One or more fields missing for creating a user");
-//		}
-//		user.setScore(0);
-//
-//		userService.addUser(user);
-//		UserDto userDto = new UserDto(user);
-//
-//		return userDto;
-//
-//	}
+	private final SimpMessagingTemplate simpMessagingTemplate;
 
 	@PreAuthorize("permitAll()")
 	@PostMapping("/user/registration")
@@ -116,7 +99,7 @@ public class UserController {
 			return userService.updateUser(orginUser, userDto);
 
 		} else {
-			throw new RuntimeException("Autenticazione non valida - 401");
+			throw new ForbiddenException("Autenticazione non valida - 401");
 		}
 
 	}
@@ -132,8 +115,67 @@ public class UserController {
 			map.put("Esito: ", Boolean.TRUE);
 			return map;
 		} else {
-			throw new RuntimeException("Autenticazione non valida -- 401");
+			throw new ForbiddenException("Autenticazione non valida -- 401");
 		}
 	}
 
+	@PreAuthorize("hasAuthority('USER')")
+	@PostMapping(value = "/lobby")
+	public Lobby createLobby(Authentication auth) {
+		log.debug("createLobby");
+		if (auth.isAuthenticated()) {
+
+			User user = (User) auth.getPrincipal();
+			
+			if (Game.getInstance().getUser(user) == null) Game.getInstance().addUser(user);
+			user = Game.getInstance().getUser(user);
+			
+			return userService.createLobby(user);
+
+		} else {
+			throw new ForbiddenException("Autenticazione non valida -- 401");
+		}
+	}
+
+	@PreAuthorize("hasAuthority('USER')")
+	@PutMapping(value = "/lobby/{room_id}")
+	public Lobby joinLobby(Authentication auth, @PathVariable("room_id") Integer roomId) {
+		log.debug("joinLobby");
+		
+		if (auth.isAuthenticated()) {
+
+			User user = (User) auth.getPrincipal();
+			
+			if (Game.getInstance().getUser(user) == null) Game.getInstance().addUser(user);
+			user = Game.getInstance().getUser(user);
+
+			Lobby lobby = userService.joinLobby(user, roomId);
+
+			simpMessagingTemplate.convertAndSend("/lobby/" + roomId, lobby);
+
+			return lobby;
+
+		} else {
+			throw new ForbiddenException("Autenticazione non valida -- 401");
+		}
+	}
+
+	@PreAuthorize("hasAuthority('USER')")
+	@DeleteMapping(value = "/lobby")
+	public Map<String, Boolean> quitLobby(Authentication auth) {
+		log.debug("quitLobby");
+
+		if (auth.isAuthenticated()) {
+			
+			User user = (User) auth.getPrincipal();
+			
+			if (Game.getInstance().getUser(user) == null) Game.getInstance().addUser(user);
+			user = Game.getInstance().getUser(user);
+
+			return userService.quitLobby(user);
+
+		} else {
+			throw new ForbiddenException("Autenticazione non valida -- 401");
+		}
+	}
 }

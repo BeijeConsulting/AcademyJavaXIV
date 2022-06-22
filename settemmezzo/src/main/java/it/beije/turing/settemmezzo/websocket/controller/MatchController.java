@@ -20,7 +20,7 @@ public class MatchController {
 	private final SimpMessagingTemplate simpMessagingTemplate;
 
 	@MessageMapping("/room/{room_id}/check_end_match")
-	public void createLobby(@DestinationVariable("room_id") Integer roomId) {
+	public void checkEndMatch(@DestinationVariable("room_id") Integer roomId) {
 
 		//TODO ricavare lobby
 		Lobby lobby = createFakeLobby(roomId);

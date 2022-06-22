@@ -10,9 +10,9 @@ public class Game
 	private static Game single_instance = null;
 	
 	private List<Lobby> lobbies = new ArrayList<>();
-	//private Leaderboard leaderboard = new Leaderboard();
+	private List<User> users = new ArrayList<>();
+//	private Leaderboard leaderboard = new Leaderboard();
 	private int idCount = 0;
-	
 	
 	
 	private Game() {}
@@ -39,11 +39,11 @@ public class Game
 //	public Leaderboard getLeaderboard()
 //	{
 //		updateLeaderboard();
-//		
+//
 //		return leaderboard;
 //	}
 
-//
+
 //	private void updateLeaderboard()
 //	{
 //		leaderboard.update();
@@ -74,11 +74,29 @@ public class Game
 			}
 		}
 		
-		return createLobby(user);
+		Lobby lobby = createLobby(user);
+		lobby.changeLobbyAccess(user, true);
+		return lobby;
+
 	}
 
 	public void destroyLobby(Lobby lobby)
 	{
 		lobbies.remove(lobby);
+	}
+	
+	public void addUser(User user)
+	{
+		if (getUser(user) == null) users.add(user);
+	}
+
+	public User getUser(User userAuth)
+	{
+		for (User user : users)
+		{
+			if (user.getId() == userAuth.getId()) return user;
+		}
+		
+		return null;
 	}
 }

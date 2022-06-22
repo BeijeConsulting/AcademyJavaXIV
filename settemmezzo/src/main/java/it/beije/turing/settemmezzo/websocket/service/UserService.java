@@ -1,6 +1,8 @@
 package it.beije.turing.settemmezzo.websocket.service;
 
+import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.game.User;
+import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import it.beije.turing.settemmezzo.http.repository.UserAuthorityRepository;
 import it.beije.turing.settemmezzo.http.repository.UserRepository;
 import it.beije.turing.settemmezzo.login.UserAuthority;
@@ -9,10 +11,11 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -172,5 +175,43 @@ public class UserService implements UserDetailsService {
 //        catch (Exception e) {
 //            throw e;
 //        }
+    }
+
+    public Lobby createLobby(User user) {
+        if (user.getLobby() != null) throw new RuntimeException("Already in a Lobby");
+
+        Lobby lobby = user.getGame().createLobby(user);
+        user.setLobby(lobby);
+
+		if (user.getLobby() != null) return lobby;
+
+        throw new RuntimeException("Error creating the Lobby");
+    }
+
+    public Lobby joinLobby(User user, Integer roomId) {
+        if (user.getLobby() != null) throw new GameActionException("Already in a Lobby");
+
+		if (roomId <= -1) user.setLobby(user.getGame().joinPublicLobby(user));
+		else user.setLobby(user.getGame().joinPrivateLobby(user, roomId));
+
+        if (user.getLobby() != null) return user.getLobby();
+
+        throw new GameActionException("Error joining the Lobby");
+    }
+
+    public Map<String, Boolean> quitLobby(User user) {
+		if (user.getLobby() == null) throw new RuntimeException("Not in a Lobby");
+
+        Map<String, Boolean> esito = new HashMap<String, Boolean>();
+
+		if (user.getLobby().quitLobby(user))
+		{
+			user.setLobby(null);
+            esito.put("esito", Boolean.TRUE);
+			return esito;
+		}
+
+        esito.put("esito", Boolean.FALSE);
+        return esito;
     }
 }

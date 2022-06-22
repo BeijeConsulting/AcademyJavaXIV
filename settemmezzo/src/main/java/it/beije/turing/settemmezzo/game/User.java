@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.Leaderboard;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
@@ -63,9 +64,11 @@ public class User implements Serializable, UserDetails {
 	private boolean online = false;
 
 	@Transient
+	@JsonIgnore
 	private Game game = Game.getInstance();
 
 	@Transient
+	@JsonIgnore
 	private Lobby lobby = null;
 
 	public Integer getId() {

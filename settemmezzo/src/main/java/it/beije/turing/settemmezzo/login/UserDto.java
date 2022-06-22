@@ -26,7 +26,7 @@ public class UserDto implements Serializable{
 		this.username = user.getUsername();
 	} 
 	
-	@JsonIgnore
+	
 	public String getUsername() {
 		return this.username;
 	}
