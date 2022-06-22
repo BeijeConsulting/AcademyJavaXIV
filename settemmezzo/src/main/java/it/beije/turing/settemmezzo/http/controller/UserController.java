@@ -10,8 +10,10 @@ import javax.annotation.security.PermitAll;
 import it.beije.turing.settemmezzo.exception.ForbiddenException;
 import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -36,6 +38,7 @@ import it.beije.turing.settemmezzo.websocket.service.UserService;
 
 
 @RestController
+@RequiredArgsConstructor
 @Slf4j
 public class UserController {
 	@Autowired
@@ -53,7 +56,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-
+	private final SimpMessagingTemplate simpMessagingTemplate;
 
 	@PreAuthorize("permitAll()")
 	@PostMapping("/user/registration")
@@ -146,7 +149,11 @@ public class UserController {
 			if (Game.getInstance().getUser(user) == null) Game.getInstance().addUser(user);
 			user = Game.getInstance().getUser(user);
 
-			return userService.joinLobby(user, roomId);
+			Lobby lobby = userService.joinLobby(user, roomId);
+
+			simpMessagingTemplate.convertAndSend("/lobby/" + roomId, lobby);
+
+			return lobby;
 
 		} else {
 			throw new ForbiddenException("Autenticazione non valida -- 401");

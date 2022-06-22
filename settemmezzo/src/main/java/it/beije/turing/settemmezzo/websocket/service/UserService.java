@@ -193,14 +193,14 @@ public class UserService implements UserDetailsService {
     }
 
     public Lobby joinLobby(User user, Integer roomId) {
-        if (user.getLobby() != null) throw new RuntimeException("Already in a Lobby");
+        if (user.getLobby() != null) throw new GameActionException("Already in a Lobby");
 
 		if (roomId <= -1) user.setLobby(user.getGame().joinPublicLobby(user));
 		else user.setLobby(user.getGame().joinPrivateLobby(user, roomId));
 
         if (user.getLobby() != null) return user.getLobby();
 
-        throw new RuntimeException("Error joining the Lobby");
+        throw new GameActionException("Error joining the Lobby");
     }
 
     public Map<String, Boolean> quitLobby(User user) {
