@@ -141,10 +141,10 @@ public class User implements Serializable, UserDetails {
 		return null;
 	}
 
-	public Leaderboard getLeaderboard()
-	{
-		return game.getLeaderboard();
-	}
+//	public Leaderboard getLeaderboard()
+//	{
+//		return game.getLeaderboard();
+//	}
 
 //	public boolean quitLobby()
 //	{

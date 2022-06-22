@@ -144,10 +144,6 @@ public class UserService implements UserDetailsService {
     }
 
     public User updateUser(User user, UserDto newUser) {
-
-        if (newUser.getEmail() != null && newUser.getEmail() != "") {
-            user.setEmail(newUser.getEmail());
-        }
         if (newUser.getPassword() != null && newUser.getPassword() != "") {
             user.setPassword(newUser.getPassword());
         }
