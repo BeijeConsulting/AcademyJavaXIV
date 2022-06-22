@@ -7,12 +7,25 @@ import axios from 'axios'
 const LobbyContainer = () => {
 
     useEffect(()=>{
-        axios.post('/lobby',{
-            headers: {
-                Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwb2xsbyIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNjU1OTA0MjIzLCJleHAiOjE2NTU5MDc4MjN9.TmIG_AbFQbDm_gLrr283CJPyxFtSFnUJltzuWDwKJdk",
-            }).then(res=>console.log(res,res?.data))
+        axios.post('/lobby',{},{  headers: {
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwb2xsbyIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNjU1OTA2OTk1LCJleHAiOjE2NTU5MTA1OTV9.Pt_a76RoXE-pwRcB_Vd5J1-9iRmwobEqVnvfWubbt0g"
+        }}
+          ).then(res=>console.log(res,res?.data))
 
     },[])
+
+    var stompClient= () =>{
+   var socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/lobby/0', function (greeting) {
+            console.log(greeting);
+            displayTable(JSON.parse(greeting.body));
+        });
+    });
+}
 
 
     const generateTestUser = () => {
