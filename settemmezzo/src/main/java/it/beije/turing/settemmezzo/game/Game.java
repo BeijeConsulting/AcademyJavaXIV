@@ -10,7 +10,7 @@ public class Game
 	private static Game single_instance = null;
 	
 	private List<Lobby> lobbies = new ArrayList<>();
-	private Leaderboard leaderboard = new Leaderboard();
+//	private Leaderboard leaderboard = new Leaderboard();
 	private int idCount = 0;
 	
 	
@@ -36,18 +36,18 @@ public class Game
 	}
 
 	//REST
-	public Leaderboard getLeaderboard()
-	{
-		updateLeaderboard();
-		
-		return leaderboard;
-	}
+//	public Leaderboard getLeaderboard()
+//	{
+//		updateLeaderboard();
+//
+//		return leaderboard;
+//	}
 
 
-	private void updateLeaderboard()
-	{
-		leaderboard.update();
-	}
+//	private void updateLeaderboard()
+//	{
+//		leaderboard.update();
+//	}
 
 	public Lobby joinPrivateLobby(User user, int idLobby)
 	{
@@ -74,7 +74,10 @@ public class Game
 			}
 		}
 		
-		return createLobby(user);
+		Lobby lobby = createLobby(user);
+		lobby.changeLobbyAccess(user, true);
+		return lobby;
+
 	}
 
 	public void destroyLobby(Lobby lobby)

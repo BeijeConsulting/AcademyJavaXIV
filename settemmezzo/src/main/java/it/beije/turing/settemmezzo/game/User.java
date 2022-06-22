@@ -63,9 +63,11 @@ public class User implements Serializable, UserDetails {
 	private boolean online = false;
 
 	@Transient
+	@JsonIgnore
 	private Game game = Game.getInstance();
 
 	@Transient
+	@JsonIgnore
 	private Lobby lobby = null;
 
 	public Integer getId() {
@@ -141,10 +143,10 @@ public class User implements Serializable, UserDetails {
 		return null;
 	}
 
-	public Leaderboard getLeaderboard()
-	{
-		return game.getLeaderboard();
-	}
+//	public Leaderboard getLeaderboard()
+//	{
+//		return game.getLeaderboard();
+//	}
 
 //	public boolean quitLobby()
 //	{

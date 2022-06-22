@@ -3,10 +3,12 @@ package it.beije.turing.settemmezzo.game.lobby;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.match.Match;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Lobby
 {
 	private List<User> users = null;
@@ -24,7 +26,10 @@ public class Lobby
 		users.add(host);
 	}
 
-	
+	public List<User> getUsers() {
+		return users;
+	}
+
 	public int getUsersSize()
 	{
 		return users.size();

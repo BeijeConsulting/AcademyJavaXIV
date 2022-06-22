@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.security.PermitAll;
 
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +33,7 @@ import it.beije.turing.settemmezzo.websocket.service.UserService;
 
 
 @RestController
+@Slf4j
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -47,6 +49,8 @@ public class UserController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	private User user;
 
 	
 	//Questi due metodi sono inutili li teniamo per ricordo <3
@@ -137,52 +141,78 @@ public class UserController {
 		}
 	}
 
-	@PreAuthorize("hasAuthority('USER')")
+//	@PreAuthorize("hasAuthority('USER')")
 	@PostMapping(value = "/lobby")
 	public Lobby createLobby(Authentication auth) {
-		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
+		log.debug("createLobby");
+//		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
 
-		if (auth.isAuthenticated()) {
+//		if (auth.isAuthenticated()) {
 
-			User user = (User) auth.getPrincipal();
+//			User user = (User) auth.getPrincipal();
+			User user = getFakeUser();
 
 			return userService.createLobby(user);
 
-		} else {
-			throw new RuntimeException("Autenticazione non valida -- 401");
-		}
+//		} else {
+//			throw new RuntimeException("Autenticazione non valida -- 401");
+//		}
 	}
 
-	@PreAuthorize("hasAuthority('USER')")
-	@PutMapping(value = "/lobby")
-	public Lobby joinLobby(Authentication auth) {
-		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
+//	@PreAuthorize("hasAuthority('USER')")
+	@PutMapping(value = "/lobby/{room_id}")
+	public Lobby joinLobby(Authentication auth, @PathVariable("room_id") Integer roomId) {
+		log.debug("joinLobby");
+//		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
 
-		if (auth.isAuthenticated()) {
+//		if (auth.isAuthenticated()) {
 
-			User user = (User) auth.getPrincipal();
+//			User user = (User) auth.getPrincipal();
+			User user = getFakeUser2();
 
-			return userService.joinLobby(user);
+			return userService.joinLobby(user, roomId);
 
-		} else {
-			throw new RuntimeException("Autenticazione non valida -- 401");
-		}
+//		} else {
+//			throw new RuntimeException("Autenticazione non valida -- 401");
+//		}
 	}
 
-	@PreAuthorize("hasAuthority('USER')")
+//	@PreAuthorize("hasAuthority('USER')")
 	@DeleteMapping(value = "/lobby")
-	public Boolean quitLobby(Authentication auth) {
-		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
+	public Map<String, Boolean> quitLobby(Authentication auth) {
+		log.debug("quitLobby");
+//		System.out.println("AUTH IS::::::::::::::::::::::" + auth);
 
-		if (auth.isAuthenticated()) {
+//		if (auth.isAuthenticated()) {
 
-			User user = (User) auth.getPrincipal();
+//			User user = (User) auth.getPrincipal();
+			User user = getFakeUser();
 
 			return userService.quitLobby(user);
 
-		} else {
-			throw new RuntimeException("Autenticazione non valida -- 401");
+//		} else {
+//			throw new RuntimeException("Autenticazione non valida -- 401");
+//		}
+	}
+
+	public User getFakeUser() {
+		if (user == null) {
+			user = new User();
+			user.setEmail("popo@gmail.com");
+			user.setUsername("popino");
+			user.setPassword("popo");
+			user.setScore(15);
 		}
+		return user;
+	}
+
+	public User getFakeUser2() {
+		User user = new User();
+		user.setEmail("pimpo@gmail.com");
+		user.setUsername("pimpino");
+		user.setPassword("pompo");
+		user.setScore(15);
+		return user;
 	}
 
 }
