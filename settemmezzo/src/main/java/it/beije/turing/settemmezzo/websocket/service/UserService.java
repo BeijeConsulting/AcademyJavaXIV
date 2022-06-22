@@ -19,7 +19,8 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService{
+public class UserService implements UserDetailsService {
+
 
     private final UserRepository userRepository;
 
@@ -161,7 +162,7 @@ public class UserService implements UserDetailsService{
 
         return user;
     }
-
+    
     public User loadUserByUsername(String email) throws UsernameNotFoundException {
 
         try {
