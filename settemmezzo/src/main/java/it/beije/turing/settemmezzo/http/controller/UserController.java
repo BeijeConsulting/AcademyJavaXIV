@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 
+
 import it.beije.turing.settemmezzo.exception.ForbiddenException;
 import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
@@ -34,6 +35,7 @@ import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.login.RefreshTokenService;
 import it.beije.turing.settemmezzo.login.UserDto;
 import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
+import it.beije.turing.settemmezzo.websocket.service.HashService;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 
 
@@ -53,6 +55,9 @@ public class UserController {
 	@Autowired
 	private RefreshTokenService refreshTokenService;
 	
+	@Autowired
+    private HashService hashService;
+	
 	
 
 	private final SimpMessagingTemplate simpMessagingTemplate;
@@ -63,6 +68,7 @@ public class UserController {
 		log.debug("//user//registration -> User: " + user);
 		try {
 			User utente = userService.createUser(user);
+			utente.setPassword(hashService.pswToHash(utente.getPassword()));
 			
 			String token = jwtTokenProvider.generateTokenRegistration(utente.getEmail(), LocalDateTime.now());
 //			mailUtil.senMail(token,utente);

@@ -5,6 +5,7 @@ import static org.springframework.http.ResponseEntity.ok;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import it.beije.turing.settemmezzo.game.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
+import it.beije.turing.settemmezzo.websocket.service.HashService;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 
 @Controller
@@ -34,6 +36,9 @@ public class AuthenticationController {
 
 	@Autowired
 	RefreshTokenService refreshTokenService;
+	
+	@Autowired
+    private HashService hashService;
 
 	
 	@PostMapping("/signin")
@@ -43,6 +48,7 @@ public class AuthenticationController {
 			
 			String username = credentials.getEmail();
 			User user = userService.loadUserByUsername(username);
+			credentials.setPassword(hashService.pswToHash(credentials.getPassword()));
 			
 			authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(username, credentials.getPassword()));
