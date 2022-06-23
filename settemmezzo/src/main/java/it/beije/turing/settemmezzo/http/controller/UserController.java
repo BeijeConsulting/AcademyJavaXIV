@@ -65,7 +65,7 @@ public class UserController {
 		log.debug("//user//registration -> User: " + user);
 		try {
 			//Check email validity
-			if (!user.getEmail().matches("[A-z0-9-_.]+@[A-z]+(\\.[A-z]+)+")) {
+			if (!user.getEmail().matches("^[A-z0-9-_.]+@[A-z]+(\\.[A-z]+)+$")) {
 				throw new InvalidArgumentException("Email isn't in the correct format");
 			}
 			//Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
