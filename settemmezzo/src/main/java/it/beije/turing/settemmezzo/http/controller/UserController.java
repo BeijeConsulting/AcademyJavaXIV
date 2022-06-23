@@ -121,6 +121,7 @@ public class UserController {
 		if (auth.isAuthenticated()) {
 
 			User user = (User) auth.getPrincipal();
+			userService.removeUser(user);
 			Map<String, Boolean> map = new HashMap<String, Boolean>();
 			map.put("Esito: ", Boolean.TRUE);
 			return map;
