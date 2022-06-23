@@ -53,8 +53,7 @@ public class UserController {
 	@Autowired
 	private RefreshTokenService refreshTokenService;
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	
 
 	private final SimpMessagingTemplate simpMessagingTemplate;
 
@@ -64,7 +63,7 @@ public class UserController {
 		log.debug("//user//registration -> User: " + user);
 		try {
 			User utente = userService.createUser(user);
-			utente.setPassword(passwordEncoder.encode(utente.getPassword()));
+			
 			String token = jwtTokenProvider.generateTokenRegistration(utente.getEmail(), LocalDateTime.now());
 //			mailUtil.senMail(token,utente);
 
