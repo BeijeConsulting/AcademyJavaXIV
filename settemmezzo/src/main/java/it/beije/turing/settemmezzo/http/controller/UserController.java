@@ -7,9 +7,9 @@ import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 
-
 import it.beije.turing.settemmezzo.exception.ForbiddenException;
 import it.beije.turing.settemmezzo.exception.GameActionException;
+import it.beije.turing.settemmezzo.exception.InvalidArgumentException;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,6 @@ import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
 import it.beije.turing.settemmezzo.websocket.service.HashService;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 
-
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -54,11 +53,9 @@ public class UserController {
 
 	@Autowired
 	private RefreshTokenService refreshTokenService;
-	
+
 	@Autowired
-    private HashService hashService;
-	
-	
+	private HashService hashService;
 
 	private final SimpMessagingTemplate simpMessagingTemplate;
 
@@ -67,9 +64,17 @@ public class UserController {
 	public User insertUser(@RequestBody User user) {
 		log.debug("//user//registration -> User: " + user);
 		try {
+			//Check email validity
+			if (!user.getEmail().matches("[A-z0-9-_.]+@[A-z]+(\\.[A-z]+)+")) {
+				throw new InvalidArgumentException("Email isn't in the correct format");
+			}
+			//Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+			if(!user.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")) {
+				throw new InvalidArgumentException("Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+			}
 			User utente = userService.createUser(user);
 			utente.setPassword(hashService.pswToHash(utente.getPassword()));
-			
+
 			String token = jwtTokenProvider.generateTokenRegistration(utente.getEmail(), LocalDateTime.now());
 //			mailUtil.senMail(token,utente);
 
@@ -79,14 +84,13 @@ public class UserController {
 
 		} catch (Exception alreadyExistException) {
 			throw alreadyExistException;
-		} 
+		}
 //		catch (MessagingException messagingException) {
 //			log.error("Insert User MessagingException", messagingException);
 //			throw new ServiceException("Error system");
 //		}
 	}
-	
-	
+
 	@PreAuthorize("permitAll()")
 	@GetMapping(value = "/users")
 	public List<User> getUsers() {
@@ -95,7 +99,7 @@ public class UserController {
 		return users;
 
 	}
-	
+
 	@PreAuthorize("hasAuthority('USER')")
 	@GetMapping(value = "/getuser")
 	public User getUser(@PathVariable("id") Integer id) {
@@ -118,10 +122,10 @@ public class UserController {
 		}
 
 	}
-	
+
 	@PreAuthorize("hasAuthority('USER')")
 	@DeleteMapping(value = "/deleteuser")
-	public  Map<String, Boolean> deleteUser(Authentication auth) {
+	public Map<String, Boolean> deleteUser(Authentication auth) {
 		log.debug("/deleteuser -> Authentication: " + auth);
 		if (auth.isAuthenticated()) {
 
@@ -142,10 +146,11 @@ public class UserController {
 		if (auth.isAuthenticated()) {
 
 			User user = (User) auth.getPrincipal();
-			
-			if (Game.getInstance().getUser(user) == null) Game.getInstance().addUser(user);
+
+			if (Game.getInstance().getUser(user) == null)
+				Game.getInstance().addUser(user);
 			user = Game.getInstance().getUser(user);
-			
+
 			return userService.createLobby(user);
 
 		} else {
@@ -157,12 +162,13 @@ public class UserController {
 	@PutMapping(value = "/lobby/{room_id}")
 	public Lobby joinLobby(Authentication auth, @PathVariable("room_id") Integer roomId) {
 		log.debug("joinLobby");
-		
+
 		if (auth.isAuthenticated()) {
 
 			User user = (User) auth.getPrincipal();
-			
-			if (Game.getInstance().getUser(user) == null) Game.getInstance().addUser(user);
+
+			if (Game.getInstance().getUser(user) == null)
+				Game.getInstance().addUser(user);
 			user = Game.getInstance().getUser(user);
 
 			Lobby lobby = userService.joinLobby(user, roomId);
@@ -182,10 +188,11 @@ public class UserController {
 		log.debug("quitLobby");
 
 		if (auth.isAuthenticated()) {
-			
+
 			User user = (User) auth.getPrincipal();
-			
-			if (Game.getInstance().getUser(user) == null) Game.getInstance().addUser(user);
+
+			if (Game.getInstance().getUser(user) == null)
+				Game.getInstance().addUser(user);
 			user = Game.getInstance().getUser(user);
 
 			return userService.quitLobby(user);
