@@ -61,7 +61,11 @@ public class UserController {
 
 	@PreAuthorize("permitAll()")
 	@PostMapping("/user/registration")
-	public User insertUser(@RequestBody User user) {
+	public User insertUser(@RequestBody String email, @RequestBody String password, @RequestBody String username) {
+		User user = new User();
+		user.setEmail(email);
+		user.setPassword(password);
+		user.setUsername(username);
 		log.debug("//user//registration -> User: " + user);
 		try {
 			//Check email validity
@@ -101,10 +105,10 @@ public class UserController {
 	}
 
 	@PreAuthorize("hasAuthority('USER')")
-	@GetMapping(value = "/getuser")
-	public User getUser(@PathVariable("id") Integer id) {
+	@GetMapping(value = "/getuser/{user_id}")
+	public User getUser(@PathVariable("user_id") Integer userId) {
 		log.debug("//users");
-		User user = userService.getUser(id);
+		User user = userService.getUser(userId);
 		return user;
 	}
 
