@@ -34,6 +34,7 @@ import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.login.RefreshTokenService;
 import it.beije.turing.settemmezzo.login.UserDto;
+import it.beije.turing.settemmezzo.login.UserRegistration;
 import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
 import it.beije.turing.settemmezzo.websocket.service.HashService;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
@@ -61,11 +62,11 @@ public class UserController {
 
 	@PreAuthorize("permitAll()")
 	@PostMapping("/user/registration")
-	public User insertUser(@RequestBody String email, @RequestBody String password, @RequestBody String username) {
+	public User insertUser(@RequestBody UserRegistration userRegistration) {
 		User user = new User();
-		user.setEmail(email);
-		user.setPassword(password);
-		user.setUsername(username);
+		user.setEmail(userRegistration.getEmail());
+		user.setPassword(userRegistration.getPassword());
+		user.setUsername(userRegistration.getUsername());
 		log.debug("//user//registration -> User: " + user);
 		try {
 			//Check email validity
