@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Game
 {	
 	private static Game single_instance = null;
@@ -24,9 +26,12 @@ public class Game
  
         return single_instance;
     }
-	
-    
-    //REST
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	//REST
 	public Lobby createLobby(User user)
 	{
 		Lobby lobby = new Lobby(user, idCount++);
@@ -76,6 +81,7 @@ public class Game
 		
 		Lobby lobby = createLobby(user);
 		lobby.changeLobbyAccess(user, true);
+
 		return lobby;
 
 	}
@@ -87,16 +93,30 @@ public class Game
 	
 	public void addUser(User user)
 	{
-		if (getUser(user) == null) users.add(user);
+//		if (getUser(user.getId()) == null) users.add(user);
+		users.add(user);
 	}
 
-	public User getUser(User userAuth)
+	public User getUser(Integer userId)
 	{
 		for (User user : users)
 		{
-			if (user.getId() == userAuth.getId()) return user;
+
+			if (user.getId().compareTo(userId) == 0) {
+				return user;
+			}
 		}
 		
+		return null;
+	}
+
+	public Lobby getLobby(Integer lobbyId)
+	{
+		for (Lobby lobby : lobbies)
+		{
+			if (lobby.getIdLobby() == lobbyId) return lobby;
+		}
+
 		return null;
 	}
 }

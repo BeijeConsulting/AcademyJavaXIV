@@ -1,6 +1,7 @@
 package it.beije.turing.settemmezzo.websocket.controller;
 
 import it.beije.turing.settemmezzo.exception.GameActionException;
+import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +10,10 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000")
 @Controller
 @RequiredArgsConstructor
 public class UserSocketController {
@@ -29,6 +32,20 @@ public class UserSocketController {
 //
 //        simpMessagingTemplate.convertAndSend("/lobby/" + roomId, true);
 //    }
+    @MessageMapping("/room/{room_id}/{user_id}")
+    public void connectLobby(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("user_id") Integer userId) {
+        log.debug("connectLobby");
+
+        User user = Game.getInstance().getUser(userId);
+        simpMessagingTemplate.convertAndSend("/lobby/" + roomId, user.getLobby());
+    }
+
+    @MessageMapping("/room/{room_id}/quit")
+    public void quitLobby(@DestinationVariable("room_id") Integer roomId) {
+        log.debug("quitLobby");
+
+        simpMessagingTemplate.convertAndSend("/lobby/" + roomId, Game.getInstance().getLobby(roomId));
+    }
 
     @MessageMapping("/room/{room_id}/stop_playing")
     public void stopPlaying(@DestinationVariable("room_id") Integer roomId) {

@@ -24,11 +24,13 @@ import it.beije.turing.settemmezzo.login.security.JwtConfigurer;
 import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.sql.DataSource;
 
 
 @SuppressWarnings("deprecation")
+@CrossOrigin(origins = "http://localhost:3000")
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

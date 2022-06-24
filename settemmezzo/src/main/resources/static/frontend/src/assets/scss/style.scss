@@ -1,0 +1,114 @@
+body {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+ul {
+   padding: 0;
+   margin: 0;
+   list-style: none;
+}
+
+a,
+a:hover {
+   text-decoration: none;
+   color: #fff;
+}
+nav {
+   .nav_item {
+      text-align: center;
+      width: 100%;
+      margin: 10px 0;
+      padding: 15px 30px;
+      border-radius: 20px;
+      display: block;
+      background-color: #7e4b82;
+   }
+}
+
+.wrapper {
+   background-color: #1e2227;
+   color: #fff;
+   height: 100vh;
+   overflow: auto;
+}
+
+.login {
+   width: 100%;
+}
+
+.lobby {
+   width: 100%;
+   height: 60%;
+
+   .lobby_container {
+      background-color: #b08661;
+      margin: 20px auto;
+      width: 50%;
+      padding: 20px;
+      height: calc(100% - 100px);
+      position: relative;
+
+      .players {
+         width: 100%;
+         border: 2px solid red;
+         height: 70%;
+         overflow: auto;
+      }
+
+      .quit {
+         position: absolute;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         height: 20px;
+         width: 20px;
+         font-size: 2em;
+         right: 10px;
+         top: 8px;
+         cursor: pointer;
+      }
+   }
+}
+
+.options {
+   margin: 10px 0;
+   display: flex;
+   
+   .access_type {
+      display: flex;
+      align-items: center;
+      p {
+         margin: 0;
+         padding: 0 10px;
+         cursor: default;
+      }
+
+      .slider {
+         width: 30px;
+         height: 30px;
+         border-radius: 6px;
+         background-color: #51bd91;
+         cursor: pointer;
+      }
+      .slider.private {
+         background-color: #d55252;
+      }
+   }
+   .max_players {
+      .form-control {
+         margin: 0 10px 0 40px;
+         width: 60px;
+      }
+   }
+}
+
+.my_btn {
+   padding: 10px 30px;
+   border-radius: 20px;
+   background-color: #63c18c;
+   border: none;
+   font-weight: bold;
+
+}

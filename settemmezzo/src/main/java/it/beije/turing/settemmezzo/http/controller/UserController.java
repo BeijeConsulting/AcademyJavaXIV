@@ -22,13 +22,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 //import io.swagger.v3.oas.annotations.tags.Tag;
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
@@ -39,6 +33,7 @@ import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
 import it.beije.turing.settemmezzo.websocket.service.HashService;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -152,9 +147,9 @@ public class UserController {
 
 			User user = (User) auth.getPrincipal();
 
-			if (Game.getInstance().getUser(user) == null)
+			if (Game.getInstance().getUser(user.getId()) == null)
 				Game.getInstance().addUser(user);
-			user = Game.getInstance().getUser(user);
+			user = Game.getInstance().getUser(user.getId());
 
 			return userService.createLobby(user);
 
@@ -167,20 +162,23 @@ public class UserController {
 	@PutMapping(value = "/lobby/{room_id}")
 	public Lobby joinLobby(Authentication auth, @PathVariable("room_id") Integer roomId) {
 		log.debug("joinLobby");
+		log.debug("auth " + auth);
 
 		if (auth.isAuthenticated()) {
 
 			User user = (User) auth.getPrincipal();
 
-			if (Game.getInstance().getUser(user) == null)
+			log.error("auth: " + user);
+
+			if (Game.getInstance().getUser(user.getId()) == null) {
 				Game.getInstance().addUser(user);
-			user = Game.getInstance().getUser(user);
+			}
 
-			Lobby lobby = userService.joinLobby(user, roomId);
+			user = Game.getInstance().getUser(user.getId());
 
-			simpMessagingTemplate.convertAndSend("/lobby/" + roomId, lobby);
+			log.error("user creato " + user);
 
-			return lobby;
+			return userService.joinLobby(user, roomId);
 
 		} else {
 			throw new ForbiddenException("Autenticazione non valida -- 401");
@@ -196,9 +194,9 @@ public class UserController {
 
 			User user = (User) auth.getPrincipal();
 
-			if (Game.getInstance().getUser(user) == null)
+			if (Game.getInstance().getUser(user.getId()) == null)
 				Game.getInstance().addUser(user);
-			user = Game.getInstance().getUser(user);
+			user = Game.getInstance().getUser(user.getId());
 
 			return userService.quitLobby(user);
 

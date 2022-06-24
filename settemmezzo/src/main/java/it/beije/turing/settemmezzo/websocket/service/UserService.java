@@ -190,7 +190,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Lobby createLobby(User user) {
-        if (user.getLobby() != null) throw new RuntimeException("Already in a Lobby");
+        if (user.getLobby() != null) throw new GameActionException("Already in a Lobby");
 
         Lobby lobby = user.getGame().createLobby(user);
         user.setLobby(lobby);
