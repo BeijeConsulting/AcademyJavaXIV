@@ -5,7 +5,6 @@ import static org.springframework.http.ResponseEntity.ok;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import it.beije.turing.settemmezzo.game.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +13,16 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import it.beije.turing.settemmezzo.login.security.JwtTokenProvider;
 import it.beije.turing.settemmezzo.websocket.service.HashService;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 
+
+@CrossOrigin(origins = {"http://localhost:3000"})
 @Controller
 public class AuthenticationController {
 
