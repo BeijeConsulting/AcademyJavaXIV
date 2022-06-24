@@ -1,7 +1,9 @@
 package it.beije.turing.settemmezzo.websocket.service;
 
+import it.beije.turing.settemmezzo.exception.AlreadyExistException;
 import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.exception.NoContentException;
+import it.beije.turing.settemmezzo.exception.SettemmezzoException;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import it.beije.turing.settemmezzo.http.repository.UserAuthorityRepository;
@@ -190,14 +192,14 @@ public class UserService implements UserDetailsService {
     }
 
     public Lobby createLobby(User user) {
-        if (user.getLobby() != null) throw new RuntimeException("Already in a Lobby");
+        if (user.getLobby() != null) throw new GameActionException("Already in a Lobby");
 
         Lobby lobby = user.getGame().createLobby(user);
         user.setLobby(lobby);
 
 		if (user.getLobby() != null) return lobby;
 
-        throw new RuntimeException("Error creating the Lobby");
+        throw new GameActionException("Error creating the Lobby");
     }
 
     public Lobby joinLobby(User user, Integer roomId) {
