@@ -56,29 +56,26 @@ public class UserSocketController {
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, userService.stopPlaying(user));
     }
 
-    @MessageMapping("/room/{room_id}/resize/{max_players}")
-    public void resizeLobby(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("max_players") Integer maxPlayers) {
-        //TODO Aggiungere Auth nel param. per prendere l'utente che richiede l'aizone
-        //utente fittizio
-        User user = createFINTOUser();
+    @MessageMapping("/room/{room_id}/resize/{max_players}/{user_id}")
+    public void resizeLobby(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("max_players") Integer maxPlayers, @DestinationVariable("user_id") Integer userId) {
+        log.debug("resizeLobby");
+        User user = Game.getInstance().getUser(userId);
 
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, userService.resizeLobby(user, maxPlayers));
     }
 
-    @MessageMapping("/room/{room_id}/access/{access_type}")
-    public void changeLobbyAccess(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("access_type") Boolean accessType) {
-        //TODO Aggiungere Auth nel param. per prendere l'utente che richiede l'aizone
-        //utente fittizio
-        User user = createFINTOUser();
+    @MessageMapping("/room/{room_id}/access/{access_type}/{user_id}")
+    public void changeLobbyAccess(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("access_type") Boolean accessType, @DestinationVariable("user_id") Integer userId) {
+        log.debug("changeLobbyAccess");
+        User user = Game.getInstance().getUser(userId);
 
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, userService.changeLobbyAccess(user, accessType));
     }
 
-    @MessageMapping("/room/{room_id}/start")
-    public void startMatch(@DestinationVariable("room_id") Integer roomId) {
-        //TODO Aggiungere Auth nel param. per prendere l'utente che richiede l'aizone
-        //utente fittizio
-        User user = createFINTOUser();
+    @MessageMapping("/room/{room_id}/start/{user_id}")
+    public void startMatch(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("user_id") Integer userId) {
+        log.debug("startMatch");
+        User user = Game.getInstance().getUser(userId);
 
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, userService.startMatch(user));
     }

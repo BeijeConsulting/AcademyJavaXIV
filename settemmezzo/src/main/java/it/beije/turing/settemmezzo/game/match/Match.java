@@ -11,7 +11,7 @@ import it.beije.turing.settemmezzo.game.deck.Hand;
 public class Match
 {	
 	private List<User> users;
-	private List<Hand> hands;
+	private List<Hand> hands = new ArrayList<>();
 	private Deck deck;
 	
 	public Match(List<User> users)

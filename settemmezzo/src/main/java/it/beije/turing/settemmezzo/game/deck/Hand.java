@@ -1,5 +1,6 @@
 package it.beije.turing.settemmezzo.game.deck;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.beije.turing.settemmezzo.game.User;
@@ -7,7 +8,7 @@ import it.beije.turing.settemmezzo.game.User;
 public class Hand
 {
 	private User user;
-	private List<Card> hand;
+	private List<Card> hand = new ArrayList<>();
 	private float cardValue = 0;
 	private boolean continuePlaying = true;
 	
@@ -49,7 +50,7 @@ public class Hand
 	{
 		float c = 0f;
 		
-		for (Card card : hand)
+ 		for (Card card : hand)
 		{
 			c += card.getValue();
 		}

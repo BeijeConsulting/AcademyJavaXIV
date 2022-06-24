@@ -43,25 +43,28 @@ public class UserService implements UserDetailsService {
         return user.getLobby().getMatch().stopPlaying(user);
     }
 
-    public Boolean resizeLobby(User user, Integer maxPlayers) {
-        if (user.getLobby() == null) return false;
+    public Lobby resizeLobby(User user, Integer maxPlayers) {
+        if (user.getLobby() == null) return null;
 
-        return user.getLobby().setUserMax(user, maxPlayers);
+        user.getLobby().setUserMax(user, maxPlayers);
+        return user.getLobby();
     }
 
-    public Boolean changeLobbyAccess(User user, Boolean accessType) {
-        if (user.getLobby() == null) return false;
+    public Lobby changeLobbyAccess(User user, Boolean accessType) {
+        if (user.getLobby() == null) return null;
 
-        return user.getLobby().changeLobbyAccess(user, accessType);
+        user.getLobby().changeLobbyAccess(user, accessType);
+        return user.getLobby();
     }
 
-    public Boolean startMatch(User user) {
+    public Lobby startMatch(User user) {
         //TODO COUNT DOWN / STOP COUNT DOWN
-        if (user.getLobby() == null) return false;
+        if (user.getLobby() == null) return null;
 
         //SET MATCH UTENTE?
 
-        return user.getLobby().startMatch(user);
+        user.getLobby().startMatch(user);
+        return user.getLobby();
     }
 
     private void setDefaultAuthority(User newUser) {

@@ -24,7 +24,7 @@
          </div>
       </div>
 
-      <div v-else class="lobby mt-5">
+      <div v-else-if="lobby.match == null" class="lobby mt-5">
 
          <h1 class="text-center">Lobby</h1>
 
@@ -46,12 +46,12 @@
                   <p v-else>lobby privata</p>
                </div>
                <div class="max_players d-flex align-items-center">
-                  <input type="number" class="form-control" min="2" max="7" :value="lobby.userMax">
+                  <input type="number" class="form-control" min="2" max="7" v-model="lobby.userMax" @change="changeMaxPlayer">
                   <p class="m-0">Player massimi</p>
                </div>
             </div>
             <div v-if="user.id == lobby.users[0].id" class="start text-center">
-               <button class="my_btn">START</button>
+               <button @click="startMatch" class="my_btn">START</button>
             </div>
             <div v-else class="countdown text-center">
                <p class="my_btn mt-4">10</p>
@@ -60,6 +60,13 @@
          
       </div>
       
+      <div v-else class="match">
+         <h1>MATCH</h1>
+         <div class="match_container">
+
+         </div>
+      </div>
+
    </div>
 </template>
 
@@ -73,7 +80,7 @@ export default {
          email: "potato",
          password: "potato",
          user: null,
-         lobby: null
+         lobby: null,
       }
    },
 
@@ -102,11 +109,9 @@ export default {
                this.connect();
                setTimeout(() => {
                   if (this.lobby != null && this.stompClient != null) {
-                     console.log("sended");
                      this.stompClient.send("/app/room/" + this.lobby.idLobby + "/" + this.user.id);
                   }
-                  console.log("sended");
-               }, 3000);
+               }, 1000);
             })
       },
 
@@ -123,7 +128,7 @@ export default {
                      console.log("sended");
                      this.stompClient.send("/app/room/" + this.lobby.idLobby + "/" + this.user.id);
                   }
-               }, 3000);
+               }, 1000);
             })
       },
 
@@ -135,8 +140,12 @@ export default {
          console.log("stomp settato", this.stompClient);
          this.stompClient.connect({}, (frame) => {
             console.log("Connected: " + frame);
-            this.stompClient.subscribe("/lobby/" + this.lobby.idLobby, (lobby) => {
-               this.lobby = JSON.parse(lobby.body);
+            this.stompClient.subscribe("/lobby/" + this.lobby.idLobby, (response) => {
+               if (typeof response == "object") {
+                  this.lobby = JSON.parse(response.body);
+               } else {
+                  
+               }
             });
          })
       },
@@ -147,8 +156,17 @@ export default {
          }
       },
 
+      changeMaxPlayer() {
+         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/resize/" + this.lobby.userMax + "/" + this.user.id);
+      },
+
       changeLobbyAccess() {
-         console.log("change access");
+         console.log("changing access");
+         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/access/" + !this.lobby.accessType + "/" + this.user.id);
+      },
+
+      startMatch() {
+         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/start/" + this.user.id);
       },
 
       quitLobby() {
@@ -173,7 +191,7 @@ export default {
    computed: {
       getUsersInLobby() {
          return this.lobby.users;
-      }
+      },
    }
 }
 </script>
