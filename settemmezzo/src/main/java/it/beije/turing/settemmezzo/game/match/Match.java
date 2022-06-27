@@ -7,12 +7,17 @@ import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.deck.Card;
 import it.beije.turing.settemmezzo.game.deck.Deck;
 import it.beije.turing.settemmezzo.game.deck.Hand;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Match
 {	
 	private List<User> users;
 	private List<Hand> hands = new ArrayList<>();
+	private List<User> winners;
 	private Deck deck;
+
+	private boolean ended = false;
 	
 	public Match(List<User> users)
 	{
@@ -24,24 +29,45 @@ public class Match
 		return hands;
 	}
 
-	public boolean start()
+	public Match start()
 	{
 		for (User user : users)
 		{
 			Hand hand = new Hand(user);
+			if (users.get(0).equals(user)) {
+				hand.setTurn(true);
+				log.debug("user turn true : " + users.get(0));
+			}
 			hands.add(hand);
 //			user.requestCard();
 		}
 		
-		return true;
+		return this;
 	}
-	
+
+	public List<User> getWinners() {
+		return winners;
+	}
+
+	public void setWinners(List<User> winners) {
+		this.winners = winners;
+	}
+
+	public Hand getPlayerHand(Integer playerId)
+	{
+		for (Hand hand : hands)
+		{
+			if (hand.getUser().getId() == playerId) return hand;
+		}
+
+		return null;
+	}
 	
 	//TODO TURNI
 	//TODO CHECK PER ASSO / RE DI DENARI CHE CAMBIANO VALORE
 	
 	
-	public List<User> end()				//TODO CHIAMARE QUANDO CHECKENDMATCH = TRUE;  AGGIUNGERE PUNTI ALLO SCORE DEI PLAYER
+	public Match end()				//TODO CHIAMARE QUANDO CHECKENDMATCH = TRUE;  AGGIUNGERE PUNTI ALLO SCORE DEI PLAYER
 	{
 		List<User> winners = new ArrayList<>();
 		
@@ -62,10 +88,20 @@ public class Match
 				winners.add(hand.getUser());
 			}
 		}
-		
-		return winners;
+
+		this.winners = winners;
+
+		return this;
 	}
-	
+
+	public boolean isEnded() {
+		return ended;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
 	public Card giveCard()
 	{
 		return deck.getCards().remove(0);
@@ -84,6 +120,7 @@ public class Match
 					if (hand.getContinuePlaying() && hand.isUnderSettemmezzo())
 					{
 						hand.addCard(giveCard());
+						hand.isUnderSettemmezzo();
 						return true;
 					}
 					
@@ -114,7 +151,46 @@ public class Match
 		
 		return false;
 	}
-	
+
+	public Match quitMatch(User user) {
+
+		users.remove(user);
+		Hand handToRemove = null;
+
+		for (Hand hand : hands) {
+			if (hand.getUser().getId() == user.getId()) {
+				handToRemove = hand;
+				break;
+			}
+		}
+
+		if (handToRemove != null) hands.remove(handToRemove);
+
+		return this;
+	}
+
+	public void nextTurn(Integer playerId)
+	{
+		int j = 0;
+		for (int i = 0; i < hands.size(); i++)
+		{
+			if (hands.get(i).getUser().getId() == playerId)
+			{
+				j = i+1;
+				hands.get(i).setTurn(false);
+				break;
+			}
+		}
+
+		if (j == hands.size() -1)
+		{
+			ended = true;
+			return;
+		}
+		if (hands.get(j).getContinuePlaying()) hands.get(j).setTurn(true);
+		else nextTurn(hands.get(j).getUser().getId());
+	}
+
 //	public boolean checkEndMatch()			//TODO CALL A FINE DI OGNI TURNO
 //	{
 //

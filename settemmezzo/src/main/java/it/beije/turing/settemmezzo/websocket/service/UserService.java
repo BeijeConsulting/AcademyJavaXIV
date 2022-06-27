@@ -7,6 +7,7 @@ import it.beije.turing.settemmezzo.exception.NoContentException;
 import it.beije.turing.settemmezzo.exception.SettemmezzoException;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
+import it.beije.turing.settemmezzo.game.match.Match;
 import it.beije.turing.settemmezzo.http.repository.UserAuthorityRepository;
 import it.beije.turing.settemmezzo.http.repository.UserRepository;
 import it.beije.turing.settemmezzo.login.UserAuthority;
@@ -32,18 +33,24 @@ public class UserService implements UserDetailsService {
 
     private static final Integer DEFAULT_AUTHORITY = 1;
 
-    public Boolean requestCard(User user) {
-        if (user.getLobby() == null) return false;
-        else if (user.getLobby().getMatch() == null) return false;
+    public Match requestCard(User user) {
+        if (user.getLobby() == null) return null;
+        else if (user.getLobby().getMatch() == null) return null;
 
-        return user.getLobby().getMatch().requestCard(user);
+        if (user.getLobby().getMatch().isEnded() || !user.getLobby().getMatch().getPlayerHand(user.getId()).isTurn()) return user.getLobby().getMatch();
+
+        user.getLobby().getMatch().requestCard(user);
+        return user.getLobby().getMatch();
     }
 
-    public Boolean stopPlaying(User user) {
-        if (user.getLobby() == null) return false;
-        else if (user.getLobby().getMatch() == null) return false;
+    public Match stopPlaying(User user) {
+        if (user.getLobby() == null) return null;
+        else if (user.getLobby().getMatch() == null) return null;
 
-        return user.getLobby().getMatch().stopPlaying(user);
+        if (user.getLobby().getMatch().isEnded() || !user.getLobby().getMatch().getPlayerHand(user.getId()).isTurn()) return user.getLobby().getMatch();
+
+        user.getLobby().getMatch().stopPlaying(user);
+        return user.getLobby().getMatch();
     }
 
     public Lobby resizeLobby(User user, Integer maxPlayers) {
@@ -60,14 +67,13 @@ public class UserService implements UserDetailsService {
         return user.getLobby();
     }
 
-    public Lobby startMatch(User user) {
+    public Match startMatch(User user) {
         //TODO COUNT DOWN / STOP COUNT DOWN
         if (user.getLobby() == null) return null;
 
         //SET MATCH UTENTE?
 
-        user.getLobby().startMatch(user);
-        return user.getLobby();
+        return user.getLobby().startMatch(user);
     }
 
     private void setDefaultAuthority(User newUser) {

@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.match.Match;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Lobby
 {
@@ -78,13 +80,13 @@ public class Lobby
 		return true;
 	}
 	
-	public boolean startMatch(User user)		//COUNTDOWN --> INIZIO PARTITA			//SOLO HOST
+	public Match startMatch(User user)		//COUNTDOWN --> INIZIO PARTITA			//SOLO HOST
 	{
-		if (user != users.get(0)) return false;
-		
+		if (user != users.get(0)) return null;
+
 		match = new Match(users);
-		
-		return match.start();					//RETURN MATCH TO FE?
+
+		return match.start();
 	}
 	
 	public boolean quitLobby(User user)			//TUTTI

@@ -1,25 +1,26 @@
 package it.beije.turing.settemmezzo.websocket.service;
 
+import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.deck.Hand;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
+import it.beije.turing.settemmezzo.game.match.Match;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MatchService {
 
-    public Boolean checkEndMatch(Lobby lobby) {
+    public Match checkEndMatch(Lobby lobby) {
 
-        for (Hand hand : lobby.getMatch().getHands())
-        {
-            if (hand.getContinuePlaying())
-            {
-                return false;
-            }
-        }
+        if (!lobby.getMatch().isEnded()) return lobby.getMatch();
 
-        lobby.getMatch().end();
-
-        return true;
+        return lobby.getMatch().end();
     }
 
+    public Match quitMatch(Lobby lobby, User user) {
+
+        Match match = lobby.getMatch().quitMatch(user);
+        lobby.quitLobby(user);
+        user.setLobby(null);
+        return match;
+    }
 }

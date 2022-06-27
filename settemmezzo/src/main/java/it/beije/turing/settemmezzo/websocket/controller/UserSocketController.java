@@ -47,11 +47,10 @@ public class UserSocketController {
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, Game.getInstance().getLobby(roomId));
     }
 
-    @MessageMapping("/room/{room_id}/stop_playing")
-    public void stopPlaying(@DestinationVariable("room_id") Integer roomId) {
-        //TODO Aggiungere Auth nel param. per prendere l'utente che richiede l'aizone
+    @MessageMapping("/room/{room_id}/stop_playing/{user_id}")
+    public void stopPlaying(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("user_id") Integer userId) {
         //utente fittizio
-        User user = createFINTOUser();
+        User user = Game.getInstance().getUser(userId);
 
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, userService.stopPlaying(user));
     }
@@ -80,11 +79,10 @@ public class UserSocketController {
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, userService.startMatch(user));
     }
 
-    @MessageMapping("/room/{room_id}/request_card")
-    public void requestCard(@DestinationVariable("room_id") Integer roomId) {
-        //TODO Aggiungere Auth nel param. per prendere l'utente che richiede l'aizone
-        //utente fittizio
-        User user = createFINTOUser();
+    @MessageMapping("/room/{room_id}/request_card/{user_id}")
+    public void requestCard(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("user_id") Integer userId) {
+        log.debug("requestCard");
+        User user = Game.getInstance().getUser(userId);
 
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, userService.requestCard(user));
     }

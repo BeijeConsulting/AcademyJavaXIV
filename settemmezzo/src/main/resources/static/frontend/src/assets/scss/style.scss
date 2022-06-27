@@ -115,7 +115,6 @@ nav {
 
 .match {
    width: 100%;
-   border: 1px solid red;
 
    .match_container {
       display: flex;
@@ -123,7 +122,7 @@ nav {
       align-items: center;
       padding: 20px;
       position: relative;
-      border: 1px solid red;
+      border: 2px solid red;
 
       .match_table {
          width: 50vw;
@@ -242,8 +241,8 @@ nav {
                position: relative;
                height: 100%;
                background-color: #fff;
-               outline: 3px solid #b63e40;
-               outline-offset: -5px;
+               outline: 2px solid #b63e40;
+               outline-offset: -4px;
                border-radius: inherit;
 
                img {
@@ -254,7 +253,46 @@ nav {
                   transform: translate(-50%, -50%);
                }
             }
+            
+            .front {
+               height: 100%;
+               background-color: #fff;
+               outline: 2px solid #b63e40;
+               outline-offset: -4px;
+               border-radius: inherit;
+               color: #b63e40;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               
+               .card_value {
+                  margin: 0;
+                  font-weight: bold;
+                  font-size: 1.4vw;
+               }
+            }
          }
+      }
+   }
+
+   .options {
+      height: 200px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+
+      .option {
+         height: 70px;
+         width: 150px;
+         color: #b63e40;
+         font-weight: bold;
+         border-radius: 10px;
+         border: 3px solid #b63e40;
+         background-color: #fff;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         cursor: pointer;
       }
    }
 }

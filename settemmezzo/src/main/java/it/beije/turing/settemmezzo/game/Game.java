@@ -58,7 +58,7 @@ public class Game
 	{
 		for (Lobby lobby : lobbies)
 		{
-			if (lobby.getIdLobby() == idLobby)
+			if (lobby.getIdLobby() == idLobby && lobby.getMatch() == null)
 			{
 				lobby.joinLobby(user);
 				return lobby;
@@ -72,7 +72,7 @@ public class Game
 	{
 		for (Lobby lobby : lobbies)
 		{
-			if (lobby.getUsersSize() < lobby.getUserMax() && lobby.isAccessType())
+			if (lobby.getUsersSize() < lobby.getUserMax() && lobby.isAccessType() && lobby.getMatch() == null)
 			{
 				lobby.joinLobby(user);
 				return lobby;

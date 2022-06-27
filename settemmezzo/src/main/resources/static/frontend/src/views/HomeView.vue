@@ -24,7 +24,7 @@
          </div>
       </div>
 
-      <div v-else-if="lobby.match == null" class="lobby mt-5">
+      <div v-else-if="match == null" class="lobby mt-5">
 
          <h1 class="text-center">Lobby</h1>
 
@@ -60,11 +60,57 @@
          
       </div>
       
-      <div v-else class="match">
+      <div v-else-if="!match.ended" class="match">
          <h1>MATCH</h1>
          <div class="match_container">
+            <div class="match_table">
+
+               <div id="master">
+                  <img src="@/assets/img/logo_official_white.svg" alt="logo beije.it">
+                  <h1>MASTER</h1>
+               </div>
+
+               <div v-for="(player, index) in getMatchUsers"
+                  :key="player.id"
+                  :id="'player_' + (index + 1)" 
+                  class="player"
+               >
+                  <p class="player_name">{{player.username}}</p>
+                  <div v-for="(card, index) in getMatchHand(player.id).cards"
+                     :key="player.id + 'card' + index"
+                     class="match_card"
+                  >
+                     <div v-if="user.id == player.id" class="front">
+                        <p class="card_value">{{card.value}}</p>
+                     </div>
+                     <div v-else class="back">
+                        <img src="@/assets/img/logo_short_red.svg" alt="logo beije.it">
+                     </div>
+                  </div>
+               </div>
+
+            </div>
 
          </div>
+         <div class="options">
+            <div v-if="getMatchHand(user.id).continuePlaying && getMatchHand(user.id).turn" @click="requestCard" class="option request_card">
+               <span>CHIEDI CARTA</span>
+            </div>
+            <div v-if="getMatchHand(user.id).continuePlaying && getMatchHand(user.id).turn" @click="stopPlaying" class="option stop_playing">
+               <span>STO BENE</span>
+            </div>
+            <div @click="quitMatch" class="option quit_game">
+               <span>ESCI</span>
+            </div>
+         </div>
+      </div>
+
+      <div v-else>
+         <ul>
+            <li v-for="winner in this.match.winners" :key="winner.id">
+               {{winner.username}}
+            </li>
+         </ul>
       </div>
 
    </div>
@@ -81,6 +127,8 @@ export default {
          password: "potato",
          user: null,
          lobby: null,
+         match: null,
+         connectionEstablished: false
       }
    },
 
@@ -107,9 +155,11 @@ export default {
             }).then(response => {
                this.lobby = response.data;
                this.connect();
+               this.connectionEstablished = false;
                setTimeout(() => {
                   if (this.lobby != null && this.stompClient != null) {
                      this.stompClient.send("/app/room/" + this.lobby.idLobby + "/" + this.user.id);
+                     this.connectionEstablished = true;
                   }
                }, 1000);
             })
@@ -123,10 +173,12 @@ export default {
             }).then(response => {
                this.lobby = response.data;
                this.connect();
+               this.connectionEstablished = false;
                setTimeout(() => {
                   if (this.lobby != null && this.stompClient != null) {
                      console.log("sended");
                      this.stompClient.send("/app/room/" + this.lobby.idLobby + "/" + this.user.id);
+                     this.connectionEstablished = true;
                   }
                }, 1000);
             })
@@ -141,10 +193,16 @@ export default {
          this.stompClient.connect({}, (frame) => {
             console.log("Connected: " + frame);
             this.stompClient.subscribe("/lobby/" + this.lobby.idLobby, (response) => {
-               if (typeof response == "object") {
-                  this.lobby = JSON.parse(response.body);
+               const obj = JSON.parse(response.body);
+               if (obj.hasOwnProperty("idLobby")) {
+                  this.lobby = obj;
                } else {
-                  
+                  if (this.match == null) {
+                     this.match = obj;
+                     this.requestCard();
+                  } else {
+                     this.match = obj;
+                  }
                }
             });
          })
@@ -153,7 +211,21 @@ export default {
       disconnect() {
          if (this.stompClient !== null) {
             this.stompClient.disconnect();
+            this.lobby = null;
+            this.match = null;
+            this.player = null;
+            //TODO DELETE INSTANCE LOBBY - MATCH => JAVA
          }
+      },
+
+      requestCard() {
+         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/request_card/" + this.user.id);
+         this.endMatch();
+      },
+
+      stopPlaying() {
+         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/stop_playing/" + this.user.id);
+         this.endMatch();
       },
 
       changeMaxPlayer() {
@@ -167,6 +239,11 @@ export default {
 
       startMatch() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/start/" + this.user.id);
+         this.turn = this.user;
+      },
+
+      endMatch() {
+         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/check_end_match");
       },
 
       quitLobby() {
@@ -185,13 +262,34 @@ export default {
                   console.log("Cannot disconnect");
                }
             })
-      }
+      },
+
+      quitMatch() {
+         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/quit_match/" + this.user.id);
+         this.disconnect();
+      },
+
+      getMatchHand(playerId) {
+            
+         for (const hand of this.match.hands) {
+            
+            if (hand.user.id == playerId) {
+               return hand;
+            }
+         }
+      },
    },
 
    computed: {
       getUsersInLobby() {
          return this.lobby.users;
       },
+
+
+      getMatchUsers() {
+         return this.match.users;
+      }
+      
    }
 }
 </script>
