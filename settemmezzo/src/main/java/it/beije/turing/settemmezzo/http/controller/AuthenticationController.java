@@ -89,9 +89,9 @@ public class AuthenticationController {
 
 	@PreAuthorize("permitAll()")
 	@PostMapping("/updateAuthToken")
-	public ResponseEntity<Map<String, Object>> reSignin(@RequestBody RefreshToken refreshToken) {
+	public ResponseEntity<Map<String, Object>> reSignin(@RequestBody String refreshToken) {
 		try {
-			return this.signin(refreshTokenService.getAuthenticationFromRefreshToken(refreshToken.getRefreshToken()));
+			return this.signin(refreshTokenService.getAuthenticationFromRefreshToken(refreshToken));
 		} catch (RuntimeException e) {
 			throw e;
 		}
