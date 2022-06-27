@@ -220,12 +220,16 @@ export default {
 
       requestCard() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/request_card/" + this.user.id);
-         this.endMatch();
+          setTimeout(() => {
+                  this.endMatch();
+               }, 1000);
       },
 
       stopPlaying() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/stop_playing/" + this.user.id);
-         this.endMatch();
+         setTimeout(() => {
+                  this.endMatch();
+               }, 1000);
       },
 
       changeMaxPlayer() {
