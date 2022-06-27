@@ -142,6 +142,7 @@ public class Match
 				if (hand.isUnderSettemmezzo() && hand.getContinuePlaying())
 				{
 					hand.setContinuePlaying(false);
+					hand.isUnderSettemmezzo();
 					return true;
 				}
 				
@@ -182,7 +183,7 @@ public class Match
 			}
 		}
 
-		if (j == hands.size() -1)
+		if (j >= hands.size())
 		{
 			ended = true;
 			return;

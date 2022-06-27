@@ -13,6 +13,7 @@ import it.beije.turing.settemmezzo.http.repository.UserRepository;
 import it.beije.turing.settemmezzo.login.UserAuthority;
 import it.beije.turing.settemmezzo.login.UserDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService implements UserDetailsService {
 
 
@@ -37,7 +39,7 @@ public class UserService implements UserDetailsService {
         if (user.getLobby() == null) return null;
         else if (user.getLobby().getMatch() == null) return null;
 
-        if (user.getLobby().getMatch().isEnded() || !user.getLobby().getMatch().getPlayerHand(user.getId()).isTurn()) return user.getLobby().getMatch();
+        if (user.getLobby().getMatch().isEnded() || (user.getLobby().getMatch().getPlayerHand(user.getId()).getCards().size() > 0 && !user.getLobby().getMatch().getPlayerHand(user.getId()).isTurn())) return user.getLobby().getMatch();
 
         user.getLobby().getMatch().requestCard(user);
         return user.getLobby().getMatch();
@@ -48,7 +50,8 @@ public class UserService implements UserDetailsService {
         else if (user.getLobby().getMatch() == null) return null;
 
         if (user.getLobby().getMatch().isEnded() || !user.getLobby().getMatch().getPlayerHand(user.getId()).isTurn()) return user.getLobby().getMatch();
-
+        
+        log.debug("ENTRO STOP PLAYING");
         user.getLobby().getMatch().stopPlaying(user);
         return user.getLobby().getMatch();
     }

@@ -71,8 +71,8 @@ public class Hand
 		
 		boolean under = c <= 7.5f ? true : false;
 		
-		if (c == 7.5f) setContinuePlaying(false);
-		else setContinuePlaying(under);
+		if (c >= 7.5f) setContinuePlaying(false);
+		//else setContinuePlaying(under);
 
 		if (turn && !continuePlaying) user.getLobby().getMatch().nextTurn(user.getId());
 
