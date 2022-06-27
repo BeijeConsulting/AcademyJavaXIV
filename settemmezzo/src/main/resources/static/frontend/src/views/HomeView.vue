@@ -222,14 +222,14 @@ export default {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/request_card/" + this.user.id);
           setTimeout(() => {
                   this.endMatch();
-               }, 1000);
+               }, 500);
       },
 
       stopPlaying() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/stop_playing/" + this.user.id);
          setTimeout(() => {
                   this.endMatch();
-               }, 1000);
+               }, 500);
       },
 
       changeMaxPlayer() {
