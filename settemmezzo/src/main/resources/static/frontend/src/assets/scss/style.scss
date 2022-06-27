@@ -112,3 +112,149 @@ nav {
    font-weight: bold;
 
 }
+
+.match {
+   width: 100%;
+   border: 1px solid red;
+
+   .match_container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      border: 1px solid red;
+
+      .match_table {
+         width: 50vw;
+         height: 25vw;
+         background-color: #51bd91;
+         border-radius: 50%;
+         border: 6px solid rgba(255, 255, 255, 0.672);
+         position: relative; 
+
+         #master {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10vw;
+
+            img {
+               width: 100%;
+            }
+
+            h1 {
+               text-align: center;
+               margin: -4px 0 0 0;
+               font-size: 2vw;
+            }
+         }
+
+         .player {
+            position: absolute;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 7vw;
+
+            .player_name {
+               position: absolute;
+               bottom: 100%;
+               margin-bottom: 7px;
+               margin-top: 7px;
+               font-weight: bold;
+               font-size: 2vw;
+               color: #a43440;
+               cursor: pointer;
+            }
+
+            &#player_1 {
+               left: 50%;
+               bottom: 15px;
+               transform: translateX(-50%);
+               
+               .player_name {
+                  top: 100%;
+               }
+            }
+            &#player_2 {
+               left: 75%;
+               bottom: 40px;
+               transform: translateX(-25%) rotate(-20deg);
+
+               .player_name {
+                  top: 100%;
+               }
+            }
+            &#player_3 {
+               left: 25%;
+               bottom: 40px;
+               transform: translateX(-75%) rotate(20deg);
+
+               .player_name {
+                  top: 100%;
+               }
+            }
+            &#player_4 {
+               left: 90%;
+               bottom: 50%;
+               transform: translateX(-10%) translateY(50%);
+
+               .player_name {
+                  bottom: 100%;
+               }
+            }
+            &#player_5 {
+               left: 10%;
+               bottom: 50%;
+               transform: translateX(-90%) translateY(50%);
+
+               .player_name {
+                  bottom: 100%;
+               }
+            }
+            &#player_6 {
+               left: 75%;
+               bottom: 70%;
+               transform: translateX(-25%) rotate(20deg);
+
+               .player_name {
+                  bottom: 100%;
+               }
+            }
+            &#player_7 {
+               left: 25%;
+               bottom: 70%;
+               transform: translateX(-75%) rotate(-20deg);
+
+               .player_name {
+                  bottom: 100%;
+               }
+            }
+         }
+
+         .match_card {
+            height: 3.7vw;
+            width: calc(100% / 3);
+            border-radius: 4px;
+
+            .back {
+               position: relative;
+               height: 100%;
+               background-color: #fff;
+               outline: 3px solid #b63e40;
+               outline-offset: -5px;
+               border-radius: inherit;
+
+               img {
+                  width: 60%;
+                  position: absolute;
+                  left: 50%;
+                  top: 50%;
+                  transform: translate(-50%, -50%);
+               }
+            }
+         }
+      }
+   }
+}
