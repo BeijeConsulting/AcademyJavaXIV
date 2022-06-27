@@ -2,7 +2,8 @@ package it.beije.turing.settemmezzo.login;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
+import it.beije.turing.settemmezzo.exception.ExpiredTokenException;
+import it.beije.turing.settemmezzo.exception.VerificationTokenException;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.http.repository.UserRepository;
 import org.slf4j.Logger;
@@ -71,12 +72,12 @@ public class RefreshTokenService {
 	public AuthCredentials getAuthenticationFromRefreshToken(String tokenString) {
 		clearOldTokens();
 //		RefreshToken token = tokenRepository.findByRefreshToken(tokenString).orElseThrow(() -> new InvalidJwtAuthenticationException("token not present", InvalidJwtAuthenticationException.FORBIDDEN));
-		RefreshToken token = tokenRepository.findByRefreshToken(tokenString).orElseThrow(() -> new RuntimeException("token not present"));
+		RefreshToken token = tokenRepository.findByRefreshToken(tokenString).orElseThrow(() -> new ExpiredTokenException("token not present"));
 		if(token.getExpirationDate().before(Timestamp.valueOf(LocalDateTime.now())))
 //			throw new InvalidJwtAuthenticationException("token expired", InvalidJwtAuthenticationException.EXPIRED);
-			throw new RuntimeException("token expired");
+			throw new VerificationTokenException("token expired");
 //		Utente user = userRepository.findById(token.getUserId()).orElseThrow(() -> new NoContentException("ERROR"));
-		User user = userRepository.findById(token.getUserId()).orElseThrow(() -> new RuntimeException("ERROR"));
+		User user = userRepository.findById(token.getUserId()).orElseThrow(() -> new ExpiredTokenException("No user found associated with this token"));
 		AuthCredentials auth = new AuthCredentials();
 		auth.setEmail(user.getUsername());
 		auth.setPassword(user.getPassword());

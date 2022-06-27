@@ -2,6 +2,7 @@ package it.beije.turing.settemmezzo.websocket.service;
 
 import it.beije.turing.settemmezzo.exception.AlreadyExistException;
 import it.beije.turing.settemmezzo.exception.GameActionException;
+import it.beije.turing.settemmezzo.exception.InvalidArgumentException;
 import it.beije.turing.settemmezzo.exception.NoContentException;
 import it.beije.turing.settemmezzo.exception.SettemmezzoException;
 import it.beije.turing.settemmezzo.game.User;
@@ -97,10 +98,10 @@ public class UserService implements UserDetailsService {
 
                 return user;
             } else {
-                throw new RuntimeException("Email giá presente nel database");
+                throw new AlreadyExistException("Email giá presente nel database");
             }
         } else {
-            throw new RuntimeException("Nome, Cognome, Password o Email = null, o stringa vuota");
+            throw new InvalidArgumentException("Nome, Cognome, Password o Email = null, o stringa vuota");
         }
     }
 
@@ -124,7 +125,7 @@ public class UserService implements UserDetailsService {
         List<User> list = userRepository.findAll();
 
         if (list.isEmpty()) {
-            throw new RuntimeException("No users found.");// TODONoContentException();
+            throw new NoContentException("No users found.");// TODONoContentException();
         }
         return list;
     }
@@ -142,7 +143,7 @@ public class UserService implements UserDetailsService {
 
     public User addUser(User user) {
         if (userRepository.findByEmail(user.getEmail()) != null) {
-            throw new RuntimeException("User already exists");
+            throw new AlreadyExistException("User already exists");
         }
         try {
             userRepository.save(user);
@@ -157,7 +158,7 @@ public class UserService implements UserDetailsService {
     public boolean removeUser(User user) {
 
         if (user == null) {
-            throw new RuntimeException("No user found with given id");
+            throw new NoContentException("No user found with given id");
         }
         userRepository.deleteById(user.getId());
         return true;
@@ -187,7 +188,7 @@ public class UserService implements UserDetailsService {
 
             return utente;
         } catch (IllegalArgumentException iaEx) {
-            throw new RuntimeException("email = null");
+            throw new InvalidArgumentException("email = null");
         }
 //        catch (Exception e) {
 //            throw e;
@@ -217,7 +218,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Map<String, Boolean> quitLobby(User user) {
-		if (user.getLobby() == null) throw new RuntimeException("Not in a Lobby");
+		if (user.getLobby() == null) throw new GameActionException("Not in a Lobby");
 
         Map<String, Boolean> esito = new HashMap<String, Boolean>();
 
