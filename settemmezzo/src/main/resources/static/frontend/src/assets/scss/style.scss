@@ -43,12 +43,16 @@ nav {
    height: 60%;
 
    .lobby_container {
-      background-color: #b08661;
+      background-image: linear-gradient(#755390, #2f4571);
+      -webkit-box-shadow: 0px 0px 37px 11px #000000; 
+box-shadow: 0px 0px 37px 11px #000000;
       margin: 20px auto;
-      width: 50%;
+      width: 70vw;
+      height: 60vh;
       padding: 20px;
-      height: calc(100% - 100px);
       position: relative;
+      border-radius: 4px;
+      border: 1px solid black;
 
       .players {
          width: 100%;
@@ -75,6 +79,7 @@ nav {
 .options {
    margin: 10px 0;
    display: flex;
+   justify-content: space-evenly;
    
    .access_type {
       display: flex;
