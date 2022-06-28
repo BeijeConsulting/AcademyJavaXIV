@@ -29,32 +29,52 @@
          <h1 class="text-center">Lobby</h1>
 
          <div class="lobby_container">
-            <div @click="quitLobby" class="quit">&times;</div>
             <div class="players">
                <ul>
                   <li class="user" v-for="user in getUsersInLobby"
                      :key="user.id"
                   >
-                     {{user.username}}
+                     <img src="@/assets/img/logo_short_red.svg" alt="logo beije.it">
+                     <span class="username">
+                        {{user.username}}
+                     </span>
+                     <span class="position">
+                        #1
+                     </span>
+                     <span class="total_score">
+                        {{user.score}}
+                     </span>
                   </li>
                </ul>
             </div>
             <div v-if="user.id == lobby.users[0].id" class="options">
-               <div class="access_type">
-                  <div @click="changeLobbyAccess" class="slider" :class="!lobby.accessType ? 'private' : ''"></div>
-                  <p v-if="lobby.accessType">lobby pubblica</p>
-                  <p v-else>lobby privata</p>
+               <label class="switch">
+                  <input :checked="!lobby.accessType" type="checkbox">
+                  <span @click="changeLobbyAccess" class="slider"></span>
+               </label>
+
+               <div class="max_players">
+                  <span @click="changeMaxPlayer(+1)" class="next"></span>
+                  <span @click="changeMaxPlayer(-1)" class="prev"></span>
+                  <div id="box">
+                     <span>{{lobby.userMax}}</span>
+                  </div>
                </div>
-               <div class="max_players d-flex align-items-center">
+               <!-- <div class="max_players d-flex align-items-center">
                   <input type="number" class="form-control" min="2" max="7" v-model="lobby.userMax" @change="changeMaxPlayer">
                   <p class="m-0">Player massimi</p>
+               </div> -->
+            </div>
+            <div class="start text-center">
+               <div class="start_container">
+                  <div @click="quitLobby" class="quit">
+                     <span>&times;</span>
+                  </div>
+                  <button v-if="user.id == lobby.users[0].id" @click="startMatch" class="my_btn">START</button>
+                  <div v-else class="countdown text-center">
+                     <p class="my_btn m-0">10</p>
+                  </div>
                </div>
-            </div>
-            <div v-if="user.id == lobby.users[0].id" class="start text-center">
-               <button @click="startMatch" class="my_btn">START</button>
-            </div>
-            <div v-else class="countdown text-center">
-               <p class="my_btn mt-4">10</p>
             </div>
          </div>
          
@@ -107,7 +127,11 @@
 
       <div class="winners" v-else>
          <h1>Vincitori</h1>
-         <ul>
+         <div v-if="match.winners.length == 0">
+            <h3 class="text-center">NESSUNO</h3>
+            <img src="@/assets/img/gif_sad.gif" alt="">
+         </div>
+         <ul v-else>
             <li class="winner" v-for="winner in this.match.winners" :key="winner.id">
                <p class="player_name m-0">
                   {{winner.username}}
@@ -242,8 +266,11 @@ export default {
          }, 100);
       },
 
-      changeMaxPlayer() {
-         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/resize/" + this.lobby.userMax + "/" + this.user.id);
+      changeMaxPlayer(value) {
+         if ((this.lobby.userMax + value) >= 2 && (this.lobby.userMax + value) <= 7) {
+            
+            this.stompClient.send("/app/room/" + this.lobby.idLobby + "/resize/" + (this.lobby.userMax + value) + "/" + this.user.id);
+         }
       },
 
       changeLobbyAccess() {
