@@ -116,7 +116,7 @@
             </li>
          </ul>
          <div class="options">
-            <div @click="quitMatch" class="option exit_game">
+            <div @click="quitGame" class="option exit_game">
                <span>ESCI</span>
             </div>
          </div>
@@ -231,15 +231,15 @@ export default {
       requestCard() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/request_card/" + this.user.id);
           setTimeout(() => {
-                  this.endMatch();
-               }, 100);
+            this.endMatch();
+         }, 100);
       },
 
       stopPlaying() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/stop_playing/" + this.user.id);
          setTimeout(() => {
-                  this.endMatch();
-               }, 100);
+            this.endMatch();
+         }, 100);
       },
 
       changeMaxPlayer() {
@@ -278,9 +278,17 @@ export default {
             })
       },
 
-      quitMatch() {
+      quitGame() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/quit_match/" + this.user.id);
          this.disconnect();
+      },
+
+      quitMatch() {
+         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/quit_match/" + this.user.id);
+         setTimeout(() => {
+            this.endMatch();
+            this.disconnect();
+         }, 100);
       },
 
       getMatchHand(playerId) {

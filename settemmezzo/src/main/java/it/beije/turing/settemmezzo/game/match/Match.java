@@ -155,20 +155,22 @@ public class Match
 
 	public Match quitMatch(User user) {
 
-		users.remove(user);
 		Hand handToRemove = null;
 
 		for (Hand hand : hands) {
 			if (hand.getUser().getId() == user.getId()) {
 				handToRemove = hand;
+				if (handToRemove.isTurn()) nextTurn(user.getId());
 				break;
 			}
 		}
 
 		if (handToRemove != null) hands.remove(handToRemove);
 
+		users.remove(user);
 		return this;
 	}
+
 
 	public void nextTurn(Integer playerId)
 	{
