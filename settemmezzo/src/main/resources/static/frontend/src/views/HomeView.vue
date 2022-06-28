@@ -105,12 +105,21 @@
          </div>
       </div>
 
-      <div v-else>
+      <div class="winners" v-else>
+         <h1>Vincitori</h1>
          <ul>
-            <li v-for="winner in this.match.winners" :key="winner.id">
-               {{winner.username}}
+            <li class="winner" v-for="winner in this.match.winners" :key="winner.id">
+               <p class="player_name m-0">
+                  {{winner.username}}
+               </p>
+               <span>score</span>
             </li>
          </ul>
+         <div class="options">
+            <div @click="quitMatch" class="option exit_game">
+               <span>ESCI</span>
+            </div>
+         </div>
       </div>
 
    </div>
@@ -128,7 +137,8 @@ export default {
          user: null,
          lobby: null,
          match: null,
-         connectionEstablished: false
+         connectionEstablished: false,
+         URL: "http://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/"
       }
    },
 
@@ -213,7 +223,7 @@ export default {
             this.stompClient.disconnect();
             this.lobby = null;
             this.match = null;
-            this.player = null;
+            this.connectionEstablished = false;
             //TODO DELETE INSTANCE LOBBY - MATCH => JAVA
          }
       },
@@ -222,14 +232,14 @@ export default {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/request_card/" + this.user.id);
           setTimeout(() => {
                   this.endMatch();
-               }, 500);
+               }, 100);
       },
 
       stopPlaying() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/stop_playing/" + this.user.id);
          setTimeout(() => {
                   this.endMatch();
-               }, 500);
+               }, 100);
       },
 
       changeMaxPlayer() {
