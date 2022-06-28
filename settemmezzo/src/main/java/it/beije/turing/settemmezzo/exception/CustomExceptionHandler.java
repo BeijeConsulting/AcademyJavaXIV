@@ -47,7 +47,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final SimpMessagingTemplate simpMessagingTemplate;
+//    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @ExceptionHandler(value = {NoContentException.class})
     public ResponseEntity<ErrorMessage> ControllerExceptionHandler(NoContentException ex, WebRequest request) {

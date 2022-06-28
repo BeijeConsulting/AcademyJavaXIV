@@ -1,5 +1,6 @@
 <template>
    <div class="container h-100 d-flex flex-column align-items-center">
+      <button @click="sendTest" class="btn btn-success">TEST</button>
       <div v-if="lobby == null" class="home">
          <h1 v-if="user == null">Login</h1>
          <form v-if="user == null" @submit.prevent="login" class="login">
@@ -131,7 +132,7 @@ export default {
    name: "HomeView",
    data() {
       return {
-         stompClient: null,
+         ws: null,
          email: "potato",
          password: "potato",
          user: null,
@@ -143,10 +144,18 @@ export default {
    },
 
    mounted() {
-      // this.connect();
+      this.connect();
    },
 
    methods: {
+
+      sendTest() {
+         const data = JSON.stringify({
+            "room_id": 0
+         });
+         this.ws.send(data)
+      },
+
       login() {
          axios.post("http://localhost:8080/signin", {
             email: this.email,
@@ -194,33 +203,43 @@ export default {
             })
       },
 
-      connect() {
-         if (this.lobby == null) return;
+      // connect() {
+      //    if (this.lobby == null) return;
          
-         const socket = new SockJS("http://localhost:8080/ws");
-         this.stompClient = Stomp.over(socket);
-         console.log("stomp settato", this.stompClient);
-         this.stompClient.connect({}, (frame) => {
-            console.log("Connected: " + frame);
-            this.stompClient.subscribe("/lobby/" + this.lobby.idLobby, (response) => {
-               const obj = JSON.parse(response.body);
-               if (obj.hasOwnProperty("idLobby")) {
-                  this.lobby = obj;
-               } else {
-                  if (this.match == null) {
-                     this.match = obj;
-                     this.requestCard();
-                  } else {
-                     this.match = obj;
-                  }
-               }
-            });
-         })
+      //    const socket = new SockJS("http://localhost:8080/ws");
+      //    this.stompClient = Stomp.over(socket);
+      //    console.log("stomp settato", this.stompClient);
+      //    this.stompClient.connect({}, (frame) => {
+      //       console.log("Connected: " + frame);
+      //       this.stompClient.subscribe("/lobby/" + this.lobby.idLobby, (response) => {
+      //          const obj = JSON.parse(response.body);
+      //          if (obj.hasOwnProperty("idLobby")) {
+      //             this.lobby = obj;
+      //          } else {
+      //             if (this.match == null) {
+      //                this.match = obj;
+      //                this.requestCard();
+      //             } else {
+      //                this.match = obj;
+      //             }
+      //          }
+      //       });
+      //    })
+      // },
+
+      connect() {
+         this.ws = new WebSocket("ws://localhost:8080/ws");
+         this.ws.onopen = () => {
+            console.log("connection OPENED");
+         }
+         this.ws.onmessage = (e) => {
+		      console.log("RISPOSTA : ", e.data);
+         }
       },
 
       disconnect() {
-         if (this.stompClient !== null) {
-            this.stompClient.disconnect();
+         if (this.ws !== null) {
+            this.ws.close();
             this.lobby = null;
             this.match = null;
             this.connectionEstablished = false;

@@ -53,7 +53,7 @@ public class UserController {
 	@Autowired
 	private HashService hashService;
 
-	private final SimpMessagingTemplate simpMessagingTemplate;
+//	private final SimpMessagingTemplate simpMessagingTemplate;
 
 	@PreAuthorize("permitAll()")
 	@PostMapping("/user/registration")
