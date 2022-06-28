@@ -84,6 +84,9 @@ public class Lobby
 	{
 		if (user != users.get(0)) return null;
 
+		if (users.size() < 2 || users.size() > 7) return null;
+
+
 		match = new Match(users);
 
 		return match.start();
