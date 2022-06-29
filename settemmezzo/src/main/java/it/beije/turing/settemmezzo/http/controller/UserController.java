@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 //import io.swagger.v3.oas.annotations.tags.Tag;
 import it.beije.turing.settemmezzo.game.Game;
+import it.beije.turing.settemmezzo.game.Leaderboard;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.login.RefreshTokenService;
 import it.beije.turing.settemmezzo.login.UserDto;
@@ -192,6 +193,21 @@ public class UserController {
 			user = Game.getInstance().getUser(user.getId());
 
 			return userService.quitLobby(user);
+
+		} else {
+			throw new ForbiddenException("Autenticazione non valida -- 401");
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('USER')")
+	@GetMapping(value = "/leaderboard")
+	public Leaderboard getLeaderboard(Authentication auth) {
+		log.debug("getLeaderboard");
+		log.debug("auth " + auth);
+
+		if (auth.isAuthenticated())
+		{
+			return userService.getLeaderboard();
 
 		} else {
 			throw new ForbiddenException("Autenticazione non valida -- 401");

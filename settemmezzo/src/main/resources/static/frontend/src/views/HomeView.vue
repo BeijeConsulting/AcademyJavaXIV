@@ -19,11 +19,11 @@
             <nav class="d-flex flex-column align-items-center">
                <a class="nav_item" @click="playFast" href="#">GIOCA VELOCE</a>
                <a class="nav_item" @click="createLobby" href="#">CREA LOBBY</a>
-               <a class="nav_item" href="#">CLASSIFICA</a>
+               <a class="nav_item" @click="getLeaderboard" href="#">CLASSIFICA</a>
             </nav>
          </div>
       </div>
-
+      
       <div v-else-if="match == null" class="lobby mt-5">
 
          <h1 class="text-center">Lobby</h1>
@@ -163,6 +163,7 @@ export default {
          },
          email: "potato",
          password: "potato",
+         leaderboard: null,
          user: null,
          lobby: null,
          match: null,
@@ -183,6 +184,17 @@ export default {
          }).then(response => {
             this.user = response.data;
             console.log(this.user);
+         })
+      },
+
+      getLeaderboard() {
+         axios.get("http://localhost:8080/leaderboard", {
+            headers: {
+                  Authorization: "Bearer " + this.user.token //the token is a variable which holds the token
+               }
+         }).then(response => {
+            this.leaderboard = response.data;
+            console.log(this.leaderboard);
          })
       },
 

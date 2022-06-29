@@ -5,6 +5,7 @@ import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.exception.InvalidArgumentException;
 import it.beije.turing.settemmezzo.exception.NoContentException;
 import it.beije.turing.settemmezzo.exception.SettemmezzoException;
+import it.beije.turing.settemmezzo.game.Leaderboard;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import it.beije.turing.settemmezzo.game.match.Match;
@@ -243,4 +244,10 @@ public class UserService implements UserDetailsService {
         esito.put("esito", Boolean.FALSE);
         return esito;
     }
+
+	public Leaderboard getLeaderboard()
+	{
+		Leaderboard leaderboard = new Leaderboard(userRepository.getLeaderboard());
+		return leaderboard;
+	}
 }
