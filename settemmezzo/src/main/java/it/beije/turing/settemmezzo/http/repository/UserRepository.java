@@ -19,6 +19,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	User findByEmailAndPassword(String email, String password);
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM settemmezzo.users ORDER BY users.score DESC;")
+	@Query(nativeQuery = true, value = "SELECT * FROM settemmezzo.users WHERE users.score > 0 ORDER BY users.score DESC LIMIT 10;")
 	List<User> getLeaderboard();
 }

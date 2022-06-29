@@ -1,6 +1,6 @@
 <template>
    <div class="container h-100 d-flex flex-column align-items-center">
-      <div v-if="lobby == null" class="home">
+      <div v-if="lobby == null && leaderboard == null" class="home">
          <h1 v-if="user == null && register == false">Login</h1>
          <h1 v-else-if="register == true">Registration</h1>
          <form v-if="user == null && register == false" @submit.prevent="login" class="login">
@@ -43,6 +43,26 @@
             </nav>
          </div>
          
+      </div>
+      <div v-else-if="leaderboard != null" class="d-flex flex-column">
+         <h1>LEADERBOARD</h1>
+         <table class="table text-white">
+            <thead>
+               <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Score</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr v-for="(user, index) in leaderboard.users" :key="user.id">
+                  <th scope="row">{{index + 1}}</th>
+                  <td>{{user.username}}</td>
+                  <td>{{user.score}}</td>
+               </tr>
+            </tbody>
+            </table>
+         <button class="btn btn-success" @click="leaderboard = null">HOME</button>
       </div>
       <div v-else-if="match == null" class="lobby mt-5">
 
@@ -145,7 +165,7 @@
          </div>
       </div>
 
-      <div class="winners" v-else>
+      <div class="winners" v-else-if="match.ended">
          <h1>Vincitori</h1>
          <div v-if="match.winners.length == 0">
             <h3 class="text-center">NESSUNO</h3>
@@ -165,6 +185,8 @@
             </div>
          </div>
       </div>
+
+      
 
    </div>
 </template>
