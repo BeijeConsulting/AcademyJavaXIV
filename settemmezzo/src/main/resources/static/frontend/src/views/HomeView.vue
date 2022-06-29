@@ -156,6 +156,11 @@ export default {
    data() {
       return {
          stompClient: null,
+         registration: {
+            username: null,
+            email: null,
+            password: null,
+         },
          email: "potato",
          password: "potato",
          user: null,
