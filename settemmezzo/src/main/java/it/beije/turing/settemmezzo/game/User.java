@@ -20,9 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import it.beije.turing.settemmezzo.game.Game;
-import it.beije.turing.settemmezzo.game.Leaderboard;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import it.beije.turing.settemmezzo.login.Authority;
 import it.beije.turing.settemmezzo.login.RefreshToken;
@@ -142,6 +139,11 @@ public class User implements Serializable, UserDetails {
 		if (refreshToken != null) return refreshToken.getRefreshToken();
 		
 		return null;
+	}
+
+	public void addScore(int points)
+	{
+		score += points;
 	}
 
 //	public Leaderboard getLeaderboard()

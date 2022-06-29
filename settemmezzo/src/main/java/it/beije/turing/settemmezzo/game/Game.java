@@ -96,6 +96,11 @@ public class Game
 //		if (getUser(user.getId()) == null) users.add(user);
 		users.add(user);
 	}
+	
+	public void removeUser(User user)
+	{
+		users.remove(user);
+	}
 
 	public User getUser(Integer userId)
 	{

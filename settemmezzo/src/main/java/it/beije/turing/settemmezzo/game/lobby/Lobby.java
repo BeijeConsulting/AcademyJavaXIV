@@ -98,6 +98,9 @@ public class Lobby
 		
 		if (users.size() == 0) Game.getInstance().destroyLobby(this);
 		
+		user.setOnline(false);
+		Game.getInstance().removeUser(user);
+		
 		return success;
 	}
 }

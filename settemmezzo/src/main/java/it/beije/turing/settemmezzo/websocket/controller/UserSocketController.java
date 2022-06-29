@@ -1,6 +1,5 @@
 package it.beije.turing.settemmezzo.websocket.controller;
 
-import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
@@ -24,19 +23,12 @@ public class UserSocketController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-//    @MessageMapping("/room/{room_id}")
-//    public void prova(@DestinationVariable("room_id") Integer roomId) {
-//        //TODO Aggiungere Auth nel param. per prendere l'utente che richiede l'aizone
-//        //utente fittizio
-//        User user = createFINTOUser();
-//
-//        simpMessagingTemplate.convertAndSend("/lobby/" + roomId, true);
-//    }
     @MessageMapping("/room/{room_id}/{user_id}")
     public void connectLobby(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("user_id") Integer userId) {
         log.debug("connectLobby");
 
         User user = Game.getInstance().getUser(userId);
+        
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, user.getLobby());
     }
 
@@ -46,7 +38,7 @@ public class UserSocketController {
 
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, Game.getInstance().getLobby(roomId));
     }
-
+    
     @MessageMapping("/room/{room_id}/stop_playing/{user_id}")
     public void stopPlaying(@DestinationVariable("room_id") Integer roomId, @DestinationVariable("user_id") Integer userId) {
         //utente fittizio
@@ -86,25 +78,4 @@ public class UserSocketController {
 
         simpMessagingTemplate.convertAndSend("/lobby/" + roomId, userService.requestCard(user));
     }
-
-    public User createFINTOUser() {
-        User user = new User();
-        user.setEmail("popo@gmail.com");
-        user.setPassword("popo");
-        user.setScore(15);
-        user.setUsername("popino");
-        return user;
-    }
-
 }
-
-//UTENTE//////////
-// richiesta carta -- socket
-// create lobby -- rest
-// join lobby -- rest
-// quit lobby -- rest
-// stop gioco = non voglio piu carte -- socket
-// HOST//////////
-//resize lobby -- socket
-//private lobby -- socket
-// start match -- socket

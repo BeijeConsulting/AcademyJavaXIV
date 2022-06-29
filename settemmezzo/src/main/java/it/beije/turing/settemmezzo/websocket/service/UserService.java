@@ -220,6 +220,8 @@ public class UserService implements UserDetailsService {
 
 		if (roomId <= -1) user.setLobby(user.getGame().joinPublicLobby(user));
 		else user.setLobby(user.getGame().joinPrivateLobby(user, roomId));
+		
+        user.setOnline(true);
 
         if (user.getLobby() != null) return user.getLobby();
 

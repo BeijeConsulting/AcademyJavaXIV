@@ -5,10 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.security.PermitAll;
-
 import it.beije.turing.settemmezzo.exception.ForbiddenException;
-import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.exception.InvalidArgumentException;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 //import io.swagger.v3.oas.annotations.tags.Tag;
 import it.beije.turing.settemmezzo.game.Game;

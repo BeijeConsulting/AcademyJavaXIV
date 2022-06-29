@@ -41,17 +41,4 @@ public class MatchController {
 
 		simpMessagingTemplate.convertAndSend("/lobby/" + roomId, matchService.quitMatch(lobby, user));
 	}
-
-	public Lobby createFakeLobby(Integer roomId) {
-		User user = new User();
-		user.setEmail("popo@gmail.com");
-		user.setPassword("popo");
-		user.setScore(15);
-		user.setUsername("popino");
-		return new Lobby(user, roomId);
-	}
-	
 }
-
-//MATCH//////////////
-//checkEndMatch
