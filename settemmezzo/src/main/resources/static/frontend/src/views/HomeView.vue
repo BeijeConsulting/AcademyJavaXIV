@@ -1,8 +1,9 @@
 <template>
    <div class="container h-100 d-flex flex-column align-items-center">
       <div v-if="lobby == null" class="home">
-         <h1 v-if="user == null">Login</h1>
-         <form v-if="user == null" @submit.prevent="login" class="login">
+         <h1 v-if="user == null && register == false">Login</h1>
+         <h1 v-else-if="register == true">Registration</h1>
+         <form v-if="user == null && register == false" @submit.prevent="login" class="login">
             <div class="mb-3">
                <label for="email" class="form-label">Email address</label>
                <input type="text" class="form-control" id="email" name="email" v-model="email">
@@ -12,6 +13,25 @@
                <input type="text" class="form-control" id="password" name="password" v-model="password">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+             <button v-if="register == false" class="btn btn-secondary" style="margin-left: 5px" @click="register = !register">Register</button>
+         </form>
+
+          <form v-else-if="user == null && register == true" @submit.prevent="postRegistration" class="login">
+            <div class="mb-3">
+               <label for="email" class="form-label">Email address</label>
+               <input type="text" class="form-control" id="email" name="email" v-model="registration.email">
+            </div>
+            <div class="mb-3">
+               <label for="username" class="form-label">Username</label>
+               <input type="text" class="form-control" id="username" name="username" v-model="registration.username">
+            </div>
+            <div class="mb-3">
+               <label for="password" class="form-label">Password</label>
+               <input type="text" class="form-control" id="password" name="password" v-model="registration.password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+           
+         <button v-if="register == true" class="btn btn-secondary" style="margin-top: 5px" @click="register = !register">Back to login</button>
          </form>
 
          <div v-else>
@@ -22,8 +42,8 @@
                <a class="nav_item" href="#">CLASSIFICA</a>
             </nav>
          </div>
+         
       </div>
-
       <div v-else-if="match == null" class="lobby mt-5">
 
          <h1 class="text-center">Lobby</h1>
@@ -156,6 +176,7 @@ export default {
    data() {
       return {
          stompClient: null,
+         register: false,
          registration: {
             username: null,
             email: null,
@@ -184,6 +205,14 @@ export default {
             this.user = response.data;
             console.log(this.user);
          })
+      },
+      postRegistration(){
+         axios.post("http://localhost:8080/user/registration", this.registration)
+            .then(response => {
+               this.user = response.data;
+               console.log(this.user);
+               this.register = false;
+            })
       },
 
       playFast() {
