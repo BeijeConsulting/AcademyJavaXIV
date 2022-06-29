@@ -16,8 +16,8 @@ public class Match
 	private List<Hand> hands = new ArrayList<>();
 	private List<User> winners;
 	private Deck deck;
-
 	private boolean ended = false;
+
 	
 	public Match(List<User> users)
 	{
@@ -90,7 +90,7 @@ public class Match
 		}
 
 		this.winners = winners;
-
+		
 		return this;
 	}
 

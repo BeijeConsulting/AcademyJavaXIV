@@ -1,9 +1,9 @@
 <template>
    <div class="container h-100 d-flex flex-column align-items-center">
-      <button @click="sendTest" class="btn btn-success">TEST</button>
-      <div v-if="lobby == null" class="home">
-         <h1 v-if="user == null">Login</h1>
-         <form v-if="user == null" @submit.prevent="login" class="login">
+      <div v-if="lobby == null && leaderboard == null" class="home">
+         <h1 v-if="user == null && register == false">Login</h1>
+         <h1 v-else-if="register == true">Registration</h1>
+         <form v-if="user == null && register == false" @submit.prevent="login" class="login">
             <div class="mb-3">
                <label for="email" class="form-label">Email address</label>
                <input type="text" class="form-control" id="email" name="email" v-model="email">
@@ -13,6 +13,25 @@
                <input type="text" class="form-control" id="password" name="password" v-model="password">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+             <button v-if="register == false" class="btn btn-secondary" style="margin-left: 5px" @click="register = !register">Register</button>
+         </form>
+
+          <form v-else-if="user == null && register == true" @submit.prevent="postRegistration" class="login">
+            <div class="mb-3">
+               <label for="email" class="form-label">Email address</label>
+               <input type="text" class="form-control" id="email" name="email" v-model="registration.email">
+            </div>
+            <div class="mb-3">
+               <label for="username" class="form-label">Username</label>
+               <input type="text" class="form-control" id="username" name="username" v-model="registration.username">
+            </div>
+            <div class="mb-3">
+               <label for="password" class="form-label">Password</label>
+               <input type="text" class="form-control" id="password" name="password" v-model="registration.password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+           
+         <button v-if="register == true" class="btn btn-secondary" style="margin-top: 5px" @click="register = !register">Back to login</button>
          </form>
 
          <div v-else>
@@ -20,42 +39,82 @@
             <nav class="d-flex flex-column align-items-center">
                <a class="nav_item" @click="playFast" href="#">GIOCA VELOCE</a>
                <a class="nav_item" @click="createLobby" href="#">CREA LOBBY</a>
-               <a class="nav_item" href="#">CLASSIFICA</a>
+               <a class="nav_item" @click="getLeaderboard" href="#">CLASSIFICA</a>
             </nav>
          </div>
+         
       </div>
-
+      <div v-else-if="leaderboard != null" class="d-flex flex-column">
+         <h1>LEADERBOARD</h1>
+         <table class="table text-white">
+            <thead>
+               <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Score</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr v-for="(user, index) in leaderboard.users" :key="user.id">
+                  <th scope="row">{{index + 1}}</th>
+                  <td>{{user.username}}</td>
+                  <td>{{user.score}}</td>
+               </tr>
+            </tbody>
+            </table>
+         <button class="btn btn-success" @click="leaderboard = null">HOME</button>
+      </div>
       <div v-else-if="match == null" class="lobby mt-5">
 
          <h1 class="text-center">Lobby</h1>
 
          <div class="lobby_container">
-            <div @click="quitLobby" class="quit">&times;</div>
             <div class="players">
                <ul>
                   <li class="user" v-for="user in getUsersInLobby"
                      :key="user.id"
                   >
-                     {{user.username}}
+                     <img src="@/assets/img/logo_short_red.svg" alt="logo beije.it">
+                     <span class="username">
+                        {{user.username}}
+                     </span>
+                     <span class="position">
+                        #1
+                     </span>
+                     <span class="total_score">
+                        {{user.score}}
+                     </span>
                   </li>
                </ul>
             </div>
             <div v-if="user.id == lobby.users[0].id" class="options">
-               <div class="access_type">
-                  <div @click="changeLobbyAccess" class="slider" :class="!lobby.accessType ? 'private' : ''"></div>
-                  <p v-if="lobby.accessType">lobby pubblica</p>
-                  <p v-else>lobby privata</p>
+               <label class="switch">
+                  <input :checked="!lobby.accessType" type="checkbox">
+                  <span @click="changeLobbyAccess" class="slider"></span>
+               </label>
+
+               <div class="max_players">
+                  <span @click="changeMaxPlayer(+1)" class="next"></span>
+                  <span @click="changeMaxPlayer(-1)" class="prev"></span>
+                  <div id="box">
+                     <span>{{lobby.userMax}}</span>
+                  </div>
                </div>
-               <div class="max_players d-flex align-items-center">
+               <!-- <div class="max_players d-flex align-items-center">
                   <input type="number" class="form-control" min="2" max="7" v-model="lobby.userMax" @change="changeMaxPlayer">
                   <p class="m-0">Player massimi</p>
+               </div> -->
+            </div>
+            <div class="start text-center">
+               <div class="start_container">
+                  <div @click="quitLobby" class="quit">
+                     <span>&times;</span>
+                  </div>
+                  <button v-if="user.id == lobby.users[0].id" @click="startMatch" class="my_btn">START</button>
+                  <div v-else class="countdown text-center">
+                     <p class="my_btn m-0">10</p>
+                  </div>
                </div>
-            </div>
-            <div v-if="user.id == lobby.users[0].id" class="start text-center">
-               <button @click="startMatch" class="my_btn">START</button>
-            </div>
-            <div v-else class="countdown text-center">
-               <p class="my_btn mt-4">10</p>
             </div>
          </div>
          
@@ -106,9 +165,13 @@
          </div>
       </div>
 
-      <div class="winners" v-else>
+      <div class="winners" v-else-if="match.ended">
          <h1>Vincitori</h1>
-         <ul>
+         <div v-if="match.winners.length == 0">
+            <h3 class="text-center">NESSUNO</h3>
+            <img src="@/assets/img/gif_sad.gif" alt="">
+         </div>
+         <ul v-else>
             <li class="winner" v-for="winner in this.match.winners" :key="winner.id">
                <p class="player_name m-0">
                   {{winner.username}}
@@ -123,6 +186,8 @@
          </div>
       </div>
 
+      
+
    </div>
 </template>
 
@@ -132,9 +197,16 @@ export default {
    name: "HomeView",
    data() {
       return {
-         ws: null,
+         stompClient: null,
+         register: false,
+         registration: {
+            username: null,
+            email: null,
+            password: null,
+         },
          email: "potato",
          password: "potato",
+         leaderboard: null,
          user: null,
          lobby: null,
          match: null,
@@ -144,18 +216,10 @@ export default {
    },
 
    mounted() {
-      this.connect();
+      // this.connect();
    },
 
    methods: {
-
-      sendTest() {
-         const data = JSON.stringify({
-            "room_id": 0
-         });
-         this.ws.send(data)
-      },
-
       login() {
          axios.post("http://localhost:8080/signin", {
             email: this.email,
@@ -163,6 +227,25 @@ export default {
          }).then(response => {
             this.user = response.data;
             console.log(this.user);
+         })
+      },
+      postRegistration(){
+         axios.post("http://localhost:8080/user/registration", this.registration)
+            .then(response => {
+               this.user = response.data;
+               console.log(this.user);
+               this.register = false;
+            })
+      },
+
+      getLeaderboard() {
+         axios.get("http://localhost:8080/leaderboard", {
+            headers: {
+                  Authorization: "Bearer " + this.user.token //the token is a variable which holds the token
+               }
+         }).then(response => {
+            this.leaderboard = response.data;
+            console.log(this.leaderboard);
          })
       },
 
@@ -203,43 +286,33 @@ export default {
             })
       },
 
-      // connect() {
-      //    if (this.lobby == null) return;
-         
-      //    const socket = new SockJS("http://localhost:8080/ws");
-      //    this.stompClient = Stomp.over(socket);
-      //    console.log("stomp settato", this.stompClient);
-      //    this.stompClient.connect({}, (frame) => {
-      //       console.log("Connected: " + frame);
-      //       this.stompClient.subscribe("/lobby/" + this.lobby.idLobby, (response) => {
-      //          const obj = JSON.parse(response.body);
-      //          if (obj.hasOwnProperty("idLobby")) {
-      //             this.lobby = obj;
-      //          } else {
-      //             if (this.match == null) {
-      //                this.match = obj;
-      //                this.requestCard();
-      //             } else {
-      //                this.match = obj;
-      //             }
-      //          }
-      //       });
-      //    })
-      // },
-
       connect() {
-         this.ws = new WebSocket("ws://localhost:8080/ws");
-         this.ws.onopen = () => {
-            console.log("connection OPENED");
-         }
-         this.ws.onmessage = (e) => {
-		      console.log("RISPOSTA : ", e.data);
-         }
+         if (this.lobby == null) return;
+         
+         const socket = new SockJS("http://localhost:8080/ws");
+         this.stompClient = Stomp.over(socket);
+         console.log("stomp settato", this.stompClient);
+         this.stompClient.connect({}, (frame) => {
+            console.log("Connected: " + frame);
+            this.stompClient.subscribe("/lobby/" + this.lobby.idLobby, (response) => {
+               const obj = JSON.parse(response.body);
+               if (obj.hasOwnProperty("idLobby")) {
+                  this.lobby = obj;
+               } else {
+                  if (this.match == null) {
+                     this.match = obj;
+                     this.requestCard();
+                  } else {
+                     this.match = obj;
+                  }
+               }
+            });
+         })
       },
 
       disconnect() {
-         if (this.ws !== null) {
-            this.ws.close();
+         if (this.stompClient !== null) {
+            this.stompClient.disconnect();
             this.lobby = null;
             this.match = null;
             this.connectionEstablished = false;
@@ -261,8 +334,11 @@ export default {
          }, 100);
       },
 
-      changeMaxPlayer() {
-         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/resize/" + this.lobby.userMax + "/" + this.user.id);
+      changeMaxPlayer(value) {
+         if ((this.lobby.userMax + value) >= 2 && (this.lobby.userMax + value) <= 7) {
+            
+            this.stompClient.send("/app/room/" + this.lobby.idLobby + "/resize/" + (this.lobby.userMax + value) + "/" + this.user.id);
+         }
       },
 
       changeLobbyAccess() {

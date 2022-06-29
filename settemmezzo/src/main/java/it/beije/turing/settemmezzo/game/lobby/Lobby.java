@@ -64,7 +64,7 @@ public class Lobby
 
 	public boolean setUserMax(User user, int userMax)				//SOLO HOST
 	{
-		if (user != users.get(0) || userMax < 2 || userMax > 7 || users.size() >= userMax) return false;
+		if (user != users.get(0) || userMax < 2 || userMax > 7 || users.size() > userMax) return false;
 		
 		this.userMax = userMax;
 		
@@ -97,6 +97,9 @@ public class Lobby
 		boolean success = users.remove(user);
 		
 		if (users.size() == 0) Game.getInstance().destroyLobby(this);
+		
+		user.setOnline(false);
+		Game.getInstance().removeUser(user);
 		
 		return success;
 	}
