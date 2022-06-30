@@ -1,5 +1,6 @@
 <template>
    <div class="container h-100 d-flex flex-column align-items-center">
+      <button @click="sendTest" class="btn btn-success">TEST SEND</button>
       <div v-if="lobby == null && leaderboard == null" class="home">
          <h1 v-if="user == null && register == false">Login</h1>
          <h1 v-else-if="register == true">Registration</h1>
@@ -44,6 +45,7 @@
          </div>
          
       </div>
+
       <div v-else-if="leaderboard != null" class="d-flex flex-column">
          <h1>LEADERBOARD</h1>
          <table class="table text-white">
@@ -64,6 +66,7 @@
             </table>
          <button class="btn btn-success" @click="leaderboard = null">HOME</button>
       </div>
+
       <div v-else-if="match == null" class="lobby mt-5">
 
          <h1 class="text-center">Lobby</h1>
@@ -197,6 +200,10 @@ export default {
    name: "HomeView",
    data() {
       return {
+         ws: null,
+         configuration: null,
+         peerConnection: null,
+         dataChannel: null,
          stompClient: null,
          register: false,
          registration: {
@@ -259,8 +266,12 @@ export default {
                this.connect();
                this.connectionEstablished = false;
                setTimeout(() => {
-                  if (this.lobby != null && this.stompClient != null) {
-                     this.stompClient.send("/app/room/" + this.lobby.idLobby + "/" + this.user.id);
+                  if (this.lobby != null && this.ws != null) {
+                     setTimeout(() => {
+                        console.log("sending...");
+                        
+                        this.sendTest();
+                     }, 1000);
                      this.connectionEstablished = true;
                   }
                }, 1000);
@@ -286,39 +297,66 @@ export default {
             })
       },
 
-      connect() {
-         if (this.lobby == null) return;
+      // connect() {
+      //    if (this.lobby == null) return;
          
-         const socket = new SockJS("http://localhost:8080/ws");
-         this.stompClient = Stomp.over(socket);
-         console.log("stomp settato", this.stompClient);
-         this.stompClient.connect({}, (frame) => {
-            console.log("Connected: " + frame);
-            this.stompClient.subscribe("/lobby/" + this.lobby.idLobby, (response) => {
-               const obj = JSON.parse(response.body);
-               if (obj.hasOwnProperty("idLobby")) {
-                  this.lobby = obj;
-               } else {
-                  if (this.match == null) {
-                     this.match = obj;
-                     this.requestCard();
-                  } else {
-                     this.match = obj;
-                  }
-               }
-            });
-         })
+      //    const socket = new SockJS("http://localhost:8080/ws");
+      //    this.stompClient = Stomp.over(socket);
+      //    console.log("stomp settato", this.stompClient);
+      //    this.stompClient.connect({}, (frame) => {
+      //       console.log("Connected: " + frame);
+      //       this.stompClient.subscribe("/lobby/" + this.lobby.idLobby, (response) => {
+      //          const obj = JSON.parse(response.body);
+      //          if (obj.hasOwnProperty("idLobby")) {
+      //             this.lobby = obj;
+      //          } else {
+      //             if (this.match == null) {
+      //                this.match = obj;
+      //                this.requestCard();
+      //             } else {
+      //                this.match = obj;
+      //             }
+      //          }
+      //       });
+      //    })
+      // },
+
+      connect() {
+         this.ws = new WebSocket("ws://localhost:8080/ws");
+         
+         this.ws.onopen = () => {
+            console.log("CONNECTED");
+         }
+         this.ws.onmessage = (event) => {
+            this.lobby = JSON.parse(event.data);
+         }
+
       },
 
       disconnect() {
-         if (this.stompClient !== null) {
-            this.stompClient.disconnect();
+         if (this.ws !== null) {
+            this.ws.close();
             this.lobby = null;
             this.match = null;
             this.connectionEstablished = false;
-            //TODO DELETE INSTANCE LOBBY - MATCH => JAVA
          }
       },
+
+      sendTest() {
+         this.ws.send(JSON.stringify({
+            user_id: this.user.id
+         }));
+      },
+
+      // disconnect() {
+      //    if (this.stompClient !== null) {
+      //       this.stompClient.disconnect();
+      //       this.lobby = null;
+      //       this.match = null;
+      //       this.connectionEstablished = false;
+      //       //TODO DELETE INSTANCE LOBBY - MATCH => JAVA
+      //    }
+      // },
 
       requestCard() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/request_card/" + this.user.id);

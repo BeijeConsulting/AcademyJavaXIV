@@ -5,6 +5,7 @@ import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.exception.InvalidArgumentException;
 import it.beije.turing.settemmezzo.exception.NoContentException;
 import it.beije.turing.settemmezzo.exception.SettemmezzoException;
+import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.Leaderboard;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
@@ -139,7 +140,13 @@ public class UserService implements UserDetailsService {
         }
         return list;
     }
-    
+
+    public User getUserInGame(Integer userId) {
+        User user = Game.getInstance().getUser(userId);
+        if (user != null) return user;
+        throw new GameActionException("No user found in game");
+    }
+
     public User getUser(Integer id) {
     	
     	User user = userRepository.findById(id).get();

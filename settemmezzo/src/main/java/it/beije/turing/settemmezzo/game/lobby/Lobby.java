@@ -103,4 +103,15 @@ public class Lobby
 		
 		return success;
 	}
+
+	@Override
+	public String toString() {
+		return "{" +
+				"users:" + users +
+				", idLobby:" + idLobby +
+				", accessType:" + accessType +
+				", userMax:" + userMax +
+				", match:" + match +
+				'}';
+	}
 }

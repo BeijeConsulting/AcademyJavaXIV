@@ -34,6 +34,7 @@ import lombok.Data;
 @Data
 @Table(name = "users")
 public class User implements Serializable, UserDetails {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -68,12 +69,24 @@ public class User implements Serializable, UserDetails {
 	@JsonIgnore
 	private Lobby lobby = null;
 
+	@Transient
+	@JsonIgnore
+	private String sessionId;
+
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 
 	public boolean isOnline() {
@@ -186,5 +199,23 @@ public class User implements Serializable, UserDetails {
 //
 //		return false;
 //	}
-//	
+//
+
+
+//	@Override
+//	public String toString() {
+//		return "User{" +
+//				"id=" + id +
+//				", username='" + username + '\'' +
+//				", email='" + email + '\'' +
+//				", password='" + password + '\'' +
+//				", score=" + score +
+//				", token='" + token + '\'' +
+//				", refreshToken=" + refreshToken +
+//				", online=" + online +
+//				", lobby=" + lobby +
+//				", sessionId='" + sessionId + '\'' +
+//				", authorityEntity=" + authorityEntity +
+//				'}';
+//	}
 }

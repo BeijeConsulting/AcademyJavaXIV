@@ -47,8 +47,6 @@ public class UserController {
 	@Autowired
 	private HashService hashService;
 
-//	private final SimpMessagingTemplate simpMessagingTemplate;
-
 	@PreAuthorize("permitAll()")
 	@PostMapping("/user/registration")
 	public User insertUser(@RequestBody UserRegistration userRegistration) {
@@ -164,11 +162,14 @@ public class UserController {
 
 			log.error("auth: " + user);
 
+			log.debug("Game http" + Game.getInstance());
+
 			if (Game.getInstance().getUser(user.getId()) == null) {
 				Game.getInstance().addUser(user);
 			}
 
 			user = Game.getInstance().getUser(user.getId());
+			log.debug("Game user http : " + Game.getInstance().getUser(user.getId()));
 
 			log.error("user creato " + user);
 
