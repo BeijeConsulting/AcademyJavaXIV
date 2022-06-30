@@ -17,6 +17,9 @@ import it.beije.turing.settemmezzo.login.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,14 +29,15 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class UserService implements UserDetailsService {
 
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    private final UserAuthorityRepository userAuthorityRepository;
+    @Autowired
+    private UserAuthorityRepository userAuthorityRepository;
 
     private static final Integer DEFAULT_AUTHORITY = 1;
 
@@ -115,6 +119,41 @@ public class UserService implements UserDetailsService {
             throw new InvalidArgumentException("Nome, Cognome, Password o Email = null, o stringa vuota");
         }
     }
+
+    public JSONObject getLobby(User user) {
+        return buildJSONLobby(user.getLobby());
+    }
+
+    public JSONObject buildJSONLobby(Lobby lobby) {
+
+        JSONObject response = new JSONObject();
+
+        response.put("idLobby", lobby.getIdLobby());
+        response.put("accessType", lobby.isAccessType());
+        response.put("userMax", lobby.getUserMax());
+        response.put("match", lobby.getMatch());
+
+        JSONArray jsonArray = new JSONArray();
+
+        log.debug("users" + jsonArray);
+
+        for (User u : lobby.getUsers()) {
+            JSONObject jsonObjectTemp = new JSONObject();
+            jsonObjectTemp.put("id", u.getId());
+            jsonObjectTemp.put("username", u.getUsername());
+            jsonObjectTemp.put("score", u.getScore());
+
+            jsonArray.put(jsonObjectTemp);
+        }
+
+        response.put("users", jsonArray);
+
+        return response;
+    }
+
+//    private JSONObject buildJSONMatch() {
+//
+//    }
 
 //	public UserDto login(String email, String password) {
 //		System.out.print("Password inserita: " + passwordEncoder.encode(password));

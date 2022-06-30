@@ -267,11 +267,11 @@ export default {
                this.connectionEstablished = false;
                setTimeout(() => {
                   if (this.lobby != null && this.ws != null) {
-                     setTimeout(() => {
-                        console.log("sending...");
-                        
-                        this.sendTest();
-                     }, 1000);
+                     const message = {
+                        user_id: this.user.id,
+                        method: "connectLobby"
+                     }
+                     this.sendMessage(message);
                      this.connectionEstablished = true;
                   }
                }, 1000);
@@ -329,11 +329,17 @@ export default {
          }
          this.ws.onmessage = (event) => {
             console.log(event.data);
-            if (event.data.accessType == true) {
-               
-               console.log("riesco a leggere le striche come fossero boolean");
+            const obj = JSON.parse(event.data);
+            if (obj.hasOwnProperty("idLobby")) {
+               this.lobby = obj;
+            } else {
+               if (this.match == null) {
+                  this.match = obj;
+                  this.requestCard();
+               } else {
+                  this.match = obj;
+               }
             }
-            // this.lobby = JSON.parse(event.data);
          }
 
       },
@@ -347,10 +353,8 @@ export default {
          }
       },
 
-      sendTest() {
-         this.ws.send(JSON.stringify({
-            user_id: this.user.id
-         }));
+      sendMessage(message) {
+         this.ws.send(JSON.stringify(message));
       },
 
       // disconnect() {
@@ -405,8 +409,13 @@ export default {
                }
             }).then(response => {
                if (response.data.esito) {
-                  if (this.lobby != null && this.stompClient != null) {
-                     this.stompClient.send("/app/room/" + this.lobby.idLobby + "/quit");
+                  if (this.lobby != null && this.ws != null) {
+                     const message = {
+                        user_id: this.user.id,
+                        method: "quitLobby",
+                        idLobby: this.lobby.idLobby
+                     }
+                     this.sendMessage(message);
                   }
                   this.lobby = null;
                   this.disconnect();
