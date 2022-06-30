@@ -4,6 +4,8 @@ import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
+import it.beije.turing.settemmezzo.game.match.Match;
+import it.beije.turing.settemmezzo.websocket.service.MatchService;
 import it.beije.turing.settemmezzo.websocket.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -17,6 +19,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -26,6 +29,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SocketTextHandler extends TextWebSocketHandler {
 
     private  UserService userService = new UserService();
+
+    private MatchService matchService = new MatchService();
 	List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     @Override
@@ -39,6 +44,8 @@ public class SocketTextHandler extends TextWebSocketHandler {
         JSONObject response = null;
         List<User> users = null;
 
+        log.debug("quit lobby fuori" + jsonPayload);
+
         switch ((String) jsonPayload.get("method")) {
             case "connectLobby": {
 
@@ -50,27 +57,89 @@ public class SocketTextHandler extends TextWebSocketHandler {
             }
             case "quitLobby": {
 
+
+
                 Integer idLobby = (Integer) jsonPayload.get("idLobby");
                 Lobby lobby = Game.getInstance().getLobby(idLobby);
-                users = lobby.getUsers();
+                if (lobby != null) {
+                    users = lobby.getUsers();
+                    response = userService.buildJSONLobby(lobby);
+                }
+
+                break;
+            }
+            case "resizeLobby": {
+
+                User user = setSenderUser(session, jsonPayload);
+                Integer userMax = (Integer) jsonPayload.get("userMax");
+                Lobby lobby = userService.resizeLobby(user, userMax);
+
                 response = userService.buildJSONLobby(lobby);
+                users = lobby.getUsers();
+
+                break;
+            }
+            case "changeLobbyAccess": {
+
+                User user = setSenderUser(session, jsonPayload);
+                Boolean accessType = (Boolean) jsonPayload.get("accessType");
+                Lobby lobby = userService.changeLobbyAccess(user, accessType);
+
+                response = userService.buildJSONLobby(lobby);
+                users = lobby.getUsers();
+
+                break;
+            }
+            case "startMatch": {
+
+                User user = setSenderUser(session, jsonPayload);
+                Match match = userService.startMatch(user);
+
+                response = userService.buildJSONMatch(match);
+                users = match.getUsers();
 
                 break;
             }
             case "requestCard": {
 
+                User user = setSenderUser(session, jsonPayload);
+                Match match = userService.requestCard(user);
+
+                response = userService.buildJSONMatch(match);
+                users = match.getUsers();
+
                 break;
             }
             case "stopPlaying": {
+
+                User user = setSenderUser(session, jsonPayload);
+                Match match = userService.stopPlaying(user);
+
+                response = userService.buildJSONMatch(match);
+                users = match.getUsers();
+
                 break;
             }
-            case "resizeLobby": {
+            case "quitMatch": {
+
+                User user = setSenderUser(session, jsonPayload);
+                Lobby lobby = user.getLobby();
+                users = new ArrayList<>(lobby.getMatch().getUsers());
+                Match match = matchService.quitMatch(lobby, user);
+
+                response = userService.buildJSONMatch(match);
+
                 break;
             }
-            case "changeLobbyAccess": {
-                break;
-            }
-            case "startMatch": {
+            case "checkEndMatch": {
+
+                User user = setSenderUser(session, jsonPayload);
+                Lobby lobby = Game.getInstance().getLobby(user.getLobby().getIdLobby());
+                Match match = matchService.checkEndMatch(lobby);
+
+                response = userService.buildJSONMatch(match);
+                users = match.getUsers();
+
                 break;
             }
             default: {
@@ -78,7 +147,9 @@ public class SocketTextHandler extends TextWebSocketHandler {
             }
         }
 
-        sendResponse(response, users);
+        if (users != null && users.size() > 0) {
+            sendResponse(response, users);
+        }
 
     }
 
@@ -117,7 +188,6 @@ public class SocketTextHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.debug("session : " + session);
         sessions.add(session);
     }
 

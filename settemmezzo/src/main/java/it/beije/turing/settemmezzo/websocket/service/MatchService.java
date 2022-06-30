@@ -9,14 +9,15 @@ import it.beije.turing.settemmezzo.http.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class MatchService {
 
-	private final UserRepository userRepository;
+    @Autowired
+	private UserRepository userRepository;
 	
     public Match checkEndMatch(Lobby lobby) {
     	
@@ -32,12 +33,12 @@ public class MatchService {
         
         int points = (50 * (m.getUsers().size()-1)) / winnerSize;
         
-        for (User user : m.getWinners())
-        {
-			User u = userRepository.findById(user.getId()).orElseThrow(() -> new GameActionException("IHIH"));
-			u.addScore(points);
-			userRepository.save(u);
-		}
+//        for (User user : m.getWinners())
+//        {
+//			User u = userRepository.findById(user.getId()).orElseThrow(() -> new GameActionException("IHIH"));
+//			u.addScore(points);
+//			userRepository.save(u);
+//		}
         
         return m;
     }

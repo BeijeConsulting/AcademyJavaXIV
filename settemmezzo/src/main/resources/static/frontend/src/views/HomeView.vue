@@ -274,7 +274,7 @@ export default {
                      this.sendMessage(message);
                      this.connectionEstablished = true;
                   }
-               }, 1000);
+               }, 10);
             })
       },
 
@@ -288,12 +288,15 @@ export default {
                this.connect();
                this.connectionEstablished = false;
                setTimeout(() => {
-                  if (this.lobby != null && this.stompClient != null) {
-                     console.log("sended");
-                     this.stompClient.send("/app/room/" + this.lobby.idLobby + "/" + this.user.id);
+                  if (this.lobby != null && this.ws != null) {
+                     const message = {
+                        user_id: this.user.id,
+                        method: "connectLobby"
+                     }
+                     this.sendMessage(message);
                      this.connectionEstablished = true;
                   }
-               }, 1000);
+               }, 10);
             })
       },
 
@@ -335,7 +338,9 @@ export default {
             } else {
                if (this.match == null) {
                   this.match = obj;
-                  this.requestCard();
+                  setTimeout(() => {
+                     this.requestCard();
+                  }, 1000);
                } else {
                   this.match = obj;
                }
@@ -368,14 +373,23 @@ export default {
       // },
 
       requestCard() {
-         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/request_card/" + this.user.id);
+         // this.sendMessage("/app/room/" + this.lobby.idLobby + "/request_card/" + this.user.id);
+         const message = {
+            user_id: this.user.id,
+            method: "requestCard"
+         }
+         this.sendMessage(message);
           setTimeout(() => {
             this.endMatch();
          }, 100);
       },
 
       stopPlaying() {
-         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/stop_playing/" + this.user.id);
+         const message = {
+            user_id: this.user.id,
+            method: "stopPlaying"
+         }
+         this.sendMessage(message);
          setTimeout(() => {
             this.endMatch();
          }, 100);
@@ -383,23 +397,40 @@ export default {
 
       changeMaxPlayer(value) {
          if ((this.lobby.userMax + value) >= 2 && (this.lobby.userMax + value) <= 7) {
-            
-            this.stompClient.send("/app/room/" + this.lobby.idLobby + "/resize/" + (this.lobby.userMax + value) + "/" + this.user.id);
+            const message = {
+               user_id: this.user.id,
+               method: "resizeLobby",
+               userMax: this.lobby.userMax + value
+            }
+            this.sendMessage(message);
          }
       },
 
       changeLobbyAccess() {
          console.log("changing access");
-         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/access/" + !this.lobby.accessType + "/" + this.user.id);
+         const message = {
+               user_id: this.user.id,
+               method: "changeLobbyAccess",
+               accessType: !this.lobby.accessType
+            }
+         this.sendMessage(message);
       },
 
       startMatch() {
-         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/start/" + this.user.id);
-         this.turn = this.user;
+         const message = {
+            user_id: this.user.id,
+            method: "startMatch"
+         }
+         this.sendMessage(message);
       },
 
       endMatch() {
-         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/check_end_match");
+         console.log("check end match...");
+         const message = {
+            user_id: this.user.id,
+            method: "checkEndMatch",
+         }
+         this.sendMessage(message);
       },
 
       quitLobby() {
@@ -426,12 +457,20 @@ export default {
       },
 
       quitGame() {
-         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/quit_match/" + this.user.id);
+         const message = {
+            user_id: this.user.id,
+            method: "quitMatch"
+         }
+         this.sendMessage(message);
          this.disconnect();
       },
 
       quitMatch() {
-         this.stompClient.send("/app/room/" + this.lobby.idLobby + "/quit_match/" + this.user.id);
+         const message = {
+            user_id: this.user.id,
+            method: "quitMatch"
+         }
+         this.sendMessage(message);
          setTimeout(() => {
             this.endMatch();
             this.disconnect();

@@ -8,6 +8,8 @@ import it.beije.turing.settemmezzo.exception.SettemmezzoException;
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.Leaderboard;
 import it.beije.turing.settemmezzo.game.User;
+import it.beije.turing.settemmezzo.game.deck.Card;
+import it.beije.turing.settemmezzo.game.deck.Hand;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
 import it.beije.turing.settemmezzo.game.match.Match;
 import it.beije.turing.settemmezzo.http.repository.UserAuthorityRepository;
@@ -24,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,32 +127,7 @@ public class UserService implements UserDetailsService {
         return buildJSONLobby(user.getLobby());
     }
 
-    public JSONObject buildJSONLobby(Lobby lobby) {
 
-        JSONObject response = new JSONObject();
-
-        response.put("idLobby", lobby.getIdLobby());
-        response.put("accessType", lobby.isAccessType());
-        response.put("userMax", lobby.getUserMax());
-        response.put("match", lobby.getMatch());
-
-        JSONArray jsonArray = new JSONArray();
-
-        log.debug("users" + jsonArray);
-
-        for (User u : lobby.getUsers()) {
-            JSONObject jsonObjectTemp = new JSONObject();
-            jsonObjectTemp.put("id", u.getId());
-            jsonObjectTemp.put("username", u.getUsername());
-            jsonObjectTemp.put("score", u.getScore());
-
-            jsonArray.put(jsonObjectTemp);
-        }
-
-        response.put("users", jsonArray);
-
-        return response;
-    }
 
 //    private JSONObject buildJSONMatch() {
 //
@@ -296,4 +274,114 @@ public class UserService implements UserDetailsService {
 		Leaderboard leaderboard = new Leaderboard(userRepository.getLeaderboard());
 		return leaderboard;
 	}
+
+    public JSONObject buildJSONLobby(Lobby lobby) {
+
+        JSONObject response = new JSONObject();
+
+        response.put("idLobby", lobby.getIdLobby());
+        response.put("accessType", lobby.isAccessType());
+        response.put("userMax", lobby.getUserMax());
+        response.put("match", lobby.getMatch());
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (User u : lobby.getUsers()) {
+            JSONObject jsonObjectTemp = new JSONObject();
+            jsonObjectTemp.put("id", u.getId());
+            jsonObjectTemp.put("username", u.getUsername());
+            jsonObjectTemp.put("score", u.getScore());
+
+            jsonArray.put(jsonObjectTemp);
+        }
+
+        response.put("users", jsonArray);
+
+        return response;
+    }
+
+    public JSONObject buildJSONMatch(Match match) {
+
+        JSONObject response = new JSONObject();
+
+
+        if (match.getHands() != null && match.getHands().size() > 0) {
+
+            JSONArray hands = new JSONArray();
+
+            for (Hand hand : match.getHands()) {
+                JSONObject handTemp = new JSONObject();
+                JSONObject userTemp = new JSONObject();
+                userTemp.put("id", hand.getUser().getId());
+                userTemp.put("username", hand.getUser().getUsername());
+                userTemp.put("score", hand.getUser().getScore());
+
+                handTemp.put("user", userTemp);
+
+                JSONArray cards = new JSONArray();
+
+                for (Card card : hand.getCards()) {
+                    JSONObject cardTemp = new JSONObject();
+                    cardTemp.put("value", card.getValue());
+                    cardTemp.put("seed", card.getSeed());
+                    cardTemp.put("figure", card.getFigure());
+
+                    cards.put(cardTemp);
+                }
+
+                handTemp.put("cards", cards);
+                handTemp.put("cardValue", hand.getCardValue());
+                handTemp.put("continuePlaying", hand.getContinuePlaying());
+                handTemp.put("turn", hand.isTurn());
+
+                hands.put(handTemp);
+            }
+
+            response.put("hands", hands);
+        } else {
+            response.put("hands", new ArrayList<>());
+        }
+
+        if (match.getUsers() != null && match.getUsers().size() > 0) {
+
+            JSONArray users = new JSONArray();
+
+            for (User u : match.getUsers()) {
+                JSONObject userTemp = new JSONObject();
+                userTemp.put("id", u.getId());
+                userTemp.put("username", u.getUsername());
+                userTemp.put("score", u.getScore());
+
+                users.put(userTemp);
+            }
+
+            response.put("users", users);
+        } else {
+            response.put("users", new ArrayList<>());
+        }
+
+        if (match.getWinners() != null && match.getWinners().size() > 0) {
+
+            JSONArray winners = new JSONArray();
+
+            for (User u : match.getWinners()) {
+                JSONObject winnerTemp = new JSONObject();
+                winnerTemp.put("id", u.getId());
+                winnerTemp.put("username", u.getUsername());
+                winnerTemp.put("score", u.getScore());
+
+                winners.put(winnerTemp);
+            }
+
+            response.put("winners", winners);
+        } else {
+            response.put("winners", new ArrayList<>());
+        }
+
+        response.put("ended", match.isEnded());
+
+
+
+        return response;
+    }
 }
