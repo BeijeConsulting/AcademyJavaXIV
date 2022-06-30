@@ -162,16 +162,11 @@ public class UserController {
 
 			log.error("auth: " + user);
 
-			log.debug("Game http" + Game.getInstance());
-
 			if (Game.getInstance().getUser(user.getId()) == null) {
 				Game.getInstance().addUser(user);
 			}
 
 			user = Game.getInstance().getUser(user.getId());
-			log.debug("Game user http : " + Game.getInstance().getUser(user.getId()));
-
-			log.error("user creato " + user);
 
 			return userService.joinLobby(user, roomId);
 

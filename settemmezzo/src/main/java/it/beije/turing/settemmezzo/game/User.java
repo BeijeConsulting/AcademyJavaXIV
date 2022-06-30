@@ -202,20 +202,20 @@ public class User implements Serializable, UserDetails {
 //
 
 
-//	@Override
-//	public String toString() {
-//		return "User{" +
-//				"id=" + id +
-//				", username='" + username + '\'' +
-//				", email='" + email + '\'' +
-//				", password='" + password + '\'' +
-//				", score=" + score +
-//				", token='" + token + '\'' +
-//				", refreshToken=" + refreshToken +
-//				", online=" + online +
-//				", lobby=" + lobby +
-//				", sessionId='" + sessionId + '\'' +
-//				", authorityEntity=" + authorityEntity +
-//				'}';
-//	}
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", score=" + score +
+				", token='" + token + '\'' +
+				", refreshToken=" + refreshToken +
+				", online=" + online +
+				", lobby=" + lobby +
+				", sessionId='" + sessionId + '\'' +
+				", authorityEntity=" + authorityEntity +
+				'}';
+	}
 }

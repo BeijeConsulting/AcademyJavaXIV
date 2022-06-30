@@ -106,12 +106,11 @@ public class Lobby
 
 	@Override
 	public String toString() {
-		return "{" +
-				"users:" + users +
-				", idLobby:" + idLobby +
-				", accessType:" + accessType +
-				", userMax:" + userMax +
-				", match:" + match +
+		return "Lobby{" +
+				", idLobby=" + idLobby +
+				", accessType=" + accessType +
+				", userMax=" + userMax +
+				", match=" + match +
 				'}';
 	}
 }

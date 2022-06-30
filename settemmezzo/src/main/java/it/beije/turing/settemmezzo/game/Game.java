@@ -108,10 +108,7 @@ public class Game
 	{
 		for (User user : users)
 		{
-			log.debug("ciclo fuori if");
 			if (user.getId().compareTo(userId) == 0) {
-				log.debug("ciclo dentro if");
-				log.debug("user game : " + user);
 
 				return user;
 			}
@@ -130,12 +127,12 @@ public class Game
 		return null;
 	}
 //
-//	@Override
-//	public String toString() {
-//		return "Game{" +
-//				"lobbies=" + lobbies +
-//				", users=" + users +
-//				", idCount=" + idCount +
-//				'}';
-//	}
+	@Override
+	public String toString() {
+		return "Game{" +
+				"lobbies=" + lobbies +
+				", users=" + users +
+				", idCount=" + idCount +
+				'}';
+	}
 }

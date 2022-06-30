@@ -328,7 +328,12 @@ export default {
             console.log("CONNECTED");
          }
          this.ws.onmessage = (event) => {
-            this.lobby = JSON.parse(event.data);
+            console.log(event.data);
+            if (event.data.accessType == true) {
+               
+               console.log("riesco a leggere le striche come fossero boolean");
+            }
+            // this.lobby = JSON.parse(event.data);
          }
 
       },
