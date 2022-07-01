@@ -37,6 +37,7 @@
 
          <div v-else>
             <h1 class="my-5 text-center">HOME</h1>
+            <input for="" min="-1" v-model="lobbyNumber" @change="changeJoin(lobbyNumber)"/>
             <nav class="d-flex flex-column align-items-center">
                <a class="nav_item" @click="playFast" href="#">GIOCA VELOCE</a>
                <a class="nav_item" @click="createLobby" href="#">CREA LOBBY</a>
@@ -113,6 +114,7 @@
                   <div @click="quitLobby" class="quit">
                      <span>&times;</span>
                   </div>
+                  <label for="">{{lobby.idLobby}}</label>
                   <button v-if="user.id == lobby.users[0].id" @click="startMatch" class="my_btn">START</button>
                   <div v-else class="countdown text-center">
                      <p class="my_btn m-0">10</p>
@@ -201,6 +203,7 @@ export default {
    data() {
       return {
          ws: null,
+         lobbyNumber: -1,
          configuration: null,
          peerConnection: null,
          dataChannel: null,
@@ -218,8 +221,8 @@ export default {
          lobby: null,
          match: null,
          connectionEstablished: false,
-         // URL: "://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/"
-         URL: "://localhost:8080/"
+         URL: "://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/"
+         //URL: "://localhost:8080/"
       }
    },
 
@@ -228,6 +231,10 @@ export default {
    },
 
    methods: {
+      changeJoin(value) {
+         if (value >= 0)this.lobbyNumber = value;
+         else this.lobbyNumber = -1;
+      },
       login() {
          axios.post("http" + this.URL + "signin", {
             email: this.email,
@@ -258,7 +265,7 @@ export default {
       },
 
       playFast() {
-         axios.put("http" + this.URL + "lobby/-1", {}, {
+         axios.put("http" + this.URL + "lobby/" + this.lobbyNumber, {}, {
                headers: {
                   Authorization: "Bearer " + this.user.token //the token is a variable which holds the token
                }
@@ -275,7 +282,7 @@ export default {
                      this.sendMessage(message);
                      this.connectionEstablished = true;
                   }
-               }, 10);
+               }, 1000);
             })
       },
 
@@ -297,7 +304,7 @@ export default {
                      this.sendMessage(message);
                      this.connectionEstablished = true;
                   }
-               }, 10);
+               }, 1000);
             })
       },
 
@@ -444,15 +451,19 @@ export default {
             }).then(response => {
                if (response.data.esito) {
                   if (this.lobby != null && this.ws != null) {
+                     console.log("QUITTO");
                      const message = {
-                        user_id: this.user.id,
                         method: "quitLobby",
                         idLobby: this.lobby.idLobby
                      }
+                     console.log("MESSAGE", message);
                      this.sendMessage(message);
                   }
                   this.lobby = null;
-                  this.disconnect();
+                  setTimeout(() => {
+                     this.disconnect();
+                  }, 1000);
+                  
                } else {
                   console.log("Cannot disconnect");
                }
