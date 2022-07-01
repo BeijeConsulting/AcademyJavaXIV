@@ -188,7 +188,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
             user = userService.getUserInGame(userId);
             log.debug("USER : " + user);
 
-            if (user.getSessionId() == null) user.setSessionId(session.getId());
+            user.setSessionId(session.getId());
 
         } catch (JSONException ex) {
             ex.printStackTrace();
