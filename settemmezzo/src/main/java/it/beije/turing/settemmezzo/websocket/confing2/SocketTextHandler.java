@@ -156,10 +156,21 @@ public class SocketTextHandler extends TextWebSocketHandler {
     private void sendResponse(JSONObject response, List<User> users)
             throws InterruptedException, IOException {
 
+        log.debug("sendResponse");
+        log.debug("users : " + users);
+        log.debug("response : " + response);
+        log.debug("sessions : " + sessions);
+
         for(WebSocketSession webSocketSession : sessions) {
+
+            log.debug("webSocketSession = " + webSocketSession);
+            log.debug("webSocketSession.isOpen() = " + webSocketSession.isOpen());
 
             if (webSocketSession.isOpen()) {
                 for (User u : users) {
+                    log.debug("user in users = " + u);
+                    log.debug("id websocket in users = " + webSocketSession.getId());
+                    log.debug("user id session = " + u.getSessionId());
                     if (u.getSessionId().equals(webSocketSession.getId())) {
                         webSocketSession.sendMessage(new TextMessage(response.toString()));
                     }

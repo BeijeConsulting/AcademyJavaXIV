@@ -218,7 +218,8 @@ export default {
          lobby: null,
          match: null,
          connectionEstablished: false,
-         URL: "http://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/"
+         // URL: "://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/"
+         URL: "://localhost:8080/"
       }
    },
 
@@ -228,7 +229,7 @@ export default {
 
    methods: {
       login() {
-         axios.post("http://localhost:8080/signin", {
+         axios.post("http" + this.URL + "signin", {
             email: this.email,
             password: this.password
          }).then(response => {
@@ -237,7 +238,7 @@ export default {
          })
       },
       postRegistration(){
-         axios.post("http://localhost:8080/user/registration", this.registration)
+         axios.post("http" + this.URL + "registration", this.registration)
             .then(response => {
                this.user = response.data;
                console.log(this.user);
@@ -246,7 +247,7 @@ export default {
       },
 
       getLeaderboard() {
-         axios.get("http://localhost:8080/leaderboard", {
+         axios.get("http" + this.URL + "leaderboard", {
             headers: {
                   Authorization: "Bearer " + this.user.token //the token is a variable which holds the token
                }
@@ -257,7 +258,7 @@ export default {
       },
 
       playFast() {
-         axios.put("http://localhost:8080/lobby/-1", {}, {
+         axios.put("http" + this.URL + "lobby/-1", {}, {
                headers: {
                   Authorization: "Bearer " + this.user.token //the token is a variable which holds the token
                }
@@ -279,7 +280,7 @@ export default {
       },
 
       createLobby() {
-         axios.post("http://localhost:8080/lobby", {}, {
+         axios.post("http" + this.URL + "lobby", {}, {
                headers: {
                   Authorization: "Bearer " + this.user.token //the token is a variable which holds the token
                }
@@ -325,13 +326,13 @@ export default {
       // },
 
       connect() {
-         this.ws = new WebSocket("ws://localhost:8080/ws");
+         this.ws = new WebSocket("ws" + this.URL + "ws");
          
          this.ws.onopen = () => {
             console.log("CONNECTED");
          }
          this.ws.onmessage = (event) => {
-            console.log(event.data);
+            console.log(JSON.parse(event.data));
             const obj = JSON.parse(event.data);
             if (obj.hasOwnProperty("idLobby")) {
                this.lobby = obj;
@@ -359,7 +360,9 @@ export default {
       },
 
       sendMessage(message) {
-         this.ws.send(JSON.stringify(message));
+         setTimeout(() => {
+            this.ws.send(JSON.stringify(message));
+         }, 200);
       },
 
       // disconnect() {
@@ -434,7 +437,7 @@ export default {
       },
 
       quitLobby() {
-         axios.delete("http://localhost:8080/lobby",  {
+         axios.delete("http" + this.URL + "lobby",  {
                headers: {
                   Authorization: "Bearer " + this.user.token //the token is a variable which holds the token
                }
