@@ -4,7 +4,6 @@ import it.beije.turing.settemmezzo.exception.AlreadyExistException;
 import it.beije.turing.settemmezzo.exception.GameActionException;
 import it.beije.turing.settemmezzo.exception.InvalidArgumentException;
 import it.beije.turing.settemmezzo.exception.NoContentException;
-import it.beije.turing.settemmezzo.exception.SettemmezzoException;
 import it.beije.turing.settemmezzo.game.Leaderboard;
 import it.beije.turing.settemmezzo.game.User;
 import it.beije.turing.settemmezzo.game.lobby.Lobby;
@@ -72,10 +71,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Match startMatch(User user) {
-        //TODO COUNT DOWN / STOP COUNT DOWN
         if (user.getLobby() == null) return null;
-
-        //SET MATCH UTENTE?
 
         return user.getLobby().startMatch(user);
     }
@@ -114,22 +110,6 @@ public class UserService implements UserDetailsService {
             throw new InvalidArgumentException("Nome, Cognome, Password o Email = null, o stringa vuota");
         }
     }
-
-//	public UserDto login(String email, String password) {
-//		System.out.print("Password inserita: " + passwordEncoder.encode(password));
-//		System.out.print("Password inserita: " + passwordEncoder.encode(password));
-//		// TODO buon lunedì owo
-//
-//		User user = userRepository.findByEmail(email);
-//		if (user == null) {
-//			throw new RuntimeException("No user found.");// TODONoContentException();
-//		}
-//		if (passwordEncoder.matches(password, user.getPassword())) {
-//			System.out.println("Password corretta");
-//		}
-//
-//		return new UserDto(user);
-//	}
 
     public List<User> getAllUser() {
         List<User> list = userRepository.findAll();

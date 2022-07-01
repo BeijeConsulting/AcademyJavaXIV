@@ -16,7 +16,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-//import io.swagger.v3.oas.annotations.tags.Tag;
 import it.beije.turing.settemmezzo.game.Game;
 import it.beije.turing.settemmezzo.game.Leaderboard;
 import it.beije.turing.settemmezzo.game.User;
@@ -70,8 +69,6 @@ public class UserController {
 			utente.setPassword(hashService.pswToHash(utente.getPassword()));
 
 			String token = jwtTokenProvider.generateTokenRegistration(utente.getEmail(), LocalDateTime.now());
-//			mailUtil.senMail(token,utente);
-
 			userService.saveRegisteredUser(utente);
 
 			return utente;
@@ -79,10 +76,6 @@ public class UserController {
 		} catch (Exception alreadyExistException) {
 			throw alreadyExistException;
 		}
-//		catch (MessagingException messagingException) {
-//			log.error("Insert User MessagingException", messagingException);
-//			throw new ServiceException("Error system");
-//		}
 	}
 
 	@PreAuthorize("permitAll()")

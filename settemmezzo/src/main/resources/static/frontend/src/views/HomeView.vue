@@ -36,6 +36,7 @@
 
          <div v-else>
             <h1 class="my-5 text-center">HOME</h1>
+            <input type="number" class="form-control" min="-1" v-model="lobbyNumber" @change="changeLobbyJoin(lobbyNumber)"/>
             <nav class="d-flex flex-column align-items-center">
                <a class="nav_item" @click="playFast" href="#">GIOCA VELOCE</a>
                <a class="nav_item" @click="createLobby" href="#">CREA LOBBY</a>
@@ -111,8 +112,11 @@
                      <span>&times;</span>
                   </div>
                   <button v-if="user.id == lobby.users[0].id" @click="startMatch" class="my_btn">START</button>
-                  <div v-else class="countdown text-center">
+                  <div v-else class="countdown text-center" style="color:black">
                      <p class="my_btn m-0">10</p>
+                  </div>
+                  <div>
+                     <label  v-if="user.id == lobby.users[0].id" for="" style="color:black; font-weight:bold">{{lobby.idLobby}}</label>
                   </div>
                </div>
             </div>
@@ -153,10 +157,10 @@
 
          </div>
          <div class="options">
-            <div v-if="getMatchHand(user.id).continuePlaying && getMatchHand(user.id).turn" @click="requestCard" class="option request_card">
+            <div v-if="getMatchHand(user.id) != null && getMatchHand(user.id).continuePlaying && getMatchHand(user.id).turn" @click="requestCard" class="option request_card">
                <span>CHIEDI CARTA</span>
             </div>
-            <div v-if="getMatchHand(user.id).continuePlaying && getMatchHand(user.id).turn" @click="stopPlaying" class="option stop_playing">
+            <div v-if="getMatchHand(user.id) != null && getMatchHand(user.id).continuePlaying && getMatchHand(user.id).turn" @click="stopPlaying" class="option stop_playing">
                <span>STO BENE</span>
             </div>
             <div @click="quitMatch" class="option quit_game">
@@ -167,7 +171,7 @@
 
       <div class="winners" v-else-if="match.ended">
          <h1>Vincitori</h1>
-         <div v-if="match.winners.length == 0">
+         <div v-if="match.winners != null && match.winners.length <= 0">
             <h3 class="text-center">NESSUNO</h3>
             <img src="@/assets/img/gif_sad.gif" alt="">
          </div>
@@ -197,6 +201,7 @@ export default {
    name: "HomeView",
    data() {
       return {
+         lobbyNumber: -1,
          stompClient: null,
          register: false,
          registration: {
@@ -248,9 +253,16 @@ export default {
             console.log(this.leaderboard);
          })
       },
+      
+
+      changeLobbyJoin(value) {
+         if (value >= 0) this.lobbyNumber = value;
+         else this.lobbyNumber = -1;
+      },
+
 
       playFast() {
-         axios.put("http://localhost:8080/lobby/-1", {}, {
+         axios.put("http://localhost:8080/lobby/" + this.lobbyNumber, {}, {
                headers: {
                   Authorization: "Bearer " + this.user.token //the token is a variable which holds the token
                }
@@ -315,6 +327,7 @@ export default {
             this.stompClient.disconnect();
             this.lobby = null;
             this.match = null;
+            this.lobbyNumber = -1;
             this.connectionEstablished = false;
             //TODO DELETE INSTANCE LOBBY - MATCH => JAVA
          }
@@ -324,14 +337,14 @@ export default {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/request_card/" + this.user.id);
           setTimeout(() => {
             this.endMatch();
-         }, 100);
+         }, 300);
       },
 
       stopPlaying() {
          this.stompClient.send("/app/room/" + this.lobby.idLobby + "/stop_playing/" + this.user.id);
          setTimeout(() => {
             this.endMatch();
-         }, 100);
+         }, 300);
       },
 
       changeMaxPlayer(value) {
@@ -394,6 +407,8 @@ export default {
                return hand;
             }
          }
+
+         return null;
       },
    },
 
