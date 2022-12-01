@@ -12,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @Slf4j
 public class MatchService {
@@ -30,12 +28,6 @@ public class MatchService {
         
         log.debug("MATCH FINITO");
         Match m = lobby.getMatch().end();
-
-        List<User> usersList = m.getUsers();
-
-        while(usersList.size() > 0){
-            this.quitMatch(lobby, usersList.get(usersList.size() - 1));
-        }
         
         int winnerSize = m.getWinners().size() == 0 ? 1 : m.getWinners().size();
         
